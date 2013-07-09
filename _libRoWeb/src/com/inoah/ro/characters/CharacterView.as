@@ -414,12 +414,13 @@ package com.inoah.ro.characters
          */ 
         public function render():void
         {
-            _bmd.bitmapData = new BitmapData( width , height + 40 )// , true, 0x0  );
-            _bmd.x = - width >> 1;
-            _bmd.y = ( - height >> 1 );
-            var matrix:Matrix = new Matrix( 1, 0, 0, 1, 0, 0);
-            matrix.translate( width >> 1 , ( height >> 1 ) + 40 );
-            _bmd.bitmapData.draw( this , matrix  , null, null, new Rectangle( 0, 0, width, height ) );
+            _bmd.bitmapData = new BitmapData( width * 2 , height * 3 , true , 0x0 );
+            _bmd.x = - width;
+            _bmd.y = - height * 2;
+            var matrix:Matrix;
+            matrix = new Matrix();
+            matrix.translate( width , height * 2 );
+            _bmd.bitmapData.draw( this , matrix , null, null, new Rectangle( 0, 0, width * 2 , height * 3 ) , false );
         }
         /**
          * 更换SWF接口

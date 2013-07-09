@@ -15,6 +15,10 @@ package com.inoah.ro.controllers
         private var _atkTarget:CharacterObject;
         private var _fightMode:uint = 0; // 攻击模式 0-无  1-追击 2-攻击
         private var _lastHurt:uint; 
+        /**
+         * 攻击CD 
+         */        
+        private var _atkCd:uint = 500;
         
         public function PlayerController(pec:Perception, ctrl:uint=2)
         {
@@ -65,7 +69,7 @@ package com.inoah.ro.controllers
                 
                 if(_fightMode==2)
                 {
-                    if(Global.Timer-_lastHurt>1500)
+                    if(Global.Timer-_lastHurt>_atkCd )
                     {
                         _lastHurt = Global.Timer;
                         _atkTarget.hp-=10;

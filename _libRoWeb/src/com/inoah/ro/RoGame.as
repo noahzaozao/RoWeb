@@ -51,9 +51,12 @@ package com.inoah.ro
             _player.setName("可爱的早早",-1,0,-130);
             _player.action = Actions.Wait;
             
-//            _player.hp = 150;
-//            _player.hpMax = 150;
-//            _player.hpBar = new HSpbar( _player,'hp','hpMax',10 , 0x009900 );
+            _player.hp = 150;
+            _player.hpMax = 150;
+            _player.hpBar = new HSpbar( _player,'hp','hpMax',10 , 0x33ff33 );
+            _player.sp = 50;
+            _player.spMax = 50;
+            _player.spBar = new HSpbar(_player,'sp','spMax',14 , 0x2868FF);
             
             _scene.createPlayer(_player);
             _camera.focus(_player);

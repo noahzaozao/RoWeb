@@ -68,7 +68,7 @@ package com.inoah.ro.scenes
                 player.hpBar = new HSpbar(player,'hp','hpMax',10 , 0x33ff33);
                 player.sp = 50;
                 player.spMax = 50;
-                player.spBar = new HSpbar(player,'sp','spMax',10 , 0x2868FF);
+                player.spBar = new HSpbar(player,'sp','spMax',14 , 0x2868FF);
             }
             
             addObject(player);
