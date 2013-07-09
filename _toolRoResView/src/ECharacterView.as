@@ -17,5 +17,19 @@ package
                 _bodyView.tick( delta );
             }
         }
+        
+        public function setActionIndex( value:uint ):void
+        {
+            _currentIndex = value;
+            _bodyView.actionIndex = _currentIndex + _dirIndex;
+            if( _headView )
+            {
+                _headView.actionIndex = _currentIndex + _dirIndex;
+            }
+            if( _weaponView )
+            {
+                _weaponView.actionIndex = _currentIndex + _dirIndex;
+            }
+        }
     }
 }

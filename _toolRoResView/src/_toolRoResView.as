@@ -3,7 +3,6 @@ package
     import com.bit101.components.Style;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.managers.AssetMgr;
-    import com.inoah.ro.managers.BattleMgr;
     import com.inoah.ro.managers.KeyMgr;
     import com.inoah.ro.managers.MainMgr;
     
@@ -47,10 +46,9 @@ package
             Style.setStyle( Style.DARK );
             
             MainMgr.instance;
-            var keyMgr:KeyMgr = new KeyMgr( stage );
+            var keyMgr:KeyMgr = new KeyMgr( stage );    
             MainMgr.instance.addMgr( MgrTypeConsts.KEY_MGR, keyMgr );
             MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, new AssetMgr() );
-            MainMgr.instance.addMgr( MgrTypeConsts.BATLLE_MGR, new BattleMgr( this ) );
             
             initMenu();
             initData();

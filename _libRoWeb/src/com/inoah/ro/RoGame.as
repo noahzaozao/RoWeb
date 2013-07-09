@@ -1,4 +1,4 @@
-package 
+package com.inoah.ro 
 {
     import com.D5Power.D5Game;
     import com.D5Power.Controler.Actions;
@@ -12,9 +12,9 @@ package
     import flash.display.Stage;
     import flash.events.Event;
     
-    import Objects.PlayerObject;
+    import com.inoah.ro.objects.PlayerObject;
     
-    import controllers.PlayerController;
+    import com.inoah.ro.controllers.PlayerController;
     
     public class RoGame extends D5Game
     {
@@ -58,9 +58,9 @@ package
             _scene.createPlayer(_player);
             _camera.focus(_player);
             
-            if( !_playerView.parent )
+            for( var i:int = 0;i< 10; i++ )
             {
-                addChild( _playerView );
+                (_scene as MainScene).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
             }
         }
         
@@ -71,6 +71,10 @@ package
                 _playerView.x = _player.x;
                 _playerView.y = _player.y;
                 _playerView.tick( delta );
+            }
+            if( _scene )
+            {
+                (_scene as MainScene).tick( delta );
             }
         }
     }

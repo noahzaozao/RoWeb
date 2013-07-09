@@ -1,4 +1,4 @@
-package 
+package com.inoah.ro 
 {
     public class RoGlobal
     {

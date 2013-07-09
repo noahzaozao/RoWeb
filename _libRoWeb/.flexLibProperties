@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
-    <classEntry path="RoGlobal"/>
-    <classEntry path="RoGame"/>
-    <classEntry path="utils.UserData"/>
-    <classEntry path="Objects.PlayerObject"/>
-    <classEntry path="controllers.PlayerController"/>
+    <classEntry path="com.inoah.ro.RoGlobal"/>
+    <classEntry path="com.inoah.ro.RoGame"/>
+    <classEntry path="com.inoah.ro.utils.UserData"/>
+    <classEntry path="com.inoah.ro.objects.PlayerObject"/>
+    <classEntry path="com.inoah.ro.controllers.PlayerController"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

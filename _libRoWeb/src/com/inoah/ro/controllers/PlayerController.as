@@ -1,234 +1,88 @@
 package com.inoah.ro.controllers
 {
-    import com.inoah.ro.characters.CharacterView;
-    import com.inoah.ro.characters.MonsterView;
-    import com.inoah.ro.characters.PlayerView;
-    import com.inoah.ro.consts.DirIndexConsts;
-    import com.inoah.ro.consts.MgrTypeConsts;
-    import com.inoah.ro.events.ActSprViewEvent;
-    import com.inoah.ro.infos.CharacterInfo;
-    import com.inoah.ro.managers.BattleMgr;
-    import com.inoah.ro.managers.KeyMgr;
-    import com.inoah.ro.managers.MainMgr;
-    import com.inoah.ro.utils.Counter;
+    import com.D5Power.D5Game;
+    import com.D5Power.Controler.Actions;
+    import com.D5Power.Controler.CharacterControler;
+    import com.D5Power.Controler.Perception;
+    import com.D5Power.Objects.CharacterObject;
+    import com.D5Power.Objects.GameObject;
     
-    import flash.display.Sprite;
-    import flash.events.Event;
+    import flash.events.MouseEvent;
     import flash.geom.Point;
-    import flash.ui.Keyboard;
     
-    public class PlayerController
+    public class PlayerController extends CharacterControler
     {
-        private var _root:Sprite;
-        private var _playerView:PlayerView;
-        private var _currentTargetView:CharacterView;
-        private var _targetList:Vector.<MonsterView>;
-        private var _isCheckTarget:Boolean;
-        private var _checkTargetCounter:Counter;
+        private var _atkTarget:CharacterObject;
+        private var _fightMode:uint = 0; // 攻击模式 0-无  1-追击 2-攻击
+        private var _lastHurt:uint; 
         
-        public function set targetView( value:CharacterView ):void
+        public function PlayerController(pec:Perception, ctrl:uint=2)
         {
-            _currentTargetView = value;
+            super(pec, ctrl);
         }
         
-        public function set targetList( value:Vector.<MonsterView> ):void
+        override protected function onClick(e:MouseEvent):void
         {
-            _targetList = value;
+            _atkTarget = null;
+            super.onClick(e);
         }
         
-        public function PlayerController( root:Sprite )
+        override protected function clickSomeBody(o:GameObject):void
         {
-            _root = root;
-            var charInfo:CharacterInfo = new CharacterInfo();
-            charInfo.init( "可爱的早早", "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_1207.act" );
-            //            charInfo.init( "可爱的早早", "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_咯.act" );
-            _playerView = new PlayerView( charInfo );
-            _playerView.x = 400;
-            _playerView.y = 400;
-            _root.addChild( _playerView );
-            
-            _checkTargetCounter = new Counter();
-            _checkTargetCounter.initialize();
-            _checkTargetCounter.reset( 1 );
+            //if(o is NCharacterObject) Main.me.talk2NPC((o as NCharacterObject).uid)
+            if(o.camp!=Global.userdata.camp)
+            {
+                // 敌人，设置为攻击目标
+                _atkTarget = o as CharacterObject;
+            }
+            super.clickSomeBody(o);
         }
         
-        public function tick( delta:Number ):void
+        override public function calcAction():void
         {
-            if( _playerView )
+            if(_atkTarget!=null)
             {
-                moveCheck( delta );
-                attackCheck( delta );
-                _playerView.tick( delta );
-            }
-        }
-        /**
-         * 攻击判定
-         * @param delta
-         */        
-        private function attackCheck(delta:Number):void
-        {
-            var keyMgr:KeyMgr = MainMgr.instance.getMgr( MgrTypeConsts.KEY_MGR ) as KeyMgr;
-            if( !keyMgr )
-            {
-                return;
-            }
-            if( _playerView.isAttacking )
-            {
-                return;
-            }
-            _checkTargetCounter.tick( delta );
-            if( _checkTargetCounter.expired )
-            {
-                _isCheckTarget = false;
-                _checkTargetCounter.reset( 1 );
-            }
-            if( keyMgr.isDown( Keyboard.J )  )
-            {
-                if( !_currentTargetView )
+                // 先判断攻击距离
+                if(_fightMode==0 && Point.distance(_atkTarget._POS,_me._POS)>200)
                 {
-                    if( !_isCheckTarget )
-                    {
-                        _isCheckTarget = true;
-                        chooseTarget();
-                    }
+                    _endTarget = _atkTarget.PosX>_me.PosX ? new Point(_atkTarget.PosX-80,_atkTarget.PosY) : new Point(_atkTarget.PosX-80,_atkTarget.PosY);
+                    walk2Target();
+                    _fightMode = 1;
                 }
-                if( _currentTargetView  )
+                else
                 {
-                    var dis:Number = Point.distance( new Point( _playerView.x, _playerView.y ), new Point( _currentTargetView.x, _currentTargetView.y ) );
-                    if( dis > 80 || _currentTargetView.isDead == true )
+                    _fightMode = 1;
+                }
+                
+                if(_fightMode==1 && Point.distance(_atkTarget._POS,_me._POS)<=200)
+                {
+                    // 走入攻击范围，开始攻击
+                    _me.action = Actions.Attack;
+                    
+                    (_atkTarget.controler as MonsterController).fightTo(_me);
+                    _fightMode = 2;
+                }
+                
+                if(_fightMode==2)
+                {
+                    if(Global.Timer-_lastHurt>1500)
                     {
-                        _currentTargetView.removeEventListener( ActSprViewEvent.ACTION_END, onHitingEndHandler );
-                        _currentTargetView.isHiting = false;
-                        _currentTargetView = null;
-                    }
-                    else
-                    {
-                        var battleMgr:BattleMgr = MainMgr.instance.getMgr( MgrTypeConsts.BATLLE_MGR ) as BattleMgr;
-                        battleMgr.attack( _playerView, _currentTargetView );
-                        _playerView.isAttacking = true;
-                        _playerView.addEventListener( ActSprViewEvent.ACTION_END, onActionEndHandler );
+                        _lastHurt = Global.Timer;
+                        _atkTarget.hp-=10;
                         
-                        if( _currentTargetView )
+                        (_me as CharacterObject).hp-=5;
+                        if(_atkTarget.hp==0)
                         {
-                            if( _currentTargetView.isHiting )
-                            {
-                                _currentTargetView.isHiting = true;
-                            }
-                            else
-                            {
-                                _currentTargetView.addEventListener( ActSprViewEvent.ACTION_END, onHitingEndHandler );
-                                _currentTargetView.isHiting = true;
-                            }
+                            D5Game.me.scene.removeObject(_atkTarget);
+                            //                            (Global.userdata as UserData).item = 2;
+                            _me.action = Actions.Wait;
+                            _atkTarget = null;
                         }
                     }
+                    
                 }
-                return;
             }
-        }
-        
-        /**
-         * 移动判定 
-         * @param delta
-         */        
-        protected function moveCheck( delta:Number ):void
-        {
-            var keyMgr:KeyMgr = MainMgr.instance.getMgr( MgrTypeConsts.KEY_MGR ) as KeyMgr;
-            if( !keyMgr )
-            {
-                return;
-            }
-            
-            _playerView.isMoving = false;
-
-            if( _playerView.isAttacking )
-            {
-                return;
-            }
-            
-            if( keyMgr.isDown( Keyboard.W ) )
-            {
-                _playerView.dirIndex = DirIndexConsts.UP;
-                _playerView.y -= delta * _playerView.speed;
-                _playerView.isMoving = true;
-            }
-            else if( keyMgr.isDown( Keyboard.S ) )
-            {
-                _playerView.dirIndex = DirIndexConsts.DOWN;
-                _playerView.y += delta * _playerView.speed;
-                _playerView.isMoving = true;
-            }
-            if( keyMgr.isDown( Keyboard.A ) )
-            {
-                if( _playerView.dirIndex == DirIndexConsts.UP )
-                {
-                    _playerView.dirIndex = DirIndexConsts.UP_LIFT;
-                    _playerView.x -= delta * _playerView.speed ;
-                }
-                else if( _playerView.dirIndex == DirIndexConsts.DOWN )
-                {
-                    _playerView.dirIndex = DirIndexConsts.DOWN_LEFT;
-                    _playerView.x -= delta * _playerView.speed ;
-                }
-                else
-                {
-                    _playerView.dirIndex = DirIndexConsts.LEFT;
-                    _playerView.x -= delta * _playerView.speed;
-                }
-                _playerView.isMoving = true;
-            }
-            else if( keyMgr.isDown( Keyboard.D ) )
-            {
-                if( _playerView.dirIndex == DirIndexConsts.UP )
-                {
-                    _playerView.dirIndex = DirIndexConsts.UP_RIGHT;
-                    _playerView.x += delta * _playerView.speed ;
-                }
-                else if( _playerView.dirIndex == DirIndexConsts.DOWN )
-                {
-                    _playerView.dirIndex = DirIndexConsts.DOWN_RIGHT;
-                    _playerView.x += delta * _playerView.speed ;
-                }
-                else
-                {
-                    _playerView.dirIndex = DirIndexConsts.RIGHT;
-                    _playerView.x += delta * _playerView.speed;
-                }
-                _playerView.isMoving = true;
-            }
-        }
-        
-        private function chooseTarget():void
-        {
-            if( !_currentTargetView )
-            {
-                var distanceList:Vector.<Point> = new Vector.<Point>();
-                var len:int = _targetList.length;
-                for( var i:int = 0;i<len;i++)
-                {
-                    distanceList[i] = new Point();
-                    distanceList[i].x = i;
-                    distanceList[i].y = Point.distance( new Point( _playerView.x, _playerView.y ), new Point( _targetList[i].x, _targetList[i].y ) );
-                }
-                distanceList.sort( sortDistanceFunc );
-                _currentTargetView = _targetList[ distanceList[0].x ];
-            }
-        }
-        
-        private function sortDistanceFunc( a:Point, b:Point ):Number
-        {
-            return a.y - b.y;
-        }
-        
-        protected function onActionEndHandler( e:Event):void
-        {
-            _playerView.removeEventListener( ActSprViewEvent.ACTION_END, onActionEndHandler );
-            _playerView.isAttacking = false;
-        }
-        
-        protected function onHitingEndHandler(event:Event):void
-        {
-            _currentTargetView.removeEventListener( ActSprViewEvent.ACTION_END, onHitingEndHandler );
-            _currentTargetView.isHiting = false;
+            super.calcAction();
         }
     }
 }

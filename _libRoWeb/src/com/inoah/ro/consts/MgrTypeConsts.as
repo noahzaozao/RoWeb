@@ -4,6 +4,5 @@ package com.inoah.ro.consts
     {
         public static const KEY_MGR:String = "keyMgr";
         public static const ASSET_MGR:String = "assetMgr";
-        public static const BATLLE_MGR:String = "battleMgr";
     }
 }

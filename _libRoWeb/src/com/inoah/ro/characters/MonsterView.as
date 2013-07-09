@@ -3,8 +3,6 @@ package com.inoah.ro.characters
     import com.inoah.ro.infos.CharacterInfo;
     import com.inoah.ro.utils.Counter;
     
-    import flash.geom.Point;
-    
     public class MonsterView extends CharacterView
     {
         private var _moveCounter:Counter;
@@ -12,7 +10,6 @@ package com.inoah.ro.characters
         public function MonsterView(charInfo:CharacterInfo=null)
         {
             super(charInfo);
-            _headTopContainer.y = -60;
             _speed = 30;
             _moveCounter = new Counter();
             _moveCounter.initialize();
@@ -22,7 +19,6 @@ package com.inoah.ro.characters
         override protected function init():void
         {
             super.init();
-            _spValBar.visible = false;
         }
         
         override public function actionStand():void
@@ -116,68 +112,6 @@ package com.inoah.ro.characters
             }
         }
         
-        protected function moveCheck( delta:Number ):void
-        {
-            if( !_isMoving && !_isHiting )
-            {
-                _moveCounter.tick( delta );
-            }
-            if( _moveCounter.expired )
-            {
-                _targetPoint = new Point( int(x + abc() * Math.random() * 100 + 5 ), int(y + abc() * Math.random() * 100 + 5 ) );
-                if( _targetPoint.x > 900 || _targetPoint.x < 50 )
-                {
-                    _targetPoint.x = x;
-                }
-                if( _targetPoint.y > 500 || _targetPoint.y < 50 )
-                {
-                    _targetPoint.y = y;
-                }
-                checkDir();
-                _isMoving = true;
-                _moveCounter.reset( 2 );
-            }
-            if( _targetPoint.x == 0 )
-            {
-                return;
-            }
-            if( _targetPoint.x == x && _targetPoint.y == y )
-            {
-                _isMoving = false;
-                return;
-            }
-            if( _targetPoint.x != x )
-            {
-                if( _targetPoint.x > x )
-                {
-                    x += delta * speed;
-                }
-                else
-                {
-                    x -= delta * speed;
-                }
-                if( (Math.abs(_targetPoint.x - x) < 2 ) )
-                {
-                    x = _targetPoint.x;
-                }
-            }
-            if( _targetPoint.y != y )
-            {
-                if( _targetPoint.y > y )
-                {
-                    y += delta * speed;
-                }
-                else
-                {
-                    y -= delta * speed;
-                }
-                if( (Math.abs(_targetPoint.x - y) < 2 ) )
-                {
-                    y = _targetPoint.y;
-                }
-            }
-        }
-
         protected function attackCheck( delta:Number ):void
         {
             
@@ -186,11 +120,6 @@ package com.inoah.ro.characters
         override public function tick( delta:Number ):void
         {
             super.tick( delta );
-            if( _isDead )
-            {
-                return;   
-            }
-            moveCheck( delta );
         }
     }
 }

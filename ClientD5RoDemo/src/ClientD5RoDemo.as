@@ -12,7 +12,8 @@ package
     import flash.events.Event;
     import flash.utils.getTimer;
     
-    import utils.UserData;
+    import com.inoah.ro.utils.UserData;
+    import com.inoah.ro.RoGame;
     
     [SWF(width="960",height="560",frameRate="60",backgroundColor="#000000")]
     public class ClientD5RoDemo extends Sprite

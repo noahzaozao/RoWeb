@@ -127,22 +127,22 @@ package com.D5Power.Controler
             
             if(_nextTarget!=null && _nextTarget!=c._POS)
             {
-                //				if(!_me.inScene)
-                //				{
-                //					_step++;
-                //					_me.setPos(_nextTarget.x,_nextTarget.y);
-                //					if(_step>=_path.length)
-                //					{
-                //						if(_isloop)
-                //						{
-                //							// 循环
-                //							_step = 0;
-                //						}else{
-                //							stopMove();
-                //						}
-                //					}
-                //					return;
-                //				}
+                //                if(!_me.inScene)
+                //                {
+                //                    _step++;
+                //                    _me.setPos(_nextTarget.x,_nextTarget.y);
+                //                    if(_step>=_path.length)
+                //                    {
+                //                        if(_isloop)
+                //                        {
+                //                            // 循环
+                //                            _step = 0;
+                //                        }else{
+                //                            stopMove();
+                //                        }
+                //                    }
+                //                    return;
+                //                }
                 
                 c.action = Actions.Run;
                 

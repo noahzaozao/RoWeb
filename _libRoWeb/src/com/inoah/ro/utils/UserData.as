@@ -1,4 +1,4 @@
-package utils
+package com.inoah.ro.utils
 {
     import com.D5Power.utils.CharacterData;
     

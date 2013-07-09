@@ -6,7 +6,6 @@ package com.inoah.ro.characters
     import com.inoah.ro.displays.ActSprBodyView;
     import com.inoah.ro.displays.ActSprHeadView;
     import com.inoah.ro.displays.ActSprWeaponView;
-    import com.inoah.ro.displays.valueBar.ValueBarView;
     import com.inoah.ro.events.ActSprViewEvent;
     import com.inoah.ro.infos.CharacterInfo;
     import com.inoah.ro.loaders.ActSprLoader;
@@ -15,13 +14,13 @@ package com.inoah.ro.characters
     import com.inoah.ro.structs.CACT;
     
     import flash.display.Bitmap;
+    import flash.display.BitmapData;
     import flash.display.Shape;
     import flash.display.Sprite;
     import flash.events.Event;
-    import flash.filters.DropShadowFilter;
+    import flash.geom.Matrix;
     import flash.geom.Point;
-    import flash.text.TextField;
-    import flash.text.TextFieldAutoSize;
+    import flash.geom.Rectangle;
     import flash.text.TextFormat;
     
     /**
@@ -55,13 +54,10 @@ package com.inoah.ro.characters
         protected var _moveTime:Number;
         protected var _isAttacking:Boolean;
         
-        protected var _headTopContainer:Sprite;
-        protected var _label:TextField;
-        protected var _hpValBar:ValueBarView;
-        protected var _spValBar:ValueBarView;
         protected var _weaponLoader:ActSprLoader;
         protected var _isHiting:Boolean;
-        protected var _isDead:Boolean;
+        
+        private var _bmd:Bitmap;
         
         /**
          * 方向转换数组 
@@ -70,6 +66,7 @@ package com.inoah.ro.characters
         
         public function CharacterView( charInfo:CharacterInfo = null )
         {
+            _bmd = new Bitmap();
             _isMoving = false;
             _targetPoint = new Point( 0, 0 );
             _speed = 140;
@@ -78,16 +75,6 @@ package com.inoah.ro.characters
                 _charInfo = charInfo;
                 init();
             }
-        }
-        
-        public function get headTopContainer():Sprite
-        {
-            return _headTopContainer;
-        }
-        
-        public function get isDead():Boolean
-        {
-            return _isDead;
         }
         
         public function get charInfo():CharacterInfo
@@ -113,41 +100,11 @@ package com.inoah.ro.characters
         
         protected function init():void
         {
-            if(_headTopContainer == null)
-            {
-                _headTopContainer = new Sprite();
-                _headTopContainer.y = -100;
-                addChild( _headTopContainer );
-            }
-            _label = new TextField();
-            _label.mouseEnabled = false;
-            _label.filters = [new DropShadowFilter(0,0,0,1,2,2,8)];
-            _label.alpha = 0.7;
-            _label.autoSize = TextFieldAutoSize.LEFT;
             var tf:TextFormat = new TextFormat();
             tf.font = "宋体";
             tf.size = 12;
             tf.color = 0xffffff;
-            _label.defaultTextFormat = tf;
-            _label.text = _charInfo.name;
-            _label.x = -_label.width / 2;
-            _headTopContainer.addChild( _label );
-            
-            _hpValBar = new ValueBarView( 0x33ff33 , 0x333333 );
-            _hpValBar.x = -_hpValBar.width / 2;
-            _hpValBar.y = 15;
-            addChild( _hpValBar );
-            _hpValBar.update( 1, 100 );
-            
-            _spValBar = new ValueBarView( 0x2868FF , 0x333333 );
-            _spValBar.x = -_spValBar.width / 2;
-            _spValBar.y = 20;
-            addChild( _spValBar );
-            _spValBar.update( 1, 100 );
-            
             updateCharInfo( _charInfo );
-            
-            updateValues();
         }
         
         public function updateCharInfo( charInfo:CharacterInfo ):void
@@ -233,49 +190,6 @@ package com.inoah.ro.characters
             {
                 _bodyView.tick( delta );
             }
-//            if( _isDead )
-//            {
-//                return;   
-//            }
-//            if( _isAttacking )
-//            {
-//                actionAttack();
-//            }
-//            else
-//            {
-//                if( _isHiting )
-//                {
-//                    actionHit();
-//                    if( _isMoving )
-//                    {
-//                        _targetPoint = new Point( x, y );
-//                    }
-//                }
-//                else if( _isMoving )
-//                {
-//                    actionWalk();
-//                }
-//                else
-//                {
-//                    actionStand();
-//                }
-//            }
-            if( _isHiting || _isAttacking )
-            {
-                updateValues();
-            }
-        }
-        
-        private function updateValues():void
-        {
-            _hpValBar.update( _charInfo.curHp, _charInfo.maxHp );
-            _spValBar.update( _charInfo.curSp, _charInfo.maxSp );
-            if( _charInfo.isDead )
-            {
-                actionDead();
-                dispatchEvent( new ActSprViewEvent( ActSprViewEvent.ACTION_DEAD_START ) );
-                _isDead = true;
-            }
         }
         
         public function actionDead():void
@@ -355,6 +269,44 @@ package com.inoah.ro.characters
             }
         }
         
+        public function actionPickup():void
+        {
+            _currentIndex = 24;
+            if( _bodyView )
+            {
+                _bodyView.counterTargetRate = 0;
+                _bodyView.actionIndex = _currentIndex + _dirIndex;
+                if( _headView )
+                {
+                    _headView.actionIndex = _currentIndex + _dirIndex;
+                }
+                if( _weaponView )
+                {
+                    _weaponView.actionIndex = _currentIndex + _dirIndex;
+                    _weaponView.visible =false;
+                }
+            }
+        }
+        
+        public function actionSit():void
+        {
+            _currentIndex = 16;
+            if( _bodyView )
+            {
+                _bodyView.counterTargetRate = 0;
+                _bodyView.actionIndex = _currentIndex + _dirIndex;
+                if( _headView )
+                {
+                    _headView.actionIndex = _currentIndex + _dirIndex;
+                }
+                if( _weaponView )
+                {
+                    _weaponView.actionIndex = _currentIndex + _dirIndex;
+                    _weaponView.visible =false;
+                }
+            }
+        }
+        
         public function actionHit():void
         {
             _currentIndex = 48;
@@ -382,23 +334,6 @@ package com.inoah.ro.characters
         public function get actionIndex():uint
         {
             return _currentIndex;
-        }
-        
-        public function setActionIndex( value:uint ):void
-        {
-//            if( _currentIndex != value )
-//            {
-//                _currentIndex = value;
-//                _bodyView.actionIndex = _currentIndex + _dirIndex;
-//                if( _headView )
-//                {
-//                    _headView.actionIndex = _currentIndex + _dirIndex;
-//                }
-//                if( _weaponView )
-//                {
-//                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-//                }
-//            }
         }
         
         public function setDirIndex( value:uint ):void
@@ -479,7 +414,12 @@ package com.inoah.ro.characters
          */ 
         public function render():void
         {
-            
+            _bmd.bitmapData = new BitmapData( width , height + 40 )// , true, 0x0  );
+            _bmd.x = - width >> 1;
+            _bmd.y = ( - height >> 1 );
+            var matrix:Matrix = new Matrix( 1, 0, 0, 1, 0, 0);
+            matrix.translate( width >> 1 , ( height >> 1 ) + 40 );
+            _bmd.bitmapData.draw( this , matrix  , null, null, new Rectangle( 0, 0, width, height ) );
         }
         /**
          * 更换SWF接口
@@ -506,12 +446,33 @@ package com.inoah.ro.characters
                     actionWalk();
                     break;
                 }
+                case Actions.Attack:
+                {
+                    actionAttack();
+                    break;
+                }
+                case Actions.Pickup:
+                {
+                    actionPickup();
+                    break;
+                }
+                case Actions.Sit:
+                {
+                    actionSit();
+                    break;
+                }
+                case Actions.BeAtk:
+                {
+                    actionHit();
+                    break;
+                }
                 default:
                 {
                     break;
                 }
             }
         }
+        
         /**
          * 更换方向接口
          */ 
@@ -523,7 +484,7 @@ package com.inoah.ro.characters
         
         public function get monitor():Bitmap
         {
-            return null;
+            return _bmd;
         }
         
         public function get shadow():Shape

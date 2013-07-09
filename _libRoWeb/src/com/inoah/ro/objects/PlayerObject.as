@@ -1,4 +1,4 @@
-package Objects
+package com.inoah.ro.objects
 {
     import com.D5Power.Controler.BaseControler;
     import com.D5Power.Objects.CharacterObject;
