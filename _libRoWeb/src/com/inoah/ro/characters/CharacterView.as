@@ -1,5 +1,7 @@
 package com.inoah.ro.characters
 {
+    import com.D5Power.Controler.Actions;
+    import com.D5Power.graphics.ISwfDisplayer;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.displays.ActSprBodyView;
     import com.inoah.ro.displays.ActSprHeadView;
@@ -12,6 +14,8 @@ package com.inoah.ro.characters
     import com.inoah.ro.managers.MainMgr;
     import com.inoah.ro.structs.CACT;
     
+    import flash.display.Bitmap;
+    import flash.display.Shape;
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.filters.DropShadowFilter;
@@ -25,7 +29,7 @@ package com.inoah.ro.characters
      * @author inoah
      * 
      */    
-    public class CharacterView extends Sprite
+    public class CharacterView extends Sprite implements ISwfDisplayer
     {
         protected var _charInfo:CharacterInfo;
         protected var _bodyView:ActSprBodyView;
@@ -58,6 +62,11 @@ package com.inoah.ro.characters
         protected var _weaponLoader:ActSprLoader;
         protected var _isHiting:Boolean;
         protected var _isDead:Boolean;
+        
+        /**
+         * 方向转换数组 
+         */        
+        private var _dirChangeArr:Array = [4, 5, 6, 7, 8, -7, -6, -5];
         
         public function CharacterView( charInfo:CharacterInfo = null )
         {
@@ -224,33 +233,33 @@ package com.inoah.ro.characters
             {
                 _bodyView.tick( delta );
             }
-            if( _isDead )
-            {
-                return;   
-            }
-            if( _isAttacking )
-            {
-                actionAttack();
-            }
-            else
-            {
-                if( _isHiting )
-                {
-                    actionHit();
-                    if( _isMoving )
-                    {
-                        _targetPoint = new Point( x, y );
-                    }
-                }
-                else if( _isMoving )
-                {
-                    actionWalk();
-                }
-                else
-                {
-                    actionStand();
-                }
-            }
+//            if( _isDead )
+//            {
+//                return;   
+//            }
+//            if( _isAttacking )
+//            {
+//                actionAttack();
+//            }
+//            else
+//            {
+//                if( _isHiting )
+//                {
+//                    actionHit();
+//                    if( _isMoving )
+//                    {
+//                        _targetPoint = new Point( x, y );
+//                    }
+//                }
+//                else if( _isMoving )
+//                {
+//                    actionWalk();
+//                }
+//                else
+//                {
+//                    actionStand();
+//                }
+//            }
             if( _isHiting || _isAttacking )
             {
                 updateValues();
@@ -269,7 +278,7 @@ package com.inoah.ro.characters
             }
         }
         
-        private function actionDead():void
+        public function actionDead():void
         {
             _currentIndex = 56;
             if( _bodyView )
@@ -290,7 +299,6 @@ package com.inoah.ro.characters
         
         public function actionStand():void
         {
-            //            _currentIndex = 0;
             _currentIndex = 32;
             if( _bodyView )
             {
@@ -378,16 +386,19 @@ package com.inoah.ro.characters
         
         public function setActionIndex( value:uint ):void
         {
-            _currentIndex = value;
-            _bodyView.actionIndex = _currentIndex + _dirIndex;
-            if( _headView )
-            {
-                _headView.actionIndex = _currentIndex + _dirIndex;
-            }
-            if( _weaponView )
-            {
-                _weaponView.actionIndex = _currentIndex + _dirIndex;
-            }
+//            if( _currentIndex != value )
+//            {
+//                _currentIndex = value;
+//                _bodyView.actionIndex = _currentIndex + _dirIndex;
+//                if( _headView )
+//                {
+//                    _headView.actionIndex = _currentIndex + _dirIndex;
+//                }
+//                if( _weaponView )
+//                {
+//                    _weaponView.actionIndex = _currentIndex + _dirIndex;
+//                }
+//            }
         }
         
         public function setDirIndex( value:uint ):void
@@ -461,6 +472,63 @@ package com.inoah.ro.characters
         public function get speed():uint
         {
             return _speed;
+        }
+        
+        /**
+         * 渲染接口
+         */ 
+        public function render():void
+        {
+            
+        }
+        /**
+         * 更换SWF接口
+         */ 
+        public function changeSWF(f:String,needMirror:Boolean=false):void
+        {
+            
+        }
+        
+        /**
+         * 更换动作接口
+         */ 
+        public function set action(v:int):void
+        {
+            switch( v )
+            {
+                case Actions.Wait:
+                {
+                    actionStand();
+                    break;
+                }
+                case Actions.Run:
+                {
+                    actionWalk();
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+        }
+        /**
+         * 更换方向接口
+         */ 
+        public function set direction(v:int):void
+        {
+            dirIndex = _dirChangeArr.indexOf( v );
+        }
+        
+        
+        public function get monitor():Bitmap
+        {
+            return null;
+        }
+        
+        public function get shadow():Shape
+        {
+            return null;
         }
     }
 }

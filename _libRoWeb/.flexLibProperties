@@ -3,6 +3,9 @@
   <includeClasses>
     <classEntry path="RoGlobal"/>
     <classEntry path="RoGame"/>
+    <classEntry path="utils.UserData"/>
+    <classEntry path="Objects.PlayerObject"/>
+    <classEntry path="controllers.PlayerController"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
