@@ -118,7 +118,7 @@ package com.inoah.ro.controllers
                         _me.action = Actions.Attack;
                         
                         _lastHurt = Global.Timer;
-                        var tween:Tween = new Tween( _atkTarget , 0.8 );
+                        var tween:Tween = new Tween( _atkTarget , 0.4 );
                         tween.onComplete = onAttacked;
                         tween.onCompleteArgs = [_atkTarget]
                         appendAnimateUnit( tween );
@@ -130,14 +130,18 @@ package com.inoah.ro.controllers
         
         private function onAttacked( atkTarget:CharacterObject ):void
         {
-            atkTarget.action = Actions.BeAtk;
+            if( atkTarget.action == Actions.Wait )
+            {
+                atkTarget.action = Actions.BeAtk;
+            }
+            _me.action = Actions.Wait;
+
             atkTarget.hp-=10;    
+            
             if(atkTarget.hp==0)
             {
                 D5Game.me.scene.removeObject(atkTarget);
-                //                            (Global.userdata as UserData).item = 2;
-                _me.action = Actions.Wait;
-                atkTarget = null;
+                _atkTarget = null;
             }
         }
     }

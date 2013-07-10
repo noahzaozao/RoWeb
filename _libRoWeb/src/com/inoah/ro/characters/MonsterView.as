@@ -1,5 +1,6 @@
 package com.inoah.ro.characters
 {
+    import com.D5Power.Controler.Actions;
     import com.inoah.ro.infos.CharacterInfo;
     import com.inoah.ro.utils.Counter;
     
@@ -10,7 +11,6 @@ package com.inoah.ro.characters
         public function MonsterView(charInfo:CharacterInfo=null)
         {
             super(charInfo);
-            _speed = 30;
             _moveCounter = new Counter();
             _moveCounter.initialize();
             _moveCounter.reset( 2 );
@@ -26,6 +26,7 @@ package com.inoah.ro.characters
             _currentIndex = 0;
             if( _bodyView )
             {
+                _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 if( _headView )
                 {
@@ -45,6 +46,7 @@ package com.inoah.ro.characters
             //            _currentIndex = 40;
             if( _bodyView )
             {
+                _bodyView.counterTargetRate = 0.8;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 if( _headView )
                 {
@@ -64,6 +66,7 @@ package com.inoah.ro.characters
             //            _currentIndex = 40;
             if( _bodyView )
             {
+                _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 if( _headView )
                 {
@@ -75,65 +78,6 @@ package com.inoah.ro.characters
                     _weaponView.visible =true;
                 }
             }
-        }
-        
-        private function abc():int
-        {
-            var result:int = uint(Math.random() * 2) >0?1:-1;
-            return result;
-        }
-        
-        private function checkDir():void
-        {
-            if( _targetPoint.x - x == 0  )
-            {
-                if( _targetPoint.y - y > 0 )
-                {
-                    _dirIndex = 0;
-                }
-                else if( _targetPoint.y - y < 0 )
-                {
-                    _dirIndex = 4;
-                }
-            }
-            else if( _targetPoint.y - y == 0 )
-            {
-                if( _targetPoint.x - x > 0 )
-                {
-                    _dirIndex = 6;
-                }
-                else if( _targetPoint.x - x < 0 )
-                {
-                    _dirIndex = 2;
-                }
-            }
-            else if( _targetPoint.x - x > 0 ) 
-            {
-                if( _targetPoint.y - y > 0 )
-                {
-                    _dirIndex = 7;
-                }
-                else
-                {
-                    _dirIndex = 5;
-                }
-            }
-            else if( _targetPoint.x - x < 0 )
-            {
-                if( _targetPoint.y - y > 0 ) 
-                {
-                    _dirIndex = 1;
-                }
-                else
-                {
-                    _dirIndex = 3;
-                }
-            }
-        }
-        
-        protected function attackCheck( delta:Number ):void
-        {
-            
         }
         
         override public function tick( delta:Number ):void

@@ -12,7 +12,7 @@ package com.inoah.ro.infos
         {
         }
         
-        public function init( name:String, headRes:String, bodyRes:String, weaponRes:String = "", maxHp:Number = 100 , isPlayer:Boolean = false ):void
+        public function init( name:String, headRes:String, bodyRes:String, weaponRes:String = "", isPlayer:Boolean = false ):void
         {
             _name = name;
             _headRes = headRes;

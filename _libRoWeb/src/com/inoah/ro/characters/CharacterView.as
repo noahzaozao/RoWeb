@@ -16,13 +16,13 @@ package com.inoah.ro.characters
     
     import flash.display.Bitmap;
     import flash.display.BitmapData;
+    import flash.display.GradientType;
     import flash.display.Shape;
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.geom.Matrix;
     import flash.geom.Point;
     import flash.geom.Rectangle;
-    import flash.text.TextFormat;
     
     /**
      * 
@@ -38,7 +38,6 @@ package com.inoah.ro.characters
         
         protected var _headLoader:ActSprLoader;
         protected var _bodyLoader:ActSprLoader;
-        protected var _speed:Number;
         /**
          * 0 stand, 8 walk,  
          */        
@@ -65,13 +64,28 @@ package com.inoah.ro.characters
          */        
         protected var _dirChangeArr:Array = [4, 5, 6, 7, 8, -7, -6, -5];
         protected var _isPlayEnd:Boolean;
+        protected var _chooseCircle:Shape;
         
+        
+        public function setChooseCircle( bool:Boolean ):void
+        {
+            if( bool )
+            {
+                addChildAt( _chooseCircle , 0 );
+            }
+            else
+            {
+                if( _chooseCircle.parent )
+                {
+                    _chooseCircle.parent.removeChild( _chooseCircle );
+                }
+            }
+        }
         public function CharacterView( charInfo:CharacterInfo = null )
         {
             _bmd = new Bitmap();
             _isMoving = false;
             _targetPoint = new Point( 0, 0 );
-            _speed = 140;
             if( charInfo )
             {
                 _charInfo = charInfo;
@@ -102,10 +116,6 @@ package com.inoah.ro.characters
         
         protected function init():void
         {
-            var tf:TextFormat = new TextFormat();
-            tf.font = "宋体";
-            tf.size = 12;
-            tf.color = 0xffffff;
             updateCharInfo( _charInfo );
         }
         
@@ -128,6 +138,10 @@ package com.inoah.ro.characters
         
         protected function onBodyLoadComplete( bodyLoader:ActSprLoader ):void
         {
+            _chooseCircle = new Shape();
+            _chooseCircle.graphics.lineStyle( 2, 0x00ff00 );
+            _chooseCircle.graphics.drawEllipse(-25, -15, 50, 30);
+            
             //            _bodyLoader.removeEventListener( Event.COMPLETE, onBodyLoadComplete );
             _bodyLoader = bodyLoader;
             if( !_bodyView )
@@ -424,11 +438,6 @@ package com.inoah.ro.characters
         public function get dirIndex():uint
         {
             return _dirIndex;
-        }
-        
-        public function get speed():uint
-        {
-            return _speed;
         }
         
         /**

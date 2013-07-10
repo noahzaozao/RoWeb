@@ -442,5 +442,10 @@ package com.D5Power.Objects
         {
             
         }
+        
+        public function setChooseCircle( bool:Boolean ):void
+        {
+            _displayer.setChooseCircle( bool );
+        }
     }
 }

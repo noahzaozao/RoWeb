@@ -34,7 +34,7 @@ package com.inoah.ro
             super.init();
             
             var charInfo:CharacterInfo = new CharacterInfo();
-            charInfo.init( "", "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_1207.act" , 100, true );
+            charInfo.init( "", "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_1207.act" , true );
             //            charInfo.init( "可爱的早早", "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_咯.act" );
             _playerView = new PlayerView( charInfo );
             _playerView.x = 400;
@@ -61,7 +61,7 @@ package com.inoah.ro
             
 //            _scene.container.addChild( _playerView );
             
-            for( var i:int = 0;i< 10; i++ )
+            for( var i:int = 0;i< 20; i++ )
             {
                 (_scene as MainScene).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
             }

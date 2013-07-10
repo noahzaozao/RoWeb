@@ -90,7 +90,7 @@ package com.inoah.ro.scenes
             _newMonsterCounter.tick( delta );
             if( _newMonsterCounter.expired )
             {
-                if( _monsterObjList.length < 20 )
+                if( _monsterObjList.length < 30 )
                 {
                     createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
                     TopText.show( "出现一个怪物！" );

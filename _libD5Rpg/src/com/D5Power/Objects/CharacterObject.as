@@ -180,8 +180,6 @@ package com.D5Power.Objects
             super.build();
             if(_nameBox!=null) flyName(); // 重新调整名字坐标
         }
-        
-        
     }
     
 }

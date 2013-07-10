@@ -147,5 +147,9 @@ package com.D5Power.graphics
         {
             return false;
         }
+        public function setChooseCircle( bool:Boolean ):void
+        {
+            
+        }
     }
 }
