@@ -36,7 +36,8 @@ package com.inoah.ro.displays
         /**
          * 动作速率
          */        
-        private var _currentTargetRate:Number;
+        protected var _currentTargetRate:Number;
+        protected var _loop:Boolean;
         
         public function get actions():CACT
         {
@@ -91,6 +92,11 @@ package com.inoah.ro.displays
         public function set currentFrame( value:uint ):void
         {
             _currentFrame = value;
+        }
+        
+        public function set loop( value:Boolean ):void
+        {
+            _loop = value;
         }
         
         public function initAct( data:ByteArray ):void
@@ -156,7 +162,10 @@ package com.inoah.ro.displays
             {
                 if( _currentFrame >= _act.aall.aa[_actionIndex].aaap.length - 1 )
                 {
-                    _currentFrame = 0;
+                    if( _loop )
+                    {
+                        _currentFrame = 0;
+                    }
                     dispatchEvent(new ActSprViewEvent( ActSprViewEvent.ACTION_END, true ));
                 }
                 else

@@ -1,6 +1,5 @@
 package com.inoah.ro.controllers
 {
-    import com.D5Power.D5Game;
     import com.D5Power.Controler.Actions;
     import com.D5Power.Controler.CharacterControler;
     import com.D5Power.Controler.Perception;
@@ -8,7 +7,10 @@ package com.inoah.ro.controllers
     import com.D5Power.Objects.GameObject;
     
     import flash.events.MouseEvent;
+    import flash.filters.GlowFilter;
     import flash.geom.Point;
+    import flash.text.TextField;
+    import flash.text.TextFormat;
     
     import starling.animation.IAnimatable;
     import starling.animation.Tween;
@@ -42,6 +44,11 @@ package com.inoah.ro.controllers
         override protected function onClick(e:MouseEvent):void
         {
             _atkTarget = null;
+            if( _chooseTarget  )
+            {
+                _chooseTarget.setChooseCircle( false );
+                _chooseTarget = null;
+            }
             super.onClick(e);
         }
         
@@ -52,11 +59,6 @@ package com.inoah.ro.controllers
             {
                 // 敌人，设置为攻击目标
                 _atkTarget = o as CharacterObject;
-            }
-            if( _chooseTarget  )
-            {
-                _chooseTarget.setChooseCircle( false );
-                _chooseTarget = null;
             }
             if( o != _me )
             {
@@ -93,6 +95,11 @@ package com.inoah.ro.controllers
                 {
                     if(Global.Timer-_lastHurt>_atkCd )
                     {
+                        if( _atkTarget.action == Actions.Die )
+                        {
+                            _atkTarget = null;
+                            return;
+                        }
                         _me.action = Actions.Attack;
                         _lastHurt = Global.Timer;
                         var tween:Tween = new Tween( _atkTarget , 0.4 );
@@ -107,19 +114,43 @@ package com.inoah.ro.controllers
         
         private function onAttacked( atkTarget:CharacterObject ):void
         {
-            if( atkTarget.action != Actions.Attack )
+            if( atkTarget.action != Actions.Attack && atkTarget.action != Actions.Die )
             {
                 atkTarget.action = Actions.BeAtk;
             }
             _me.action = Actions.Wait;
-
-            atkTarget.hp-=10;    
+            
+            var textField:TextField = new TextField();
+            var tf:TextFormat = new TextFormat( "宋体" , 24 , 0xffffff );
+            textField.defaultTextFormat = tf;
+            textField.text = "20";
+            textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
+            textField.y = -50;
+            textField.x = - textField.textWidth >> 1;
+            atkTarget.addChild( textField );
+            var tween:Tween = new Tween( textField , 0.5 );
+            tween.moveTo( - textField.textWidth >> 1, - 150 );
+            tween.fadeTo( 0.5 );
+            tween.onComplete = onBlooded;
+            tween.onCompleteArgs = [textField];
+            appendAnimateUnit( tween );
+            
+            atkTarget.hp-=20; 
+            
             if(atkTarget.hp==0)
             {
-                D5Game.me.scene.removeObject(atkTarget);
+                atkTarget.action = Actions.Die;
+                //                D5Game.me.scene.removeObject(atkTarget);
                 //                            (Global.userdata as UserData).item = 2;
                 _atkTarget = null;
+                _chooseTarget.setChooseCircle( false );
+                _chooseTarget = null;
             }
+        }
+        
+        private function onBlooded( textField:TextField ):void
+        {
+            textField.parent.removeChild( textField );
         }
         
         public function tick( delta:Number ):void

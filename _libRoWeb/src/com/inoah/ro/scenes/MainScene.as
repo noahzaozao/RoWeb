@@ -32,13 +32,18 @@ package com.inoah.ro.scenes
         public function createMonser(posx:uint,posy:uint,camp:uint = 2):void
         {
             var monsterInfo:CharacterInfo = new CharacterInfo();
-            if( int(Math.random() * 2) > 0 )
+            var randMonster:int =  int(Math.random() * 3);
+            if( randMonster == 0 )
             {
-                monsterInfo.init( "" , "" , "data/sprite/阁胶磐/poring.act" , "" ,100 );
+                monsterInfo.init(  "" , "data/sprite/阁胶磐/poring.act" , "" ,100 );
             }
-            else
+            else if( randMonster == 1 )
             {
-                monsterInfo.init( "" , "" , "data/sprite/阁胶磐/poporing.act", "" , 200 );
+                monsterInfo.init( "" , "data/sprite/阁胶磐/poporing.act", "" , 200 );
+            }
+            else 
+            {
+                monsterInfo.init( "" , "data/sprite/阁胶磐/ghostring.act", "" , 200 );
             }
             //            charInfo.init( "可爱的早早", "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_咯.act" );
             var monsterView:MonsterView = new MonsterView( monsterInfo );
@@ -55,10 +60,10 @@ package com.inoah.ro.scenes
             player.speed = 2.5;
             player.camp = camp;// 阵营
             player.setName(
-                (camp==2 ? "波利" : "D5机器人-"+int(Math.random()*100)),
+                (randMonster==0)?"波利":(randMonster==1)?"波波利":"幽灵波利",
                 (camp==2 ? 0xff0000 : 0xffff00),
                 0,
-                -130
+                (randMonster==0)?-60:(randMonster==1)?-60:-100
             );
             player.action = Actions.Wait;
             if(camp==2)
@@ -90,7 +95,7 @@ package com.inoah.ro.scenes
             _newMonsterCounter.tick( delta );
             if( _newMonsterCounter.expired )
             {
-                if( _monsterObjList.length < 30 )
+                if( _monsterObjList.length < 1 )
                 {
                     createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
                     TopText.show( "出现一个怪物！" );

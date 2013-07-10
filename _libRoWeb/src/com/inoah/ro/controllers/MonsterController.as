@@ -9,7 +9,10 @@ package com.inoah.ro.controllers
     import com.D5Power.Objects.GameObject;
     import com.D5Power.map.WorldMap;
     
+    import flash.filters.GlowFilter;
     import flash.geom.Point;
+    import flash.text.TextField;
+    import flash.text.TextFormat;
     
     import starling.animation.IAnimatable;
     import starling.animation.Tween;
@@ -74,6 +77,10 @@ package com.inoah.ro.controllers
         
         override public function calcAction():void
         {
+            if( _me.action == Actions.Die )
+            {
+                return;
+            }
             if(_lastAutoMove!=-1 && Global.Timer-_lastAutoMove>2000)
             {
                 // 自动移动
@@ -136,6 +143,21 @@ package com.inoah.ro.controllers
             }
             _me.action = Actions.Wait;
 
+            var textField:TextField = new TextField();
+            var tf:TextFormat = new TextFormat( "宋体" , 24 , 0xff0000 );
+            textField.defaultTextFormat = tf;
+            textField.text = "10";
+            textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
+            textField.y = -50;
+            textField.x = - textField.textWidth >> 1;
+            atkTarget.addChild( textField );
+            var tween:Tween = new Tween( textField , 0.5 );
+            tween.moveTo( - textField.textWidth >> 1, - 150 );
+            tween.fadeTo( 0.5 );
+            tween.onComplete = onBlooded;
+            tween.onCompleteArgs = [textField];
+            appendAnimateUnit( tween );
+            
             atkTarget.hp-=10;    
             
             if(atkTarget.hp==0)
@@ -143,6 +165,11 @@ package com.inoah.ro.controllers
                 D5Game.me.scene.removeObject(atkTarget);
                 _atkTarget = null;
             }
+        }
+        
+        private function onBlooded( textField:TextField ):void
+        {
+            textField.parent.removeChild( textField );
         }
     }
 }

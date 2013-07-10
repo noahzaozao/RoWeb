@@ -1,6 +1,5 @@
 package com.inoah.ro.characters
 {
-    import com.D5Power.Controler.Actions;
     import com.inoah.ro.infos.CharacterInfo;
     import com.inoah.ro.utils.Counter;
     
@@ -28,6 +27,7 @@ package com.inoah.ro.characters
             {
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = true;
                 if( _headView )
                 {
                     _headView.actionIndex = _currentIndex + _dirIndex;
@@ -48,6 +48,7 @@ package com.inoah.ro.characters
             {
                 _bodyView.counterTargetRate = 0.8;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = false;
                 if( _headView )
                 {
                     _headView.actionIndex = _currentIndex + _dirIndex;
@@ -68,6 +69,7 @@ package com.inoah.ro.characters
             {
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = false;
                 if( _headView )
                 {
                     _headView.actionIndex = _currentIndex + _dirIndex;
@@ -76,6 +78,26 @@ package com.inoah.ro.characters
                 {
                     _weaponView.actionIndex = _currentIndex + _dirIndex;
                     _weaponView.visible =true;
+                }
+            }
+        }
+        
+        override public function actionDead():void
+        {
+            _currentIndex = 32;
+            if( _bodyView )
+            {
+                _bodyView.counterTargetRate = 0;
+                _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = false;
+                if( _headView )
+                {
+                    _headView.actionIndex = _currentIndex + _dirIndex;
+                }
+                if( _weaponView )
+                {
+                    _weaponView.actionIndex = _currentIndex + _dirIndex;
+                    _weaponView.visible =false;
                 }
             }
         }

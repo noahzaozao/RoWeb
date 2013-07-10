@@ -56,6 +56,7 @@ package
             resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_1207.act" );
             resPathList.push( "data/sprite/阁胶磐/poring.act" );
             resPathList.push( "data/sprite/阁胶磐/poporing.act" );
+            resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
             assetMgr.getResList( resPathList , onInitLoadComplete );
             
             TopText.init();

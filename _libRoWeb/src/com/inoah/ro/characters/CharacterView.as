@@ -164,13 +164,19 @@ package com.inoah.ro.characters
         
         protected function onActionEndHandler( e:Event):void
         {
-            if( _currentIndex != 8 && _currentIndex != 32 )
+            if( this is MonsterView )
             {
-                _isPlayEnd = true;
+                if( _currentIndex != 8 )
+                {
+                    _isPlayEnd = true;
+                }
             }
-            else
+            else if( this is PlayerView )
             {
-                
+                if( _currentIndex != 8 && _currentIndex != 32 )
+                {
+                    _isPlayEnd = true;
+                }
             }
         }
         
@@ -221,9 +227,12 @@ package com.inoah.ro.characters
         
         public function tick( delta:Number ):void
         {
-            if( _bodyView )
+            if( !_isPlayEnd )
             {
-                _bodyView.tick( delta );
+                if( _bodyView )
+                {
+                    _bodyView.tick( delta );
+                }
             }
         }
         
@@ -234,6 +243,7 @@ package com.inoah.ro.characters
             {
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = false;
                 if( _headView )
                 {
                     _headView.actionIndex = _currentIndex + _dirIndex;
@@ -253,6 +263,7 @@ package com.inoah.ro.characters
             {
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = true;
                 if( _headView )
                 {
                     _headView.actionIndex = _currentIndex + _dirIndex;
@@ -272,6 +283,7 @@ package com.inoah.ro.characters
             {
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = true;
                 if( _headView )
                 {
                     _headView.actionIndex = _currentIndex + _dirIndex;
@@ -292,6 +304,7 @@ package com.inoah.ro.characters
             {
                 _bodyView.counterTargetRate = 0.27;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = false;
                 if( _headView )
                 {
                     _headView.actionIndex = _currentIndex + _dirIndex;
@@ -311,6 +324,7 @@ package com.inoah.ro.characters
             {
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = false;
                 if( _headView )
                 {
                     _headView.actionIndex = _currentIndex + _dirIndex;
@@ -330,6 +344,7 @@ package com.inoah.ro.characters
             {
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = false;
                 if( _headView )
                 {
                     _headView.actionIndex = _currentIndex + _dirIndex;
@@ -349,6 +364,7 @@ package com.inoah.ro.characters
             {
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
+                _bodyView.loop = false;
                 if( _headView )
                 {
                     _headView.actionIndex = _currentIndex + _dirIndex;
@@ -495,6 +511,11 @@ package com.inoah.ro.characters
                 case Actions.BeAtk:
                 {
                     actionHit();
+                    break;
+                }
+                case Actions.Die:
+                {
+                    actionDead();
                     break;
                 }
                 default:
