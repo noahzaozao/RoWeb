@@ -58,6 +58,8 @@ package
             resPathList.push( "data/sprite/阁胶磐/poring.act" );
             resPathList.push( "data/sprite/阁胶磐/poporing.act" );
             resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
+            resPathList.push( "data/sprite/酒捞袍/lk_aurablade.act" );
+            resPathList.push( "data/sprite/酒捞袍/lk_spiralpierce.act" );
             assetMgr.getResList( resPathList , onInitLoadComplete );
             
             TopText.init();

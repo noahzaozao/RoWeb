@@ -14,6 +14,7 @@ package
         {
             if( _bodyView )
             {
+                _bodyView.loop = true;
                 _bodyView.tick( delta );
             }
         }

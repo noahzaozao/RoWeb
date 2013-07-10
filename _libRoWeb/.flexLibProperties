@@ -7,6 +7,7 @@
     <classEntry path="com.inoah.ro.objects.PlayerObject"/>
     <classEntry path="com.inoah.ro.controllers.PlayerController"/>
     <classEntry path="com.inoah.ro.displays.ActSprPlayerView"/>
+    <classEntry path="com.inoah.ro.displays.ActSprSkillIconView"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

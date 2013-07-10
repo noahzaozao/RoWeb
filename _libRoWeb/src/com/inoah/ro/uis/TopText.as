@@ -23,7 +23,7 @@ package com.inoah.ro.uis
             var tf:TextFormat = new TextFormat( "宋体", 16, 0xffff00 );
             _tipTxt.defaultTextFormat = tf;
             _tipTxt.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
-            _tipTxt.text = "操作说明 鼠标左键[移动,攻击] 右键[施放技能](未实现)";
+            _tipTxt.text = "操作说明 鼠标左键[移动,攻击] 键盘施放技能";
             _tipTxt.mouseEnabled = false;
             
             _topTxt = new TextField();

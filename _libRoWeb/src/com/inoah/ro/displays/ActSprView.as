@@ -160,6 +160,11 @@ package com.inoah.ro.displays
             var couldRender:Boolean;
             while( _counter.expired == true )
             {
+                if( _act.aall.aa.length <= _actionIndex )
+                {
+                    _actionIndex = 0;
+                    return;
+                }
                 if( _currentFrame >= _act.aall.aa[_actionIndex].aaap.length - 1 )
                 {
                     if( _loop )
@@ -187,7 +192,15 @@ package com.inoah.ro.displays
             _currentAaap = _act.aall.aa[_actionIndex].aaap[_currentFrame];
             
             var isExt:Boolean = false;
+            if( _currentAaap.apsList.length == 0 )
+            {
+                return;
+            }
             var apsv:AnyPatSprV0101 = _currentAaap.apsList[0];
+            if( !apsv )
+            {
+                return;
+            }
             if( apsv.sprNo == 0xffffffff )
             {
                 if( _currentAaap.apsList.length > 1)
