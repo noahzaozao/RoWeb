@@ -605,7 +605,7 @@ package com.D5Power.Controler
         protected function onKeyUp(e:KeyboardEvent):void
         {
             //if(isStatic) return;
-            if((_me as GameObject).action==Actions.Die)
+            if((_me as ControlActionObject).action==Actions.Die)
             {
                 resetKeyStatus();
                 return;

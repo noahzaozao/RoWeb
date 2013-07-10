@@ -25,7 +25,7 @@ package com.D5Power
         /**
          * 当游戏对象进出场景时，是否进行Alpha效果渐变
          */ 
-        public static var ZorderTime:uint = 150;
+        public static var ZorderTime:uint = 1000;
         
         /**
          * 分布渲染时间限制。每次渲染的最大允许占用时间，单位毫秒

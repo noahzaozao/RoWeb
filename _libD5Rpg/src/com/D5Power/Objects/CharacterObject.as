@@ -7,7 +7,6 @@
 package com.D5Power.Objects
 {
     
-    import com.D5Power.Controler.Actions;
     import com.D5Power.Controler.BaseControler;
     import com.D5Power.Stuff.HSpbar;
     import com.D5Power.display.D5TextField;
@@ -162,15 +161,7 @@ package com.D5Power.Objects
             super.renderAction();
             if(_displayer)
             {
-                if(_displayer is ISwfDisplayer) 
-                {
-                    (_displayer as ISwfDisplayer).render();
-                    if( _displayer.isPlayEnd )
-                    {
-                        _displayer.action = Actions.Wait;
-                        _displayer.isPlayEnd = false;
-                    }
-                }
+                if(_displayer is ISwfDisplayer) (_displayer as ISwfDisplayer).render();
                 WorldMap.me.isInAlphaArea(pos.x,pos.y) ? .5 : 1;
             }
         }
@@ -180,6 +171,8 @@ package com.D5Power.Objects
             super.build();
             if(_nameBox!=null) flyName(); // 重新调整名字坐标
         }
+        
+        
     }
     
 }

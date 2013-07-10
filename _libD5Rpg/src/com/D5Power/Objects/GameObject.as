@@ -334,14 +334,8 @@ package com.D5Power.Objects
             
             _displayer = v;
             
-            if( _displayer.shadow )
-            {
-                addChild(_displayer.shadow);
-            }
-            if( _displayer.monitor )
-            {
-                addChild(_displayer.monitor);
-            }
+            addChild(_displayer.shadow);
+            addChild(_displayer.monitor);
         }
         
         public function get directionNum():int
@@ -441,11 +435,6 @@ package com.D5Power.Objects
         protected function build():void
         {
             
-        }
-        
-        public function setChooseCircle( bool:Boolean ):void
-        {
-            _displayer.setChooseCircle( bool );
         }
     }
 }
