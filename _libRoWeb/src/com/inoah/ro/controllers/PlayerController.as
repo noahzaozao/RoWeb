@@ -23,7 +23,7 @@ package com.inoah.ro.controllers
         /**
          * 攻击CD 
          */        
-        private var _atkCd:uint = 1500;
+        private var _atkCd:uint = 2000;
         
         public function PlayerController(pec:Perception, ctrl:uint=2)
         {

@@ -16,7 +16,6 @@ package com.inoah.ro.characters
     
     import flash.display.Bitmap;
     import flash.display.BitmapData;
-    import flash.display.GradientType;
     import flash.display.Shape;
     import flash.display.Sprite;
     import flash.events.Event;
