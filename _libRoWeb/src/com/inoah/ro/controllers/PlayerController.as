@@ -1,5 +1,6 @@
 package com.inoah.ro.controllers
 {
+    import com.D5Power.D5Game;
     import com.D5Power.Controler.Actions;
     import com.D5Power.Controler.CharacterControler;
     import com.D5Power.Controler.Perception;
@@ -121,16 +122,15 @@ package com.inoah.ro.controllers
             _me.action = Actions.Wait;
             
             var textField:TextField = new TextField();
-            var tf:TextFormat = new TextFormat( "宋体" , 24 , 0xffffff );
+            var tf:TextFormat = new TextFormat( "宋体" , 28 , 0xffffff );
             textField.defaultTextFormat = tf;
             textField.text = "20";
             textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
             textField.y = -50;
             textField.x = - textField.textWidth >> 1;
             atkTarget.addChild( textField );
-            var tween:Tween = new Tween( textField , 0.5 );
+            var tween:Tween = new Tween( textField , 0.6 );
             tween.moveTo( - textField.textWidth >> 1, - 150 );
-            tween.fadeTo( 0.5 );
             tween.onComplete = onBlooded;
             tween.onCompleteArgs = [textField];
             appendAnimateUnit( tween );
@@ -140,12 +140,22 @@ package com.inoah.ro.controllers
             if(atkTarget.hp==0)
             {
                 atkTarget.action = Actions.Die;
+                tween = new Tween( atkTarget, 5 );
+                tween.fadeTo( 0 );
+                tween.onComplete = onRemoveAtkTarget;
+                tween.onCompleteArgs = [atkTarget];
+                appendAnimateUnit( tween );
                 //                D5Game.me.scene.removeObject(atkTarget);
                 //                            (Global.userdata as UserData).item = 2;
                 _atkTarget = null;
                 _chooseTarget.setChooseCircle( false );
                 _chooseTarget = null;
             }
+        }
+        
+        private function onRemoveAtkTarget( atkTarget:CharacterObject ):void
+        {
+            D5Game.me.scene.removeObject(atkTarget);
         }
         
         private function onBlooded( textField:TextField ):void

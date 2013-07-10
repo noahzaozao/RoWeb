@@ -144,16 +144,15 @@ package com.inoah.ro.controllers
             _me.action = Actions.Wait;
 
             var textField:TextField = new TextField();
-            var tf:TextFormat = new TextFormat( "宋体" , 24 , 0xff0000 );
+            var tf:TextFormat = new TextFormat( "宋体" , 28 , 0xff0000 , true );
             textField.defaultTextFormat = tf;
             textField.text = "10";
             textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
             textField.y = -50;
             textField.x = - textField.textWidth >> 1;
             atkTarget.addChild( textField );
-            var tween:Tween = new Tween( textField , 0.5 );
+            var tween:Tween = new Tween( textField , 0.6 );
             tween.moveTo( - textField.textWidth >> 1, - 150 );
-            tween.fadeTo( 0.5 );
             tween.onComplete = onBlooded;
             tween.onCompleteArgs = [textField];
             appendAnimateUnit( tween );
