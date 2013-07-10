@@ -2,18 +2,18 @@ package
 {
     import com.D5Power.Objects.NCharacterObject;
     import com.D5Power.mission.EventData;
+    import com.inoah.ro.RoGame;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.loaders.ActSprLoader;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.MainMgr;
     import com.inoah.ro.uis.TopText;
+    import com.inoah.ro.utils.UserData;
     
     import flash.display.Sprite;
     import flash.events.Event;
+    import flash.events.MouseEvent;
     import flash.utils.getTimer;
-    
-    import com.inoah.ro.utils.UserData;
-    import com.inoah.ro.RoGame;
     
     [SWF(width="960",height="560",frameRate="60",backgroundColor="#000000")]
     public class ClientD5RoDemo extends Sprite
@@ -43,7 +43,8 @@ package
         
         private function init( e:Event = null ):void
         {
-            stage.removeEventListener( Event.ADDED_TO_STAGE , init )
+            stage.removeEventListener( Event.ADDED_TO_STAGE , init );
+            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
             lastTimeStamp = getTimer();
             
             MainMgr.instance;
@@ -64,6 +65,11 @@ package
             addChild( TopText.tipTextField );
             
             stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );
+        }
+        
+        protected function onRightClick( e:MouseEvent):void
+        {
+            
         }
         
         private function onInitLoadComplete( loader:ActSprLoader = null ):void

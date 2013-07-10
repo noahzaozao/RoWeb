@@ -63,9 +63,9 @@ package com.inoah.ro
             
 //            _scene.container.addChild( _playerView );
             
-            for( var i:int = 0;i< 1; i++ )
+            for( var i:int = 0;i< 10; i++ )
             {
-                (_scene as MainScene).createMonser( 400 * Math.random() + 100, 400 * Math.random() + 100 );
+                (_scene as MainScene).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
             }
         }
         
