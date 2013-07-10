@@ -182,5 +182,17 @@ package com.D5Power.graphics
             _totalFrame = int(_xml.@Frame)-1;
             initPlay();
         }
+        
+        public function set isPlayEnd( value:Boolean ):void
+        {
+        }
+        public function get isPlayEnd():Boolean
+        {
+            return false;
+        }
+        public function setChooseCircle( bool:Boolean ):void
+        {
+            
+        }
     }
 }

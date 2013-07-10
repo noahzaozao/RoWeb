@@ -28,5 +28,9 @@ package com.D5Power.graphics
         function get monitor():Bitmap;
         
         function get shadow():Shape;
+        
+        function set isPlayEnd( value:Boolean ):void;
+        function get isPlayEnd():Boolean;
+        function setChooseCircle( bool:Boolean ):void
     }
 }
