@@ -5,6 +5,7 @@ package com.inoah.ro.characters
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.displays.ActSprBodyView;
     import com.inoah.ro.displays.ActSprHeadView;
+    import com.inoah.ro.displays.ActSprPlayerView;
     import com.inoah.ro.displays.ActSprWeaponView;
     import com.inoah.ro.events.ActSprViewEvent;
     import com.inoah.ro.infos.CharacterInfo;
@@ -57,12 +58,13 @@ package com.inoah.ro.characters
         protected var _weaponLoader:ActSprLoader;
         protected var _isHiting:Boolean;
         
-        private var _bmd:Bitmap;
+        protected var _bmd:Bitmap;
         
         /**
          * 方向转换数组 
          */        
-        private var _dirChangeArr:Array = [4, 5, 6, 7, 8, -7, -6, -5];
+        protected var _dirChangeArr:Array = [4, 5, 6, 7, 8, -7, -6, -5];
+        protected var _isPlayEnd:Boolean;
         
         public function CharacterView( charInfo:CharacterInfo = null )
         {
@@ -130,13 +132,33 @@ package com.inoah.ro.characters
             _bodyLoader = bodyLoader;
             if( !_bodyView )
             {
-                _bodyView = new ActSprBodyView();
+                if( charInfo.isPlayer )
+                {
+                    _bodyView = new ActSprPlayerView();
+                }
+                else
+                {
+                    _bodyView = new ActSprBodyView();
+                }
             }
             _bodyView.initAct( _bodyLoader.actData );
             _bodyView.initSpr( _bodyLoader.sprData );
+            _bodyView.addEventListener( ActSprViewEvent.ACTION_END , onActionEndHandler );
             _bodyView.addEventListener( ActSprViewEvent.NEXT_FRAME , onNextFrameHandler );
             //noah
             addChild( _bodyView );
+        }
+        
+        protected function onActionEndHandler( e:Event):void
+        {
+            if( _currentIndex != 8 && _currentIndex != 32 )
+            {
+                _isPlayEnd = true;
+            }
+            else
+            {
+                
+            }
         }
         
         protected function onNextFrameHandler( e:Event):void
@@ -474,6 +496,14 @@ package com.inoah.ro.characters
             }
         }
         
+        public function set isPlayEnd( value:Boolean ):void
+        {
+            _isPlayEnd = value;
+        }
+        public function get isPlayEnd():Boolean
+        {
+            return _isPlayEnd;
+        }
         /**
          * 更换方向接口
          */ 

@@ -6,6 +6,7 @@
     <classEntry path="com.inoah.ro.utils.UserData"/>
     <classEntry path="com.inoah.ro.objects.PlayerObject"/>
     <classEntry path="com.inoah.ro.controllers.PlayerController"/>
+    <classEntry path="com.inoah.ro.displays.ActSprPlayerView"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

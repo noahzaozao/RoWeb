@@ -139,5 +139,13 @@ package com.D5Power.graphics
             _xml = data.xml;
             initPlay();
         }
+        
+        public function set isPlayEnd( value:Boolean ):void
+        {
+        }
+        public function get isPlayEnd():Boolean
+        {
+            return false;
+        }
     }
 }

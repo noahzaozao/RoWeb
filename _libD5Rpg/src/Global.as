@@ -59,7 +59,7 @@ package
         /**
          * 标准每帧消耗的时间
          */ 
-        public static var TPF:Number=1000/32;
+        public static var TPF:Number=1000/60;
         
         /**
          * 时间，用以保存从程序开始运行到现在经过的毫秒数

@@ -1,7 +1,6 @@
 package com.inoah.ro.structs.acth
 {
-    import flash.utils.ByteArray;
-
+    
     public class AnyActAnyPat
     {
         public var ph:PatHeader;

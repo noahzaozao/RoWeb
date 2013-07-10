@@ -10,19 +10,32 @@ package com.inoah.ro.controllers
     import flash.events.MouseEvent;
     import flash.geom.Point;
     
+    import starling.animation.IAnimatable;
+    import starling.animation.Tween;
+    
     public class PlayerController extends CharacterControler
     {
-        private var _atkTarget:CharacterObject;
-        private var _fightMode:uint = 0; // 攻击模式 0-无  1-追击 2-攻击
-        private var _lastHurt:uint; 
+        protected var _atkTarget:CharacterObject;
+        protected var _fightMode:uint = 0; // 攻击模式 0-无  1-追击 2-攻击
+        protected var _lastHurt:uint; 
+        protected var _animationUnitList:Vector.<IAnimatable>;
         /**
          * 攻击CD 
          */        
-        private var _atkCd:uint = 500;
+        private var _atkCd:uint = 1500;
         
         public function PlayerController(pec:Perception, ctrl:uint=2)
         {
+            _animationUnitList = new Vector.<IAnimatable>();
             super(pec, ctrl);
+        }
+        
+        public function appendAnimateUnit(animateUnit:IAnimatable):void
+        {
+            if(_animationUnitList.indexOf(animateUnit)<0)
+            {
+                _animationUnitList.push(animateUnit);
+            }
         }
         
         override protected function onClick(e:MouseEvent):void
@@ -61,8 +74,6 @@ package com.inoah.ro.controllers
                 if(_fightMode==1 && Point.distance(_atkTarget._POS,_me._POS)<=200)
                 {
                     // 走入攻击范围，开始攻击
-                    _me.action = Actions.Attack;
-                    
                     (_atkTarget.controler as MonsterController).fightTo(_me);
                     _fightMode = 2;
                 }
@@ -71,22 +82,51 @@ package com.inoah.ro.controllers
                 {
                     if(Global.Timer-_lastHurt>_atkCd )
                     {
-                        _lastHurt = Global.Timer;
-                        _atkTarget.hp-=10;
+                        _me.action = Actions.Attack;
                         
-                        (_me as CharacterObject).hp-=5;
-                        if(_atkTarget.hp==0)
-                        {
-                            D5Game.me.scene.removeObject(_atkTarget);
-                            //                            (Global.userdata as UserData).item = 2;
-                            _me.action = Actions.Wait;
-                            _atkTarget = null;
-                        }
+                        _lastHurt = Global.Timer;
+                        var tween:Tween = new Tween( _atkTarget , 0.3 );
+                        tween.onComplete = onAttacked;
+                        tween.onCompleteArgs = [_atkTarget]
+                        appendAnimateUnit( tween );
                     }
-                    
                 }
             }
             super.calcAction();
+        }
+        
+        private function onAttacked( atkTarget:CharacterObject ):void
+        {
+            atkTarget.action = Actions.BeAtk;
+            atkTarget.hp-=10;    
+            if(atkTarget.hp==0)
+            {
+                D5Game.me.scene.removeObject(atkTarget);
+                //                            (Global.userdata as UserData).item = 2;
+                _me.action = Actions.Wait;
+                atkTarget = null;
+            }
+        }
+        
+        public function tick( delta:Number ):void
+        {
+            var len:int = _animationUnitList.length;
+            var animateUnit:IAnimatable;
+            
+            for(var i:int = 0; i<len; i++)
+            {
+                animateUnit = _animationUnitList[i];
+                animateUnit.advanceTime(delta);
+                
+                if((animateUnit as Object).hasOwnProperty("isComplete") == true &&
+                    animateUnit["isComplete"] == true )
+                {
+                    _animationUnitList.splice(i,1);
+                    len--;
+                    i--;
+                    continue;
+                }
+            }
         }
     }
 }

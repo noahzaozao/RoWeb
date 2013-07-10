@@ -41,7 +41,26 @@ package com.inoah.ro.characters
         
         override public function actionAttack():void
         {
-            _currentIndex = 48;
+            _currentIndex = 16;
+            //            _currentIndex = 40;
+            if( _bodyView )
+            {
+                _bodyView.actionIndex = _currentIndex + _dirIndex;
+                if( _headView )
+                {
+                    _headView.actionIndex = _currentIndex + _dirIndex;
+                }
+                if( _weaponView )
+                {
+                    _weaponView.actionIndex = _currentIndex + _dirIndex;
+                    _weaponView.visible =true;
+                }
+            }
+        }
+        
+        override public function actionHit():void
+        {
+            _currentIndex = 24;
             //            _currentIndex = 40;
             if( _bodyView )
             {

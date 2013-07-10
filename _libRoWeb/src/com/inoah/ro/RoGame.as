@@ -6,15 +6,13 @@ package com.inoah.ro
     import com.D5Power.Objects.CharacterObject;
     import com.D5Power.Stuff.HSpbar;
     import com.inoah.ro.characters.PlayerView;
+    import com.inoah.ro.controllers.PlayerController;
     import com.inoah.ro.infos.CharacterInfo;
+    import com.inoah.ro.objects.PlayerObject;
     import com.inoah.ro.scenes.MainScene;
     
     import flash.display.Stage;
     import flash.events.Event;
-    
-    import com.inoah.ro.objects.PlayerObject;
-    
-    import com.inoah.ro.controllers.PlayerController;
     
     public class RoGame extends D5Game
     {
@@ -36,7 +34,7 @@ package com.inoah.ro
             super.init();
             
             var charInfo:CharacterInfo = new CharacterInfo();
-            charInfo.init( "", "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_1207.act" );
+            charInfo.init( "", "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_1207.act" , 100, true );
             //            charInfo.init( "可爱的早早", "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_咯.act" );
             _playerView = new PlayerView( charInfo );
             _playerView.x = 400;
@@ -61,6 +59,8 @@ package com.inoah.ro
             _scene.createPlayer(_player);
             _camera.focus(_player);
             
+//            _scene.container.addChild( _playerView );
+            
             for( var i:int = 0;i< 10; i++ )
             {
                 (_scene as MainScene).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
@@ -74,6 +74,7 @@ package com.inoah.ro
                 _playerView.x = _player.x;
                 _playerView.y = _player.y;
                 _playerView.tick( delta );
+                (_player.controler as PlayerController).tick( delta );
             }
             if( _scene )
             {

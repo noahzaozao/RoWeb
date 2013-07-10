@@ -71,6 +71,8 @@ package com.inoah.ro.scenes
                 player.spBar = new HSpbar(player,'sp','spMax',14 , 0x2868FF);
             }
             
+//            container.addChild( monsterView );
+            
             addObject(player);
         }
         
@@ -82,6 +84,7 @@ package com.inoah.ro.scenes
                 _monsterList[i].x = _monsterObjList[i].x;
                 _monsterList[i].y = _monsterObjList[i].y;
                 _monsterList[i].tick( delta );
+                (_monsterObjList[i].controler as MonsterController).tick( delta );
             }
             
             _newMonsterCounter.tick( delta );

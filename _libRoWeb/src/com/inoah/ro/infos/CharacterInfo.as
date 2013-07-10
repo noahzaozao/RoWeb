@@ -6,19 +6,25 @@ package com.inoah.ro.infos
         protected var _headRes:String;
         protected var _bodyRes:String;
         protected var _weaponRes:String;
+        protected var _isPlayer:Boolean;
         
         public function CharacterInfo()
         {
         }
         
-        public function init( name:String, headRes:String, bodyRes:String, weaponRes:String = "", maxHp:Number = 100 ):void
+        public function init( name:String, headRes:String, bodyRes:String, weaponRes:String = "", maxHp:Number = 100 , isPlayer:Boolean = false ):void
         {
             _name = name;
             _headRes = headRes;
             _bodyRes = bodyRes;
             _weaponRes = weaponRes;
+            _isPlayer = isPlayer;
         }
         
+        public function get isPlayer():Boolean
+        {
+            return _isPlayer;
+        }
         public function get name():String
         {
             return _name;
