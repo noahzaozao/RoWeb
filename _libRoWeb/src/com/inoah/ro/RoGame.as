@@ -18,6 +18,9 @@ package com.inoah.ro
     import flash.events.Event;
     import flash.events.KeyboardEvent;
     import flash.events.MouseEvent;
+    import flash.geom.Rectangle;
+    import flash.text.TextField;
+    import flash.text.TextFormat;
     import flash.ui.Keyboard;
     
     public class RoGame extends D5Game
@@ -35,6 +38,10 @@ package com.inoah.ro
         private var _coldDownTime:Number;
         private var _coldDownStep:Number;
         
+        private var _windowBgMc:WindowBgUI;
+        private var _closeBtn:CloseBtnUI;
+        private var _msgTxt:TextField;
+        
         public function RoGame(config:String, stg:Stage, openGPU:uint=0)
         {
             super(config, stg, openGPU);
@@ -49,6 +56,34 @@ package com.inoah.ro
         override protected function init(e:Event=null):void
         {
             super.init();
+            
+            _windowBgMc = new WindowBgUI();
+            _windowBgMc.x = 560 >> 1;
+            _windowBgMc.y = 260 >> 1;
+            _windowBgMc.scale9Grid = new Rectangle( 19, 19, 64, 63 );
+            _windowBgMc.width = 400;
+            _windowBgMc.height = 300;
+            
+            _closeBtn = new CloseBtnUI();
+            _closeBtn.x = 660;
+            _closeBtn.y = 145;
+            
+            _msgTxt = new TextField();
+            var tf:TextFormat = new TextFormat( "Arial" , 18 , 0xffffff );
+            _msgTxt.defaultTextFormat = tf;
+            _msgTxt.text = "Hi,\nWelcome to the world of RoWeb!\n";
+            _msgTxt.x = (560 >> 1) + 20;
+            _msgTxt.y = (260 >> 1) + 20;
+            _msgTxt.width = 400;
+            _msgTxt.height = 300;
+            _msgTxt.mouseEnabled = false;
+            _closeBtn.addEventListener( MouseEvent.CLICK, function ( e:MouseEvent):void
+            {
+                e.currentTarget.removeEventListener( MouseEvent.CLICK, arguments.callee );
+                _stg.removeChild( _windowBgMc );
+                _stg.removeChild( _closeBtn );
+                _stg.removeChild(_msgTxt);
+            });
             
             _skillBar = new SkillBarUI();
             _skillBar.x = 960 - _skillBar.width;
@@ -96,7 +131,7 @@ package com.inoah.ro
             _player.displayer = _playerView;
             _player.setPos(500,500);
             _player.speed = 4.5;
-            _player.setName("可爱的早早",-1,0,-110);
+            _player.setName("player",-1,0,-110);
             _player.action = Actions.Wait;
             
             _player.hp = 150;
@@ -117,6 +152,10 @@ package com.inoah.ro
             }
             
             addChild( _skillBar );
+            
+            _stg.addChild( _windowBgMc );
+            _stg.addChild( _closeBtn );
+            _stg.addChild( _msgTxt );
         }
         
         protected function onSkill( e:KeyboardEvent):void
@@ -135,7 +174,7 @@ package com.inoah.ro
                 }
                 else
                 {
-                    TopText.show( "技能冷却中" );
+                    TopText.show( "skill cold down" );
                 }
             }
         }

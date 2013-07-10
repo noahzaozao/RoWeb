@@ -72,6 +72,7 @@ package com.inoah.ro.managers
                 {
                     _isLoading = true;
                     _loaderList[0].addEventListener( Event.COMPLETE , onLoadComplete );
+                    TopText.show( "start load" + _loaderList[0].actUrl );
                     _loaderList[0].load();
                 }
                 else
@@ -91,7 +92,7 @@ package com.inoah.ro.managers
         {
             var loader:ActSprLoader = e.currentTarget as ActSprLoader;
             loader.removeEventListener( Event.COMPLETE, onLoadComplete );
-            TopText.show( "加载完成..." + loader.actUrl );
+            TopText.show( "load complete..." + loader.actUrl );
             _cacheList.push( loader );
             _cacheListIndex.push( loader.actUrl );
             

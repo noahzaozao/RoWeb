@@ -60,7 +60,7 @@ package com.inoah.ro.scenes
             player.speed = 2.5;
             player.camp = camp;// 阵营
             player.setName(
-                (randMonster==0)?"波利":(randMonster==1)?"波波利":"幽灵波利",
+                (randMonster==0)?"poring":(randMonster==1)?"porpring":"ghostpring",
                 (camp==2 ? 0xff0000 : 0xffff00),
                 0,
                 (randMonster==0)?-60:(randMonster==1)?-60:-100
@@ -98,7 +98,7 @@ package com.inoah.ro.scenes
                 if( _monsterObjList.length < 30 )
                 {
                     createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
-                    TopText.show( "出现一个怪物！" );
+                    TopText.show( "a monster appear!" );
                 }
                 _newMonsterCounter.reset( 3 );
             }
