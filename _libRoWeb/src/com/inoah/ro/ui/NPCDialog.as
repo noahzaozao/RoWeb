@@ -19,7 +19,7 @@ package com.inoah.ro.ui
         private var npcTitle:D5TLFText;
         private var npcSay:D5TLFText;
         private var npcHead:Sprite;
-        private var npc:Array = ['','村长','丁小妹','若兰','杂货张','伏魔道人','D5Power','李大娘'];
+        private var npc:Array = ['','village head'];
         private var fontController:ESayBox;
         private var boxWidth:uint = 400;
         private var boxHeight:uint = 200;
@@ -53,7 +53,7 @@ package com.inoah.ro.ui
             
             if(btn2)
             {
-                btn2.lable=_type==0 ? '接受' : '完成';
+                btn2.lable=_type==0 ? 'accept' : 'ok';
                 if(_type==1 && !complate) btn2.enabled=false;
                 btn2.visible=misid>0 ? true : false;
             }
@@ -82,7 +82,7 @@ package com.inoah.ro.ui
             _say = _say.replace(/{/g,'<');
             _say = _say.replace(/}/g,'>');
             
-            fontController.play(_say);
+            fontController.play(_say , 10);
             
             visible = true;
         }
@@ -144,12 +144,12 @@ package com.inoah.ro.ui
             var btnBox:Sprite = new Sprite();
             
             btn1 = new D5IVfaceButton(res,onClick);
-            btn1.lable='确认';
+            btn1.lable='accept';
             btn1.id = 1;
             btn1.setLableBorder(0);
             
             btn2 = new D5IVfaceButton(res,onClick);
-            btn2.lable='完成';
+            btn2.lable='ok';
             btn2.id= 2;
             btn2.setLableBorder(0);
             
@@ -163,7 +163,7 @@ package com.inoah.ro.ui
             
             if(_misid>0)
             {
-                btn2.lable=_type==0 ? '接受' : '完成';
+                btn2.lable=_type==0 ? 'accept' : 'ok';
                 if(_type==1 && !_complate) btn2.enabled=false;
             }else{
                 btn2.visible=false;

@@ -1,7 +1,5 @@
 package
 {
-    import com.D5Power.Objects.NCharacterObject;
-    import com.D5Power.mission.EventData;
     import com.inoah.ro.RoGame;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.loaders.ActSprLoader;
@@ -76,23 +74,25 @@ package
         
         private function onInitLoadComplete( loader:ActSprLoader = null ):void
         {
-//            var keyMgr:KeyMgr = new KeyMgr( stage );
-//            MainMgr.instance.addMgr( MgrTypeConsts.KEY_MGR, keyMgr );
-//            MainMgr.instance.addMgr( MgrTypeConsts.BATLLE_MGR, new BattleMgr( this ) );
+            //            var keyMgr:KeyMgr = new KeyMgr( stage );
+            //            MainMgr.instance.addMgr( MgrTypeConsts.KEY_MGR, keyMgr );
+            //            MainMgr.instance.addMgr( MgrTypeConsts.BATLLE_MGR, new BattleMgr( this ) );
             
-//            _mapController = new MapController( this );
-//            _playerController = new PlayerController( _mapController.currentContainer );
-//            _monsterController = new MonsterController( _mapController.currentContainer );
-//            
-//            _playerController.targetList = _monsterController.monsterViewList;;
+            //            _mapController = new MapController( this );
+            //            _playerController = new PlayerController( _mapController.currentContainer );
+            //            _monsterController = new MonsterController( _mapController.currentContainer );
+            //            
+            //            _playerController.targetList = _monsterController.monsterViewList;;
             
             Global.userdata = new UserData();
             Global.userdata.getCanSeeMission(1);
             _me = this;
-            _game = new RoGame('map1',stage);
+            _game = new RoGame('map1',stage , 0 );
             addChild(_game);
             addChild( TopText.textField );
             addChild( TopText.tipTextField );
+            
+            RoGame.inited = true;
         }
         
         protected function onEnterFrameHandler( e:Event):void
@@ -105,17 +105,6 @@ package
             {
                 _game.tick( delta );
             }
-        }
-        
-        public function npcWindow(say:String,event:EventData,npc:NCharacterObject,misid:uint,type:uint=0,complate:Boolean=false):void
-        {
-            //            if(npcDialogBox==null)
-            //            {
-            //                npcDialogBox = new NPCDialog();
-            //            }
-            //            
-            //            npcDialogBox.config(say,npc,misid,type,complate);
-            //            if(!contains(npcDialogBox)) addChild(npcDialogBox);
         }
     }
 }

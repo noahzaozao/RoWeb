@@ -1,8 +1,10 @@
 package com.inoah.ro.uis
 {
+    import com.inoah.ro.RoGame;
     import com.inoah.ro.utils.Counter;
     
     import flash.filters.GlowFilter;
+    import flash.system.Capabilities;
     import flash.text.TextField;
     import flash.text.TextFormat;
     
@@ -23,7 +25,8 @@ package com.inoah.ro.uis
             var tf:TextFormat = new TextFormat( "宋体", 16, 0xffff00 );
             _tipTxt.defaultTextFormat = tf;
             _tipTxt.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
-            _tipTxt.text = "use mouse to move and attack";
+            _tipTxt.text = "use mouse to move and attack, please waiting for resources loading..." + Capabilities.version;
+            
             _tipTxt.mouseEnabled = false;
             
             _topTxt = new TextField();
@@ -64,10 +67,13 @@ package com.inoah.ro.uis
             if( _topTxt.text != _contentStr )
             {
                 _topTxt.text =  _contentStr;
-                while( _contentStr.split( "\n" ).length > 15 )
+                if( RoGame.inited )
                 {
-                    index= _contentStr.indexOf( "\n" );
-                    _contentStr = _contentStr.slice( index + 1 );
+                    while( _contentStr.split( "\n" ).length > 15 )
+                    {
+                        index= _contentStr.indexOf( "\n" );
+                        _contentStr = _contentStr.slice( index + 1 );
+                    }
                 }
             }
         }

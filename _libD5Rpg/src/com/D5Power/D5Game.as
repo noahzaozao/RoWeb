@@ -103,7 +103,7 @@ package com.D5Power
             
             _config = config;
             _stg = stg;
-            _gpuTry = openGPU!=0;
+            _gpuTry = openGPU !=0;
             
             Global.W = _stg.stageWidth;
             Global.H = _stg.stageHeight;
@@ -119,8 +119,6 @@ package com.D5Power
         
         protected function install(e:Event):void
         {
-            
-            
             removeEventListener(Event.ADDED_TO_STAGE,install);
             
             if(_gpuTry)
@@ -131,7 +129,6 @@ package com.D5Power
             }else{
                 installStart();
             }
-            
         }
         
         
@@ -184,7 +181,6 @@ package com.D5Power
             loader.load(new URLRequest(Global.httpServer+configPath+_config+'.d5'));
             loader.addEventListener(IOErrorEvent.IO_ERROR,onConfigIO);
             loader.addEventListener(Event.COMPLETE,parseData);
-            
         }
         
         protected function onChangeMap(e:ChangeMapEvent):void
