@@ -8,6 +8,7 @@ package com.inoah.ro.controllers
     import com.D5Power.Objects.CharacterObject;
     import com.D5Power.Objects.GameObject;
     import com.D5Power.map.WorldMap;
+    import com.inoah.ro.characters.MonsterView;
     
     import flash.filters.GlowFilter;
     import flash.geom.Point;
@@ -30,6 +31,11 @@ package com.inoah.ro.controllers
         {
             _animationUnitList = new Vector.<IAnimatable>();
             super(pec);
+        }
+        
+        protected function posCheck( value:int ):Boolean
+        {
+            return int(Point.distance(_atkTarget._POS,_me._POS))<=value;
         }
         
         public function appendAnimateUnit(animateUnit:IAnimatable):void
@@ -81,7 +87,8 @@ package com.inoah.ro.controllers
             {
                 return;
             }
-            if(_lastAutoMove!=-1 && Global.Timer-_lastAutoMove>2000)
+                
+            if( _atkTarget == null && _lastAutoMove!=-1 && Global.Timer-_lastAutoMove>2000)
             {
                 // 自动移动
                 _lastAutoMove = Global.Timer;
@@ -90,7 +97,6 @@ package com.inoah.ro.controllers
                 // 不可移出屏幕
                 if(nextX>Global.MAPSIZE.x || nextX<0) return;
                 if(nextY>Global.MAPSIZE.y || nextY<0) return;
-                
                 // 不可移动到地图非0区域
                 var p:Point = WorldMap.me.Postion2Tile(nextX,nextY);
                 if(WorldMap.me.roadMap && WorldMap.me.roadMap[p.y] && WorldMap.me.roadMap[p.y][p.x]!=0) return;
@@ -101,35 +107,57 @@ package com.inoah.ro.controllers
             if(_atkTarget!=null)
             {
                 // 先判断攻击距离
-                if(_fightMode==0 && Point.distance(_atkTarget._POS,_me._POS)>200)
+                if(_fightMode==0 && posCheck( 100 ) )
                 {
-                    _endTarget = _atkTarget.PosX>_me.PosX ? new Point(_atkTarget.PosX-80,_atkTarget.PosY) : new Point(_atkTarget.PosX-80,_atkTarget.PosY);
-                    moveTo(_endTarget.x,_endTarget.y);
-                    _fightMode = 1;
+                    if( _endTarget )
+                    {
+                        _endTarget = null;
+                        stopMove();
+                    }
+                    _fightMode = 2;
                 }
                 else
                 {
                     _fightMode = 1;
                 }
                 
-                if(_fightMode==1 && Point.distance(_atkTarget._POS,_me._POS)<=200)
+                if(_fightMode==1 && posCheck( 100 ) )
                 {
                     // 走入攻击范围，开始攻击
+                    if( _endTarget )
+                    {
+                        _endTarget = null;
+                        stopMove();
+                    }
                     _fightMode = 2;
                 }
-                
-                if(_fightMode==2)
+                else
                 {
+                    _endTarget = new Point( _atkTarget.PosX , _atkTarget.PosY );
+                    walk2Target();
+                }
+                
+                if(_fightMode==2 && posCheck( 100 ) )
+                {
+                    if( _endTarget )
+                    {
+                        _endTarget = null;
+                        stopMove();
+                    }
                     if(Global.Timer-_lastHurt>_atkCd )
                     {
                         _me.action = Actions.Attack;
-                        
                         _lastHurt = Global.Timer;
-                        var tween:Tween = new Tween( _atkTarget , 0.4 );
+                        var tween:Tween = new Tween( _atkTarget , 1 );
                         tween.onComplete = onAttacked;
                         tween.onCompleteArgs = [_atkTarget]
                         appendAnimateUnit( tween );
+                        return;
                     }
+                }
+                else
+                {
+                    _fightMode==1;
                 }
             }
             super.calcAction();
@@ -146,7 +174,7 @@ package com.inoah.ro.controllers
             var textField:TextField = new TextField();
             var tf:TextFormat = new TextFormat( "宋体" , 28 , 0xff0000 , true );
             textField.defaultTextFormat = tf;
-            textField.text = "10";
+            textField.text = "2";
             textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
             textField.y = -50;
             textField.x = - textField.textWidth >> 1;
@@ -157,7 +185,7 @@ package com.inoah.ro.controllers
             tween.onCompleteArgs = [textField];
             appendAnimateUnit( tween );
             
-            atkTarget.hp-=10;    
+            atkTarget.hp-=2;    
             
             if(atkTarget.hp==0)
             {

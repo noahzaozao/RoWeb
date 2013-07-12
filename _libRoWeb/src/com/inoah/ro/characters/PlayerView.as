@@ -1,4 +1,4 @@
-package com.inoah.ro.characters.actspr
+package com.inoah.ro.characters
 {
     import com.inoah.ro.infos.CharacterInfo;
     
@@ -12,6 +12,11 @@ package com.inoah.ro.characters.actspr
         override public function tick( delta:Number ):void
         {
             super.tick( delta );
+        }
+        
+        override public function set dirIndex( v:uint):void
+        {
+            super.dirIndex = v;
         }
     }
 }

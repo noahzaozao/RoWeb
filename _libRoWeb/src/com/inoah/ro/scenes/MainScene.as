@@ -3,7 +3,7 @@ package com.inoah.ro.scenes
     import com.D5Power.Controler.Actions;
     import com.D5Power.Stuff.HSpbar;
     import com.D5Power.scene.BaseScene;
-    import com.inoah.ro.characters.actspr.MonsterView;
+    import com.inoah.ro.characters.MonsterView;
     import com.inoah.ro.controllers.MonsterController;
     import com.inoah.ro.infos.CharacterInfo;
     import com.inoah.ro.objects.PlayerObject;
@@ -35,15 +35,15 @@ package com.inoah.ro.scenes
             var randMonster:int =  int(Math.random() * 3);
             if( randMonster == 0 )
             {
-                monsterInfo.init(  "" , "data/sprite/阁胶磐/poring.act" , "" ,100 );
+                monsterInfo.init(  "" , "data/sprite/阁胶磐/poring.act" , "" , false );
             }
             else if( randMonster == 1 )
             {
-                monsterInfo.init( "" , "data/sprite/阁胶磐/poporing.act", "" , 200 );
+                monsterInfo.init( "" , "data/sprite/阁胶磐/poporing.act", "" , false );
             }
             else 
             {
-                monsterInfo.init( "" , "data/sprite/阁胶磐/ghostring.act", "" , 200 );
+                monsterInfo.init( "" , "data/sprite/阁胶磐/ghostring.act", "" , false );
             }
             //            charInfo.init( "可爱的早早", "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_咯.act" );
             var monsterView:MonsterView = new MonsterView( monsterInfo );

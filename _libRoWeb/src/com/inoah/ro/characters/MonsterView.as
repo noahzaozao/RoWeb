@@ -1,4 +1,4 @@
-package com.inoah.ro.characters.actspr
+package com.inoah.ro.characters
 {
     import com.inoah.ro.infos.CharacterInfo;
     import com.inoah.ro.utils.Counter;

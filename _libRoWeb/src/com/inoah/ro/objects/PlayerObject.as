@@ -18,8 +18,11 @@ package com.inoah.ro.objects
         
         override public function setDirectionNum(v:int):void
         {
-            _direction = v;
-            _displayer.direction = v;
+            if( _direction != v )
+            {
+                _direction = v;
+                _displayer.direction = v;
+            }
         }
     }
 }

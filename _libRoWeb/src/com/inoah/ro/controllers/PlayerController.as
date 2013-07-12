@@ -4,6 +4,7 @@ package com.inoah.ro.controllers
     import com.D5Power.Controler.Actions;
     import com.D5Power.Controler.CharacterControler;
     import com.D5Power.Controler.Perception;
+    import com.D5Power.GMath.GMath;
     import com.D5Power.Objects.CharacterObject;
     import com.D5Power.Objects.GameObject;
     
@@ -34,6 +35,11 @@ package com.inoah.ro.controllers
             super(pec, ctrl);
         }
         
+        protected function posCheck( value:int ):Boolean
+        {
+            return int(Point.distance(_atkTarget._POS,_me._POS))<=value;
+        }
+        
         public function appendAnimateUnit(animateUnit:IAnimatable):void
         {
             if(_animationUnitList.indexOf(animateUnit)<0)
@@ -60,11 +66,13 @@ package com.inoah.ro.controllers
             {
                 // 敌人，设置为攻击目标
                 _atkTarget = o as CharacterObject;
+                _fightMode = 0;
             }
             if( o != _me )
             {
                 _chooseTarget = o as CharacterObject;
                 _chooseTarget.setChooseCircle( true );
+                
             }
             super.clickSomeBody(o);
         }
@@ -74,26 +82,44 @@ package com.inoah.ro.controllers
             if(_atkTarget!=null)
             {
                 // 先判断攻击距离
-                if(_fightMode==0 && Point.distance(_atkTarget._POS,_me._POS)>200)
+                if(_fightMode==0 && posCheck( 100 ) )
                 {
-                    _endTarget = _atkTarget.PosX>_me.PosX ? new Point(_atkTarget.PosX-80,_atkTarget.PosY) : new Point(_atkTarget.PosX-80,_atkTarget.PosY);
-                    walk2Target();
-                    _fightMode = 1;
+                    if( _endTarget )
+                    {
+                        _endTarget = null;
+                        stopMove();
+                    }
+                    _fightMode = 2;
                 }
-                else
+                else 
                 {
                     _fightMode = 1;
                 }
                 
-                if(_fightMode==1 && Point.distance(_atkTarget._POS,_me._POS)<=200)
+                if(_fightMode==1 && posCheck( 100 ))
                 {
                     // 走入攻击范围，开始攻击
                     (_atkTarget.controler as MonsterController).fightTo(_me);
+                    if( _endTarget )
+                    {
+                        _endTarget = null;
+                        stopMove();
+                    }
                     _fightMode = 2;
                 }
-                
-                if(_fightMode==2)
+                else
                 {
+                    _endTarget = new Point( _atkTarget.PosX , _atkTarget.PosY );
+                    walk2Target();
+                }
+                
+                if(_fightMode==2 && posCheck( 100 ) )
+                {
+                    if( _endTarget )
+                    {
+                        _endTarget = null;
+                        stopMove();
+                    }
                     if(Global.Timer-_lastHurt>_atkCd )
                     {
                         if( _atkTarget.action == Actions.Die )
@@ -101,6 +127,10 @@ package com.inoah.ro.controllers
                             _atkTarget = null;
                             return;
                         }
+                        var radian:Number = GMath.getPointAngle(_atkTarget.PosX-_me.PosX,_atkTarget.PosY-_me.PosY);
+                        var angle:int = GMath.R2A(radian)+90;
+                        changeDirectionByAngle( angle );
+                        
                         _me.action = Actions.Attack;
                         _lastHurt = Global.Timer;
                         var tween:Tween = new Tween( _atkTarget , 0.4 );
@@ -109,12 +139,18 @@ package com.inoah.ro.controllers
                         appendAnimateUnit( tween );
                     }
                 }
+                else
+                {
+                    _fightMode = 1;
+                }
             }
             super.calcAction();
         }
         
         private function onAttacked( atkTarget:CharacterObject ):void
         {
+            (atkTarget.controler as MonsterController).fightTo(_me);
+            
             if( atkTarget.action != Actions.Attack && atkTarget.action != Actions.Die )
             {
                 atkTarget.action = Actions.BeAtk;
@@ -124,7 +160,7 @@ package com.inoah.ro.controllers
             var textField:TextField = new TextField();
             var tf:TextFormat = new TextFormat( "宋体" , 28 , 0xffffff );
             textField.defaultTextFormat = tf;
-            textField.text = "20";
+            textField.text = "10";
             textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
             textField.y = -50;
             textField.x = - textField.textWidth >> 1;
@@ -135,7 +171,7 @@ package com.inoah.ro.controllers
             tween.onCompleteArgs = [textField];
             appendAnimateUnit( tween );
             
-            atkTarget.hp-=20; 
+            atkTarget.hp-=10; 
             
             if(atkTarget.hp==0)
             {

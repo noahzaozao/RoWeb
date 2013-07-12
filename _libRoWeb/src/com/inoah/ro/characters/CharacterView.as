@@ -1,4 +1,4 @@
-package com.inoah.ro.characters.actspr
+package com.inoah.ro.characters
 {
     import com.D5Power.Controler.Actions;
     import com.D5Power.graphics.ISwfDisplayer;
@@ -7,13 +7,13 @@ package com.inoah.ro.characters.actspr
     import com.inoah.ro.displays.actspr.ActSprHeadView;
     import com.inoah.ro.displays.actspr.ActSprPlayerView;
     import com.inoah.ro.displays.actspr.ActSprWeaponView;
+    import com.inoah.ro.displays.actspr.structs.CACT;
     import com.inoah.ro.events.ActSprViewEvent;
     import com.inoah.ro.infos.CharacterInfo;
     import com.inoah.ro.loaders.ActSprLoader;
     import com.inoah.ro.loaders.ILoader;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.MainMgr;
-    import com.inoah.ro.displays.actspr.structs.CACT;
     
     import flash.display.Bitmap;
     import flash.display.BitmapData;

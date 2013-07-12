@@ -7,8 +7,8 @@ package com.inoah.ro
     import com.D5Power.Objects.NCharacterObject;
     import com.D5Power.Stuff.HSpbar;
     import com.D5Power.mission.EventData;
-    import com.inoah.ro.characters.actspr.CharacterView;
-    import com.inoah.ro.characters.actspr.PlayerView;
+    import com.inoah.ro.characters.CharacterView;
+    import com.inoah.ro.characters.PlayerView;
     import com.inoah.ro.controllers.PlayerController;
     import com.inoah.ro.infos.CharacterInfo;
     import com.inoah.ro.objects.PlayerObject;
