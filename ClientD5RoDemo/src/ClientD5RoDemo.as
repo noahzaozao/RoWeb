@@ -5,13 +5,18 @@ package
     import com.inoah.ro.loaders.ActSprLoader;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.MainMgr;
+    import com.inoah.ro.managers.TextureMgr;
     import com.inoah.ro.uis.TopText;
     import com.inoah.ro.utils.UserData;
     
     import flash.display.Sprite;
+    import flash.display.StageAlign;
+    import flash.display.StageScaleMode;
     import flash.events.Event;
     import flash.events.MouseEvent;
     import flash.utils.getTimer;
+    
+    import starling.core.Starling;
     
     [SWF(width="960",height="560",frameRate="60",backgroundColor="#000000")]
     public class ClientD5RoDemo extends Sprite
@@ -21,6 +26,7 @@ package
         private var _game:RoGame;
         //        private var npcDialogBox:NPCDialog;
         private var lastTimeStamp:int;
+        private var _starling:Starling;
         
         public static function get me():ClientD5RoDemo
         {
@@ -29,25 +35,36 @@ package
         
         public function ClientD5RoDemo()
         {
-            if( stage )
-            {
-                init();
-            }
-            else
-            {
-                stage.addEventListener( Event.ADDED_TO_STAGE , init );
-            }
+            addEventListener( Event.ADDED_TO_STAGE , init );
         }
         
         private function init( e:Event = null ):void
         {
-            stage.removeEventListener( Event.ADDED_TO_STAGE , init );
-            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
+            removeEventListener( Event.ADDED_TO_STAGE , init );
+            stage.align = StageAlign.TOP_LEFT;
+            stage.scaleMode = StageScaleMode.NO_SCALE;
+            
             lastTimeStamp = getTimer();
             
             MainMgr.instance;
             var assetMgr:AssetMgr = new AssetMgr();
             MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, assetMgr );
+            MainMgr.instance.addMgr( MgrTypeConsts.TEXTURE_MGR, new TextureMgr );
+            
+            //pretends to be an iPhone Retina screen
+            //            DeviceCapabilities.dpi = 326;
+            //            DeviceCapabilities.screenPixelWidth = 960;
+            //            DeviceCapabilities.screenPixelHeight = 640;
+            
+            //            Starling.handleLostContext = true;
+            //            Starling.multitouchEnabled = true;
+            //            _starling = new Starling(Main, stage);
+            //            _starling.enableErrorChecking = false;
+            //            _starling.showStats = true;
+            //            _starling.showStatsAt(HAlign.LEFT, VAlign.BOTTOM);
+            //            _starling.start();
+            
+            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
             
             var resPathList:Vector.<String> = new Vector.<String>();
             resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
@@ -105,6 +122,11 @@ package
             {
                 _game.tick( delta );
             }
+            //            var root:Main = Starling.current.root as Main;
+            //            if( root )
+            //            {
+            //                root.tick( delta );
+            //            }
         }
     }
 }
