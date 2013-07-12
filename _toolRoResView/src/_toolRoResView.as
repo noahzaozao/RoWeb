@@ -7,6 +7,8 @@ package
     import com.inoah.ro.managers.MainMgr;
     
     import flash.display.Sprite;
+    import flash.display.StageAlign;
+    import flash.display.StageScaleMode;
     import flash.events.Event;
     import flash.filesystem.File;
     import flash.filesystem.FileMode;
@@ -15,16 +17,15 @@ package
     
     import consts.AppConsts;
     
-    import panels.DisplayEvent;
-    import panels.SidePanel;
-    import panels.ViewPanel;
+    import starling.core.Starling;
+    import starling.utils.HAlign;
+    import starling.utils.VAlign;
     
     
     [SWF(width="1024",height="620",frameRate="60",backgroundColor="#2f2f2f")]
     public class _toolRoResView extends Sprite
     {
-        private var sidePanel:SidePanel;
-        private var viewPanel:ViewPanel
+        private var _starling:Starling;
         private var lastTimeStamp:int;
         
         public function _toolRoResView()
@@ -41,23 +42,34 @@ package
         
         private function init( e:Event = null ):void
         {
+            stage.align = StageAlign.TOP_LEFT;
+            stage.scaleMode = StageScaleMode.NO_SCALE;
+            
+            loaderInfo.addEventListener(Event.COMPLETE, loaderInfo_completeHandler);
+        }
+        
+        protected function loaderInfo_completeHandler( e:Event):void
+        {
             Style.embedFonts = false;
             Style.fontSize =  14;
             Style.setStyle( Style.DARK );
             
             MainMgr.instance;
-            var keyMgr:KeyMgr = new KeyMgr( stage );    
-            MainMgr.instance.addMgr( MgrTypeConsts.KEY_MGR, keyMgr );
             MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, new AssetMgr() );
             
             initMenu();
             initData();
-            sidePanel = new SidePanel( this, 0, 0 );
-            sidePanel.addEventListener( DisplayEvent.SHOW, onShowHandler )
-            viewPanel = new ViewPanel( this, AppConsts.SIDE_PANEL_WIDTH, 0 );
             
             lastTimeStamp = getTimer();
             stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );
+            
+            Starling.handleLostContext = true;
+            Starling.multitouchEnabled = true;
+            _starling = new Starling(StarlingMain, stage);
+            _starling.enableErrorChecking = false;
+            _starling.showStats = true;
+            _starling.showStatsAt(HAlign.RIGHT, VAlign.TOP);
+            _starling.start();
         }
         
         protected function onEnterFrameHandler(e:Event):void
@@ -65,12 +77,12 @@ package
             var timeNow:uint = getTimer();
             var delta:Number = (timeNow - lastTimeStamp) / 1000;
             lastTimeStamp = timeNow;
-            viewPanel.tick( delta );
-        }
-        
-        protected function onShowHandler(e:DisplayEvent):void
-        {
-            viewPanel.showAct( e.data, e.switchType );
+            
+            var root:StarlingMain =    Starling.current.root as StarlingMain;
+            if( root )
+            {
+                root.tick( delta );
+            }
         }
         
         private function initMenu():void

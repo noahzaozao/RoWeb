@@ -52,52 +52,42 @@ package panels
             super.init();
             
             _txtPath = new InputText( this , 0 , 0 ,"aaa" );
-            _txtPath.setSize( 500, 30 );
+            _txtPath.setSize( 450, 30 );
             
-            var bgShape:Shape = new Shape();
-            bgShape.graphics.lineStyle(0,0xFF0000)
-            bgShape.graphics.moveTo(0,100)
-            bgShape.graphics.lineTo(200,100)
-            bgShape.graphics.moveTo(100,0)
-            bgShape.graphics.lineTo(100,200);
-            bgShape.x = 300;
-            bgShape.y = 300;
-            addChild( bgShape );
+            var startPosX:int = 10;
+            var startPosY:int = 40;
             
-            var startPosX:int = 620;
-            var startPosY:int = 20;
-            
-            _dirUpBtn = new PushButton( this, startPosX + 60 , startPosY , "U", onClickPanelHandler );
+            _dirUpBtn = new PushButton( this, startPosX + 55 , startPosY , "U", onClickPanelHandler );
             _dirUpBtn.setSize( 40, 40 );
-            _dirDownBtn = new PushButton( this, startPosX + 60 , startPosY + 120, "D", onClickPanelHandler );
+            _dirDownBtn = new PushButton( this, startPosX + 55 , startPosY + 110, "D", onClickPanelHandler );
             _dirDownBtn.setSize( 40, 40 );
-            _dirLeftBtn = new PushButton( this, startPosX , startPosY + 60 , "L", onClickPanelHandler );
+            _dirLeftBtn = new PushButton( this, startPosX , startPosY + 55 , "L", onClickPanelHandler );
             _dirLeftBtn.setSize( 40, 40 );
-            _dirRightBtn = new PushButton( this, startPosX + 120 , startPosY + 60 , "R", onClickPanelHandler );
+            _dirRightBtn = new PushButton( this, startPosX + 110 , startPosY + 55 , "R", onClickPanelHandler );
             _dirRightBtn.setSize( 40, 40 );
             
             _dirUpLeftBtn = new PushButton( this, startPosX , startPosY , "UL", onClickPanelHandler );
             _dirUpLeftBtn.setSize( 40, 40 );
-            _dirUpRightBtn = new PushButton( this, startPosX + 120, startPosY , "UR", onClickPanelHandler );
+            _dirUpRightBtn = new PushButton( this, startPosX + 110, startPosY , "UR", onClickPanelHandler );
             _dirUpRightBtn.setSize( 40, 40 );
-            _dirDownLeftBtn = new PushButton( this, startPosX , startPosY + 120, "DL", onClickPanelHandler );
+            _dirDownLeftBtn = new PushButton( this, startPosX , startPosY + 110, "DL", onClickPanelHandler );
             _dirDownLeftBtn.setSize( 40, 40 );
-            _dirDownRightBtn = new PushButton( this, startPosX + 120 , startPosY + 120, "DR", onClickPanelHandler );
+            _dirDownRightBtn = new PushButton( this, startPosX + 110 , startPosY + 110, "DR", onClickPanelHandler );
             _dirDownRightBtn.setSize( 40, 40 );
             
-            _actionIndexLabel = new Label( this, startPosX, startPosY + 180 , "actionIndex: " );
+            _actionIndexLabel = new Label( this, startPosX, startPosY + 155 , "actionIndex: " );
             
-            _prewActionBtn = new PushButton( this, startPosX, startPosY + 210, "-" );
+            _prewActionBtn = new PushButton( this, startPosX, startPosY + 180, "-" );
             _prewActionBtn.setSize( 24 , 24 );
-            _actionTxt = new InputText( this , startPosX + 24, startPosY + 210 );
+            _actionTxt = new InputText( this , startPosX + 24, startPosY + 180 );
             _actionTxt.setSize( 48, 24 );
             _actionTxt.enabled = false;
-            _nextActionBtn = new PushButton( this, startPosX + 72, startPosY + 210 ,  "+" );
+            _nextActionBtn = new PushButton( this, startPosX + 72, startPosY + 180 ,  "+" );
             _nextActionBtn.setSize( 24 , 24 );
             _prewActionBtn.addEventListener( MouseEvent.CLICK, onChangeActionHandler );
             _nextActionBtn.addEventListener( MouseEvent.CLICK, onChangeActionHandler );
             
-            setSize( AppConsts.VIEW_PANEL_WIDTH, AppConsts.HEIGHT );
+            setSize( AppConsts.VIEW_PANEL_WIDTH - 350, AppConsts.HEIGHT );
         }
         
         protected function onChangeActionHandler(e:MouseEvent):void
@@ -209,8 +199,17 @@ package panels
             }
             if( !_charView )//&& _charInfo.isReady )
             {
+                var sh:Shape = new Shape();
+                sh.graphics.lineStyle( 1 , 0xff0000 );
+                sh.graphics.drawRect( 0, 400, 500 , 1 );
+                addChild( sh );
+                sh = new Shape();
+                sh.graphics.lineStyle( 1 , 0xff0000 );
+                sh.graphics.drawRect( 200 , 0 , 1 , 500 );
+                addChild( sh );
+
                 _charView = new ECharacterView( _charInfo );
-                _charView.x = 400;
+                _charView.x = 200;
                 _charView.y = 400;
                 addChild( _charView );
             }
@@ -235,6 +234,10 @@ package panels
             }
             if( _charView )
             {
+                if( !StarlingMain.actSprView && _charView.bodyView )
+                {
+                    StarlingMain.actSprView = _charView.bodyView;
+                }
                 _charView.tick( delta );
             }
         }

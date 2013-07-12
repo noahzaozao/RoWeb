@@ -1,6 +1,6 @@
 package
 {
-    import com.inoah.ro.characters.CharacterView;
+    import com.inoah.ro.characters.actspr.CharacterView;
     import com.inoah.ro.infos.CharacterInfo;
     
     public class ECharacterView extends CharacterView

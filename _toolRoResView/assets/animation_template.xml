@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<animation>
+    <action index="idle0" name="通常待机" framesLimit="8" fps="8"/>
+    <action index="move" name="移动" framesLimit="6" fps="8"/>
+    <action index="idle1" name="攻击待机" framesLimit="8" fps="8"/>
+    <action index="attack1" name="攻击1" framesLimit="4" fps="8"/>
+    <action index="attack2" name="攻击2" framesLimit="4" fps="8"/>
+    <action index="attack3" name="攻击3" framesLimit="4" fps="8"/>
+    <action index="protect" name="防御" framesLimit="1" fps="8"/>
+    <action index="beaten" name="受击" framesLimit="6" fps="8"/>
+    <action index="feint" name="眩晕" framesLimit="8" fps="8"/>
+    <action index="die" name="死亡" framesLimit="4" fps="8"/>
+    <action index="skill0" name="技能1" framesLimit="20" fps="8"/>
+    <action index="skill1" name="技能2" framesLimit="20" fps="8"/>
+    <action index="skill2" name="技能3" framesLimit="20" fps="8"/>
+    <action index="skill3" name="技能4" framesLimit="20" fps="8"/>
+    <action index="skill4" name="技能5" framesLimit="20" fps="8"/>
+    <action index="skill5" name="技能6" framesLimit="20" fps="8"/>
+    <action index="skill6" name="技能7" framesLimit="20" fps="8"/>
+    <action index="skill7" name="技能8" framesLimit="20" fps="8"/>
+    <action index="skill8" name="技能9" framesLimit="20" fps="8"/>
+</animation>
