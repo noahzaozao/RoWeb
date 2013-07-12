@@ -187,21 +187,36 @@ package com.D5Power.Controler
             
             //_me.Angle = angle;
             
-            if(angle>=-22.5 && angle<22.5){
+            if(angle>=-22.5 && angle<22.5)
+            {
                 _me.setDirectionNum(_me.directions.Up);
-            }else if(angle>=22.5 && angle<67.5){
+            }
+            else if(angle>=22.5 && angle<67.5)
+            {
                 _me.setDirectionNum(_me.directions.RightUp);
-            }else if(angle>=67.5 && angle<112.5){
+            }
+            else if(angle>=67.5 && angle<112.5)
+            {
                 _me.setDirectionNum(_me.directions.Right);
-            }else if(angle>=112.5 && angle<157.5){
+            }
+            else if(angle>=112.5 && angle<157.5)
+            {
                 _me.setDirectionNum(_me.directions.RightDown);
-            }else if(angle>=157.5 && angle<202.5){
+            }
+            else if(angle>=157.5 && angle<202.5)
+            {
                 _me.setDirectionNum(_me.directions.Down);
-            }else if(angle>=202.5 && angle<247.5){
+            }
+            else if(angle>=202.5 && angle<247.5)
+            {
                 _me.setDirectionNum(_me.directions.LeftDown);
-            }else if(angle>=247.5 && angle<292.5){
+            }
+            else if(angle>=247.5 && angle<292.5)
+            {
                 _me.setDirectionNum(_me.directions.Left);
-            }else{
+            }
+            else
+            {
                 _me.setDirectionNum(_me.directions.LeftUp);
             }
         }

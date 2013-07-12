@@ -111,6 +111,57 @@ package com.D5Power.Controler
         }
         
         /**
+         * 控制角色走向某点
+         * 请在本方法执行前设置_endTarget
+         * 
+         * @return	移动成功，则返回true，移动失败返回false(目标点无法到达)
+         */ 
+        protected function walk2Target():Boolean
+        {
+            var me:CharacterObject = _me as CharacterObject;
+            //me.action = Actions.Wait;
+            
+            if(_path==null)
+            {
+                _path = new Array()
+            }else{
+                _path.splice(0,_path.length);
+            }
+            
+            // 检查目标点是否可移动
+            if(WorldMap.AStar==null)
+            {
+                var p2:Point = WorldMap.me.Postion2Tile(me.PosX,me.PosY);
+                _path.push([p2.x,p2.y]);
+                p2 = WorldMap.me.Postion2Tile(_endTarget.x,_endTarget.y);
+                _path.push([p2.x,p2.y]);
+            }else{
+                var p:Point = WorldMap.me.Postion2Tile(_endTarget.x,_endTarget.y);
+                if(WorldMap.me.roadMap[p.y][p.x]!=0)
+                {
+                    _me.action = Actions.Wait;
+                    return false;
+                }
+                // 得出路径
+                var nodeArr:Array = WorldMap.AStar.find(me.PosX,me.PosY,_endTarget.x,_endTarget.y);
+                if(nodeArr==null)
+                {
+                    _me.action = Actions.Wait;
+                    return false;
+                }
+                else
+                {
+                    for(var i:int=0,j:int=nodeArr.length;i<j;i++)
+                    {
+                        _path.push([nodeArr[i].x,nodeArr[i].y]);
+                    }
+                }
+            }
+            _step=1;
+            
+            return true;
+        }
+        /**
          * 计算行动
          */ 
         override public function calcAction():void

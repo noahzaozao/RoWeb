@@ -9,7 +9,6 @@ package com.D5Power.Controler
     import com.D5Power.D5Game;
     import com.D5Power.GMath.GMath;
     import com.D5Power.Objects.CharacterObject;
-    import com.D5Power.Objects.ControlActionObject;
     import com.D5Power.Objects.GameObject;
     import com.D5Power.Objects.NCharacterObject;
     import com.D5Power.map.WorldMap;
@@ -447,11 +446,9 @@ package com.D5Power.Controler
             var to:NCharacterObject = o as NCharacterObject;
             if(to!=null && to.missionConfig!=null)
             {
-                
                 var list:Vector.<MissionData> = to.missionConfig.getList(Global.userdata);
                 _perception.Scene.missionCallBack(to.missionConfig.npcname,to.missionConfig.say,to.missionConfig.event,list,to);
             }
-            
             
             // do some thing
         }
@@ -511,8 +508,6 @@ package com.D5Power.Controler
             }else{
                 _path.splice(0,_path.length);
             }
-            
-            
             
             // 检查目标点是否可移动
             if(WorldMap.AStar==null)
