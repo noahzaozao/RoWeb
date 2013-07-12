@@ -3,7 +3,7 @@ package com.inoah.ro.scenes
     import com.D5Power.Controler.Actions;
     import com.D5Power.Stuff.HSpbar;
     import com.D5Power.scene.BaseScene;
-    import com.inoah.ro.characters.MonsterView;
+    import com.inoah.ro.characters.actspr.MonsterView;
     import com.inoah.ro.controllers.MonsterController;
     import com.inoah.ro.infos.CharacterInfo;
     import com.inoah.ro.objects.PlayerObject;

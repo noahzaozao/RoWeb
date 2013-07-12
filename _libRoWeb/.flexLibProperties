@@ -6,8 +6,17 @@
     <classEntry path="com.inoah.ro.utils.UserData"/>
     <classEntry path="com.inoah.ro.objects.PlayerObject"/>
     <classEntry path="com.inoah.ro.controllers.PlayerController"/>
-    <classEntry path="com.inoah.ro.displays.ActSprPlayerView"/>
-    <classEntry path="com.inoah.ro.displays.ActSprSkillIconView"/>
+    <classEntry path="com.inoah.ro.displays.actspr.ActSprPlayerView"/>
+    <classEntry path="com.inoah.ro.displays.actspr.ActSprSkillIconView"/>
+    <classEntry path="com.inoah.ro.Main"/>
+    <classEntry path="com.inoah.ro.displays.starling.TpcView"/>
+    <classEntry path="com.inoah.ro.displays.starling.structs.TPAnimation"/>
+    <classEntry path="com.inoah.ro.managers.TextureMgr"/>
+    <classEntry path="com.inoah.ro.loaders.ILoader"/>
+    <classEntry path="com.inoah.ro.loaders.TPCLoader"/>
+    <classEntry path="com.inoah.ro.displays.starling.TpcBodyView"/>
+    <classEntry path="com.inoah.ro.displays.starling.TpcOtherView"/>
+    <classEntry path="com.inoah.ro.characters.starling.CharacterView"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -7,7 +7,7 @@ package com.inoah.ro.loaders
     import flash.net.URLRequest;
     import flash.utils.ByteArray;
 
-    public class ActSprLoader extends EventDispatcher
+    public class ActSprLoader extends EventDispatcher implements ILoader
     {
         private var _actUrl:String;
         private var _sprUrl:String;
@@ -28,7 +28,7 @@ package com.inoah.ro.loaders
             _actLoader.load( new URLRequest( _actUrl ) );
         }
         
-        public function get actUrl():String
+        public function get url():String
         {
             return _actUrl;
         }
