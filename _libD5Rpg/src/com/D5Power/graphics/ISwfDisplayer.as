@@ -8,7 +8,7 @@ package com.D5Power.graphics
         /**
          * 渲染接口
          */ 
-        function render():void;
+        function renderMe():void;
         /**
          * 更换SWF接口
          */ 

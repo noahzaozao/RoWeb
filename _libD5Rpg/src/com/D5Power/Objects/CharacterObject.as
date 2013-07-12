@@ -164,7 +164,7 @@ package com.D5Power.Objects
             {
                 if(_displayer is ISwfDisplayer) 
                 {
-                    (_displayer as ISwfDisplayer).render();
+                    (_displayer as ISwfDisplayer).renderMe();
                     if( _displayer.isPlayEnd && action != Actions.Die )
                     {
                         _displayer.action = Actions.Wait;
