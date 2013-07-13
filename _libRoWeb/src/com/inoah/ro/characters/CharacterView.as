@@ -156,7 +156,7 @@ package com.inoah.ro.characters
                 }
             }
             _bodyView.initAct( (_bodyLoader as ActSprLoader).actData );
-            _bodyView.initSpr( (_bodyLoader as ActSprLoader).sprData );
+            _bodyView.initSpr( (_bodyLoader as ActSprLoader).sprData , _bodyLoader.url );
             _bodyView.addEventListener( ActSprViewEvent.ACTION_END , onActionEndHandler );
             _bodyView.addEventListener( ActSprViewEvent.NEXT_FRAME , onNextFrameHandler );
             //noah
@@ -204,7 +204,7 @@ package com.inoah.ro.characters
                 _headView = new ActSprHeadView( _bodyView );
             }
             _headView.initAct( (_headLoader as ActSprLoader).actData );
-            _headView.initSpr( (_headLoader as ActSprLoader).sprData );
+            _headView.initSpr( (_headLoader as ActSprLoader).sprData , _headLoader.url );
             _headView.actionIndex = _bodyView.actionIndex;
             addChild( _bodyView );
             addChild( _headView );
@@ -219,7 +219,7 @@ package com.inoah.ro.characters
                 _weaponView = new ActSprWeaponView( _bodyView );
             }
             _weaponView.initAct( (_weaponLoader as ActSprLoader).actData );
-            _weaponView.initSpr( (_weaponLoader as ActSprLoader).sprData );
+            _weaponView.initSpr( (_weaponLoader as ActSprLoader).sprData , _headLoader.url );
             _weaponView.actionIndex = _bodyView.actionIndex;
             addChild( _bodyView );
             addChild( _headView );

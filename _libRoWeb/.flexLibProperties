@@ -16,6 +16,7 @@
     <classEntry path="com.inoah.ro.loaders.TPCLoader"/>
     <classEntry path="com.inoah.ro.displays.starling.TpcBodyView"/>
     <classEntry path="com.inoah.ro.displays.starling.TpcOtherView"/>
+    <classEntry path="com.inoah.ro.managers.SprMgr"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

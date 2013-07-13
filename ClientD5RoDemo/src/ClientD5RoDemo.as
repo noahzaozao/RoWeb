@@ -3,6 +3,7 @@ package
     import com.inoah.ro.RoGame;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.loaders.ActSprLoader;
+    import com.inoah.ro.managers.SprMgr;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.MainMgr;
     import com.inoah.ro.managers.TextureMgr;
@@ -49,7 +50,8 @@ package
             MainMgr.instance;
             var assetMgr:AssetMgr = new AssetMgr();
             MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, assetMgr );
-            MainMgr.instance.addMgr( MgrTypeConsts.TEXTURE_MGR, new TextureMgr );
+            MainMgr.instance.addMgr( MgrTypeConsts.TEXTURE_MGR, new TextureMgr() );
+            MainMgr.instance.addMgr( MgrTypeConsts.SPR_MGR , new SprMgr() );
             
             //pretends to be an iPhone Retina screen
             //            DeviceCapabilities.dpi = 326;
@@ -91,16 +93,6 @@ package
         
         private function onInitLoadComplete( loader:ActSprLoader = null ):void
         {
-            //            var keyMgr:KeyMgr = new KeyMgr( stage );
-            //            MainMgr.instance.addMgr( MgrTypeConsts.KEY_MGR, keyMgr );
-            //            MainMgr.instance.addMgr( MgrTypeConsts.BATLLE_MGR, new BattleMgr( this ) );
-            
-            //            _mapController = new MapController( this );
-            //            _playerController = new PlayerController( _mapController.currentContainer );
-            //            _monsterController = new MonsterController( _mapController.currentContainer );
-            //            
-            //            _playerController.targetList = _monsterController.monsterViewList;;
-            
             Global.userdata = new UserData();
             Global.userdata.getCanSeeMission(1);
             _me = this;

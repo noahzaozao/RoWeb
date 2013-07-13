@@ -8,7 +8,6 @@ package com.inoah.ro.controllers
     import com.D5Power.Objects.CharacterObject;
     import com.D5Power.Objects.GameObject;
     import com.D5Power.map.WorldMap;
-    import com.inoah.ro.characters.MonsterView;
     
     import flash.filters.GlowFilter;
     import flash.geom.Point;
@@ -146,9 +145,13 @@ package com.inoah.ro.controllers
                     }
                     if(Global.Timer-_lastHurt>_atkCd )
                     {
+                        var radian:Number = GMath.getPointAngle(_atkTarget.PosX-_me.PosX,_atkTarget.PosY-_me.PosY);
+                        var angle:int = GMath.R2A(radian)+90;
+                        changeDirectionByAngle( angle );
+                        
                         _me.action = Actions.Attack;
                         _lastHurt = Global.Timer;
-                        var tween:Tween = new Tween( _atkTarget , 1 );
+                        var tween:Tween = new Tween( _atkTarget , 0.4 );
                         tween.onComplete = onAttacked;
                         tween.onCompleteArgs = [_atkTarget]
                         appendAnimateUnit( tween );

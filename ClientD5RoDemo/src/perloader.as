@@ -2,7 +2,6 @@ package
 {
     import flash.display.DisplayObject;
     import flash.display.Loader;
-    import flash.display.LoaderInfo;
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
     import flash.events.ErrorEvent;
@@ -46,7 +45,7 @@ package
             _gameLoader.contentLoaderInfo.addEventListener( Event.COMPLETE, onGameLoaded );
             _gameLoader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onGameLoadProgress );
             _gameLoader.contentLoaderInfo.addEventListener( ErrorEvent.ERROR , onGameLoadError );
-            _gameLoader.load( new URLRequest("ClientD5RoDemo.swf" ) );
+            _gameLoader.load( new URLRequest("ClientD5RoDemo.swf?v=" + Math.random() ) );
         }
         
         protected function onUncaughtErrorHandle(event:UncaughtErrorEvent):void
@@ -86,13 +85,23 @@ package
             
             if(_gameLoader!=null)
             {
-                graphics.drawRect((stageWidth-196)*.5,(stageHeight-16)*.5,196*(_gameLoader.contentLoaderInfo.bytesLoaded / _gameLoader.contentLoaderInfo.bytesTotal),16);
+                try
+                {
+                    graphics.drawRect((stageWidth-196)*.5,(stageHeight-16)*.5,196*(_gameLoader.contentLoaderInfo.bytesLoaded / _gameLoader.contentLoaderInfo.bytesTotal),16);
+                } 
+                catch( e:Error ) 
+                {
+                    
+                }
             }
             graphics.endFill();
         }
         
         protected function onGameLoaded(e:Event):void
         {
+            _gameLoader.contentLoaderInfo.removeEventListener( Event.COMPLETE, onGameLoaded );
+            _gameLoader.contentLoaderInfo.removeEventListener( ProgressEvent.PROGRESS, onGameLoadProgress );
+            _gameLoader.contentLoaderInfo.removeEventListener( ErrorEvent.ERROR , onGameLoadError );
             var gameInitializer:DisplayObject = _gameLoader.content;
             stage.addChildAt(gameInitializer, 0);
             stage.removeChild(this);

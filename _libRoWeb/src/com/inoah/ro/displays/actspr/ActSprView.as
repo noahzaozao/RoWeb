@@ -1,6 +1,6 @@
 package com.inoah.ro.displays.actspr
 {
-    import com.inoah.ro.events.ActSprViewEvent;
+    import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.displays.actspr.structs.CACT;
     import com.inoah.ro.displays.actspr.structs.CSPR;
     import com.inoah.ro.displays.actspr.structs.acth.AnyActAnyPat;
@@ -9,6 +9,9 @@ package com.inoah.ro.displays.actspr
     import com.inoah.ro.displays.actspr.structs.acth.AnyPatSprV0204;
     import com.inoah.ro.displays.actspr.structs.acth.AnyPatSprV0205;
     import com.inoah.ro.displays.actspr.structs.sprh.AnySprite;
+    import com.inoah.ro.events.ActSprViewEvent;
+    import com.inoah.ro.managers.MainMgr;
+    import com.inoah.ro.managers.SprMgr;
     import com.inoah.ro.utils.Counter;
     
     import flash.display.Bitmap;
@@ -123,7 +126,7 @@ package com.inoah.ro.displays.actspr
             _counter.reset( _counterTarget );
         }
         
-        public function initSpr( data:ByteArray ):void
+        public function initSpr( data:ByteArray , url:String ):void
         {
             if( _spr )
             {
@@ -133,7 +136,8 @@ package com.inoah.ro.displays.actspr
             inData.endian = Endian.BIG_ENDIAN;
             data.position = 0;
             data.readBytes( inData );
-            _spr = new CSPR( inData , inData.length );
+            var sprMgr:SprMgr = MainMgr.instance.getMgr( MgrTypeConsts.SPR_MGR  ) as SprMgr;
+            _spr = sprMgr.getCSPR( url , inData );
             _counter.initialize();
             _counter.reset( _counterTarget );
             updateFrame();

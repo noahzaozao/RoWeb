@@ -76,7 +76,7 @@ package com.inoah.ro
             _msgTxt = new TextField();
             var tf:TextFormat = new TextFormat( "Arial" , 18 , 0xffffff );
             _msgTxt.defaultTextFormat = tf;
-            _msgTxt.text = "\nWelcome to the world of RoWeb!\nWe're now at version demo 0.0.3.\nEmail: 234082230@qq.com\n";
+            _msgTxt.text = "\nWelcome to the world of RoWeb!\nWe're now at version demo 0.0.3-1\nEmail: 234082230@qq.com\n";
             _msgTxt.x = (560 >> 1) + 20;
             _msgTxt.y = (260 >> 1) + 20;
             _msgTxt.width = 400;
@@ -154,7 +154,7 @@ package com.inoah.ro
             
             //            _scene.container.addChild( _playerView );
             
-            for( i = 0;i< 10; i++ )
+            for( i = 0;i< 50; i++ )
             {
                 (_scene as MainScene).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
             }
