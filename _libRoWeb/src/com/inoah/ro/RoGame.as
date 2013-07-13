@@ -154,7 +154,7 @@ package com.inoah.ro
             
             //            _scene.container.addChild( _playerView );
             
-            for( i = 0;i< 50; i++ )
+            for( i = 0;i< 100; i++ )
             {
                 (_scene as MainScene).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
             }

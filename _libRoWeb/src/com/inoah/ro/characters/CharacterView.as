@@ -65,7 +65,11 @@ package com.inoah.ro.characters
         protected var _dirChangeArr:Array = [4, 5, 6, 7, 8, -7, -6, -5];
         protected var _isPlayEnd:Boolean;
         protected var _chooseCircle:Shape;
-        
+        /**
+         *  
+         */        
+        protected var _bodyBitmapDataIndexList:Vector.<Vector.<String>>;
+        protected var _bodyBitmapDataList:Vector.<Vector.<BitmapData>>;
         
         public function setChooseCircle( bool:Boolean ):void
         {
@@ -83,6 +87,9 @@ package com.inoah.ro.characters
         }
         public function CharacterView( charInfo:CharacterInfo = null )
         {
+            _bodyBitmapDataIndexList = new Vector.<Vector.<String>>();
+            _bodyBitmapDataList = new Vector.<Vector.<BitmapData>>(); 
+            
             _bmd = new Bitmap();
             _isMoving = false;
             _targetPoint = new Point( 0, 0 );
@@ -459,15 +466,18 @@ package com.inoah.ro.characters
         /**
          * 渲染接口
          */ 
-        public function renderMe():void
+        public function render():void
         {
-            _bmd.bitmapData = new BitmapData( width * 2 , height * 3 , true , 0x0 );
-            _bmd.x = - width;
-            _bmd.y = - height * 2;
-            var matrix:Matrix;
-            matrix = new Matrix();
-            matrix.translate( width , height * 2 );
-            _bmd.bitmapData.draw( this , matrix , null, null, new Rectangle( 0, 0, width * 2 , height * 3 ) , false );
+            if( _headView && _weaponView )
+            {
+                _bmd.bitmapData = new BitmapData( width * 2 , height * 3 , true , 0x0 );
+                _bmd.x = - width;
+                _bmd.y = - height * 2;
+                var matrix:Matrix;
+                matrix = new Matrix();
+                matrix.translate( width , height * 2 );
+                _bmd.bitmapData.draw( this , matrix , null, null, new Rectangle( 0, 0, width * 2 , height * 3 ) , false );
+            }
         }
         /**
          * 更换SWF接口
@@ -545,6 +555,10 @@ package com.inoah.ro.characters
         
         public function get monitor():Bitmap
         {
+            if( !_headView && !_weaponView )
+            {
+                return _bodyView.bitmap;
+            }
             return _bmd;
         }
         

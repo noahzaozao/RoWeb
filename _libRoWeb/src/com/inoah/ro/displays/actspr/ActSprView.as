@@ -42,6 +42,11 @@ package com.inoah.ro.displays.actspr
         protected var _counterTarget:Number;
         protected var _counter:Counter;
         protected var _couldTick:Boolean;
+        
+        public function get bitmap():Bitmap
+        {
+            return _bitmap;
+        }
         /**
          * 动作速率
          */        

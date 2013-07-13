@@ -63,7 +63,7 @@ package com.D5Power.graphics
             D5StepLoader.me.addLoad(file,onComplate,true,D5StepLoader.TYPE_SWF);
         }
         
-        public function renderMe():void
+        public function render():void
         {
             if(_xml==null) return;
             var cost_time:Number = (getTimer() - _time) / int(_xml.@Time);

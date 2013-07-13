@@ -106,7 +106,7 @@ package com.D5Power.graphics
             D5StepLoader.me.addLoad(file,onComplate,true,D5StepLoader.TYPE_SWF);
         }
         
-        public function renderMe():void
+        public function render():void
         {
             if(_xml==null || (!_loop && _playFrame==int(_xml.@Frame)-1)) return;
             
