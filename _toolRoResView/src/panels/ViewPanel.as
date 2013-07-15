@@ -176,7 +176,7 @@ package panels
             if( !_charInfo )
             {
                 _charInfo = new CharacterInfo();
-                _charInfo.init( "", "", "", false );
+                _charInfo.init( "", "", false );
             }
             switch( _switchType )
             {

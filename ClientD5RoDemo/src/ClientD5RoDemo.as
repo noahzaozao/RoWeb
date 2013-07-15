@@ -71,7 +71,8 @@ package
             var resPathList:Vector.<String> = new Vector.<String>();
             resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
             resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
-            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_1207.act" );
+            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
+            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
             resPathList.push( "data/sprite/阁胶磐/poring.act" );
             resPathList.push( "data/sprite/阁胶磐/poporing.act" );
             resPathList.push( "data/sprite/阁胶磐/ghostring.act" );

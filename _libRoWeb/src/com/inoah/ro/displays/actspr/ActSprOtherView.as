@@ -5,8 +5,10 @@ package com.inoah.ro.displays.actspr
     import com.inoah.ro.displays.actspr.structs.acth.AnyPatSprV0204;
     import com.inoah.ro.displays.actspr.structs.acth.AnyPatSprV0205;
     import com.inoah.ro.displays.actspr.structs.sprh.AnySprite;
+    import com.inoah.ro.events.ActSprViewEvent;
     
     import flash.display.Bitmap;
+    
     /**
      *
      * weapon, headEquip 
@@ -15,7 +17,7 @@ package com.inoah.ro.displays.actspr
      */    
     public class ActSprOtherView extends ActSprView
     {
-        private var _bodyView:ActSprBodyView;
+        protected var _bodyView:ActSprBodyView;
         
         public function ActSprOtherView( bodyView:ActSprBodyView )
         {
@@ -30,30 +32,59 @@ package com.inoah.ro.displays.actspr
                 return;
             }
             _counter.tick( delta );
-            if( _counter.expired )
+            var couldRender:Boolean;
+            while( _counter.expired == true )
             {
-                _counter.reset( _counterTarget );
-                _currentFrame++;
-                if( _currentFrame >= _act.aall.aa[_actionIndex].aaap.length )
+                if( _act.aall.aa.length <= _actionIndex )
                 {
-                    _currentFrame = 0;
+                    _actionIndex = 0;
+                    return;
                 }
+                if( _currentFrame >= _act.aall.aa[_actionIndex].aaap.length - 1 )
+                {
+                    if( _loop )
+                    {
+                        _currentFrame = 0;
+                    }
+                }
+                else
+                {
+                    _currentFrame++;
+                }
+                couldRender = true;
+                _counter.reset( _counterTarget );
             }
-            else 
+            
+            if(couldRender == true)
+            {
+                updateFrame();
+            }
+        }
+        
+        override public function updateFrame():void
+        {
+            _currentAaap = _act.aall.aa[_actionIndex].aaap[_currentFrame];
+            
+            var isExt:Boolean = false;
+            if( _currentAaap.apsList.length == 0 )
             {
                 return;
             }
             
-            _currentAaap = _act.aall.aa[_actionIndex].aaap[_currentFrame];
-            
-            var isExt:Boolean = false;
             var apsv:AnyPatSprV0101 = _currentAaap.apsList[0];
+            if( !apsv )
+            {
+                return;
+            }
             if( apsv.sprNo == 0xffffffff )
             {
-                apsv = _currentAaap.apsList[1];
-                isExt = true;
+                if( _currentAaap.apsList.length > 1)
+                {
+                    apsv = _currentAaap.apsList[1];
+                    isExt = true;
+                }
             }
-            if( apsv as AnyPatSprV0101 )
+            if( apsv as AnyPatSprV0101 && apsv.sprNo != 0xffffffff )
             {
                 var anySprite:AnySprite;
                 anySprite = _spr.imgs[ apsv.sprNo ];
@@ -79,24 +110,6 @@ package com.inoah.ro.displays.actspr
                     _bitmap.y = -_bitmap.height / 2 + apsv.yOffs + _bodyView.currentAaap.ExtYoffs - _currentAaap.ExtYoffs;
                     _bitmap.scaleX = -1;
                 }
-            }
-            if( apsv as AnyPatSprV0201 )
-            {
-                apsv.color;
-                apsv.xyMag;
-                //                _bitmap.rotation = 
-                apsv.rot;
-                apsv.spType;
-            }
-            if( apsv as AnyPatSprV0204 )
-            {
-                apsv.xMag;
-                apsv.yMag;
-            }
-            if( apsv as AnyPatSprV0205 )
-            {
-                apsv.sprW;
-                apsv.sprH;
             }
         }
     }

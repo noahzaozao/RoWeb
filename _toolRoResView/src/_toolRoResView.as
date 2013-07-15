@@ -5,6 +5,7 @@ package
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.KeyMgr;
     import com.inoah.ro.managers.MainMgr;
+    import com.inoah.ro.managers.SprMgr;
     
     import flash.display.Sprite;
     import flash.display.StageAlign;
@@ -56,6 +57,7 @@ package
             
             MainMgr.instance;
             MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, new AssetMgr() );
+            MainMgr.instance.addMgr( MgrTypeConsts.SPR_MGR , new SprMgr() );
             
             initMenu();
             initData();

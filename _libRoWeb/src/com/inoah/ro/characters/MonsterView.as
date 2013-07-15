@@ -28,14 +28,17 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = true;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =true;
+                    _otherViews[1].visible =true;
                 }
             }
         }
@@ -49,14 +52,17 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0.8;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =true;
+                    _otherViews[1].visible =true;
                 }
             }
         }
@@ -70,14 +76,17 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =true;
+                    _otherViews[1].visible =true;
                 }
             }
         }
@@ -90,14 +99,17 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =false;
+                    _otherViews[1].visible =false;
                 }
             }
         }

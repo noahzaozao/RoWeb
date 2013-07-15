@@ -35,15 +35,15 @@ package com.inoah.ro.scenes
             var randMonster:int =  int(Math.random() * 3);
             if( randMonster == 0 )
             {
-                monsterInfo.init(  "" , "data/sprite/阁胶磐/poring.act" , "" , false );
+                monsterInfo.init(  "" , "data/sprite/阁胶磐/poring.act" , false );
             }
             else if( randMonster == 1 )
             {
-                monsterInfo.init( "" , "data/sprite/阁胶磐/poporing.act", "" , false );
+                monsterInfo.init( "" , "data/sprite/阁胶磐/poporing.act", false );
             }
             else 
             {
-                monsterInfo.init( "" , "data/sprite/阁胶磐/ghostring.act", "" , false );
+                monsterInfo.init( "" , "data/sprite/阁胶磐/ghostring.act", false );
             }
             //            charInfo.init( "可爱的早早", "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_咯.act" );
             var monsterView:MonsterView = new MonsterView( monsterInfo );

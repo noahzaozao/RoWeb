@@ -4,9 +4,8 @@ package com.inoah.ro.characters
     import com.D5Power.graphics.ISwfDisplayer;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.displays.actspr.ActSprBodyView;
-    import com.inoah.ro.displays.actspr.ActSprHeadView;
+    import com.inoah.ro.displays.actspr.ActSprOtherView;
     import com.inoah.ro.displays.actspr.ActSprPlayerView;
-    import com.inoah.ro.displays.actspr.ActSprWeaponView;
     import com.inoah.ro.displays.actspr.structs.CACT;
     import com.inoah.ro.events.ActSprViewEvent;
     import com.inoah.ro.infos.CharacterInfo;
@@ -33,8 +32,10 @@ package com.inoah.ro.characters
     {
         protected var _charInfo:CharacterInfo;
         protected var _bodyView:ActSprBodyView;
-        protected var _headView:ActSprHeadView;
-        protected var _weaponView:ActSprWeaponView;
+        /**
+         * 0head, 1weapon, 2weapon, 3head
+         */        
+        protected var _otherViews:Vector.<ActSprOtherView>
         
         protected var _headLoader:ILoader;
         protected var _bodyLoader:ILoader;
@@ -55,6 +56,7 @@ package com.inoah.ro.characters
         protected var _isAttacking:Boolean;
         
         protected var _weaponLoader:ILoader;
+        protected var _weaponShadowLoader:ILoader;
         protected var _isHiting:Boolean;
         
         protected var _bmd:Bitmap;
@@ -65,11 +67,6 @@ package com.inoah.ro.characters
         protected var _dirChangeArr:Array = [4, 5, 6, 7, 8, -7, -6, -5];
         protected var _isPlayEnd:Boolean;
         protected var _chooseCircle:Shape;
-        /**
-         *  
-         */        
-        protected var _bodyBitmapDataIndexList:Vector.<Vector.<String>>;
-        protected var _bodyBitmapDataList:Vector.<Vector.<BitmapData>>;
         
         public function setChooseCircle( bool:Boolean ):void
         {
@@ -87,8 +84,7 @@ package com.inoah.ro.characters
         }
         public function CharacterView( charInfo:CharacterInfo = null )
         {
-            _bodyBitmapDataIndexList = new Vector.<Vector.<String>>();
-            _bodyBitmapDataList = new Vector.<Vector.<BitmapData>>(); 
+            _otherViews = new Vector.<ActSprOtherView>( 4 );
             
             _bmd = new Bitmap();
             _isMoving = false;
@@ -141,6 +137,10 @@ package com.inoah.ro.characters
             {
                 assetMgr.getRes( _charInfo.weaponRes, onWeaponLoadComplete );
             }
+            if( _charInfo.weaponShadowRes )
+            {
+                assetMgr.getRes( _charInfo.weaponShadowRes, onWeaponShadowLoadComplete );
+            }
         }
         
         protected function onBodyLoadComplete( bodyLoader:ILoader ):void
@@ -190,15 +190,14 @@ package com.inoah.ro.characters
         
         protected function onNextFrameHandler( e:Event):void
         {
-            if( _headView )
+            var len:int = _otherViews.length;
+            for( var i:int = 0;i<len;i++)
             {
-                _headView.currentFrame = _bodyView.currentFrame
-                _headView.updateFrame();
-            }
-            if( _weaponView )
-            {
-                _weaponView.currentFrame = _bodyView.currentFrame
-                _weaponView.updateFrame();
+                if( _otherViews[i] )
+                {
+                    _otherViews[i].currentFrame = _bodyView.currentFrame
+                    _otherViews[i].updateFrame();
+                }
             }
         }
         
@@ -206,31 +205,48 @@ package com.inoah.ro.characters
         {
             //            _headLoader.removeEventListener( Event.COMPLETE, onHeadLoadComplete );
             _headLoader = headLoader;
-            if( !_headView )
+            if( !_otherViews[0] )
             {
-                _headView = new ActSprHeadView( _bodyView );
+                _otherViews[0] = new ActSprOtherView( _bodyView );
             }
-            _headView.initAct( (_headLoader as ActSprLoader).actData );
-            _headView.initSpr( (_headLoader as ActSprLoader).sprData , _headLoader.url );
-            _headView.actionIndex = _bodyView.actionIndex;
+            _otherViews[0].initAct( (_headLoader as ActSprLoader).actData );
+            _otherViews[0].initSpr( (_headLoader as ActSprLoader).sprData , _headLoader.url );
+            _otherViews[0].actionIndex = _bodyView.actionIndex;
             addChild( _bodyView );
-            addChild( _headView );
+            addChild( _otherViews[0] );
         }
         
         protected function onWeaponLoadComplete( weaponLoader:ILoader ):void
         {
             //            _weaponLoader.removeEventListener( Event.COMPLETE, onWeaponLoadComplete );
             _weaponLoader = weaponLoader;
-            if( !_weaponView )
+            if( !_otherViews[1] )
             {
-                _weaponView = new ActSprWeaponView( _bodyView );
+                _otherViews[1] = new ActSprOtherView( _bodyView );
             }
-            _weaponView.initAct( (_weaponLoader as ActSprLoader).actData );
-            _weaponView.initSpr( (_weaponLoader as ActSprLoader).sprData , _headLoader.url );
-            _weaponView.actionIndex = _bodyView.actionIndex;
+            _otherViews[1].initAct( (_weaponLoader as ActSprLoader).actData );
+            _otherViews[1].initSpr( (_weaponLoader as ActSprLoader).sprData , _weaponLoader.url );
+            _otherViews[1].actionIndex = _bodyView.actionIndex;
             addChild( _bodyView );
-            addChild( _headView );
-            addChild( _weaponView );
+            addChild( _otherViews[0] );
+            addChild( _otherViews[1] );
+        }
+        
+        protected function onWeaponShadowLoadComplete( weaponShadowLoader:ILoader ):void
+        {
+            //            _weaponLoader.removeEventListener( Event.COMPLETE, onWeaponLoadComplete );
+            _weaponShadowLoader = weaponShadowLoader;
+            if( !_otherViews[2] )
+            {
+                _otherViews[2] = new ActSprOtherView( _bodyView );
+            }
+            _otherViews[2].initAct( (_weaponShadowLoader as ActSprLoader).actData );
+            _otherViews[2].initSpr( (_weaponShadowLoader as ActSprLoader).sprData , _weaponShadowLoader.url );
+            _otherViews[2].actionIndex = _bodyView.actionIndex;
+            addChild( _bodyView );
+            addChild( _otherViews[0] );
+            addChild( _otherViews[2] );
+            addChild( _otherViews[1] );
         }
         
         public function tick( delta:Number ):void
@@ -240,6 +256,14 @@ package com.inoah.ro.characters
                 if( _bodyView )
                 {
                     _bodyView.tick( delta );
+                }
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
+                {
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].tick( delta );
+                    }
                 }
             }
         }
@@ -252,14 +276,21 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =false;
+                    _otherViews[1].visible =false;
+                }
+                if( _otherViews[2] )
+                {
+                    _otherViews[2].visible =false;
                 }
             }
         }
@@ -272,14 +303,21 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = true;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =true;
+                    _otherViews[1].visible =true;
+                }
+                if( _otherViews[2] )
+                {
+                    _otherViews[2].visible =false;
                 }
             }
         }
@@ -292,14 +330,21 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = true;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =false;
+                    _otherViews[1].visible =false;
+                }
+                if( _otherViews[2] )
+                {
+                    _otherViews[2].visible =false;
                 }
             }
         }
@@ -313,14 +358,21 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0.27;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =true;
+                    _otherViews[1].visible =true;
+                }
+                if( _otherViews[2] )
+                {
+                    _otherViews[2].visible =true;
                 }
             }
         }
@@ -333,14 +385,21 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =false;
+                    _otherViews[1].visible =false;
+                }
+                if( _otherViews[2] )
+                {
+                    _otherViews[2].visible =false;
                 }
             }
         }
@@ -353,14 +412,21 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =false;
+                    _otherViews[1].visible =false;
+                }
+                if( _otherViews[2] )
+                {
+                    _otherViews[2].visible =false;
                 }
             }
         }
@@ -373,14 +439,21 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
-                if( _headView )
+                var len:int = _otherViews.length;
+                for( var i:int = 0;i<len;i++)
                 {
-                    _headView.actionIndex = _currentIndex + _dirIndex;
+                    if( _otherViews[i] )
+                    {
+                        _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                    }
                 }
-                if( _weaponView )
+                if( _otherViews[1] )
                 {
-                    _weaponView.actionIndex = _currentIndex + _dirIndex;
-                    _weaponView.visible =false;
+                    _otherViews[1].visible =false;
+                }
+                if( _otherViews[2] )
+                {
+                    _otherViews[2].visible =false;
                 }
             }
         }
@@ -399,13 +472,13 @@ package com.inoah.ro.characters
         {
             _dirIndex = value;
             _bodyView.actionIndex = _currentIndex + _dirIndex;
-            if( _headView )
+            var len:int = _otherViews.length;
+            for( var i:int = 0;i<len;i++)
             {
-                _headView.actionIndex = _currentIndex + _dirIndex;
-            }
-            if( _weaponView )
-            {
-                _weaponView.actionIndex = _currentIndex + _dirIndex;
+                if( _otherViews[i] )
+                {
+                    _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                }
             }
         }
         
@@ -428,13 +501,13 @@ package com.inoah.ro.characters
         {
             _isHiting = value;
             _bodyView.currentFrame = 0;
-            if( _headView )
+            var len:int = _otherViews.length;
+            for( var i:int = 0;i<len;i++)
             {
-                _headView.currentFrame = 0;
-            }
-            if( _weaponView )
-            {
-                _weaponView.currentFrame = 0;
+                if( _otherViews[i] )
+                {
+                    _otherViews[i].currentFrame = 0;
+                }
             }
         }
         
@@ -468,7 +541,7 @@ package com.inoah.ro.characters
          */ 
         public function render():void
         {
-            if( _headView && _weaponView )
+            if( _otherViews[0] && _otherViews[1] )
             {
                 _bmd.bitmapData = new BitmapData( width * 2 , height * 3 , true , 0x0 );
                 _bmd.x = - width;
@@ -555,7 +628,7 @@ package com.inoah.ro.characters
         
         public function get monitor():Bitmap
         {
-            if( !_headView && !_weaponView )
+            if( !_otherViews[0] && !_otherViews[1] )
             {
                 return _bodyView.bitmap;
             }

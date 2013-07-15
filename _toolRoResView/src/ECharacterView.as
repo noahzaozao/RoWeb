@@ -23,13 +23,13 @@ package
         {
             _currentIndex = value;
             _bodyView.actionIndex = _currentIndex + _dirIndex;
-            if( _headView )
+            var len:int = _otherViews.length;
+            for( var i:int = 0;i<len;i++)
             {
-                _headView.actionIndex = _currentIndex + _dirIndex;
-            }
-            if( _weaponView )
-            {
-                _weaponView.actionIndex = _currentIndex + _dirIndex;
+                if( _otherViews[i] )
+                {
+                    _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                }
             }
         }
     }

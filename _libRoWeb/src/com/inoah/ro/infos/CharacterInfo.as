@@ -5,17 +5,17 @@ package com.inoah.ro.infos
         protected var _headRes:String;
         protected var _bodyRes:String;
         protected var _weaponRes:String;
+        protected var _weaponShadowRes:String;
         protected var _isPlayer:Boolean;
         
         public function CharacterInfo()
         {
         }
         
-        public function init( headRes:String, bodyRes:String, weaponRes:String = "", isPlayer:Boolean = false ):void
+        public function init( headRes:String, bodyRes:String, isPlayer:Boolean = false ):void
         {
             _headRes = headRes;
             _bodyRes = bodyRes;
-            _weaponRes = weaponRes;
             _isPlayer = isPlayer;
         }
         
@@ -35,9 +35,17 @@ package com.inoah.ro.infos
         {
             return _weaponRes;
         }
+        public function get weaponShadowRes():String
+        {
+            return _weaponShadowRes;
+        }
         public function setHeadRes( value:String ):void
         {
             _headRes = value;
+        }
+        public function setWeaponShadowRes( value:String ):void
+        {
+            _weaponShadowRes = value;
         }
         public function setWeaponRes( value:String ):void
         {

@@ -204,7 +204,7 @@ package com.inoah.ro.displays.actspr.structs
             {
                 for (var x:int=0; x<width; x++) 
                 {
-                    var val:int = data.readByte();
+                    var val:int = data.readUnsignedByte();
                     if (val == 0) 
                     {
                         imgs[no].dat[ y*width + x ] = 0;
