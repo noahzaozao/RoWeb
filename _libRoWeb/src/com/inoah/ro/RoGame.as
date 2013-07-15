@@ -118,6 +118,13 @@ package com.inoah.ro
             skillIconView.height = 32;
             _skillBarItemList[0].addChildAt( skillIconView , 1 );
             
+            skillIconInfo = new CharacterInfo();
+            skillIconInfo.init( "", "data/sprite/酒捞袍/lk_spiralpierce.act", "" );
+            skillIconView = new CharacterView( skillIconInfo );
+            skillIconView.width = 32;
+            skillIconView.height = 32;
+            _skillBarItemList[1].addChildAt( skillIconView , 1 );
+            
             _skillMask = new Shape();
             _skillMask.alpha = 0.7;
             _skillMask.x = -16;

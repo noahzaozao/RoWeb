@@ -356,6 +356,7 @@ package com.inoah.ro.characters
         
         public function actionAttack():void
         {
+//            _currentIndex = 88;
             _currentIndex = 80;
             //            _currentIndex = 40;
             if( _bodyView )
