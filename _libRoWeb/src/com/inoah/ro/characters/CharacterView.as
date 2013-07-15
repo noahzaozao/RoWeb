@@ -54,11 +54,9 @@ package com.inoah.ro.characters
         protected var _x:Number;
         protected var _y:Number;
         protected var _moveTime:Number;
-        protected var _isAttacking:Boolean;
         
         protected var _weaponLoader:ILoader;
         protected var _weaponShadowLoader:ILoader;
-        protected var _isHiting:Boolean;
         
         protected var _bmd:Bitmap;
         
@@ -277,12 +275,14 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
+                _bodyView.updateFrame();
                 var len:int = _otherViews.length;
                 for( var i:int = 0;i<len;i++)
                 {
                     if( _otherViews[i] )
                     {
                         _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                        _otherViews[i].updateFrame();
                     }
                 }
                 if( _otherViews[1] )
@@ -304,12 +304,14 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = true;
+                _bodyView.updateFrame();
                 var len:int = _otherViews.length;
                 for( var i:int = 0;i<len;i++)
                 {
                     if( _otherViews[i] )
                     {
                         _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                        _otherViews[i].updateFrame();
                     }
                 }
                 if( _otherViews[1] )
@@ -331,12 +333,14 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = true;
+                _bodyView.updateFrame();
                 var len:int = _otherViews.length;
                 for( var i:int = 0;i<len;i++)
                 {
                     if( _otherViews[i] )
                     {
                         _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                        _otherViews[i].updateFrame();
                     }
                 }
                 if( _otherViews[1] )
@@ -359,12 +363,14 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0.27;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
+                _bodyView.updateFrame();
                 var len:int = _otherViews.length;
                 for( var i:int = 0;i<len;i++)
                 {
                     if( _otherViews[i] )
                     {
                         _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                        _otherViews[i].updateFrame();
                     }
                 }
                 if( _otherViews[1] )
@@ -386,12 +392,14 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
+                _bodyView.updateFrame();
                 var len:int = _otherViews.length;
                 for( var i:int = 0;i<len;i++)
                 {
                     if( _otherViews[i] )
                     {
                         _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                        _otherViews[i].updateFrame();
                     }
                 }
                 if( _otherViews[1] )
@@ -413,12 +421,14 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
+                _bodyView.updateFrame();
                 var len:int = _otherViews.length;
                 for( var i:int = 0;i<len;i++)
                 {
                     if( _otherViews[i] )
                     {
                         _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                        _otherViews[i].updateFrame();
                     }
                 }
                 if( _otherViews[1] )
@@ -440,12 +450,14 @@ package com.inoah.ro.characters
                 _bodyView.counterTargetRate = 0;
                 _bodyView.actionIndex = _currentIndex + _dirIndex;
                 _bodyView.loop = false;
+                _bodyView.updateFrame();
                 var len:int = _otherViews.length;
                 for( var i:int = 0;i<len;i++)
                 {
                     if( _otherViews[i] )
                     {
                         _otherViews[i].actionIndex = _currentIndex + _dirIndex;
+                        _otherViews[i].updateFrame();
                     }
                 }
                 if( _otherViews[1] )
@@ -496,35 +508,6 @@ package com.inoah.ro.characters
         public function get isMoving():Boolean
         {
             return _isMoving;
-        }
-        
-        public function set isHiting( value:Boolean ):void
-        {
-            _isHiting = value;
-            _bodyView.currentFrame = 0;
-            var len:int = _otherViews.length;
-            for( var i:int = 0;i<len;i++)
-            {
-                if( _otherViews[i] )
-                {
-                    _otherViews[i].currentFrame = 0;
-                }
-            }
-        }
-        
-        public function get isHiting():Boolean
-        {
-            return _isHiting;
-        }
-        
-        public function set isAttacking( value:Boolean ):void
-        {
-            _isAttacking = value;
-        }
-        
-        public function get isAttacking():Boolean
-        {
-            return _isAttacking;
         }
         
         public function set dirIndex( value:uint ):void

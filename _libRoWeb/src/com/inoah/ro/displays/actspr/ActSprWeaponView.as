@@ -4,7 +4,7 @@ package com.inoah.ro.displays.actspr
     import com.inoah.ro.displays.actspr.structs.sprh.AnySprite;
     
     import flash.display.Bitmap;
-
+    
     public class ActSprWeaponView extends ActSprOtherView
     {
         public function ActSprWeaponView(bodyView:ActSprBodyView)
@@ -56,14 +56,14 @@ package com.inoah.ro.displays.actspr
                 }
                 if( apsv.mirrorOn == 0 )
                 {
-                    _bitmap.x = -_bitmap.width / 2 + apsv.xOffs// + _bodyView.currentAaap.ExtXoffs - _currentAaap.ExtXoffs;
-                    _bitmap.y = -_bitmap.height / 2 + apsv.yOffs// + _bodyView.currentAaap.ExtYoffs - _currentAaap.ExtYoffs;
+                    _bitmap.x = -_bitmap.width / 2 + apsv.xOffs - _currentAaap.ExtXoffs;
+                    _bitmap.y = -_bitmap.height / 2 + apsv.yOffs - _currentAaap.ExtYoffs;
                     _bitmap.scaleX = 1;
                 }
                 else
                 {
-                    _bitmap.x = _bitmap.width / 2 + apsv.xOffs// + _bodyView.currentAaap.ExtXoffs - _currentAaap.ExtXoffs;
-                    _bitmap.y = -_bitmap.height / 2 + apsv.yOffs// + _bodyView.currentAaap.ExtYoffs - _currentAaap.ExtYoffs;
+                    _bitmap.x = _bitmap.width / 2 + apsv.xOffs - _currentAaap.ExtXoffs;
+                    _bitmap.y = -_bitmap.height / 2 + apsv.yOffs - _currentAaap.ExtYoffs;
                     _bitmap.scaleX = -1;
                 }
                 

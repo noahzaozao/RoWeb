@@ -25,6 +25,7 @@ package com.inoah.ro.controllers
         private var _lastHurt:uint;
         private var _atkCd:uint = 3000;
         protected var _animationUnitList:Vector.<IAnimatable>;
+        private var _isDie:Boolean;
         
         public function MonsterController(pec:Perception)
         {
@@ -83,6 +84,11 @@ package com.inoah.ro.controllers
         override public function calcAction():void
         {
             if( _me.action == Actions.Die )
+            {
+                _isDie = true;
+                return;
+            }
+            if( _isDie )
             {
                 return;
             }

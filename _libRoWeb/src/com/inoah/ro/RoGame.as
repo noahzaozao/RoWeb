@@ -130,8 +130,10 @@ package com.inoah.ro
             charInfo.init( "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", true );
             charInfo.setWeaponRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
             charInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
+//            charInfo.init( "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/咯/檬焊磊_咯.act", true );
+//            charInfo.setWeaponRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八.act" );
+//            charInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八_八堡.act" );
             
-            //            charInfo.init( "可爱的早早", "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_咯.act" );
             _playerView = new PlayerView( charInfo );
             _playerView.x = 400;
             _playerView.y = 400;

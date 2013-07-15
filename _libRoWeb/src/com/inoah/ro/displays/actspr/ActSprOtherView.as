@@ -27,34 +27,6 @@ package com.inoah.ro.displays.actspr
             {
                 return;
             }
-            _counter.tick( delta );
-            var couldRender:Boolean;
-            while( _counter.expired == true )
-            {
-                if( _act.aall.aa.length <= _actionIndex )
-                {
-                    _actionIndex = 0;
-                    return;
-                }
-                if( _currentFrame >= _act.aall.aa[_actionIndex].aaap.length - 1 )
-                {
-                    if( _loop )
-                    {
-                        _currentFrame = 0;
-                    }
-                }
-                else
-                {
-                    _currentFrame++;
-                }
-                couldRender = true;
-                _counter.reset( _counterTarget );
-            }
-            
-            if(couldRender == true)
-            {
-                updateFrame();
-            }
         }
         
         override public function updateFrame():void
