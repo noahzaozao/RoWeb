@@ -4,57 +4,17 @@ package com.inoah.ro.displays.actspr
     import com.inoah.ro.displays.actspr.structs.sprh.AnySprite;
     
     import flash.display.Bitmap;
-    
-    /**
-     *
-     * weapon, headEquip 
-     * @author inoah
-     * 
-     */    
-    public class ActSprOtherView extends ActSprView
+
+    public class ActSprWeaponView extends ActSprOtherView
     {
-        protected var _bodyView:ActSprBodyView;
-        
-        public function ActSprOtherView( bodyView:ActSprBodyView )
+        public function ActSprWeaponView(bodyView:ActSprBodyView)
         {
-            super();
-            _bodyView = bodyView;
+            super(bodyView);
         }
         
         override public function tick(delta:Number):void
         {
-            if( !_couldTick )
-            {
-                return;
-            }
-            _counter.tick( delta );
-            var couldRender:Boolean;
-            while( _counter.expired == true )
-            {
-                if( _act.aall.aa.length <= _actionIndex )
-                {
-                    _actionIndex = 0;
-                    return;
-                }
-                if( _currentFrame >= _act.aall.aa[_actionIndex].aaap.length - 1 )
-                {
-                    if( _loop )
-                    {
-                        _currentFrame = 0;
-                    }
-                }
-                else
-                {
-                    _currentFrame++;
-                }
-                couldRender = true;
-                _counter.reset( _counterTarget );
-            }
-            
-            if(couldRender == true)
-            {
-                updateFrame();
-            }
+            super.tick( delta );
         }
         
         override public function updateFrame():void
@@ -96,16 +56,17 @@ package com.inoah.ro.displays.actspr
                 }
                 if( apsv.mirrorOn == 0 )
                 {
-                    _bitmap.x = -_bitmap.width / 2 + apsv.xOffs + _bodyView.currentAaap.ExtXoffs - _currentAaap.ExtXoffs;
-                    _bitmap.y = -_bitmap.height / 2 + apsv.yOffs + _bodyView.currentAaap.ExtYoffs - _currentAaap.ExtYoffs;
+                    _bitmap.x = -_bitmap.width / 2 + apsv.xOffs// + _bodyView.currentAaap.ExtXoffs - _currentAaap.ExtXoffs;
+                    _bitmap.y = -_bitmap.height / 2 + apsv.yOffs// + _bodyView.currentAaap.ExtYoffs - _currentAaap.ExtYoffs;
                     _bitmap.scaleX = 1;
                 }
                 else
                 {
-                    _bitmap.x = _bitmap.width / 2 + apsv.xOffs + _bodyView.currentAaap.ExtXoffs - _currentAaap.ExtXoffs;
-                    _bitmap.y = -_bitmap.height / 2 + apsv.yOffs + _bodyView.currentAaap.ExtYoffs - _currentAaap.ExtYoffs;
+                    _bitmap.x = _bitmap.width / 2 + apsv.xOffs// + _bodyView.currentAaap.ExtXoffs - _currentAaap.ExtXoffs;
+                    _bitmap.y = -_bitmap.height / 2 + apsv.yOffs// + _bodyView.currentAaap.ExtYoffs - _currentAaap.ExtYoffs;
                     _bitmap.scaleX = -1;
                 }
+                
             }
         }
     }

@@ -6,6 +6,7 @@ package com.inoah.ro.characters
     import com.inoah.ro.displays.actspr.ActSprBodyView;
     import com.inoah.ro.displays.actspr.ActSprOtherView;
     import com.inoah.ro.displays.actspr.ActSprPlayerView;
+    import com.inoah.ro.displays.actspr.ActSprWeaponView;
     import com.inoah.ro.displays.actspr.structs.CACT;
     import com.inoah.ro.events.ActSprViewEvent;
     import com.inoah.ro.infos.CharacterInfo;
@@ -222,7 +223,7 @@ package com.inoah.ro.characters
             _weaponLoader = weaponLoader;
             if( !_otherViews[1] )
             {
-                _otherViews[1] = new ActSprOtherView( _bodyView );
+                _otherViews[1] = new ActSprWeaponView( _bodyView );
             }
             _otherViews[1].initAct( (_weaponLoader as ActSprLoader).actData );
             _otherViews[1].initSpr( (_weaponLoader as ActSprLoader).sprData , _weaponLoader.url );
@@ -238,7 +239,7 @@ package com.inoah.ro.characters
             _weaponShadowLoader = weaponShadowLoader;
             if( !_otherViews[2] )
             {
-                _otherViews[2] = new ActSprOtherView( _bodyView );
+                _otherViews[2] = new ActSprWeaponView( _bodyView );
             }
             _otherViews[2].initAct( (_weaponShadowLoader as ActSprLoader).actData );
             _otherViews[2].initSpr( (_weaponShadowLoader as ActSprLoader).sprData , _weaponShadowLoader.url );
