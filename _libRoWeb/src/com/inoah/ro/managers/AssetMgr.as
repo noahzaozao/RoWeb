@@ -4,7 +4,6 @@ package com.inoah.ro.managers
     import com.inoah.ro.loaders.ActSprLoader;
     import com.inoah.ro.loaders.ILoader;
     import com.inoah.ro.loaders.TPCLoader;
-    import com.inoah.ro.uis.TopText;
     
     import flash.events.Event;
     
@@ -86,7 +85,7 @@ package com.inoah.ro.managers
                 {
                     _isLoading = true;
                     _loaderList[0].addEventListener( Event.COMPLETE , onLoadComplete );
-                    TopText.show( "start load" + _loaderList[0].url );
+                    trace( "start load" + _loaderList[0].url );
                     _loaderList[0].load();
                 }
                 else
@@ -106,7 +105,7 @@ package com.inoah.ro.managers
         {
             var loader:ILoader = e.currentTarget as ILoader;
             loader.removeEventListener( Event.COMPLETE, onLoadComplete );
-            TopText.show( "load complete..." + loader.url );
+            trace( "load complete..." + loader.url );
             _cacheList.push( loader );
             _cacheListIndex.push( loader.url );
             

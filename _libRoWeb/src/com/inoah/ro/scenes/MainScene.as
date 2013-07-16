@@ -7,7 +7,6 @@ package com.inoah.ro.scenes
     import com.inoah.ro.controllers.MonsterController;
     import com.inoah.ro.infos.CharacterInfo;
     import com.inoah.ro.objects.PlayerObject;
-    import com.inoah.ro.uis.TopText;
     import com.inoah.ro.utils.Counter;
     
     import flash.display.DisplayObjectContainer;
@@ -95,10 +94,10 @@ package com.inoah.ro.scenes
             _newMonsterCounter.tick( delta );
             if( _newMonsterCounter.expired )
             {
-                if( _monsterObjList.length < 50 )
+                if( _monsterObjList.length < 10 )
                 {
-                    createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
-                    TopText.show( "a monster appear!" );
+                    createMonser( 800 * Math.random() + 100, 800 * Math.random() + 100 );
+                    trace( "a monster appear!" );
                 }
                 _newMonsterCounter.reset( 3 );
             }

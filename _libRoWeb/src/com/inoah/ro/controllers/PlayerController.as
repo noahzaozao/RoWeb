@@ -57,6 +57,7 @@ package com.inoah.ro.controllers
                 _chooseTarget = null;
             }
             super.onClick(e);
+            
         }
         
         override protected function clickSomeBody(o:GameObject):void

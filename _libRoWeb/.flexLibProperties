@@ -18,6 +18,13 @@
     <classEntry path="com.inoah.ro.displays.starling.TpcOtherView"/>
     <classEntry path="com.inoah.ro.managers.SprMgr"/>
     <classEntry path="com.inoah.ro.displays.actspr.ActSprWeaponView"/>
+    <classEntry path="com.inoah.ro.ui.LoginView"/>
+    <classEntry path="com.inoah.ro.mediators.GameMediator"/>
+    <classEntry path="com.inoah.ro.consts.GameConsts"/>
+    <classEntry path="com.inoah.ro.consts.GameCommands"/>
+    <classEntry path="com.inoah.ro.ui.MainView"/>
+    <classEntry path="com.inoah.ro.mediators.views.MainViewMediator"/>
+    <classEntry path="com.inoah.ro.managers.DisplayMgr"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -1,0 +1,155 @@
+<Dialog sceneWidth="280" sceneHeight="300" sceneColor="0xffffff" sceneBg="" layers="1,1,0,0,第 1 层;2,1,0,0,第 2 层">
+  <Image url="png.basic_interface.itemwin_left" x="0" y="17" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="25" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="33" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="41" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="49" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="57" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="65" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="73" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="81" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="89" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="97" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="105" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="113" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="121" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="129" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="137" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="145" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="153" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="161" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="169" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="177" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="185" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="193" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="201" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="209" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="217" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="225" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="233" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="241" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="249" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="257" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="265" layer="2"/>
+  <Image url="png.basic_interface.itemwin_left" x="0" y="273" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="17" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="25" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="33" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="41" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="49" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="57" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="65" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="73" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="81" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="89" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="97" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="105" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="113" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="121" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="129" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="137" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="145" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="153" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="161" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="169" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="177" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="185" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="193" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="201" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="209" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="217" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="225" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="233" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="241" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="249" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="257" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="265" layer="2"/>
+  <Image url="png.basic_interface.itemwin_right" x="260" y="273" layer="2"/>
+  <Image url="png.basic_interface.btnbar_left" x="0" y="273" layer="2"/>
+  <Image url="png.basic_interface.btnbar_mid" x="21" y="273" layer="2" width="240" height="21"/>
+  <Image url="png.basic_interface.btnbar_right" x="259" y="273" layer="2"/>
+  <Image url="png.basic_interface.titlebar_fix" x="0" y="0" layer="1"/>
+  <Button skin="png.basic_interface.btn_sys_close" x="267" y="2" layer="1" var="btnClose" name="btnClose"/>
+  <Container layers="1,1,0" layer="1" x="20" y="17">
+    <Image url="png.basic_interface.itemwin_mid" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="32" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="64" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="128" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="96" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="160" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="192" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="224" layer="1"/>
+  </Container>
+  <Container layers="1,1,0" layer="1" x="20" y="49">
+    <Image url="png.basic_interface.itemwin_mid" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="32" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="64" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="128" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="96" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="160" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="192" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="224" layer="1"/>
+  </Container>
+  <Container layers="1,1,0" layer="1" x="20" y="81">
+    <Image url="png.basic_interface.itemwin_mid" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="32" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="64" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="128" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="96" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="160" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="192" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="224" layer="1"/>
+  </Container>
+  <Container layers="1,1,0" layer="1" x="20" y="113">
+    <Image url="png.basic_interface.itemwin_mid" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="32" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="64" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="128" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="96" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="160" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="192" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="224" layer="1"/>
+  </Container>
+  <Container layers="1,1,0" layer="1" x="20" y="145">
+    <Image url="png.basic_interface.itemwin_mid" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="32" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="64" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="128" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="96" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="160" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="192" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="224" layer="1"/>
+  </Container>
+  <Container layers="1,1,0" layer="1" x="20" y="177">
+    <Image url="png.basic_interface.itemwin_mid" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="32" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="64" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="128" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="96" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="160" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="192" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="224" layer="1"/>
+  </Container>
+  <Container layers="1,1,0" layer="1" x="20" y="209">
+    <Image url="png.basic_interface.itemwin_mid" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="32" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="64" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="128" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="96" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="160" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="192" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="224" layer="1"/>
+  </Container>
+  <Container layers="1,1,0" layer="1" x="20" y="241">
+    <Image url="png.basic_interface.itemwin_mid" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="32" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="64" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="128" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="96" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="160" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="192" layer="1"/>
+    <Image url="png.basic_interface.itemwin_mid" x="224" layer="1"/>
+  </Container>
+  <Label text="item" x="18" y="-1" layer="1" size="12"/>
+  <Button skin="png.basic_interface.btn_sys_base" x="3" y="3" layer="1"/>
+</Dialog>

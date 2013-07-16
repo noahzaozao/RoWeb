@@ -23,6 +23,7 @@ package com.inoah.ro.controllers
         private var _atkTarget:CharacterObject;
         private var _fightMode:int;
         private var _lastHurt:uint;
+        private var _movCd:uint = 3000;
         private var _atkCd:uint = 3000;
         protected var _animationUnitList:Vector.<IAnimatable>;
         private var _isDie:Boolean;
@@ -93,12 +94,12 @@ package com.inoah.ro.controllers
                 return;
             }
                 
-            if( _atkTarget == null && _lastAutoMove!=-1 && Global.Timer-_lastAutoMove>2000)
+            if( _atkTarget == null && _lastAutoMove!=-1 && Global.Timer-_lastAutoMove>_movCd)
             {
                 // 自动移动
                 _lastAutoMove = Global.Timer;
-                var nextX:int = Math.random()>0.5 ? _me.PosX+int(Math.random()*50) : _me.PosX-int(Math.random()*50);
-                var nextY:int = Math.random()>0.5 ? _me.PosY+int(Math.random()*50) : _me.PosY-int(Math.random()*50);
+                var nextX:int = Math.random()>0.5 ? _me.PosX+int(Math.random()*30) : _me.PosX-int(Math.random()*30);
+                var nextY:int = Math.random()>0.5 ? _me.PosY+int(Math.random()*30) : _me.PosY-int(Math.random()*30);
                 // 不可移出屏幕
                 if(nextX>Global.MAPSIZE.x || nextX<0) return;
                 if(nextY>Global.MAPSIZE.y || nextY<0) return;

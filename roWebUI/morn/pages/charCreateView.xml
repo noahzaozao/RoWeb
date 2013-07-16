@@ -1,0 +1,18 @@
+<View sceneWidth="576" sceneHeight="342" sceneColor="0xffffff" sceneBg="" layers="1,1,0,0,第 1 层">
+  <Image url="png.login_interface.win_make" x="0" y="0" layer="1"/>
+  <Image url="png.login_interface.arw-agi0" x="192" y="107" layer="1"/>
+  <Image url="png.login_interface.arw-dex0" x="192" y="192" layer="1"/>
+  <Image url="png.login_interface.arw-int0" x="271" y="245" layer="1"/>
+  <Image url="png.login_interface.arw-luk0" x="349" y="189" layer="1"/>
+  <Image url="png.login_interface.arw-str0" x="270" y="50" layer="1"/>
+  <Image url="png.login_interface.arw-vit0" x="348" y="104" layer="1"/>
+  <TextInput text="TextInput" skin="png.comp.textinput" x="61" y="244" layer="1" var="txtName" name="txtName"/>
+  <Label text="label" x="459" y="36" layer="1" width="80" var="labStr" name="labStr"/>
+  <Label text="label" x="459" y="52" layer="1" width="80" var="labAgi" name="labAgi"/>
+  <Label text="label" x="459" y="69" layer="1" width="80" var="labVit" name="labVit"/>
+  <Label text="label" x="459" y="85" layer="1" width="80" var="labInt" name="labInt"/>
+  <Label text="label" x="459" y="101" layer="1" width="80" var="labDex" name="labDex"/>
+  <Label text="label" x="459" y="118" layer="1" width="80" var="labLuk" name="labLuk"/>
+  <Button skin="png.basic_interface.btn_ok" x="6" y="318" layer="1"/>
+  <Button skin="png.basic_interface.btn_cancel" x="54" y="318" layer="1"/>
+</View>

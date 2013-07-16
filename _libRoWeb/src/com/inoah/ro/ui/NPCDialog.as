@@ -82,7 +82,7 @@ package com.inoah.ro.ui
             _say = _say.replace(/{/g,'<');
             _say = _say.replace(/}/g,'>');
             
-            fontController.play(_say , 10);
+            fontController.play(_say );
             
             visible = true;
         }
