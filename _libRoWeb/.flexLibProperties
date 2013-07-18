@@ -33,6 +33,10 @@
     <classEntry path="com.inoah.ro.ui.sysView.AlertView"/>
     <classEntry path="com.inoah.ro.ui.mainViewChildren.ChatView"/>
     <classEntry path="com.inoah.ro.ui.mainViewChildren.SkillBarView"/>
+    <classEntry path="com.inoah.ro.infos.UserInfo"/>
+    <classEntry path="com.inoah.ro.infos.BattleCharacterInfo"/>
+    <classEntry path="com.inoah.ro.managers.BattleMgr"/>
+    <classEntry path="com.inoah.ro.mediators.views.ChatViewMediator"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

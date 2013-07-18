@@ -11,5 +11,7 @@ package com.inoah.ro.consts
         public static const MAP_VIEW:String = "GameConsts.MAP_VIEW";
         public static const TASK_VIEW:String = "GameConsts.TASK_VIEW";
         public static const OPTION_VIEW:String = "GameConsts.OPTION_VIEW";
+
+        public static const CHAT_VIEW:String = "GameConsts.CHAT_VIEW";
     }
 }

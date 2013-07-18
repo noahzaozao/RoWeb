@@ -4,6 +4,7 @@ package com.inoah.ro.mediators
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.consts.MgrTypeConsts;
+    import com.inoah.ro.infos.UserInfo;
     import com.inoah.ro.loaders.ActSprLoader;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.DisplayMgr;
@@ -50,11 +51,13 @@ package com.inoah.ro.mediators
         }
         override public function handleNotification(notification:INotification):void
         {
+            var arr:Array;
             switch ( notification.getName() )
             {
                 case GameCommands.LOGIN:
                 {
-                    onLoginHandler();
+                    arr = notification.getBody() as Array;
+                    onLoginHandler( arr[0] );
                     break;
                 }
                 default:
@@ -64,9 +67,36 @@ package com.inoah.ro.mediators
             }
         }
         
-        private function onLoginHandler():void
+        private function onLoginHandler( username:String ):void
         {
             _loginView.remove();
+            
+            Global.userdata = new UserData();
+            Global.userdata.getCanSeeMission(1);
+            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            userInfo.init( "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", true );
+            userInfo.setWeaponRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
+            userInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
+            //            charInfo.init( "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/咯/檬焊磊_咯.act", true );
+            //            charInfo.setWeaponRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八.act" );
+            //            charInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八_八堡.act" );
+            userInfo.name = username;
+            userInfo.job = "Novice";
+            userInfo.baseLv = 1;
+            userInfo.baseExp = 0;
+            userInfo.jobLv = 1;
+            userInfo.jobExp = 0;
+            userInfo.weightCurrent = 0;
+            userInfo.weightMax = 1000;
+            userInfo.zeny = 10000;
+            userInfo.strength = 1;
+            userInfo.agile = 1;
+            userInfo.vit = 1;
+            userInfo.intelligence = 1;
+            userInfo.dexterous = 1;
+            userInfo.lucky = 1;
+            userInfo.hpCurrent = userInfo.hpMax;
+            userInfo.spCurrent = userInfo.spMax;
             
             _noteTxt = new TextField();
             _noteTxt.defaultTextFormat = new TextFormat( "Arial", 32 , 0xffffff, true );
@@ -75,11 +105,6 @@ package com.inoah.ro.mediators
             _noteTxt.text = "Waiting for resource...";
             var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
             displayMgr.uiLevel.addChild( _noteTxt );
-            
-            //pretends to be an iPhone Retina screen
-            //            DeviceCapabilities.dpi = 326;
-            //            DeviceCapabilities.screenPixelWidth = 960;
-            //            DeviceCapabilities.screenPixelHeight = 640;
             
             //            Starling.handleLostContext = true;
             //            Starling.multitouchEnabled = true;
@@ -109,8 +134,7 @@ package com.inoah.ro.mediators
         private function onInitLoadComplete( loader:ActSprLoader = null ):void
         {
             _noteTxt.parent.removeChild( _noteTxt );
-            Global.userdata = new UserData();
-            Global.userdata.getCanSeeMission(1);
+            
             _game = new RoGame('map1',mainView.stage , 0 );
             var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
             displayMgr.mapLevel.addChild(_game);

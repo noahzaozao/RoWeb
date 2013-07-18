@@ -3,6 +3,7 @@ package com.inoah.ro.mediators.views
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.ui.MainView;
+    import com.inoah.ro.ui.mainViewChildren.ChatView;
     import com.inoah.ro.ui.sysView.AlertView;
     import com.inoah.ro.ui.sysView.ItemView;
     import com.inoah.ro.ui.sysView.StatusView;
@@ -20,6 +21,9 @@ package com.inoah.ro.mediators.views
             view.x = 480 - view.width / 2;
             view.y = 280 - view.height / 2;
             facade.registerMediator( new AlertViewMediator( view ) );
+            
+            var chatView:ChatView = new ChatView( mainView.chatView );
+            facade.registerMediator( new ChatViewMediator( chatView ) );
         }
         
         override public function listNotificationInterests():Array

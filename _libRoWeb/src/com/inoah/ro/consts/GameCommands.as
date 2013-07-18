@@ -4,8 +4,10 @@ package com.inoah.ro.consts
     {
         public static const LOGIN:String = "GameCommands.LOGIN";
         public static const RIGHT_CLICK:String = "GameCommands.RIGHT_CLICK";
+        
         public static const SHOW_ALERT:String = "GameCommands.SHOW_ALERT";
         public static const HIDE_ALERT:String = "GameCommands.HIDE_ALERT";
+
         public static const OPEN_STATUS:String = "GameCommands.OPEN_STATUS";
         public static const CLOSE_STATUS:String = "GameCommands.CLOSE_STATUS";
         public static const OPEN_SKILL:String = "GameCommands.OPEN_SKILL";
@@ -18,5 +20,8 @@ package com.inoah.ro.consts
         public static const CLOSE_TASK:String = "GameCommands.CLOSE_TASK";
         public static const OPEN_OPTION:String = "GameCommands.OPEN_OPTION";
         public static const CLOSE_OPTION:String = "GameCommands.CLOSE_OPTION";
+
+        public static const SEND_CHAT:String = "GameCommands.SEND_CHAT";
+        public static const RECV_CHAT:String = "GameCommands.RECV_CHAT";
     }
 }

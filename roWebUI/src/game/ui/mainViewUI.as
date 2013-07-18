@@ -18,11 +18,11 @@ package game.ui {
 		public var labJobLv:Label;
 		public var labWeightZeny:Label;
 		public var hpBar:ProgressBar;
-		public var labHpVal:Label;
 		public var spBar:ProgressBar;
-		public var labSpVal:Label;
 		public var skillBarView:skillBarViewUI;
 		public var chatView:chatViewUI;
+		public var baseExpBar:ProgressBar;
+		public var jobExpBar:ProgressBar;
 		private var uiXML:XML =
 			<View height="100">
 			  <Button skin="png.basic_interface.btn_info" x="0" y="135" var="btnStatus" name="btnStatus"/>
@@ -44,11 +44,11 @@ package game.ui {
 			  <Label text="Weight: 0 / 1000 Zeny: 10,000" x="54" y="116" size="11" align="right" var="labWeightZeny" name="labWeightZeny"/>
 			  <Button skin="png.basic_interface.btn_sys_base" x="3" y="3"/>
 			  <ProgressBar skin="png.basic_interface.progress_gzeblue" x="35" y="52" var="hpBar" name="hpBar"/>
-			  <Label text="100 / 100" x="39" size="9" align="center" height="14" width="128" var="labHpVal" name="labHpVal" y="49"/>
 			  <ProgressBar skin="png.basic_interface.progress_gzeblue" x="35" y="69" var="spBar" name="spBar"/>
-			  <Label text="100 / 100" x="39" size="9" align="center" height="14" width="128" var="labSpVal" name="labSpVal" y="66"/>
 			  <skillBarView x="680" y="526" var="skillBarView" name="skillBarView"/>
 			  <chatView x="0" y="405" var="chatView" name="chatView"/>
+			  <ProgressBar skin="png.basic_interface.progress_exp" x="65" y="88" var="baseExpBar" name="baseExpBar"/>
+			  <ProgressBar skin="png.basic_interface.progress_exp" x="65" y="100" var="jobExpBar" name="jobExpBar"/>
 			</View>;
 		override protected function createChildren():void {
 			viewClassMap = {"chatView":chatViewUI,"skillBarView":skillBarViewUI};

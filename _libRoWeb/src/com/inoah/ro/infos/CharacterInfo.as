@@ -1,5 +1,9 @@
 package com.inoah.ro.infos
 {
+    /**
+     * 角色形象数据 
+     * @author inoah
+     */    
     public class CharacterInfo
     {
         protected var _headRes:String;

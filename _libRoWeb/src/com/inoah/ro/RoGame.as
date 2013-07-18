@@ -3,16 +3,20 @@ package com.inoah.ro
     import com.D5Power.D5Game;
     import com.D5Power.Controler.Actions;
     import com.D5Power.Controler.CharacterControler;
+    import com.D5Power.Controler.NCharacterControler;
     import com.D5Power.Objects.CharacterObject;
+    import com.D5Power.Objects.NCharacterObject;
     import com.D5Power.Stuff.HSpbar;
+    import com.D5Power.mission.EventData;
     import com.inoah.ro.characters.PlayerView;
     import com.inoah.ro.controllers.PlayerController;
-    import com.inoah.ro.infos.CharacterInfo;
+    import com.inoah.ro.infos.UserInfo;
     import com.inoah.ro.mediators.views.MainViewMediator;
     import com.inoah.ro.objects.PlayerObject;
     import com.inoah.ro.scenes.MainScene;
     import com.inoah.ro.ui.MainView;
     import com.inoah.ro.ui.NPCDialog;
+    import com.inoah.ro.utils.UserData;
     
     import flash.display.Shape;
     import flash.display.Stage;
@@ -61,14 +65,9 @@ package com.inoah.ro
             facade.registerMediator( _mainViewMediator );
             addChild( _mainView );
             
-            //            var itemView:itemViewUI = new itemViewUI();
-            //            itemView.x = 400;
-            //            itemView.y = 200;
-            //            addChild( itemView );
-            
-            //            var nObj:NCharacterObject =  new NCharacterObject( new NCharacterControler( scene.perc ));
-            //            nObj.uid = 1;
-            //            npcWindow( "hey, guys, welcome to my village!" , new EventData(), nObj, 0 );
+            var nObj:NCharacterObject =  new NCharacterObject( new NCharacterControler( scene.perc ));
+            nObj.uid = 1;
+            npcWindow( "hey, guys, welcome to my village!" , new EventData(), nObj, 0 );
             
             //            _skillBar = new SkillBarUI();
             //            _skillBar.x = 960 - _skillBar.width;
@@ -110,15 +109,8 @@ package com.inoah.ro
             //            
             //            _stg.addEventListener( KeyboardEvent.KEY_DOWN , onSkill );
             
-            var charInfo:CharacterInfo = new CharacterInfo();
-            charInfo.init( "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", true );
-            charInfo.setWeaponRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
-            charInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
-            //            charInfo.init( "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/咯/檬焊磊_咯.act", true );
-            //            charInfo.setWeaponRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八.act" );
-            //            charInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八_八堡.act" );
-            
-            _playerView = new PlayerView( charInfo );
+            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            _playerView = new PlayerView( userInfo );
             _playerView.x = 400;
             _playerView.y = 400;
             
@@ -128,14 +120,14 @@ package com.inoah.ro
             _player.displayer = _playerView;
             _player.setPos(500,500);
             _player.speed = 4.5;
-            _player.setName("player",-1,0,-110);
+            _player.setName( userInfo.name ,-1,0,-110);
             _player.action = Actions.Wait;
             
-            _player.hp = 150;
-            _player.hpMax = 150;
+            _player.hp = userInfo.hpCurrent;
+            _player.hpMax = userInfo.hpMax;
             _player.hpBar = new HSpbar( _player,'hp','hpMax',10 , 0x33ff33 );
-            _player.sp = 50;
-            _player.spMax = 50;
+            _player.sp = userInfo.spCurrent;
+            _player.spMax = userInfo.spMax;
             _player.spBar = new HSpbar(_player,'sp','spMax',14 , 0x2868FF);
             
             _scene.createPlayer(_player);
@@ -263,18 +255,18 @@ package com.inoah.ro
             //            }
         }
         
-        //        public function npcWindow(say:String,event:EventData,npc:NCharacterObject,misid:uint,type:uint=0,complate:Boolean=false):void
-        //        {
-        //            if(_npcDialogBox==null)
-        //            {
-        //                _npcDialogBox = new NPCDialog();
-        //            }
-        //            
-        //            _npcDialogBox.config(say,npc,misid,type,complate);
-        //            if(!contains(_npcDialogBox))
-        //            {
-        //                _stg.addChild(_npcDialogBox);
-        //            }
-        //        }
+        public function npcWindow(say:String,event:EventData,npc:NCharacterObject,misid:uint,type:uint=0,complate:Boolean=false):void
+        {
+            if(_npcDialogBox==null)
+            {
+                _npcDialogBox = new NPCDialog();
+            }
+            
+            _npcDialogBox.config(say,npc,misid,type,complate);
+            if(!contains(_npcDialogBox))
+            {
+                _stg.addChild(_npcDialogBox);
+            }
+        }
     }
 }

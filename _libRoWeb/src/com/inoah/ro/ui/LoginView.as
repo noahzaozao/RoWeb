@@ -27,7 +27,11 @@ package com.inoah.ro.ui
         
         protected function onLoginHandler( e:MouseEvent):void
         {
-            Facade.getInstance().sendNotification( GameCommands.LOGIN );
+            if( this.txtID.text == "" )
+            {
+                this.txtID.text = "player" + uint( Math.random() * 1000000 );
+            }
+            Facade.getInstance().sendNotification( GameCommands.LOGIN , [ this.txtID.text ] );
         }
     }
 }
