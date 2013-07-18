@@ -65,21 +65,10 @@ package com.inoah.ro.characters
          */        
         protected var _dirChangeArr:Array = [4, 5, 6, 7, 8, -7, -6, -5];
         protected var _isPlayEnd:Boolean;
-        protected var _chooseCircle:Shape;
         
         public function setChooseCircle( bool:Boolean ):void
         {
-            if( bool )
-            {
-                addChildAt( _chooseCircle , 0 );
-            }
-            else
-            {
-                if( _chooseCircle.parent )
-                {
-                    _chooseCircle.parent.removeChild( _chooseCircle );
-                }
-            }
+            
         }
         public function CharacterView( charInfo:CharacterInfo = null )
         {
@@ -144,10 +133,6 @@ package com.inoah.ro.characters
         
         protected function onBodyLoadComplete( bodyLoader:ILoader ):void
         {
-            _chooseCircle = new Shape();
-            _chooseCircle.graphics.lineStyle( 2, 0x00ff00 );
-            _chooseCircle.graphics.drawEllipse(-25, -15, 50, 30);
-            
             //            _bodyLoader.removeEventListener( Event.COMPLETE, onBodyLoadComplete );
             _bodyLoader = bodyLoader;
             if( !_bodyView )

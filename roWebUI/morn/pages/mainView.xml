@@ -1,32 +1,26 @@
 <View sceneWidth="960" sceneHeight="560" sceneColor="0xffffff" sceneBg="" layers="2,1,0,0,第 2 层;1,1,0,0,第 1 层" height="100">
-  <Image url="png.basic_interface.dialog_bg" x="0" y="535" layer="1"/>
   <Button skin="png.basic_interface.btn_info" x="0" y="135" layer="1" var="btnStatus" name="btnStatus"/>
   <Button skin="png.basic_interface.btn_item" x="108" y="135" layer="1" var="btnItem" name="btnItem"/>
   <Button skin="png.basic_interface.btn_map" x="162" y="135" layer="1" var="btnMap" name="btnMap"/>
   <Button skin="png.basic_interface.btn_option" x="54" y="153" layer="1" var="btnOption" name="btnOption"/>
   <Button skin="png.basic_interface.btn_quest" x="0" y="153" layer="1" var="btnTask" name="btnTask"/>
   <Button skin="png.basic_interface.btn_skill" x="54" y="135" layer="1" var="btnSkill" name="btnSkill"/>
-  <Image url="png.comp.blank" x="1" y="433" layer="1" width="600" height="100"/>
   <Image url="png.basic_interface.basewin_bg2" x="0" y="0" layer="1"/>
-  <Label text="label" x="1" y="433" layer="2" width="600" height="100" multiline="true" align="left" mouseChildren="true" mouseEnabled="true" isHtml="true" wordWrap="false" var="labChat" name="labChat"/>
-  <TextInput text="TextInput" skin="png.comp.textinput" x="108" y="538" layer="2" width="464" height="18" var="txtChat" name="txtChat"/>
-  <Box layers="1,1,0" layer="2" x="35" y="50">
-    <Image url="png.basic_interface.gzeblue_left" layer="1" var="imgLeft" name="imgLeft" y="3"/>
-    <Image url="png.basic_interface.gzeblue_mid" x="4" y="4" layer="1" width="128" var="imgBar" name="imgBar"/>
-    <Image url="png.basic_interface.gzeblue_right" x="130" layer="1" y="3" var="imgRIght" name="imgRIght"/>
-    <Label text="100 / 100" x="4" layer="1" size="9" align="center" height="14" width="128" var="labVal" name="labVal" y="0"/>
-  </Box>
   <Label text="name" x="10" y="18" layer="2" size="12" var="labName" name="labName"/>
   <Label text="Novice" x="9" y="32" layer="2" size="12" var="labJob" name="labJob"/>
   <Label text="HP" x="14" y="48" layer="2" size="11"/>
   <Label text="base info window" x="13" y="-2" layer="2" size="12"/>
   <Label text="SP" x="13" y="64" layer="2" size="11"/>
-  <Label text="100%" x="175" y="48" layer="2" size="11" var="labHp" name="labHp"/>
-  <Label text="100%" x="175" y="64" layer="2" size="11" var="labSp" name="labSp"/>
+  <Label text="100%" x="175" y="48" layer="2" size="11" var="labHpPer" name="labHpPer"/>
+  <Label text="100%" x="175" y="64" layer="2" size="11" var="labSpPer" name="labSpPer"/>
   <Label text="Base Lv.1" x="11" y="84" layer="2" size="9" var="labLv" name="labLv"/>
   <Label text="Job Lv.1" x="12" y="96" layer="2" size="9" var="labJobLv" name="labJobLv"/>
   <Label text="Weight: 0 / 1000 Zeny: 10,000" x="54" y="116" layer="2" size="11" align="right" var="labWeightZeny" name="labWeightZeny"/>
-  <Image url="png.basic_interface.shortitem_bg" x="679" y="525" layer="2"/>
-  <Tab labels="chat,battle" skin="png.comp.tab" x="0" y="406" layer="2"/>
   <Button skin="png.basic_interface.btn_sys_base" x="3" y="3" layer="2"/>
+  <ProgressBar skin="png.basic_interface.progress_gzeblue" x="35" y="52" layer="2" var="hpBar" name="hpBar"/>
+  <Label text="100 / 100" x="39" layer="2" size="9" align="center" height="14" width="128" var="labHpVal" name="labHpVal" y="49"/>
+  <ProgressBar skin="png.basic_interface.progress_gzeblue" x="35" y="69" layer="2" var="spBar" name="spBar"/>
+  <Label text="100 / 100" x="39" layer="2" size="9" align="center" height="14" width="128" var="labSpVal" name="labSpVal" y="66"/>
+  <UIView source="mainViewChildren/skillBarView.xml" x="680" y="526" layer="2" var="skillBarView" name="skillBarView"/>
+  <UIView source="mainViewChildren/chatView.xml" x="0" y="405" layer="2" var="chatView" name="chatView"/>
 </View>

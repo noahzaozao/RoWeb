@@ -1,4 +1,4 @@
-<Dialog sceneWidth="280" sceneHeight="300" sceneColor="0xffffff" sceneBg="" layers="2,1,1,0,第 2 层;1,1,1,0,第 1 层">
+<Dialog sceneWidth="280" sceneHeight="300" sceneColor="0xffffff" sceneBg="" layers="2,1,1,0,第 2 层;1,1,1,0,第 1 层" dragArea="0,0,900,500">
   <Image url="png.basic_interface.statwin_bg" x="0" y="146" layer="1"/>
   <Image url="png.basic_interface.titlebar_fix" x="0" y="0" layer="1"/>
   <Image url="png.basic_interface.equipwin_bg" x="0" y="17" layer="1"/>

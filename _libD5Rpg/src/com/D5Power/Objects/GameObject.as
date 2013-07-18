@@ -16,6 +16,7 @@ package com.D5Power.Objects
     import com.D5Power.ns.NSEditor;
     import com.D5Power.utils.NoEventSprite;
     
+    import flash.display.Shape;
     import flash.events.Event;
     import flash.geom.Point;
     
@@ -114,6 +115,8 @@ package com.D5Power.Objects
         
         private var _resname:String;
         
+        protected var _chooseCircle:Shape;
+        
         /**
          * 是否在场景内
          */ 
@@ -127,6 +130,10 @@ package com.D5Power.Objects
             pos = new Point(0,0);
             speed = 1.4;
             changeController(ctrl);
+            
+            _chooseCircle = new Shape();
+            _chooseCircle.graphics.lineStyle( 2, 0x00ff00 );
+            _chooseCircle.graphics.drawEllipse(-25, -15, 50, 30);
         }
         
         /**
@@ -445,7 +452,17 @@ package com.D5Power.Objects
         
         public function setChooseCircle( bool:Boolean ):void
         {
-            _displayer.setChooseCircle( bool );
+            if( bool )
+            {
+                addChildAt( _chooseCircle , 0 );
+            }
+            else
+            {
+                if( _chooseCircle.parent )
+                {
+                    _chooseCircle.parent.removeChild( _chooseCircle );
+                }
+            }
         }
     }
 }

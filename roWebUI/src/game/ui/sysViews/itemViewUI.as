@@ -1,10 +1,10 @@
 /**Created by Morn,Do not modify.*/
-package game.ui {
+package game.ui.sysViews {
 	import morn.core.components.*;
 	public class itemViewUI extends Dialog {
 		public var btnClose:Button;
 		private var uiXML:XML =
-			<Dialog>
+			<Dialog dragArea="0,0,900,500">
 			  <Image url="png.basic_interface.itemwin_left" x="0" y="17"/>
 			  <Image url="png.basic_interface.itemwin_left" x="0" y="25"/>
 			  <Image url="png.basic_interface.itemwin_left" x="0" y="33"/>

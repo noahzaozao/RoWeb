@@ -30,8 +30,6 @@ package com.inoah.ro
         public static var game:RoGame;
         private var _playerView:PlayerView;
         private var _player:CharacterObject;
-        private var _skillBar:SkillBarUI;
-        private var _skillBarItemList:Vector.<SkillBarItemUI>;
         private var _isColdDown:Boolean;
         private var _skillMask:Shape;
         private var _cdX:Number;

@@ -3,33 +3,77 @@ package com.inoah.ro.mediators.views
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.ui.MainView;
+    import com.inoah.ro.ui.sysView.AlertView;
+    import com.inoah.ro.ui.sysView.ItemView;
+    import com.inoah.ro.ui.sysView.StatusView;
     
     import as3.interfaces.INotification;
     import as3.patterns.mediator.Mediator;
-    
-    import game.ui.statusViewUI;
     
     public class MainViewMediator extends Mediator
     {
         public function MainViewMediator( viewComponent:Object=null)
         {
             super(GameConsts.MAIN_VIEW, viewComponent);
+            
+            var view:AlertView = new AlertView();
+            view.x = 480 - view.width / 2;
+            view.y = 280 - view.height / 2;
+            facade.registerMediator( new AlertViewMediator( view ) );
         }
         
         override public function listNotificationInterests():Array
         {
             var arr:Array = super.listNotificationInterests();
+            arr.push( GameCommands.SHOW_ALERT );
             arr.push( GameCommands.OPEN_STATUS  );
+            arr.push( GameCommands.OPEN_SKILL  );
+            arr.push( GameCommands.OPEN_ITEM  );
+            arr.push( GameCommands.OPEN_MAP  );
+            arr.push( GameCommands.OPEN_TASK  );
+            arr.push( GameCommands.OPEN_OPTION  );
             return arr;
         }
         
         override public function handleNotification(notification:INotification):void
         {
+            var arr:Array;
             switch( notification.getName() )
             {
+                case GameCommands.SHOW_ALERT:
+                {
+                    arr = notification.getBody() as Array;
+                    showAlert( arr[0] );
+                    break;
+                }
                 case GameCommands.OPEN_STATUS:
                 {
                     openStatus();
+                    break;
+                }
+                case GameCommands.OPEN_SKILL:
+                {
+                    openSkill();
+                    break;
+                }
+                case GameCommands.OPEN_ITEM:
+                {
+                    openItem();
+                    break;
+                }
+                case GameCommands.OPEN_MAP:
+                {
+                    openMap();
+                    break;
+                }
+                case GameCommands.OPEN_TASK:
+                {
+                    openTask();
+                    break;
+                }
+                case GameCommands.OPEN_OPTION:
+                {
+                    openOption();
                     break;
                 }
                 default:
@@ -39,12 +83,66 @@ package com.inoah.ro.mediators.views
             }
         }
         
+        private function showAlert( msg:String ):void
+        {
+            var view:AlertView = (facade.retrieveMediator( GameConsts.ALERT_VIEW ) as AlertViewMediator).mainView;
+            mainView.addChild( view );
+        }
+        
+        private function openOption():void
+        {
+            if( !facade.hasMediator( GameConsts.OPTION_VIEW ) )
+            {
+                facade.sendNotification( GameCommands.SHOW_ALERT , ["功能尚未开放!"] );
+            }
+        }
+        
+        private function openTask():void
+        {
+            if( !facade.hasMediator( GameConsts.TASK_VIEW ) )
+            {
+                facade.sendNotification( GameCommands.SHOW_ALERT , ["功能尚未开放!"] );
+            }
+        }
+        
+        private function openMap():void
+        {
+            if( !facade.hasMediator( GameConsts.MAP_VIEW ) )
+            {
+                facade.sendNotification( GameCommands.SHOW_ALERT , ["功能尚未开放!"] );
+            }
+        }
+        
+        private function openItem():void
+        {
+            if( !facade.hasMediator( GameConsts.ITEM_VIEW ) )
+            {
+                var view:ItemView = new ItemView();
+                view.x = 480 - view.width / 2;
+                view.y = 280 - view.height / 2;
+                mainView.addChild( view );
+                facade.registerMediator( new ItemViewMediator( view ) );
+            }
+        }
+        
+        private function openSkill():void
+        {
+            if( !facade.hasMediator( GameConsts.SKILL_VIEW ) )
+            {
+                facade.sendNotification( GameCommands.SHOW_ALERT , ["功能尚未开放!"] );
+            }
+        }
+        
         private function openStatus():void
         {
-            var statusView:statusViewUI = new statusViewUI();
-            statusView.x = 400;
-            statusView.y = 200;
-            mainView.addChild( statusView );
+            if( !facade.hasMediator( GameConsts.STATUS_VIEW ) )
+            {
+                var view:StatusView = new StatusView();
+                view.x = 480 - view.width / 2;
+                view.y = 280 - view.height / 2;
+                mainView.addChild( view );
+                facade.registerMediator( new StatusViewMediator( view ) );
+            }
         }
         
         public function get mainView():MainView

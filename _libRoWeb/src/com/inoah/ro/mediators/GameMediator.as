@@ -8,8 +8,6 @@ package com.inoah.ro.mediators
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.DisplayMgr;
     import com.inoah.ro.managers.MainMgr;
-    import com.inoah.ro.managers.SprMgr;
-    import com.inoah.ro.managers.TextureMgr;
     import com.inoah.ro.ui.LoginView;
     import com.inoah.ro.utils.UserData;
     

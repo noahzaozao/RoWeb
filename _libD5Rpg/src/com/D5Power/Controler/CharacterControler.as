@@ -481,14 +481,16 @@ package com.D5Power.Controler
                 return;
             }
             
-            // 计算世界坐标
-            _endTarget = WorldMap.me.getWorldPostion(e.stageX,e.stageY).clone();
-            
-            // 自动清掉后续动作，因为是在控制移动
-            clearWalkComplate();
-            
-            walk2Target();
-            
+            if( e.target is D5Game )
+            {
+                // 计算世界坐标
+                _endTarget = WorldMap.me.getWorldPostion(e.stageX,e.stageY).clone();
+                
+                // 自动清掉后续动作，因为是在控制移动
+                clearWalkComplate();
+                
+                walk2Target();
+            }
         }
         
         /**

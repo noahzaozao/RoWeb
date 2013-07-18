@@ -1,10 +1,10 @@
 /**Created by Morn,Do not modify.*/
-package game.ui {
+package game.ui.sysViews {
 	import morn.core.components.*;
 	public class statusViewUI extends Dialog {
 		public var btnClose:Button;
 		private var uiXML:XML =
-			<Dialog>
+			<Dialog dragArea="0,0,900,500">
 			  <Image url="png.basic_interface.statwin_bg" x="0" y="146"/>
 			  <Image url="png.basic_interface.titlebar_fix" x="0" y="0"/>
 			  <Image url="png.basic_interface.equipwin_bg" x="0" y="17"/>

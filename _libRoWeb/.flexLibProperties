@@ -25,6 +25,14 @@
     <classEntry path="com.inoah.ro.ui.MainView"/>
     <classEntry path="com.inoah.ro.mediators.views.MainViewMediator"/>
     <classEntry path="com.inoah.ro.managers.DisplayMgr"/>
+    <classEntry path="com.inoah.ro.mediators.views.StatusViewMediator"/>
+    <classEntry path="com.inoah.ro.ui.sysView.StatusView"/>
+    <classEntry path="com.inoah.ro.ui.sysView.ItemView"/>
+    <classEntry path="com.inoah.ro.mediators.views.ItemViewMediator"/>
+    <classEntry path="com.inoah.ro.mediators.views.AlertViewMediator"/>
+    <classEntry path="com.inoah.ro.ui.sysView.AlertView"/>
+    <classEntry path="com.inoah.ro.ui.mainViewChildren.ChatView"/>
+    <classEntry path="com.inoah.ro.ui.mainViewChildren.SkillBarView"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

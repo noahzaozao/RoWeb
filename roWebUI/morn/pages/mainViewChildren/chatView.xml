@@ -1,0 +1,7 @@
+<Dialog sceneWidth="600" sceneHeight="160" sceneColor="0xffffff" sceneBg="" layers="1,1,0,0,第 1 层" width="600" height="160" dragArea="0,0,900,500">
+  <Image url="png.basic_interface.dialog_bg" x="0" y="129" layer="1"/>
+  <Image url="png.comp.blank" x="1" y="27" layer="1" width="600" height="100"/>
+  <Label text="label" x="1" y="27" layer="1" width="600" height="100" multiline="true" align="left" mouseChildren="true" mouseEnabled="true" isHtml="true" wordWrap="false" var="labChat" name="labChat"/>
+  <TextInput text="TextInput" skin="png.comp.textinput" x="108" y="132" layer="1" width="464" height="18" var="txtChat" name="txtChat"/>
+  <Tab labels="chat,battle" skin="png.comp.tab" x="0" y="0" layer="1"/>
+</Dialog>

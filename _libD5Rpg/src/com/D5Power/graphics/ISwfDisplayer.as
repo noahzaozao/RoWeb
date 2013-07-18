@@ -31,6 +31,5 @@ package com.D5Power.graphics
         
         function set isPlayEnd( value:Boolean ):void;
         function get isPlayEnd():Boolean;
-        function setChooseCircle( bool:Boolean ):void
     }
 }
