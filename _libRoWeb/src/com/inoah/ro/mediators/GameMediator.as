@@ -7,6 +7,7 @@ package com.inoah.ro.mediators
     import com.inoah.ro.infos.UserInfo;
     import com.inoah.ro.loaders.ActSprLoader;
     import com.inoah.ro.managers.AssetMgr;
+    import com.inoah.ro.managers.BattleMgr;
     import com.inoah.ro.managers.DisplayMgr;
     import com.inoah.ro.managers.MainMgr;
     import com.inoah.ro.ui.LoginView;
@@ -82,6 +83,12 @@ package com.inoah.ro.mediators
             //            charInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八_八堡.act" );
             userInfo.name = username;
             userInfo.job = "Novice";
+            userInfo.strength = 1;
+            userInfo.agile = 1;
+            userInfo.vit = 1;
+            userInfo.intelligence = 1;
+            userInfo.dexterous = 1;
+            userInfo.lucky = 1;
             userInfo.baseLv = 1;
             userInfo.baseExp = 0;
             userInfo.jobLv = 1;
@@ -89,12 +96,6 @@ package com.inoah.ro.mediators
             userInfo.weightCurrent = 0;
             userInfo.weightMax = 1000;
             userInfo.zeny = 10000;
-            userInfo.strength = 1;
-            userInfo.agile = 1;
-            userInfo.vit = 1;
-            userInfo.intelligence = 1;
-            userInfo.dexterous = 1;
-            userInfo.lucky = 1;
             userInfo.hpCurrent = userInfo.hpMax;
             userInfo.spCurrent = userInfo.spMax;
             
@@ -105,6 +106,10 @@ package com.inoah.ro.mediators
             _noteTxt.text = "Waiting for resource...";
             var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
             displayMgr.uiLevel.addChild( _noteTxt );
+            
+            var battleMgr:BattleMgr = new BattleMgr();
+            MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, battleMgr );
+            facade.registerMediator( battleMgr );
             
             //            Starling.handleLostContext = true;
             //            Starling.multitouchEnabled = true;
@@ -127,8 +132,7 @@ package com.inoah.ro.mediators
             resPathList.push( "data/sprite/阁胶磐/poring.act" );
             resPathList.push( "data/sprite/阁胶磐/poporing.act" );
             resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
-            resPathList.push( "data/sprite/酒捞袍/lk_aurablade.act" );
-            resPathList.push( "data/sprite/酒捞袍/lk_spiralpierce.act" );
+            
             assetMgr.getResList( resPathList , onInitLoadComplete );
         }
         private function onInitLoadComplete( loader:ActSprLoader = null ):void

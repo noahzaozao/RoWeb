@@ -60,10 +60,6 @@ package
         private function onInitRes( assetMgr:AssetMgr ):void
         {
             var resPathList:Vector.<String> = new Vector.<String>();
-            resPathList.push( "data/sprite/牢埃练/赣府烹/咯/2_咯.act" );
-            resPathList.push( "data/sprite/牢埃练/个烹/咯/檬焊磊_咯.act" );
-            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八.act" );
-            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八_八堡.act" );
             resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
             resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
             resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
@@ -71,8 +67,6 @@ package
             resPathList.push( "data/sprite/阁胶磐/poring.act" );
             resPathList.push( "data/sprite/阁胶磐/poporing.act" );
             resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
-            resPathList.push( "data/sprite/酒捞袍/lk_aurablade.act" );
-            resPathList.push( "data/sprite/酒捞袍/lk_spiralpierce.act" );
             assetMgr.getResList( resPathList , function():void{} );
         }
         

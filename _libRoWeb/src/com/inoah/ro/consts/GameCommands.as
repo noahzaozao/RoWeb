@@ -23,5 +23,11 @@ package com.inoah.ro.consts
 
         public static const SEND_CHAT:String = "GameCommands.SEND_CHAT";
         public static const RECV_CHAT:String = "GameCommands.RECV_CHAT";
+
+        public static const UPDATE_HP:String = "GameCommands.UPDATE_HP";
+        public static const UPDATE_SP:String = "GameCommands.UPDATE_SP";
+        public static const UPDATE_EXP:String = "GameCommands.UPDATE_EXP";
+        public static const UPDATE_LV:String = "GameCommands.UPDATE_LV";
+        public static const UPDATE_STATUS_POINT:String = "GameCommands.UPDATE_STATUS_POINT";
     }
 }

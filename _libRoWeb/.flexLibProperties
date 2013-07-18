@@ -37,6 +37,10 @@
     <classEntry path="com.inoah.ro.infos.BattleCharacterInfo"/>
     <classEntry path="com.inoah.ro.managers.BattleMgr"/>
     <classEntry path="com.inoah.ro.mediators.views.ChatViewMediator"/>
+    <classEntry path="com.inoah.ro.mediators.views.SkillBarViewMediator"/>
+    <classEntry path="com.inoah.ro.mediators.battle.BattleMediator"/>
+    <classEntry path="com.inoah.ro.consts.BattleCommands"/>
+    <classEntry path="com.inoah.ro.objects.MonsterObject"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

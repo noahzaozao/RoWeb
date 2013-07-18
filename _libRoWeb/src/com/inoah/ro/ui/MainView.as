@@ -16,7 +16,7 @@ package com.inoah.ro.ui
         {
             super();
             
-            updateBaseInfo();
+            updateInfo();
             
             this.btnStatus.addEventListener( MouseEvent.CLICK , onOpenHandler );
             this.btnSkill.addEventListener( MouseEvent.CLICK , onOpenHandler );
@@ -26,7 +26,36 @@ package com.inoah.ro.ui
             this.btnOption.addEventListener( MouseEvent.CLICK , onOpenHandler );
         }
         
-        private function updateBaseInfo():void
+        public function updateHp():void
+        {
+            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            hpBar.value = userInfo.hpPer;
+            hpBar.barLabel.text = userInfo.hpCurrent + " / " + userInfo.hpMax;
+            labHpPer.text = uint(userInfo.hpPer * 100) + "%";
+        }
+        public function updateSp():void
+        {
+            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            spBar.value = userInfo.spPer;
+            spBar.barLabel.text = userInfo.spCurrent + " / " + userInfo.spMax;
+            labSpPer.text = uint(userInfo.spPer * 100) + "%";
+        }
+        public function updateExp():void
+        {
+            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            baseExpBar.value = userInfo.baseExp / Math.pow( userInfo.baseLv + 1 , 3 );
+            jobExpBar.value = userInfo.jobExp / Math.pow( userInfo.jobLv + 1 , 3 );
+        }
+        public function updateLv():void
+        {
+            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            updateInfo();
+        }
+        public function updateStatusPoint():void
+        {
+            updateInfo();
+        }
+        private function updateInfo():void
         {
             var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
             labName.text = userInfo.name;

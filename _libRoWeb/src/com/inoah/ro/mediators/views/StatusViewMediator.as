@@ -19,6 +19,8 @@ package com.inoah.ro.mediators.views
         {
             var arr:Array = super.listNotificationInterests();
             arr.push( GameCommands.CLOSE_STATUS  );
+            arr.push( GameCommands.UPDATE_LV  );
+            arr.push( GameCommands.UPDATE_STATUS_POINT  );
             return arr;
         }
         
@@ -31,11 +33,22 @@ package com.inoah.ro.mediators.views
                     closeStatus();
                     break;
                 }
+                case GameCommands.UPDATE_LV:
+                case GameCommands.UPDATE_STATUS_POINT:
+                {
+                    updateStatusPoint();
+                    break;
+                }
                 default:
                 {
                     break;
                 }
             }
+        }
+        
+        private function updateStatusPoint():void
+        {
+            mainView.refresh();
         }
         
         private function closeStatus():void

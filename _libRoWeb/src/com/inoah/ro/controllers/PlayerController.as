@@ -7,6 +7,9 @@ package com.inoah.ro.controllers
     import com.D5Power.GMath.GMath;
     import com.D5Power.Objects.CharacterObject;
     import com.D5Power.Objects.GameObject;
+    import com.inoah.ro.consts.BattleCommands;
+    import com.inoah.ro.consts.GameCommands;
+    import com.inoah.ro.objects.PlayerObject;
     
     import flash.events.MouseEvent;
     import flash.filters.GlowFilter;
@@ -14,20 +17,34 @@ package com.inoah.ro.controllers
     import flash.text.TextField;
     import flash.text.TextFormat;
     
+    import as3.patterns.facade.Facade;
+    
     import starling.animation.IAnimatable;
     import starling.animation.Tween;
     
     public class PlayerController extends CharacterControler
     {
-        protected var _chooseTarget:CharacterObject;
-        protected var _atkTarget:CharacterObject;
         protected var _fightMode:uint = 0; // 攻击模式 0-无  1-追击 2-攻击
+        protected var _atkTarget:CharacterObject;
+        protected var _chooseTarget:CharacterObject;
+
         protected var _lastHurt:uint; 
+        protected var _atkCd:uint = 2000;
+        
+        protected var _lastRecover:uint; 
+        protected var _recoverCd:uint = 3000;
+        
         protected var _animationUnitList:Vector.<IAnimatable>;
-        /**
-         * 攻击CD 
-         */        
-        private var _atkCd:uint = 2000;
+
+        public function get atkCd():uint
+        {
+            var rate:Number = 1- (_me as PlayerObject).info.aspd / 100;
+            if( rate >=  1 )
+            {
+                rate = 0.01;
+            }
+            return _atkCd * rate;
+        }
         
         public function PlayerController(pec:Perception, ctrl:uint=2)
         {
@@ -82,70 +99,90 @@ package com.inoah.ro.controllers
         {
             if(_atkTarget!=null)
             {
-                // 先判断攻击距离
-                if(_fightMode==0 && posCheck( 100 ) )
+                calAttackMove();
+                calAttack();
+            }
+            calRecover();
+            super.calcAction();
+        }
+        
+        private function calAttackMove():void
+        {
+            // 先判断攻击距离
+            if(_fightMode==0 && posCheck( 100 ) )
+            {
+                if( _endTarget )
                 {
-                    if( _endTarget )
+                    _endTarget = null;
+                    stopMove();
+                }
+                _fightMode = 2;
+            }
+            else 
+            {
+                _fightMode = 1;
+            }
+            
+            if(_fightMode==1 && posCheck( 100 ))
+            {
+                // 走入攻击范围，开始攻击
+                (_atkTarget.controler as MonsterController).fightTo(_me);
+                if( _endTarget )
+                {
+                    _endTarget = null;
+                    stopMove();
+                }
+                _fightMode = 2;
+            }
+            else
+            {
+                _endTarget = new Point( _atkTarget.PosX , _atkTarget.PosY );
+                walk2Target();
+            }
+        }
+        
+        private function calAttack():void
+        {
+            if(_fightMode==2 && posCheck( 100 ) )
+            {
+                if( _endTarget )
+                {
+                    _endTarget = null;
+                    stopMove();
+                }
+                if( Global.Timer - _lastHurt > atkCd )
+                {
+                    if( _atkTarget.action == Actions.Die )
                     {
-                        _endTarget = null;
-                        stopMove();
+                        _atkTarget = null;
+                        return;
                     }
-                    _fightMode = 2;
-                }
-                else 
-                {
-                    _fightMode = 1;
-                }
-                
-                if(_fightMode==1 && posCheck( 100 ))
-                {
-                    // 走入攻击范围，开始攻击
-                    (_atkTarget.controler as MonsterController).fightTo(_me);
-                    if( _endTarget )
-                    {
-                        _endTarget = null;
-                        stopMove();
-                    }
-                    _fightMode = 2;
-                }
-                else
-                {
-                    _endTarget = new Point( _atkTarget.PosX , _atkTarget.PosY );
-                    walk2Target();
-                }
-                
-                if(_fightMode==2 && posCheck( 100 ) )
-                {
-                    if( _endTarget )
-                    {
-                        _endTarget = null;
-                        stopMove();
-                    }
-                    if(Global.Timer-_lastHurt>_atkCd )
-                    {
-                        if( _atkTarget.action == Actions.Die )
-                        {
-                            _atkTarget = null;
-                            return;
-                        }
-                        var radian:Number = GMath.getPointAngle(_atkTarget.PosX-_me.PosX,_atkTarget.PosY-_me.PosY);
-                        var angle:int = GMath.R2A(radian)+90;
-                        changeDirectionByAngle( angle );
-                        
-                        _me.action = Actions.Attack;
-                        _lastHurt = Global.Timer;
-                        var tween:Tween = new Tween( _atkTarget , 0.4 );
-                        tween.onComplete = onAttacked;
-                        tween.onCompleteArgs = [_atkTarget]
-                        appendAnimateUnit( tween );
-                    }
-                }
-                else
-                {
-                    _fightMode = 1;
+                    var radian:Number = GMath.getPointAngle(_atkTarget.PosX-_me.PosX,_atkTarget.PosY-_me.PosY);
+                    var angle:int = GMath.R2A(radian)+90;
+                    changeDirectionByAngle( angle );
+                    
+                    _me.action = Actions.Attack;
+                    _lastHurt = Global.Timer;
+                    var tween:Tween = new Tween( _atkTarget , 0.4 );
+                    tween.onComplete = onAttacked;
+                    tween.onCompleteArgs = [_atkTarget]
+                    appendAnimateUnit( tween );
                 }
             }
-            super.calcAction();
+            else
+            {
+                _fightMode = 1;
+            }
+        }
+        
+        private function calRecover():void
+        {
+            if( Global.Timer - _lastRecover > _recoverCd )
+            {
+                (_me as PlayerObject).hp += 1;
+                (_me as PlayerObject).sp += 1;
+                _lastRecover = Global.Timer;
+            }
         }
         
         private function onAttacked( atkTarget:CharacterObject ):void
@@ -158,46 +195,17 @@ package com.inoah.ro.controllers
             }
             _me.action = Actions.Wait;
             
-            var textField:TextField = new TextField();
-            var tf:TextFormat = new TextFormat( "宋体" , 28 , 0xffffff );
-            textField.defaultTextFormat = tf;
-            textField.text = "10";
-            textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
-            textField.y = -50;
-            textField.x = - textField.textWidth >> 1;
-            atkTarget.addChild( textField );
-            var tween:Tween = new Tween( textField , 0.6 );
-            tween.moveTo( - textField.textWidth >> 1, - 150 );
-            tween.onComplete = onBlooded;
-            tween.onCompleteArgs = [textField];
-            appendAnimateUnit( tween );
-            
-            atkTarget.hp-=10; 
+            Facade.getInstance().sendNotification( BattleCommands.ATTACK , [_me, _atkTarget] );
             
             if(atkTarget.hp==0)
             {
-                atkTarget.action = Actions.Die;
-                tween = new Tween( atkTarget, 5 );
-                tween.fadeTo( 0 );
-                tween.onComplete = onRemoveAtkTarget;
-                tween.onCompleteArgs = [atkTarget];
-                appendAnimateUnit( tween );
-                //                D5Game.me.scene.removeObject(atkTarget);
-                //                            (Global.userdata as UserData).item = 2;
                 _atkTarget = null;
-                _chooseTarget.setChooseCircle( false );
-                _chooseTarget = null;
+                if( _chooseTarget )
+                {
+                    _chooseTarget.setChooseCircle( false );
+                    _chooseTarget = null;
+                }
             }
-        }
-        
-        private function onRemoveAtkTarget( atkTarget:CharacterObject ):void
-        {
-            D5Game.me.scene.removeObject(atkTarget);
-        }
-        
-        private function onBlooded( textField:TextField ):void
-        {
-            textField.parent.removeChild( textField );
         }
         
         public function tick( delta:Number ):void

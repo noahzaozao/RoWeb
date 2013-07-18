@@ -1,7 +1,10 @@
 package com.inoah.ro.infos
 {
+    import com.inoah.ro.consts.GameCommands;
     
-
+    import as3.patterns.facade.Facade;
+    
+    
     /**
      * 玩家基本信息 
      * @author inoah
@@ -16,6 +19,7 @@ package com.inoah.ro.infos
         protected var _dexterous:uint;
         protected var _lucky:uint;
         protected var _statusPoint:uint;
+        protected var _totalStatusPoint:uint;
         
         protected var _zeny:uint;
         
@@ -68,7 +72,21 @@ package com.inoah.ro.infos
         
         override public function set baseLv( value:uint ):void
         {
-            _baseLv = value;
+            if( _baseLv != value )
+            {
+                if( value <= 99)
+                {
+                    _baseLv = value;
+                    hpCurrent = hpMax;
+                    spCurrent = spMax;
+                    _totalStatusPoint = (_baseLv - 1)*3 - strength - agile - vit - intelligence - lucky - dexterous + 6;
+                    if( statusPoint < _totalStatusPoint )
+                    {
+                        statusPoint = _totalStatusPoint - statusPoint;
+                    }
+                    Facade.getInstance().sendNotification( GameCommands.UPDATE_LV );
+                }
+            }
         }
         override public function set jobLv( value:uint ):void
         {
@@ -77,7 +95,19 @@ package com.inoah.ro.infos
         
         override public function set baseExp( value:uint ):void
         {
-            _baseExp = value;
+            if( _baseExp != value )
+            {
+                if( value <= Math.pow( _baseLv + 1, 3 )  )
+                {
+                    _baseExp = value;
+                }
+                else
+                {
+                    baseLv += 1;
+                    _baseExp = 0;
+                }
+                Facade.getInstance().sendNotification( GameCommands.UPDATE_EXP );
+            }
         }
         override public function set jobExp( value:uint ):void
         {
@@ -86,17 +116,49 @@ package com.inoah.ro.infos
         
         override public function set hpCurrent( value:uint ):void
         {
-            _hpCurrent = value;
+            if( _hpCurrent != value )
+            {
+                if( value <= _hpMax )
+                {
+                    _hpCurrent = value;
+                }
+                else
+                {
+                    _hpCurrent = _hpMax;
+                }
+                Facade.getInstance().sendNotification( GameCommands.UPDATE_HP );
+            }
         }
         override public function set hpMax( value:uint ):void
         {
+            if( _hpMax != value )
+            {
+                _hpMax = value;
+                Facade.getInstance().sendNotification( GameCommands.UPDATE_HP );
+            }
         }
         override public function set spCurrent( value:uint ):void
         {
-            _spCurrent = value;
+            if( _spCurrent != value )
+            {
+                if( value <= _spMax )
+                {
+                    _spCurrent = value;
+                }
+                else
+                {
+                    _spCurrent = _spMax;
+                }
+                Facade.getInstance().sendNotification( GameCommands.UPDATE_SP );
+            }
         }
         override public function set spMax( value:uint ):void
         {
+            if( _spMax != value )
+            {
+                _spMax = value;
+                Facade.getInstance().sendNotification( GameCommands.UPDATE_SP );
+            }
         }
         
         override public function set weightCurrent( value:uint ):void
@@ -211,7 +273,7 @@ package com.inoah.ro.infos
         
         override public function get spPer():Number
         {
-            return _spCurrent / _spMax;
+            return spCurrent / _spMax;
         }
         //base
         public function set strength( value:uint ):void

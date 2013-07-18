@@ -19,6 +19,61 @@ package com.inoah.ro.ui.sysView
             updateInfo();
             
             this.btnClose.addEventListener( MouseEvent.CLICK, onCloseHandler );
+            this.btnStr.addEventListener( MouseEvent.CLICK, onAddPointHandler );
+            this.btnAgi.addEventListener( MouseEvent.CLICK, onAddPointHandler );
+            this.btnVit.addEventListener( MouseEvent.CLICK, onAddPointHandler );
+            this.btnInt.addEventListener( MouseEvent.CLICK, onAddPointHandler );
+            this.btnDex.addEventListener( MouseEvent.CLICK, onAddPointHandler );
+            this.btnLuk.addEventListener( MouseEvent.CLICK, onAddPointHandler );
+        }
+        
+        protected function onAddPointHandler( e:MouseEvent):void
+        {
+            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            switch( e.currentTarget )
+            {
+                case btnStr:
+                {
+                    userInfo.statusPoint -= 1;
+                    userInfo.strength += 1;
+                    break;
+                }
+                case btnAgi:
+                {
+                    userInfo.statusPoint -= 1;
+                    userInfo.agile += 1;
+                    break;
+                }
+                case btnVit:
+                {
+                    userInfo.statusPoint -= 1;
+                    userInfo.vit += 1;
+                    break;
+                }
+                case btnInt:
+                {
+                    userInfo.statusPoint -= 1;
+                    userInfo.intelligence += 1;
+                    break;
+                }
+                case btnDex:
+                {
+                    userInfo.statusPoint -= 1;
+                    userInfo.dexterous += 1;
+                    break;
+                }
+                case btnLuk:
+                {
+                    userInfo.statusPoint -= 1;
+                    userInfo.lucky += 1;
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+            Facade.getInstance().sendNotification( GameCommands.UPDATE_STATUS_POINT );
         }
         
         private function updateInfo():void
@@ -60,6 +115,11 @@ package com.inoah.ro.ui.sysView
         protected function onCloseHandler( e:MouseEvent):void
         {
             Facade.getInstance().sendNotification( GameCommands.CLOSE_STATUS );
+        }
+        
+        public function refresh():void
+        {
+            updateInfo();
         }
     }
 }

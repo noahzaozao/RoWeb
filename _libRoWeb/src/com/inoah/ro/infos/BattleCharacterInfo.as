@@ -1,5 +1,10 @@
 package com.inoah.ro.infos
 {
+    import com.inoah.ro.consts.BattleCommands;
+    import com.inoah.ro.consts.GameCommands;
+    
+    import as3.patterns.facade.Facade;
+
     /**
      * 角色战斗数据 
      * @author inoah
@@ -97,19 +102,45 @@ package com.inoah.ro.infos
         
         public function set hpCurrent( value:uint ):void
         {
-            _hpCurrent = value;
+            if( _hpCurrent != value )
+            {
+                if( value <= _hpMax )
+                {
+                    _hpCurrent = value;
+                }
+                else
+                {
+                    _hpCurrent = _hpMax;
+                }
+            }
         }
         public function set hpMax( value:uint ):void
         {
-            _hpMax = value;
+            if( _hpMax != value )
+            {
+                _hpMax = value;
+            }
         }
         public function set spCurrent( value:uint ):void
         {
-            _spCurrent = value;
+            if( _spCurrent != value )
+            {
+                if( value <= _spMax )
+                {
+                    _spCurrent = value;
+                }
+                else
+                {
+                    _spCurrent = _spMax;
+                }
+            }
         }
         public function set spMax( value:uint ):void
         {
-            _spMax = value;
+            if( _spMax != value )
+            {
+                _spMax = value;
+            }
         }
         
         public function set weightCurrent( value:uint ):void

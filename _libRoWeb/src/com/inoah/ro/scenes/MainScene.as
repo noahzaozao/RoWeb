@@ -1,12 +1,12 @@
 package com.inoah.ro.scenes 
 {
     import com.D5Power.Controler.Actions;
-    import com.D5Power.Stuff.HSpbar;
     import com.D5Power.scene.BaseScene;
     import com.inoah.ro.characters.MonsterView;
     import com.inoah.ro.controllers.MonsterController;
+    import com.inoah.ro.infos.BattleCharacterInfo;
     import com.inoah.ro.infos.CharacterInfo;
-    import com.inoah.ro.objects.PlayerObject;
+    import com.inoah.ro.objects.MonsterObject;
     import com.inoah.ro.utils.Counter;
     
     import flash.display.DisplayObjectContainer;
@@ -14,7 +14,7 @@ package com.inoah.ro.scenes
     
     public class MainScene extends BaseScene
     {
-        private var _monsterObjList:Vector.<PlayerObject>;
+        private var _monsterObjList:Vector.<MonsterObject>;
         private var _monsterList:Vector.<MonsterView>;
         private var _newMonsterCounter:Counter;
         
@@ -23,7 +23,7 @@ package com.inoah.ro.scenes
             _newMonsterCounter = new Counter();
             _newMonsterCounter.initialize();
             _newMonsterCounter.reset( 3 );
-            _monsterObjList = new Vector.<PlayerObject>();
+            _monsterObjList = new Vector.<MonsterObject>();
             _monsterList = new Vector.<MonsterView>(); 
             super(stg, container);
         }
@@ -51,33 +51,24 @@ package com.inoah.ro.scenes
             _monsterList[ _monsterList.length ] = monsterView
             
             var ctrl:com.inoah.ro.controllers.MonsterController = new MonsterController(perc);
-            var player:PlayerObject = new PlayerObject(ctrl);
-            _monsterObjList[ _monsterObjList.length ] = player;
+            var monster:MonsterObject = new MonsterObject(ctrl);
+            _monsterObjList[ _monsterObjList.length ] = monster;
             
-            player.displayer = monsterView;
-            player.setPos(posx,posy);
-            player.speed = 2.5;
-            player.camp = camp;// 阵营
-            player.setName(
-                (randMonster==0)?"poring":(randMonster==1)?"porpring":"ghostpring",
-                (camp==2 ? 0xff0000 : 0xffff00),
-                0,
-                (randMonster==0)?-60:(randMonster==1)?-60:-100
-            );
-            player.action = Actions.Wait;
-            if(camp==2)
-            {
-                player.hp = 50;
-                player.hpMax = 50;
-                player.hpBar = new HSpbar(player,'hp','hpMax',10 , 0x33ff33);
-                player.sp = 50;
-                player.spMax = 50;
-                player.spBar = new HSpbar(player,'sp','spMax',14 , 0x2868FF);
-            }
+            monster.displayer = monsterView;
+            monster.setPos(posx,posy);
+            monster.speed = 2.5;
+            monster.camp = camp;// 阵营
+            monster.action = Actions.Wait;
+            var info:BattleCharacterInfo = new BattleCharacterInfo();
+            info.name = (randMonster==0)?"poring":(randMonster==1)?"porpring":"ghostpring";
+            info.hpMax = 50;
+            info.spMax = 50;
+            info.hpCurrent = info.hpMax;
+            info.spCurrent = info.spMax;
+            info.atk = 1;
+            monster.info = info;
             
-//            container.addChild( monsterView );
-            
-            addObject(player);
+            addObject(monster);
         }
         
         public function tick( delta:Number ):void

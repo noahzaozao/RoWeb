@@ -4,6 +4,7 @@ package com.inoah.ro.mediators.views
     import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.ui.MainView;
     import com.inoah.ro.ui.mainViewChildren.ChatView;
+    import com.inoah.ro.ui.mainViewChildren.SkillBarView;
     import com.inoah.ro.ui.sysView.AlertView;
     import com.inoah.ro.ui.sysView.ItemView;
     import com.inoah.ro.ui.sysView.StatusView;
@@ -24,6 +25,9 @@ package com.inoah.ro.mediators.views
             
             var chatView:ChatView = new ChatView( mainView.chatView );
             facade.registerMediator( new ChatViewMediator( chatView ) );
+            
+            var skillView:SkillBarView = new SkillBarView ( mainView.skillBarView );
+            facade.registerMediator( new SkillBarViewMediator( skillView ) );
         }
         
         override public function listNotificationInterests():Array
@@ -36,6 +40,11 @@ package com.inoah.ro.mediators.views
             arr.push( GameCommands.OPEN_MAP  );
             arr.push( GameCommands.OPEN_TASK  );
             arr.push( GameCommands.OPEN_OPTION  );
+            arr.push( GameCommands.UPDATE_HP  );
+            arr.push( GameCommands.UPDATE_SP  );
+            arr.push( GameCommands.UPDATE_EXP  );
+            arr.push( GameCommands.UPDATE_LV  );
+            arr.push( GameCommands.UPDATE_STATUS_POINT  );
             return arr;
         }
         
@@ -80,6 +89,31 @@ package com.inoah.ro.mediators.views
                     openOption();
                     break;
                 }
+                case GameCommands.UPDATE_HP:
+                {
+                    mainView.updateHp();
+                    break;
+                }
+                case GameCommands.UPDATE_SP:
+                {
+                    mainView.updateSp();
+                    break;
+                }
+                case GameCommands.UPDATE_EXP:
+                {
+                    mainView.updateExp();
+                    break;
+                }
+                case GameCommands.UPDATE_LV:
+                {
+                    mainView.updateLv();
+                    break;
+                }
+                case GameCommands.UPDATE_STATUS_POINT:
+                {
+                    mainView.updateStatusPoint();
+                    break;
+                }
                 default:
                 {
                     break;
@@ -97,7 +131,7 @@ package com.inoah.ro.mediators.views
         {
             if( !facade.hasMediator( GameConsts.OPTION_VIEW ) )
             {
-                facade.sendNotification( GameCommands.SHOW_ALERT , ["功能尚未开放!"] );
+                facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#ffff00'>The module is not available!</font>" ] );
             }
         }
         
@@ -105,7 +139,7 @@ package com.inoah.ro.mediators.views
         {
             if( !facade.hasMediator( GameConsts.TASK_VIEW ) )
             {
-                facade.sendNotification( GameCommands.SHOW_ALERT , ["功能尚未开放!"] );
+                facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#ffff00'>The module is not available!</font>" ] );
             }
         }
         
@@ -113,7 +147,7 @@ package com.inoah.ro.mediators.views
         {
             if( !facade.hasMediator( GameConsts.MAP_VIEW ) )
             {
-                facade.sendNotification( GameCommands.SHOW_ALERT , ["功能尚未开放!"] );
+                facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#ffff00'>The module is not available!</font>" ] );
             }
         }
         
@@ -133,7 +167,7 @@ package com.inoah.ro.mediators.views
         {
             if( !facade.hasMediator( GameConsts.SKILL_VIEW ) )
             {
-                facade.sendNotification( GameCommands.SHOW_ALERT , ["功能尚未开放!"] );
+                facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#ffff00'>The module is not available!</font>" ] );
             }
         }
         
