@@ -1,19 +1,12 @@
 package
 {
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.consts.MgrTypeConsts;
-    import com.inoah.ro.managers.AssetMgr;
-    import com.inoah.ro.managers.DisplayMgr;
-    import com.inoah.ro.managers.MainMgr;
-    import com.inoah.ro.managers.SprMgr;
-    import com.inoah.ro.managers.TextureMgr;
+    import com.inoah.ro.RoGlobal;
     import com.inoah.ro.mediators.GameMediator;
     
     import flash.display.Sprite;
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
     import flash.events.Event;
-    import flash.events.MouseEvent;
     import flash.utils.getTimer;
     
     import as3.interfaces.IFacade;
@@ -40,39 +33,14 @@ package
             
             lastTimeStamp = getTimer();
             
+            RoGlobal.W = stage.stageWidth;
+            RoGlobal.H = stage.stageHeight;
+            
             var facade:IFacade = Facade.getInstance();
-            _gameMediator = new GameMediator( this );
+            _gameMediator = new GameMediator( stage , this );
             facade.registerMediator( _gameMediator );
             
-            MainMgr.instance;
-            var assetMgr:AssetMgr = new AssetMgr();
-            MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, assetMgr );
-            MainMgr.instance.addMgr( MgrTypeConsts.TEXTURE_MGR, new TextureMgr() );
-            MainMgr.instance.addMgr( MgrTypeConsts.SPR_MGR , new SprMgr() );
-            MainMgr.instance.addMgr( MgrTypeConsts.DISPLAY_MGR , new DisplayMgr( stage ) );
-            
-            onInitRes( assetMgr );
-            
-            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
             stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );
-        }
-        
-        private function onInitRes( assetMgr:AssetMgr ):void
-        {
-            var resPathList:Vector.<String> = new Vector.<String>();
-            resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
-            resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
-            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
-            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
-            resPathList.push( "data/sprite/阁胶磐/poring.act" );
-            resPathList.push( "data/sprite/阁胶磐/poporing.act" );
-            resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
-            assetMgr.getResList( resPathList , function():void{} );
-        }
-        
-        protected function onRightClick( e:MouseEvent):void
-        {
-            Facade.getInstance().sendNotification( GameCommands.RIGHT_CLICK , [e] );
         }
         
         protected function onEnterFrameHandler( e:Event):void

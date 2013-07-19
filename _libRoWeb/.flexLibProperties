@@ -43,6 +43,11 @@
     <classEntry path="com.inoah.ro.objects.MonsterObject"/>
     <classEntry path="com.inoah.ro.ui.mainViewChildren.MapView"/>
     <classEntry path="com.inoah.ro.loaders.JpgLoader"/>
+    <classEntry path="com.inoah.ro.mediators.map.MapMediator"/>
+    <classEntry path="com.inoah.ro.managers.MapMgr"/>
+    <classEntry path="com.inoah.ro.maps.BaseMap"/>
+    <classEntry path="com.inoah.ro.RoCamera"/>
+    <classEntry path="com.inoah.ro.displays.BaseObject"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

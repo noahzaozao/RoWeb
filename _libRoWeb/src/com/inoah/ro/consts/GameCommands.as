@@ -29,5 +29,8 @@ package com.inoah.ro.consts
         public static const UPDATE_EXP:String = "GameCommands.UPDATE_EXP";
         public static const UPDATE_LV:String = "GameCommands.UPDATE_LV";
         public static const UPDATE_STATUS_POINT:String = "GameCommands.UPDATE_STATUS_POINT";
+
+        //map
+        public static const CHANGE_MAP:String = "GameCommands.CHANGE_MAP";
     }
 }

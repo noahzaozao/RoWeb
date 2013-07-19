@@ -4,6 +4,10 @@ package com.inoah.ro.managers
     import flash.events.EventDispatcher;
     import flash.utils.getQualifiedClassName;
     
+    /**
+     * 主管理器基类 
+     * @author inoah
+     */    
     public class BaseMgr extends EventDispatcher
     {
         protected static var _instance:BaseMgr;

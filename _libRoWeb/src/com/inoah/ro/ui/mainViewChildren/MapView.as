@@ -9,7 +9,6 @@ package com.inoah.ro.ui.mainViewChildren
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.display.Shape;
-    import flash.geom.Matrix;
     
     import game.ui.mainViewChildren.mapViewUI;
 
@@ -24,7 +23,7 @@ package com.inoah.ro.ui.mainViewChildren
             _mapBg = new Shape();
             _mapView.addChild( _mapBg );
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            assetMgr.getRes( "asset/tiles/1/s.jpg" , onUpdateHandler );
+            assetMgr.getRes( "map/1s.jpg" , onUpdateHandler );
         }
         
         private function onUpdateHandler( loader:ILoader ):void

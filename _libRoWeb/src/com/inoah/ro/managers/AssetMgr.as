@@ -8,6 +8,10 @@ package com.inoah.ro.managers
     
     import flash.events.Event;
     
+    /**
+     * 资源加载管理器 
+     * @author inoah
+     */    
     public class AssetMgr implements IMgr
     {
         private var _cacheList:Vector.<ILoader>;
@@ -77,7 +81,7 @@ package com.inoah.ro.managers
                     _loaderList.push( new ActSprLoader( resPath ) );
                     break;
                 }
-                default:
+                case "jpg":
                 {
                     _loaderList.push( new JpgLoader( resPath ) );
                     break;
@@ -93,6 +97,8 @@ package com.inoah.ro.managers
         
         private function loadNext():void
         {
+            var callBack:Function;
+            var loader:ILoader;
             if( _loaderList.length > 0 )
             {
                 if( _cacheListIndex.indexOf( _loaderList[0].url ) == -1  )
@@ -104,12 +110,14 @@ package com.inoah.ro.managers
                 }
                 else
                 {
-                    if( _callBackList[0] != null )
-                    {
-                        _callBackList[0].apply( null, [ _cacheList[ _cacheListIndex.indexOf(_loaderList[0].url) ] ] );
-                    }
+                    callBack = _callBackList[0];
+                    loader = _loaderList[0];
                     _loaderList.shift();
                     _callBackList.shift();
+                    if( callBack != null )
+                    {
+                        callBack.apply( null, [ _cacheList[ _cacheListIndex.indexOf( loader.url ) ] ] );
+                    }
                     loadNext();
                 }
             }
@@ -118,17 +126,18 @@ package com.inoah.ro.managers
         private function onLoadComplete( e:Event ):void
         {
             var loader:ILoader = e.currentTarget as ILoader;
+            var callBack:Function = _callBackList[0]
             loader.removeEventListener( Event.COMPLETE, onLoadComplete );
+            _loaderList.shift();
+            _callBackList.shift();
             trace( "load complete..." + loader.url );
             _cacheList.push( loader );
             _cacheListIndex.push( loader.url );
             
-            if( _callBackList[0] != null )
+            if( callBack != null )
             {
-                _callBackList[0].apply( null, [loader]);
+                callBack.apply( null, [loader]);
             }
-            _loaderList.shift();
-            _callBackList.shift();
             _isLoading = false;
             loadNext();
         }

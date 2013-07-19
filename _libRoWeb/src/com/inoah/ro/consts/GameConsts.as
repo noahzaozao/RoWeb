@@ -15,6 +15,7 @@ package com.inoah.ro.consts
         public static const CHAT_VIEW:String = "GameConsts.CHAT_VIEW";
         public static const SKILL_BAR_VIEW:String = "GameConsts.SKILL_BAR_VIEW";
         
+        public static const MAP_MEDIATOR:String = "GameConsts.MAP_MEDIATOR";
         public static const BATTLE_MEDIATOR:String = "GameConsts.BATTLE_MEDIATOR";
     }
 }

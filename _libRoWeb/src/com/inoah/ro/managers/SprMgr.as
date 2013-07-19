@@ -5,6 +5,10 @@ package com.inoah.ro.managers
     
     import flash.utils.ByteArray;
     
+    /**
+     * roSpr文件位图管理器
+     * @author inoah
+     */    
     public class SprMgr implements IMgr
     {
         private var _sprListIndex:Vector.<ByteArray>;

@@ -7,32 +7,23 @@ package com.inoah.ro
     import com.D5Power.Objects.NCharacterObject;
     import com.D5Power.mission.EventData;
     import com.inoah.ro.characters.PlayerView;
-    import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.controllers.PlayerController;
     import com.inoah.ro.infos.UserInfo;
     import com.inoah.ro.managers.BattleMgr;
+    import com.inoah.ro.managers.DisplayMgr;
     import com.inoah.ro.managers.MainMgr;
-    import com.inoah.ro.mediators.views.MainViewMediator;
     import com.inoah.ro.objects.PlayerObject;
     import com.inoah.ro.scenes.MainScene;
-    import com.inoah.ro.ui.MainView;
     import com.inoah.ro.ui.NPCDialog;
     import com.inoah.ro.utils.UserData;
     
     import flash.display.Stage;
     import flash.events.Event;
     
-    import as3.interfaces.IFacade;
-    import as3.patterns.facade.Facade;
-    
     public class RoGame extends D5Game
     {
-        private var _mainViewMediator:MainViewMediator;
-        private var _mainView:MainView;
-        
         public static var inited:Boolean
-        public static var game:RoGame;
         private var _playerView:PlayerView;
         private var _player:CharacterObject;
         
@@ -41,23 +32,19 @@ package com.inoah.ro
         public function RoGame(config:String, stg:Stage, openGPU:uint=0)
         {
             super(config, stg, openGPU);
-            game = this;
         }
         
         override protected function buildScene():void
         {
-            _scene = new MainScene(_stg,this);
+            var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
+            _scene = new MainScene(_stg , displayMgr.mapLevel);
         }
         
         override protected function init(e:Event=null):void
         {
             super.init();
             
-            _mainView = new MainView();
-            _mainViewMediator = new MainViewMediator( _mainView );
-            var facade:IFacade = Facade.getInstance();
-            facade.registerMediator( _mainViewMediator );
-            addChild( _mainView );
+            
             
 //            var nObj:NCharacterObject =  new NCharacterObject( new NCharacterControler( scene.perc ));
 //            nObj.uid = 1;
@@ -85,8 +72,6 @@ package com.inoah.ro
             {
                 (_scene as MainScene).createMonser( 800 * Math.random() + 100, 800 * Math.random() + 100 );
             }
-            
-            facade.sendNotification( GameCommands.RECV_CHAT , [ "\n\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>" ] );
         }
         
         public function tick( delta:Number ):void

@@ -30,6 +30,11 @@ package com.inoah.ro.mediators.views
             facade.registerMediator( new SkillBarViewMediator( skillView ) );
         }
         
+        public function tick(delta:Number):void
+        {
+            
+        }
+        
         override public function listNotificationInterests():Array
         {
             var arr:Array = super.listNotificationInterests();

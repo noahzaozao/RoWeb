@@ -1,5 +1,6 @@
 package com.inoah.ro.ui.mainViewChildren
 {
+    import com.inoah.ro.RoGlobal;
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.infos.UserInfo;
     import com.inoah.ro.utils.UserData;
@@ -30,7 +31,7 @@ package com.inoah.ro.ui.mainViewChildren
             {
                 if( this._chatView.txtChat.text != "" )
                 {
-                    var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+                    var userInfo:UserInfo = RoGlobal.userInfo;
                     var msg:String = userInfo.name + ": " + this._chatView.txtChat.text;
                     Facade.getInstance().sendNotification( GameCommands.SEND_CHAT, [msg] );
                     this._chatView.txtChat.text = "";

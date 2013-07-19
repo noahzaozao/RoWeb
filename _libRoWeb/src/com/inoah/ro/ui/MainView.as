@@ -1,5 +1,6 @@
 package com.inoah.ro.ui
 {
+    import com.inoah.ro.RoGlobal;
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.infos.UserInfo;
     import com.inoah.ro.ui.mainViewChildren.MapView;
@@ -63,7 +64,7 @@ package com.inoah.ro.ui
         }
         private function updateInfo():void
         {
-            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            var userInfo:UserInfo = RoGlobal.userInfo;
             labName.text = userInfo.name;
             labJob.text = userInfo.job;
             hpBar.value = userInfo.hpPer;

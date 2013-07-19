@@ -8,6 +8,10 @@ package com.inoah.ro.managers
     import flash.events.KeyboardEvent;
     import flash.utils.ByteArray;
     
+    /**
+     * 键盘管理器 
+     * @author inoah
+     */    
     public class KeyMgr implements IMgr
     {
         private var states:ByteArray;

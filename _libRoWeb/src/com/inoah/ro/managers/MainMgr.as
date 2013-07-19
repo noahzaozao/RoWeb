@@ -1,5 +1,9 @@
 package com.inoah.ro.managers
 {
+    /**
+     * 主管管理器，所有管理器从这里调用
+     * @author inoah
+     */    
     public class MainMgr extends BaseMgr
     {
         protected static var _instance:MainMgr;

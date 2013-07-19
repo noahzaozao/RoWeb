@@ -5,6 +5,10 @@ package com.inoah.ro.managers
     import flash.display.Sprite;
     import flash.display.Stage;
     
+    /**
+     * 显示管理器 （层管理 )
+     * @author inoah
+     */    
     public class DisplayMgr implements IMgr
     {
         private var _stage:Stage;

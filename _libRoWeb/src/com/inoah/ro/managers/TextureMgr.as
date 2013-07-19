@@ -6,6 +6,10 @@ package com.inoah.ro.managers
     
     import starling.textures.Texture;
     
+    /**
+     * 贴图管理器 
+     * @author inoah
+     */    
     public class TextureMgr implements IMgr
     {
         private var _atfDataListIndex:Vector.<ByteArray>;
