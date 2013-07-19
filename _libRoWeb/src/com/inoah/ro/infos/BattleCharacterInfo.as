@@ -1,10 +1,5 @@
 package com.inoah.ro.infos
 {
-    import com.inoah.ro.consts.BattleCommands;
-    import com.inoah.ro.consts.GameCommands;
-    
-    import as3.patterns.facade.Facade;
-
     /**
      * 角色战斗数据 
      * @author inoah

@@ -195,7 +195,7 @@ package com.inoah.ro.controllers
             }
             _me.action = Actions.Wait;
             
-            Facade.getInstance().sendNotification( BattleCommands.ATTACK , [_me, _atkTarget] );
+            Facade.getInstance().sendNotification( BattleCommands.ATTACK , [_me, atkTarget] );
             
             if(atkTarget.hp==0)
             {

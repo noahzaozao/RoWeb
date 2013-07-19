@@ -5,7 +5,7 @@ package game.ui.mainViewChildren {
 		public var labChat:Label;
 		public var txtChat:TextInput;
 		private var uiXML:XML =
-			<Dialog width="600" height="160" dragArea="0,0,900,500">
+			<Dialog width="600" height="160">
 			  <Image url="png.basic_interface.dialog_bg" x="0" y="129"/>
 			  <Image url="png.comp.blank" x="1" y="27" width="600" height="100"/>
 			  <Label text="label" x="1" y="27" width="600" height="100" multiline="true" align="left" mouseChildren="true" mouseEnabled="true" isHtml="true" wordWrap="false" var="labChat" name="labChat" color="0xffffff" size="12"/>
@@ -15,5 +15,5 @@ package game.ui.mainViewChildren {
 		override protected function createChildren():void {
 			createView(uiXML);
 		}
-    }
+	}
 }

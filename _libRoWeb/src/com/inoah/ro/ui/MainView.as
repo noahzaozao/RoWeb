@@ -2,6 +2,7 @@ package com.inoah.ro.ui
 {
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.infos.UserInfo;
+    import com.inoah.ro.ui.mainViewChildren.MapView;
     import com.inoah.ro.utils.UserData;
     
     import flash.events.MouseEvent;
@@ -12,9 +13,14 @@ package com.inoah.ro.ui
     
     public class MainView extends mainViewUI
     {
+        private var _mapView:MapView;
+        
         public function MainView()
         {
             super();
+            
+            _mapView = new MapView( mapView );
+            _mapView.update();
             
             updateInfo();
             
@@ -71,6 +77,10 @@ package com.inoah.ro.ui
             labJobLv.text = "Job Lv." + userInfo.jobLv;
             jobExpBar.value = userInfo.jobExp / Math.pow( userInfo.jobLv + 1 , 3 );
             labWeightZeny.text = "Weight: " + userInfo.weightCurrent + " / " + userInfo.weightMax + " Zeny: " + userInfo.zeny;
+        }
+        public function updateMapView():void
+        {
+            _mapView.update();   
         }
         
         protected function onOpenHandler( e:MouseEvent):void

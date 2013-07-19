@@ -3,6 +3,7 @@ package com.inoah.ro.managers
     import com.inoah.ro.interfaces.IMgr;
     import com.inoah.ro.loaders.ActSprLoader;
     import com.inoah.ro.loaders.ILoader;
+    import com.inoah.ro.loaders.JpgLoader;
     import com.inoah.ro.loaders.TPCLoader;
     
     import flash.events.Event;
@@ -56,6 +57,14 @@ package com.inoah.ro.managers
         }
         public function getRes( resPath:String, callBack:Function ):void
         {
+            if( _cacheListIndex.indexOf( resPath ) != -1  )
+            {
+                if( callBack != null )
+                {
+                    callBack.apply( null, [ _cacheList[ _cacheListIndex.indexOf( resPath ) ] ] );
+                }
+                return;
+            }
             switch( resPath.split( "." )[1] )
             {
                 case "tpc":
@@ -66,6 +75,11 @@ package com.inoah.ro.managers
                 case "act":
                 {
                     _loaderList.push( new ActSprLoader( resPath ) );
+                    break;
+                }
+                default:
+                {
+                    _loaderList.push( new JpgLoader( resPath ) );
                     break;
                 }
             }

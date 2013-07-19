@@ -85,7 +85,7 @@ package com.inoah.ro.scenes
             _newMonsterCounter.tick( delta );
             if( _newMonsterCounter.expired )
             {
-                if( _monsterObjList.length < 10 )
+                if( _monsterObjList.length < 50 )
                 {
                     createMonser( 800 * Math.random() + 100, 800 * Math.random() + 100 );
                     trace( "a monster appear!" );

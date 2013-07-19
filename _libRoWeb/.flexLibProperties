@@ -41,6 +41,8 @@
     <classEntry path="com.inoah.ro.mediators.battle.BattleMediator"/>
     <classEntry path="com.inoah.ro.consts.BattleCommands"/>
     <classEntry path="com.inoah.ro.objects.MonsterObject"/>
+    <classEntry path="com.inoah.ro.ui.mainViewChildren.MapView"/>
+    <classEntry path="com.inoah.ro.loaders.JpgLoader"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

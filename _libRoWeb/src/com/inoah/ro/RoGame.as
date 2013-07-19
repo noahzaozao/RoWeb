@@ -81,7 +81,7 @@ package com.inoah.ro
             _scene.createPlayer(_player);
             _camera.focus(_player);
             
-            for( var i:int = 0;i< 10; i++ )
+            for( var i:int = 0;i< 50; i++ )
             {
                 (_scene as MainScene).createMonser( 800 * Math.random() + 100, 800 * Math.random() + 100 );
             }
