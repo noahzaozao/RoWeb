@@ -1,7 +1,5 @@
 package com.inoah.ro.characters
 {
-    import com.D5Power.Controler.Actions;
-    import com.D5Power.graphics.ISwfDisplayer;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.displays.actspr.ActSprBodyView;
     import com.inoah.ro.displays.actspr.ActSprOtherView;
@@ -29,7 +27,7 @@ package com.inoah.ro.characters
      * @author inoah
      * 
      */    
-    public class CharacterView extends Sprite implements ISwfDisplayer
+    public class CharacterView extends Sprite
     {
         protected var _charInfo:CharacterInfo;
         protected var _bodyView:ActSprBodyView;
@@ -537,45 +535,45 @@ package com.inoah.ro.characters
         {
             switch( v )
             {
-                case Actions.Wait:
-                {
-                    actionStand();
-                    break;
-                }
-                case Actions.Run:
-                {
-                    actionWalk();
-                    break;
-                }
-                case Actions.Attack:
-                {
-                    actionAttack();
-                    break;
-                }
-                case Actions.Pickup:
-                {
-                    actionPickup();
-                    break;
-                }
-                case Actions.Sit:
-                {
-                    actionSit();
-                    break;
-                }
-                case Actions.BeAtk:
-                {
-                    actionHit();
-                    break;
-                }
-                case Actions.Die:
-                {
-                    actionDead();
-                    break;
-                }
-                default:
-                {
-                    break;
-                }
+//                case Actions.Wait:
+//                {
+//                    actionStand();
+//                    break;
+//                }
+//                case Actions.Run:
+//                {
+//                    actionWalk();
+//                    break;
+//                }
+//                case Actions.Attack:
+//                {
+//                    actionAttack();
+//                    break;
+//                }
+//                case Actions.Pickup:
+//                {
+//                    actionPickup();
+//                    break;
+//                }
+//                case Actions.Sit:
+//                {
+//                    actionSit();
+//                    break;
+//                }
+//                case Actions.BeAtk:
+//                {
+//                    actionHit();
+//                    break;
+//                }
+//                case Actions.Die:
+//                {
+//                    actionDead();
+//                    break;
+//                }
+//                default:
+//                {
+//                    break;
+//                }
             }
         }
         

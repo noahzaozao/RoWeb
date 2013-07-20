@@ -4,22 +4,26 @@ package com.inoah.ro.loaders
     import flash.display.Loader;
     import flash.events.Event;
     import flash.events.EventDispatcher;
+    import flash.net.URLLoader;
+    import flash.net.URLLoaderDataFormat;
     import flash.net.URLRequest;
+    import flash.utils.ByteArray;
     
-    public class JpgLoader extends EventDispatcher implements ILoader
+    public class AtfLoader extends EventDispatcher implements ILoader
     {
         private var _url:String;
-        private var _loader:Loader;
+        private var _loader:URLLoader;
         
-        public function JpgLoader( url:String )
+        public function AtfLoader( url:String )
         {
             _url = url;
         }
         
         public function load():void
         {
-            _loader = new Loader();
-            _loader.contentLoaderInfo.addEventListener( Event.COMPLETE, onLoaderComplete );
+            _loader = new URLLoader();
+            _loader.dataFormat = URLLoaderDataFormat.BINARY;
+            _loader.addEventListener( Event.COMPLETE, onLoaderComplete );
             _loader.load( new URLRequest( _url ) );
         }
         
@@ -28,14 +32,14 @@ package com.inoah.ro.loaders
             return _url;
         }
         
-        public function get content():DisplayObject
+        public function get data():ByteArray
         {
-            return _loader.content;
+            return _loader.data;
         }
         
         protected function onLoaderComplete( e:Event):void
         {
-            _loader.contentLoaderInfo.removeEventListener( Event.COMPLETE, onLoaderComplete );
+            _loader.removeEventListener( Event.COMPLETE, onLoaderComplete );
             dispatchEvent( new Event( Event.COMPLETE ) );
         }
     }

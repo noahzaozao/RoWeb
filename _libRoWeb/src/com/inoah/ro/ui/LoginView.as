@@ -32,6 +32,7 @@ package com.inoah.ro.ui
                 this.txtID.text = "player" + uint( Math.random() * 1000000 );
             }
             Facade.getInstance().sendNotification( GameCommands.LOGIN , [ this.txtID.text ] );
+            this.remove();
         }
     }
 }

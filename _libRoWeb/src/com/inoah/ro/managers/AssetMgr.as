@@ -2,6 +2,7 @@ package com.inoah.ro.managers
 {
     import com.inoah.ro.interfaces.IMgr;
     import com.inoah.ro.loaders.ActSprLoader;
+    import com.inoah.ro.loaders.AtfLoader;
     import com.inoah.ro.loaders.ILoader;
     import com.inoah.ro.loaders.JpgLoader;
     import com.inoah.ro.loaders.TPCLoader;
@@ -79,6 +80,11 @@ package com.inoah.ro.managers
                 case "act":
                 {
                     _loaderList.push( new ActSprLoader( resPath ) );
+                    break;
+                }
+                case "atf":
+                {
+                    _loaderList.push( new AtfLoader( resPath ) );
                     break;
                 }
                 case "jpg":

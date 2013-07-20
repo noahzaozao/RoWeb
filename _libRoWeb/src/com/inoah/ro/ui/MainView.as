@@ -4,7 +4,6 @@ package com.inoah.ro.ui
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.infos.UserInfo;
     import com.inoah.ro.ui.mainViewChildren.MapView;
-    import com.inoah.ro.utils.UserData;
     
     import flash.events.MouseEvent;
     
@@ -35,27 +34,26 @@ package com.inoah.ro.ui
         
         public function updateHp():void
         {
-            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            var userInfo:UserInfo = RoGlobal.userInfo;
             hpBar.value = userInfo.hpPer;
             hpBar.barLabel.text = userInfo.hpCurrent + " / " + userInfo.hpMax;
             labHpPer.text = uint(userInfo.hpPer * 100) + "%";
         }
         public function updateSp():void
         {
-            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            var userInfo:UserInfo = RoGlobal.userInfo;
             spBar.value = userInfo.spPer;
             spBar.barLabel.text = userInfo.spCurrent + " / " + userInfo.spMax;
             labSpPer.text = uint(userInfo.spPer * 100) + "%";
         }
         public function updateExp():void
         {
-            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            var userInfo:UserInfo = RoGlobal.userInfo;
             baseExpBar.value = userInfo.baseExp / Math.pow( userInfo.baseLv + 1 , 3 );
             jobExpBar.value = userInfo.jobExp / Math.pow( userInfo.jobLv + 1 , 3 );
         }
         public function updateLv():void
         {
-            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
             updateInfo();
         }
         public function updateStatusPoint():void

@@ -60,8 +60,8 @@ package com.inoah.ro.displays
         
         public function tick(delta:Number):void
         {
-            this.x = _posX + _offsetX;
-            this.y = _posY + _offsetY;
+            this.x = int(_posX + _offsetX);
+            this.y = int(_posY + _offsetY);
         }
     }
 }

@@ -1,21 +1,24 @@
 package com.inoah.ro.maps
 {
-    import com.inoah.ro.RoCamera;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.displays.BaseObject;
+    import com.inoah.ro.loaders.AtfLoader;
     import com.inoah.ro.loaders.ILoader;
-    import com.inoah.ro.loaders.JpgLoader;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.MainMgr;
     
-    import flash.display.Bitmap;
     import flash.display.DisplayObject;
+    import flash.display.DisplayObjectContainer;
     import flash.display.Sprite;
     
-    public class BaseMap extends Sprite
+    import starling.display.Image;
+    import starling.display.Sprite;
+    import starling.textures.Texture;
+    
+    public class BaseMap extends starling.display.Sprite
     {
-        protected var _mapBg:Bitmap;
-        protected var _container:Sprite;
+        protected var _mapBg:Image;
+        protected var _container:flash.display.Sprite;
         protected var _screenObj:Vector.<BaseObject>;
         protected var _unitList:Vector.<BaseObject>;
         protected var _player:BaseObject;
@@ -24,27 +27,30 @@ package com.inoah.ro.maps
         protected var _nowRend:uint;
         protected var _offsetY:Number;
         protected var _offsetX:Number;
+        protected var _unitContainer:DisplayObjectContainer;
         
-        public function BaseMap()
+        public function BaseMap( unitContainer:DisplayObjectContainer )
         {
             super();
+            _unitContainer = unitContainer;
             _unitList = new Vector.<BaseObject>();
         }
         
         public function init( mapId:uint ):void
         {
-            _container = new Sprite();
-            addChild( _container );
+            _container = new flash.display.Sprite();
+            //            addChild( _container );
             
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            assetMgr.getRes( "map/" + mapId + ".jpg" , onMapLoadComplete );
+            assetMgr.getRes( "map/" + mapId + ".atf" , onMapLoadComplete );
         }
         
         private function onMapLoadComplete( loader:ILoader ):void
         {
-            _mapBg = (loader as JpgLoader).content as Bitmap;
+            var texture:Texture = Texture.fromAtfData(  (loader as AtfLoader).data , 1 , false );
+            _mapBg = new Image( texture );
             addChild( _mapBg );
-            addChild( _container );
+            _unitContainer.addChild( _container );
         }
         
         public function addObject( o:DisplayObject ):void
@@ -55,22 +61,22 @@ package com.inoah.ro.maps
         
         public function ReCut(update:Boolean=true):void
         {
-            for each(var obj:BaseObject in _unitList)
-            {
-                if(obj==_player) 
-                {
-                    continue;
-                }
-                if(RoCamera.cameraView.containsPoint(obj.pos))
-                {
-                    pushRenderList(obj);
-                }
-                else
-                {
-                    pullRenderList(obj);
-                }
-            }
-            RoCamera.needReCut = false;
+            //            for each(var obj:BaseObject in _unitList)
+            //            {
+            //                if(obj==_player) 
+            //                {
+            //                    continue;
+            //                }
+            //                if(RoCamera.cameraView.containsPoint(obj.pos))
+            //                {
+            //                    pushRenderList(obj);
+            //                }
+            //                else
+            //                {
+            //                    pullRenderList(obj);
+            //                }
+            //            }
+            //            RoCamera.needReCut = false;
         }
         
         /**
@@ -78,13 +84,13 @@ package com.inoah.ro.maps
          */ 
         public function pushRenderList(o:BaseObject):void
         {
-//            if(_screenObj.indexOf(o)!=-1) return;
-//            
-//            _screenObj.push(o);
-//            
-//            _container.addChild(o);
-//            //            o.$inScene = true;
-//            //            if(RoCamera.AlphaEffect) o.isIning();
+            //            if(_screenObj.indexOf(o)!=-1) return;
+            //            
+            //            _screenObj.push(o);
+            //            
+            //            _container.addChild(o);
+            //            //            o.$inScene = true;
+            //            //            if(RoCamera.AlphaEffect) o.isIning();
         }
         
         /**
@@ -94,15 +100,15 @@ package com.inoah.ro.maps
          */ 
         public function pullRenderList(o:BaseObject,deleteAbs:Boolean=false):void
         {
-//            var index:int = _screenObj.indexOf(o);
-//            if(index!=-1) _screenObj.splice(index,1);
-//            
-//            if(_container.contains(o))
-//            {
-//                _container.removeChild(o);
-//                //                o.$inScene = false;
-//                //                if(RoCamera.AlphaEffect) o.isOuting();
-//            }
+            //            var index:int = _screenObj.indexOf(o);
+            //            if(index!=-1) _screenObj.splice(index,1);
+            //            
+            //            if(_container.contains(o))
+            //            {
+            //                _container.removeChild(o);
+            //                //                o.$inScene = false;
+            //                //                if(RoCamera.AlphaEffect) o.isOuting();
+            //            }
         }
         
         public function set posX( value:Number ):void
@@ -119,8 +125,8 @@ package com.inoah.ro.maps
         {
             if( _mapBg )
             {
-                _mapBg.x = _offsetX;
-                _mapBg.y = _offsetY;
+                _mapBg.pivotX = -int(_offsetX);
+                _mapBg.pivotY = -int(_offsetY);
             }
             
             if(_unitList.length==0) 
@@ -201,11 +207,6 @@ package com.inoah.ro.maps
             //                
             //                if(getTimer()-Global.Timer>D5Camera.RenderMaxTime) break;
             //            }
-        }
-        
-        protected function draw():void
-        {
-            
         }
     }
 }

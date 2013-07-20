@@ -3,7 +3,6 @@
   <includeClasses>
     <classEntry path="com.inoah.ro.RoGlobal"/>
     <classEntry path="com.inoah.ro.RoGame"/>
-    <classEntry path="com.inoah.ro.utils.UserData"/>
     <classEntry path="com.inoah.ro.objects.PlayerObject"/>
     <classEntry path="com.inoah.ro.controllers.PlayerController"/>
     <classEntry path="com.inoah.ro.displays.actspr.ActSprPlayerView"/>
@@ -48,6 +47,7 @@
     <classEntry path="com.inoah.ro.maps.BaseMap"/>
     <classEntry path="com.inoah.ro.RoCamera"/>
     <classEntry path="com.inoah.ro.displays.BaseObject"/>
+    <classEntry path="com.inoah.ro.loaders.AtfLoader"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

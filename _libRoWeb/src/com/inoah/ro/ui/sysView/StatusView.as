@@ -3,7 +3,6 @@ package com.inoah.ro.ui.sysView
     import com.inoah.ro.RoGlobal;
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.infos.UserInfo;
-    import com.inoah.ro.utils.UserData;
     
     import flash.events.MouseEvent;
     
@@ -30,7 +29,7 @@ package com.inoah.ro.ui.sysView
         
         protected function onAddPointHandler( e:MouseEvent):void
         {
-            var userInfo:UserInfo = (Global.userdata as UserData).userInfo;
+            var userInfo:UserInfo = RoGlobal.userInfo;
             switch( e.currentTarget )
             {
                 case btnStr:

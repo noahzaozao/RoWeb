@@ -6,17 +6,15 @@ package com.inoah.ro.mediators
     import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.infos.UserInfo;
+    import com.inoah.ro.interfaces.IMgr;
+    import com.inoah.ro.interfaces.ITickable;
     import com.inoah.ro.loaders.ActSprLoader;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.BattleMgr;
     import com.inoah.ro.managers.DisplayMgr;
-    import com.inoah.ro.managers.KeyMgr;
     import com.inoah.ro.managers.MainMgr;
     import com.inoah.ro.managers.MapMgr;
-    import com.inoah.ro.managers.SprMgr;
-    import com.inoah.ro.managers.TextureMgr;
     import com.inoah.ro.mediators.views.MainViewMediator;
-    import com.inoah.ro.ui.LoginView;
     import com.inoah.ro.ui.MainView;
     
     import flash.display.Sprite;
@@ -25,93 +23,45 @@ package com.inoah.ro.mediators
     import flash.text.TextField;
     import flash.text.TextFormat;
     
-    import as3.interfaces.IFacade;
+    import as3.interfaces.IMediator;
     import as3.interfaces.INotification;
-    import as3.patterns.facade.Facade;
     import as3.patterns.mediator.Mediator;
-    
-    import morn.core.handlers.Handler;
     
     import starling.core.Starling;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
     
-    public class GameMediator extends Mediator
+    public class GameMediator extends Mediator implements ITickable
     {
         private var _stage:Stage;
-        private var _loginView:LoginView;
         private var _starling:Starling;
         private var _noteTxt:TextField;
         
-        private var _mainViewMediator:MainViewMediator;
-        private var _mainView:MainView;
-        private var _mapMgr:MapMgr;
-        private var _battleMgr:BattleMgr;
+        private var _mainViewMediator:ITickable;;
+        private var _mapMgr:ITickable;
+        private var _battleMgr:ITickable;
+
+        private var _couldTick:Boolean;
         
         public function GameMediator( stage:Stage , viewComponent:Object=null )
         {
             super( GameConsts.GAME_MEDIATOR , viewComponent);
             _stage = stage;
             
-            MainMgr.instance;
-            MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, new AssetMgr() );
+            Starling.handleLostContext = true;
+            Starling.multitouchEnabled = true;
+            _starling = new Starling( Main, _stage );
+            _starling.enableErrorChecking = false;
+            _starling.showStats = true;
+            _starling.showStatsAt(HAlign.RIGHT, VAlign.CENTER);
+            _starling.start();
             
-            MainMgr.instance.addMgr( MgrTypeConsts.TEXTURE_MGR, new TextureMgr() );
-            MainMgr.instance.addMgr( MgrTypeConsts.SPR_MGR , new SprMgr() );
-            
-            MainMgr.instance.addMgr( MgrTypeConsts.DISPLAY_MGR , new DisplayMgr( stage ) );
-            MainMgr.instance.addMgr( MgrTypeConsts.KEY_MGR, new KeyMgr( stage ) );
-            
-            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
-            
-            App.init( mainView );
-            App.loader.loadAssets( ["assets/comp.swf","assets/login_interface.swf", "assets/basic_interface.swf"] , new Handler( loadComplete ) );
+//            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
         }
         
         protected function onRightClick( e:MouseEvent):void
         {
-            Facade.getInstance().sendNotification( GameCommands.RIGHT_CLICK , [e] );
-        }
-        
-        private function loadComplete():void
-        {
-            _loginView = new LoginView();
-            
-            var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
-            displayMgr.uiLevel.addChild( _loginView );
-            
-            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            onInitRes( assetMgr );
-        }
-        
-        /**
-         * 初始加载，不必等待 作为预缓冲
-         * @param assetMgr
-         */        
-        private function onInitRes( assetMgr:AssetMgr ):void
-        {
-            if( RoGlobal.isStarling == false )
-            {
-                var resPathList:Vector.<String> = new Vector.<String>();
-                resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
-                resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
-                resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
-                resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
-                resPathList.push( "data/sprite/阁胶磐/poring.act" );
-                resPathList.push( "data/sprite/阁胶磐/poporing.act" );
-                resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
-                assetMgr.getResList( resPathList , function():void{} );
-            }
-            else
-            {
-                Starling.handleLostContext = true;
-                Starling.multitouchEnabled = true;
-                _starling = new Starling( Main, _stage );
-                _starling.enableErrorChecking = false;
-                _starling.showStats = true;
-                _starling.showStatsAt(HAlign.LEFT, VAlign.BOTTOM);
-                _starling.start();
-            }
+            facade.sendNotification( GameCommands.RIGHT_CLICK , [e] );
         }
         
         override public function listNotificationInterests():Array
@@ -141,8 +91,6 @@ package com.inoah.ro.mediators
         
         private function onLoginHandler( username:String ):void
         {
-            _loginView.remove();
-            
             initUserinfo( username );
             
             var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
@@ -157,24 +105,17 @@ package com.inoah.ro.mediators
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
             
             var resPathList:Vector.<String> = new Vector.<String>();
-            if( RoGlobal.isStarling == false )
-            {
-                //            resPathList.push( "data/sprite/牢埃练/赣府烹/咯/2_咯.act" );
-                //            resPathList.push( "data/sprite/牢埃练/个烹/咯/檬焊磊_咯.act" );
-                //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八.act" );
-                //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八_八堡.act" );
-                resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
-                resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
-                resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
-                resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
-                resPathList.push( "data/sprite/阁胶磐/poring.act" );
-                resPathList.push( "data/sprite/阁胶磐/poporing.act" );
-                resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
-            }
-            else
-            {
-                //tpc资源列表
-            }
+            //            resPathList.push( "data/sprite/牢埃练/赣府烹/咯/2_咯.act" );
+            //            resPathList.push( "data/sprite/牢埃练/个烹/咯/檬焊磊_咯.act" );
+            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八.act" );
+            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八_八堡.act" );
+            resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
+            resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
+            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
+            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
+            resPathList.push( "data/sprite/阁胶磐/poring.act" );
+            resPathList.push( "data/sprite/阁胶磐/poporing.act" );
+            resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
             
             assetMgr.getResList( resPathList , onInitLoadComplete );
         }
@@ -221,23 +162,22 @@ package com.inoah.ro.mediators
             var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
             
             //初始化主界面
-            _mainView = new MainView();
-            _mainViewMediator = new MainViewMediator( _mainView );
-            var facade:IFacade = Facade.getInstance();
-            facade.registerMediator( _mainViewMediator );
-            displayMgr.uiLevel.addChild( _mainView );
+            var mainView:MainView = new MainView();
+            _mainViewMediator = new MainViewMediator( mainView );
+            facade.registerMediator( _mainViewMediator as IMediator );
+            displayMgr.uiLevel.addChild( mainView );
             
             //初始化地图管理器
-            _mapMgr = new MapMgr( displayMgr.mapLevel );
-            MainMgr.instance.addMgr( MgrTypeConsts.MAP_MGR, _mapMgr );
-            facade.registerMediator( _mapMgr );
+            _mapMgr = new MapMgr( displayMgr.unitLevel , displayMgr.mapLevel );
+            MainMgr.instance.addMgr( MgrTypeConsts.MAP_MGR, _mapMgr as IMgr );
+            facade.registerMediator( _mapMgr as IMediator );
             
             facade.sendNotification( GameCommands.CHANGE_MAP , [ 1 ] );
             
             //初始化战斗管理器
             _battleMgr = new BattleMgr();
-            MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, _battleMgr );
-            facade.registerMediator( _battleMgr );
+            MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, _battleMgr as IMgr );
+            facade.registerMediator( _battleMgr as IMediator );
             
             facade.sendNotification( GameCommands.RECV_CHAT , [ "\n\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>" ] );
         }
@@ -258,9 +198,14 @@ package com.inoah.ro.mediators
             }
         }
         
-        private function get mainView():Sprite
+        public function get mainView():Sprite
         {
             return viewComponent as Sprite;
+        }
+        
+        public function get couldTick():Boolean
+        {
+            return true;
         }
     }
 }

@@ -3,7 +3,6 @@ package com.inoah.ro.ui.mainViewChildren
     import com.inoah.ro.RoGlobal;
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.infos.UserInfo;
-    import com.inoah.ro.utils.UserData;
     
     import flash.events.KeyboardEvent;
     import flash.ui.Keyboard;

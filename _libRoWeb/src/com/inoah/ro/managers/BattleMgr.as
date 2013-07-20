@@ -1,6 +1,7 @@
 package com.inoah.ro.managers
 {
     import com.inoah.ro.interfaces.IMgr;
+    import com.inoah.ro.interfaces.ITickable;
     import com.inoah.ro.mediators.battle.BattleMediator;
     
     /**

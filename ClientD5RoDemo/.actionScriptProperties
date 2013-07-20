@@ -30,7 +30,6 @@
           <libraryPathEntry kind="3" linkType="1" path="${PROJECT_FRAMEWORKS}/libs/automation_agent.swc" useDefaultLinkType="false"/>
         </excludedEntries>
       </libraryPathEntry>
-      <libraryPathEntry kind="3" linkType="1" path="/_libD5Rpg/bin/_libD5Rpg.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/_libRoWeb/bin/_libRoWeb.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/_libMornUI/bin/_libMornUI.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/_libCommon/bin/_libCommon.swc" useDefaultLinkType="false"/>

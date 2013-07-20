@@ -1,31 +1,45 @@
 package com.inoah.ro.mediators.map
 {
     import com.inoah.ro.RoCamera;
+    import com.inoah.ro.RoGlobal;
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.displays.BaseObject;
+    import com.inoah.ro.interfaces.ITickable;
     import com.inoah.ro.managers.KeyMgr;
     import com.inoah.ro.managers.MainMgr;
     import com.inoah.ro.maps.BaseMap;
+    import com.inoah.ro.utils.Counter;
     
     import flash.display.DisplayObjectContainer;
-    import flash.display.Shape;
+    import flash.display.Sprite;
     import flash.ui.Keyboard;
     
     import as3.interfaces.INotification;
     import as3.patterns.mediator.Mediator;
     
-    public class MapMediator extends Mediator
+    import starling.display.DisplayObjectContainer;
+    import starling.display.Sprite;
+    
+    public class MapMediator extends Mediator implements ITickable
     {
         protected var _camera:RoCamera;
         protected var _map:BaseMap;
         protected var _mapId:uint;
         protected var _baseObj:BaseObject;
+        protected var _unitLevel:flash.display.Sprite;
+        protected var _mapLevel:starling.display.Sprite;
+        protected var _drawCounter:Counter;
         
-        public function MapMediator( viewComponent:Object=null)
+        public function MapMediator( unitLevel:flash.display.Sprite , mapLevel:starling.display.Sprite )
         {
-            super(GameConsts.MAP_MEDIATOR, viewComponent);
+            super(GameConsts.MAP_MEDIATOR);
+            _unitLevel = unitLevel;
+            _mapLevel = mapLevel;
+            _drawCounter = new Counter();
+            _drawCounter.initialize();
+            _drawCounter.reset( 0.015 );
         }
         
         override public function listNotificationInterests():Array
@@ -58,15 +72,15 @@ package com.inoah.ro.mediators.map
             _mapId = mapId;
             if( !_map )
             {
-                _map = new BaseMap();
+                _map = new BaseMap( _unitLevel as flash.display.DisplayObjectContainer );
                 _camera = new RoCamera( _map );
             }
             _map.init( _mapId );
-            container.addChild( _map );
+            mapContainer.addChild( _map );
             
             _baseObj = new BaseObject();
             _baseObj.graphics.beginFill( 0xff0000 );
-            _baseObj.graphics.drawRect( -2, -2 , 4 , 4);
+            _baseObj.graphics.drawRect( -5, -5 , 10 , 10);
             _baseObj.graphics.endFill();
             _baseObj.posX = 200;
             _baseObj.posY = 200;
@@ -77,35 +91,67 @@ package com.inoah.ro.mediators.map
         
         public function tick( delta:Number ):void
         {
-            var speed:Number = 600;
-            var keyMgr:KeyMgr = MainMgr.instance.getMgr( MgrTypeConsts.KEY_MGR ) as KeyMgr;
-            if( keyMgr.isDown( Keyboard.D ) )
+            _drawCounter.tick( delta );
+            if(_drawCounter.expired )
             {
-                _baseObj.posX +=speed * delta;
+                var speed:Number = 500;
+                var keyMgr:KeyMgr = MainMgr.instance.getMgr( MgrTypeConsts.KEY_MGR ) as KeyMgr;
+                if( keyMgr.isDown( Keyboard.D ) )
+                {
+                    _baseObj.posX +=speed * delta;
+                    if( _baseObj.posX > RoGlobal.MAP_W )
+                    {
+                        _baseObj.posX = RoGlobal.MAP_W;
+                    }
+                }
+                else if( keyMgr.isDown( Keyboard.A ) )
+                {
+                    _baseObj.posX -=speed * delta;
+                    if( _baseObj.posX < 0 )
+                    {
+                        _baseObj.posX = 0;
+                    }
+                }
+                if( keyMgr.isDown( Keyboard.W ) )
+                {
+                    _baseObj.posY -=speed * delta;
+                    if( _baseObj.posY < 0 )
+                    {
+                        _baseObj.posY = 0;
+                    }
+                }
+                else if( keyMgr.isDown( Keyboard.S ) )
+                {
+                    _baseObj.posY +=speed * delta;
+                    if( _baseObj.posY > RoGlobal.MAP_H )
+                    {
+                        _baseObj.posY = RoGlobal.MAP_H;
+                    }
+                }
+                
+                _camera.update();
+                _map.posX = -_camera.zeroX;
+                _map.posY = -_camera.zeroY;
+                _map.tick( delta );
+                _baseObj.tick( delta );
+                
+                _drawCounter.reset( 0.015 );
             }
-            else if( keyMgr.isDown( Keyboard.A ) )
-            {
-                _baseObj.posX -=speed * delta;
-            }
-            if( keyMgr.isDown( Keyboard.W ) )
-            {
-                _baseObj.posY -=speed * delta;
-            }
-            else if( keyMgr.isDown( Keyboard.S ) )
-            {
-                _baseObj.posY +=speed * delta;
-            }
-            
-            _camera.update();
-            _map.posX = -_camera.zeroX;
-            _map.posY = -_camera.zeroY;
-            _map.tick( delta );
-            _baseObj.tick( delta );
         }
         
-        public function get container():DisplayObjectContainer
+        public function get mapContainer():starling.display.DisplayObjectContainer
         {
-            return viewComponent as DisplayObjectContainer;
+            return _mapLevel as starling.display.DisplayObjectContainer;
+        }
+        
+        public function get unitContainer():flash.display.DisplayObjectContainer
+        {
+            return _unitLevel as flash.display.DisplayObjectContainer;
+        }
+        
+        public function get couldTick():Boolean
+        {
+            return true;
         }
     }
 }

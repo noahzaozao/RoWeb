@@ -2,6 +2,7 @@ package com.inoah.ro.mediators.views
 {
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.consts.GameConsts;
+    import com.inoah.ro.interfaces.ITickable;
     import com.inoah.ro.ui.MainView;
     import com.inoah.ro.ui.mainViewChildren.ChatView;
     import com.inoah.ro.ui.mainViewChildren.SkillBarView;
@@ -12,7 +13,7 @@ package com.inoah.ro.mediators.views
     import as3.interfaces.INotification;
     import as3.patterns.mediator.Mediator;
     
-    public class MainViewMediator extends Mediator
+    public class MainViewMediator extends Mediator implements ITickable
     {
         public function MainViewMediator( viewComponent:Object=null)
         {
@@ -191,6 +192,11 @@ package com.inoah.ro.mediators.views
         public function get mainView():MainView
         {
             return viewComponent as MainView;
+        }
+        
+        public function get couldTick():Boolean
+        {
+            return true;
         }
     }
 }
