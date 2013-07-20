@@ -49,7 +49,7 @@ package game.ui {
 			  <Button skin="png.basic_interface.btn_sys_base" x="3" y="3"/>
 			  <ProgressBar skin="png.basic_interface.progress_gzeblue" x="35" y="52" var="hpBar" name="hpBar"/>
 			  <ProgressBar skin="png.basic_interface.progress_gzeblue" x="35" y="69" var="spBar" name="spBar"/>
-			  <skillBarView x="680" y="526" var="skillBarView" name="skillBarView"/>
+			  <skillBarView x="350" y="0" var="skillBarView" name="skillBarView"/>
 			  <chatView x="0" y="405" var="chatView" name="chatView"/>
 			  <ProgressBar skin="png.basic_interface.progress_exp" x="65" y="88" var="baseExpBar" name="baseExpBar"/>
 			  <ProgressBar skin="png.basic_interface.progress_exp" x="65" y="100" var="jobExpBar" name="jobExpBar"/>
