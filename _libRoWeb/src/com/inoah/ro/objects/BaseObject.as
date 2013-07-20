@@ -57,6 +57,11 @@ package com.inoah.ro.objects
             _viewObj.tick( delta );
         }
         
+        public function set playRate( value:Number ):void
+        {
+            _viewObj.playRate = value;
+        }
+        
         public function set controller( ctrl:BaseController ):void
         {
             if(_controller!=null)

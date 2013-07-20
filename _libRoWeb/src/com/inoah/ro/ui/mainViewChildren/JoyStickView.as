@@ -26,6 +26,7 @@ package com.inoah.ro.ui.mainViewChildren
             _joyStick.btnUpRight.addEventListener( MouseEvent.ROLL_OVER , onKeyDownHandler );
             _joyStick.btnDownLeft.addEventListener( MouseEvent.ROLL_OVER , onKeyDownHandler );
             _joyStick.btnDownRight.addEventListener( MouseEvent.ROLL_OVER , onKeyDownHandler );
+            _joyStick.btnAttack.addEventListener( MouseEvent.ROLL_OVER , onKeyDownHandler );
 
             _joyStick.btnUp.addEventListener( MouseEvent.ROLL_OUT , onKeyDownHandler );
             _joyStick.btnDown.addEventListener( MouseEvent.ROLL_OUT , onKeyDownHandler );
@@ -35,6 +36,7 @@ package com.inoah.ro.ui.mainViewChildren
             _joyStick.btnUpRight.addEventListener( MouseEvent.ROLL_OUT , onKeyDownHandler );
             _joyStick.btnDownLeft.addEventListener( MouseEvent.ROLL_OUT , onKeyDownHandler );
             _joyStick.btnDownRight.addEventListener( MouseEvent.ROLL_OUT , onKeyDownHandler );
+            _joyStick.btnAttack.addEventListener( MouseEvent.ROLL_OUT , onKeyDownHandler );
 
             _joyStick.btnUp.addEventListener( TouchEvent.TOUCH_OVER , onKeyDownHandler );
             _joyStick.btnDown.addEventListener( TouchEvent.TOUCH_OVER , onKeyDownHandler );
@@ -44,6 +46,7 @@ package com.inoah.ro.ui.mainViewChildren
             _joyStick.btnUpRight.addEventListener( TouchEvent.TOUCH_OVER , onKeyDownHandler );
             _joyStick.btnDownLeft.addEventListener( TouchEvent.TOUCH_OVER , onKeyDownHandler );
             _joyStick.btnDownRight.addEventListener( TouchEvent.TOUCH_OVER , onKeyDownHandler );
+            _joyStick.btnAttack.addEventListener( TouchEvent.TOUCH_OVER , onKeyDownHandler );
 
             _joyStick.btnUp.addEventListener( TouchEvent.TOUCH_END , onKeyDownHandler );
             _joyStick.btnDown.addEventListener( TouchEvent.TOUCH_END , onKeyDownHandler );
@@ -53,6 +56,7 @@ package com.inoah.ro.ui.mainViewChildren
             _joyStick.btnUpRight.addEventListener( TouchEvent.TOUCH_END , onKeyDownHandler );
             _joyStick.btnDownLeft.addEventListener( TouchEvent.TOUCH_END , onKeyDownHandler );
             _joyStick.btnDownRight.addEventListener( TouchEvent.TOUCH_END , onKeyDownHandler );
+            _joyStick.btnAttack.addEventListener( TouchEvent.TOUCH_END , onKeyDownHandler );
         }
         
         protected function onKeyDownHandler( e:* ):void
@@ -69,6 +73,11 @@ package com.inoah.ro.ui.mainViewChildren
             var facade:IFacade = Facade.getInstance();
             switch( e.currentTarget )
             {
+                case _joyStick.btnAttack:
+                {
+                    facade.sendNotification( GameCommands.JOY_STICK_ATTACK , [isDown] );
+                    break;
+                }
                 case _joyStick.btnUp:
                 {
                     facade.sendNotification( GameCommands.JOY_STICK_UP , [isDown] );

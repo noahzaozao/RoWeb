@@ -13,6 +13,7 @@ package com.inoah.ro.consts
         public static const JOY_STICK_UP_RIGHT:String = "GameCommands.JOY_STICK_UP_RIGHT";
         public static const JOY_STICK_DOWN_LEFT:String = "GameCommands.JOY_STICK_DOWN_LEFT";
         public static const JOY_STICK_DOWN_RIGHT:String = "GameCommands.JOY_STICK_DOWN_RIGHT";
+        public static const JOY_STICK_ATTACK:String = "GameCommands.JOY_STICK_ATTACK";
 
         public static const SHOW_ALERT:String = "GameCommands.SHOW_ALERT";
         public static const HIDE_ALERT:String = "GameCommands.HIDE_ALERT";

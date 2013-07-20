@@ -4,6 +4,7 @@ package com.inoah.ro
 
     public class RoGlobal
     {
+        public static var isIPhone:Boolean;
         public static var W:uint;
         public static var H:uint;
         public static var MAP_W:uint = 2048;

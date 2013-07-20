@@ -1,5 +1,6 @@
 package com.inoah.ro.mediators.views
 {
+    import com.inoah.ro.RoGlobal;
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.interfaces.ITickable;
@@ -27,7 +28,11 @@ package com.inoah.ro.mediators.views
             
             var joyStickview:JoyStickView = new JoyStickView( mainView.joyStick );
             facade.registerMediator( new JoyStickViewMediator( joyStickview ) );
-            mainView.joyStick.visible = false;
+            if( !RoGlobal.isIPhone )
+            {
+                mainView.joyStick.visible = false;
+                
+            }
             
             var chatView:ChatView = new ChatView( mainView.chatView );
             facade.registerMediator( new ChatViewMediator( chatView ) );

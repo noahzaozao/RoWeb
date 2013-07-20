@@ -57,6 +57,15 @@ package com.inoah.ro.characters
         protected var _dirChangeArr:Array = [4, 5, 6, 7, 8, -7, -6, -5];
         protected var _isPlayEnd:Boolean;
         protected var _action:int;
+        /**
+         * 动画播放倍率 
+         */        
+        protected var _playRate:Number = 1;
+        
+        public function set playRate( value:Number ):void
+        {
+            _playRate = value;
+        }
         
         public function setChooseCircle( bool:Boolean ):void
         {
@@ -226,6 +235,7 @@ package com.inoah.ro.characters
         
         public function tick( delta:Number ):void
         {
+            delta = delta * _playRate; 
             if( !_isPlayEnd )
             {
                 if( _bodyView )

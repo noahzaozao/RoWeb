@@ -1,6 +1,6 @@
 <Dialog sceneWidth="960" sceneHeight="256" sceneColor="0xffffff" sceneBg="" layers="1,1,0,0,第 1 层">
   <Button label="label" skin="png.comp.button" x="766" y="0" layer="1" width="96" height="96"/>
-  <Button label="label" skin="png.comp.button" x="670" y="80" layer="1" width="96" height="96"/>
+  <Button label="label" skin="png.comp.button" x="670" y="80" layer="1" width="96" height="96" var="btnAttack" name="btnAttack"/>
   <Button label="label" skin="png.comp.button" x="766" y="160" layer="1" width="96" height="96"/>
   <Button label="label" skin="png.comp.button" x="862" y="80" layer="1" width="96" height="96"/>
   <Button label="label" skin="png.comp.button" x="0" y="0" layer="1" width="96" height="96" var="btnUpLeft" name="btnUpLeft"/>

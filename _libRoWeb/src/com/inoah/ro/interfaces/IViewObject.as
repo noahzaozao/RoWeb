@@ -13,5 +13,6 @@ package com.inoah.ro.interfaces
         function set direction( value:int ):void;
         function set isPlayEnd( value:Boolean ):void;
         
+        function set playRate( value:Number ):void;
     }
 }

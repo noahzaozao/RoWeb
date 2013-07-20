@@ -2,6 +2,7 @@
 package game.ui.mainViewChildren {
 	import morn.core.components.*;
 	public class joystickUI extends Dialog {
+		public var btnAttack:Button;
 		public var btnUpLeft:Button;
 		public var btnUpRight:Button;
 		public var btnDownLeft:Button;
@@ -13,7 +14,7 @@ package game.ui.mainViewChildren {
 		private var uiXML:XML =
 			<Dialog>
 			  <Button label="label" skin="png.comp.button" x="766" y="0" width="96" height="96"/>
-			  <Button label="label" skin="png.comp.button" x="670" y="80" width="96" height="96"/>
+			  <Button label="label" skin="png.comp.button" x="670" y="80" width="96" height="96" var="btnAttack" name="btnAttack"/>
 			  <Button label="label" skin="png.comp.button" x="766" y="160" width="96" height="96"/>
 			  <Button label="label" skin="png.comp.button" x="862" y="80" width="96" height="96"/>
 			  <Button label="label" skin="png.comp.button" x="0" y="0" width="96" height="96" var="btnUpLeft" name="btnUpLeft"/>

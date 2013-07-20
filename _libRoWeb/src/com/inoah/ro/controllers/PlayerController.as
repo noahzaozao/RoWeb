@@ -11,13 +11,17 @@ package com.inoah.ro.controllers
     
     import as3.interfaces.INotification;
     
+    import starling.animation.Tween;
+    
     public class PlayerController extends BaseController
     {
         protected var _joyStickUp:Boolean;
         protected var _joyStickDown:Boolean;
         protected var _joyStickLeft:Boolean;
         protected var _joyStickRight:Boolean;
+        protected var _joyStickAttack:Boolean;
         
+        protected var _isAttacking:Boolean;
         //        protected var _fightMode:uint = 0; // 攻击模式 0-无  1-追击 2-攻击
         //        protected var _atkTarget:CharacterObject;
         //        protected var _chooseTarget:CharacterObject;
@@ -38,10 +42,9 @@ package com.inoah.ro.controllers
         //            return _atkCd * rate;
         //        }
         //        
-        public function PlayerController()//pec:Perception, ctrl:uint=2)
+        public function PlayerController()
         {
             super();
-            //            super(pec, ctrl);
         }
         
         //        protected function posCheck( value:int ):Boolean
@@ -203,6 +206,7 @@ package com.inoah.ro.controllers
             arr.push( GameCommands.JOY_STICK_UP_RIGHT );
             arr.push( GameCommands.JOY_STICK_DOWN_LEFT );
             arr.push( GameCommands.JOY_STICK_DOWN_RIGHT );
+            arr.push( GameCommands.JOY_STICK_ATTACK );
             return arr;
         }
         
@@ -213,8 +217,14 @@ package com.inoah.ro.controllers
             _joyStickDown = false;
             _joyStickLeft = false;
             _joyStickRight = false;
+            _joyStickAttack = false;
             switch( notification.getName() )
             {
+                case GameCommands.JOY_STICK_ATTACK:
+                {
+                    _joyStickAttack = arr[0];
+                    break;
+                }
                 case GameCommands.JOY_STICK_UP:
                 {
                     _joyStickUp = arr[0];
@@ -264,9 +274,32 @@ package com.inoah.ro.controllers
         
         override public function tick( delta:Number ):void
         {
+            super.tick( delta );
+            
             var speed:Number = 200;
             var keyMgr:KeyMgr = MainMgr.instance.getMgr( MgrTypeConsts.KEY_MGR ) as KeyMgr;
-            if( keyMgr.isDown( Keyboard.D ) && !keyMgr.isDown( Keyboard.A ) || _joyStickRight && !_joyStickLeft )
+            //攻击控制逻辑
+            if( !_isAttacking )
+            {
+                _me.playRate = 1;
+            }
+            if( _isAttacking )
+            {
+                
+            }
+            else if( keyMgr.isDown( Keyboard.J ) || _joyStickAttack )
+            {
+                _isAttacking = true;
+                _me.playRate = 1;
+                _me.action = Actions.Attack;
+                var tween:Tween = new Tween( _me , 0.6 );
+                tween.onComplete = onAttacked;
+                appendAnimateUnit( tween );
+            }
+            //攻击控制逻辑结束
+            
+            //八方向移动控制逻辑
+            else if( keyMgr.isDown( Keyboard.D ) && !keyMgr.isDown( Keyboard.A ) || _joyStickRight && !_joyStickLeft )
             {
                 _me.posX +=speed * delta;
                 if( _me.posX > RoGlobal.MAP_W ) _me.posX = RoGlobal.MAP_W;
@@ -328,8 +361,13 @@ package com.inoah.ro.controllers
             {
                 _me.action = Actions.Wait;
             }
-            
-            super.tick( delta );
+            //八方向移动控制逻辑结束
+        }
+        
+        protected function onAttacked():void
+        {
+            _isAttacking = false;
+            _me.action = Actions.Wait;
         }
         
         public function changeDirectionByAngle(angle:int):void
@@ -372,15 +410,5 @@ package com.inoah.ro.controllers
                 _me.direction(_me.directions.LeftUp);
             }
         }
-        
-//        public function unsetupListener():void
-//        {
-//            
-//        }
-//        
-//        public function setupListener():void
-//        {
-//            
-//        }
     }
 }
