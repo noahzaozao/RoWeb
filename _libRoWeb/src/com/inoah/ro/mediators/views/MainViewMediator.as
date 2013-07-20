@@ -5,6 +5,7 @@ package com.inoah.ro.mediators.views
     import com.inoah.ro.interfaces.ITickable;
     import com.inoah.ro.ui.MainView;
     import com.inoah.ro.ui.mainViewChildren.ChatView;
+    import com.inoah.ro.ui.mainViewChildren.JoyStickView;
     import com.inoah.ro.ui.mainViewChildren.SkillBarView;
     import com.inoah.ro.ui.sysView.AlertView;
     import com.inoah.ro.ui.sysView.ItemView;
@@ -23,6 +24,10 @@ package com.inoah.ro.mediators.views
             view.x = 480 - view.width / 2;
             view.y = 280 - view.height / 2;
             facade.registerMediator( new AlertViewMediator( view ) );
+            
+            var joyStickview:JoyStickView = new JoyStickView( mainView.joyStick );
+            facade.registerMediator( new JoyStickViewMediator( joyStickview ) );
+            mainView.joyStick.visible = false;
             
             var chatView:ChatView = new ChatView( mainView.chatView );
             facade.registerMediator( new ChatViewMediator( chatView ) );

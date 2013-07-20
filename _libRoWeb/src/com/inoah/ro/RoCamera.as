@@ -1,9 +1,8 @@
 package com.inoah.ro
 {
-    import com.inoah.ro.displays.BaseObject;
     import com.inoah.ro.maps.BaseMap;
+    import com.inoah.ro.objects.BaseObject;
     
-    import flash.display.DisplayObject;
     import flash.events.TimerEvent;
     import flash.geom.Point;
     import flash.geom.Rectangle;
@@ -144,7 +143,7 @@ package com.inoah.ro
             _map.ReCut();
         }
         
-        public function get focusObject():DisplayObject
+        public function get focusObject():BaseObject
         {
             return _focus;
         }

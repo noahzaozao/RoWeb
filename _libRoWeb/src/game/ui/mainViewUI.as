@@ -2,6 +2,7 @@
 package game.ui {
 	import morn.core.components.*;
 	import game.ui.mainViewChildren.chatViewUI;
+	import game.ui.mainViewChildren.joystickUI;
 	import game.ui.mainViewChildren.mapViewUI;
 	import game.ui.mainViewChildren.skillBarViewUI;
 	public class mainViewUI extends View {
@@ -25,6 +26,7 @@ package game.ui {
 		public var baseExpBar:ProgressBar;
 		public var jobExpBar:ProgressBar;
 		public var mapView:mapViewUI;
+		public var joyStick:joystickUI;
 		private var uiXML:XML =
 			<View height="100">
 			  <Button skin="png.basic_interface.btn_info" x="0" y="135" var="btnStatus" name="btnStatus"/>
@@ -52,9 +54,10 @@ package game.ui {
 			  <ProgressBar skin="png.basic_interface.progress_exp" x="65" y="88" var="baseExpBar" name="baseExpBar"/>
 			  <ProgressBar skin="png.basic_interface.progress_exp" x="65" y="100" var="jobExpBar" name="jobExpBar"/>
 			  <mapView x="760" y="0" var="mapView" name="mapView"/>
+			  <joystick x="0" y="360" var="joyStick" name="joyStick"/>
 			</View>;
 		override protected function createChildren():void {
-			viewClassMap = {"chatView":chatViewUI,"mapView":mapViewUI,"skillBarView":skillBarViewUI};
+			viewClassMap = {"chatView":chatViewUI,"joystick":joystickUI,"mapView":mapViewUI,"skillBarView":skillBarViewUI};
 			createView(uiXML);
 		}
 	}

@@ -1,17 +1,14 @@
 package com.inoah.ro.objects
 {
-    //    import com.D5Power.Controler.BaseControler;
-    //    import com.D5Power.Objects.CharacterObject;
-    //    import com.D5Power.Stuff.HSpbar;
-    //    import com.inoah.ro.infos.BattleCharacterInfo;
-    //    
-    public class PlayerObject// extends CharacterObject
+    import com.inoah.ro.infos.BattleCharacterInfo;
+    
+    public class BattleCharacterObject extends CharacterObject
     {
-        //        protected var _info:BattleCharacterInfo;
+        protected var _info:BattleCharacterInfo;
         
-        public function PlayerObject()//ctrl:BaseControler=null)
+        public function BattleCharacterObject()
         {
-            //            super(ctrl);
+            super();
         }
         
         //        override public function set hp(val:int):void
@@ -57,25 +54,10 @@ package com.inoah.ro.objects
         //            spMax = _info.spMax;
         //            spBar = new HSpbar( this,'sp','spMax',14 , 0x2868FF);
         //        }
-        //        
-        //        public function get info():BattleCharacterInfo
-        //        {
-        //            return _info;
-        //        }
-        //        
-        //        override public function set action(u:int):void
-        //        {
-        //            _action = u;
-        //            _displayer.action = u;
-        //        }
-        //        
-        //        override public function setDirectionNum(v:int):void
-        //        {
-        //            if( _direction != v )
-        //            {
-        //                _direction = v;
-        //                _displayer.direction = v;
-        //            }
-        //        }
+        
+        public function get info():BattleCharacterInfo
+        {
+            return _info;
+        }
     }
 }

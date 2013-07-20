@@ -3,7 +3,7 @@
   <includeClasses>
     <classEntry path="com.inoah.ro.RoGlobal"/>
     <classEntry path="com.inoah.ro.RoGame"/>
-    <classEntry path="com.inoah.ro.objects.PlayerObject"/>
+    <classEntry path="com.inoah.ro.objects.BattleCharacterObject"/>
     <classEntry path="com.inoah.ro.controllers.PlayerController"/>
     <classEntry path="com.inoah.ro.displays.actspr.ActSprPlayerView"/>
     <classEntry path="com.inoah.ro.displays.actspr.ActSprSkillIconView"/>
@@ -46,8 +46,13 @@
     <classEntry path="com.inoah.ro.managers.MapMgr"/>
     <classEntry path="com.inoah.ro.maps.BaseMap"/>
     <classEntry path="com.inoah.ro.RoCamera"/>
-    <classEntry path="com.inoah.ro.displays.BaseObject"/>
+    <classEntry path="com.inoah.ro.objects.BaseObject"/>
     <classEntry path="com.inoah.ro.loaders.AtfLoader"/>
+    <classEntry path="com.inoah.ro.interfaces.IViewObject"/>
+    <classEntry path="com.inoah.ro.objects.CharacterObject"/>
+    <classEntry path="com.inoah.ro.controllers.BaseController"/>
+    <classEntry path="com.inoah.ro.ui.mainViewChildren.JoyStickView"/>
+    <classEntry path="com.inoah.ro.mediators.views.JoyStickViewMediator"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

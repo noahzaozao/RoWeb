@@ -1,0 +1,14 @@
+<Dialog sceneWidth="960" sceneHeight="256" sceneColor="0xffffff" sceneBg="" layers="1,1,0,0,第 1 层">
+  <Button label="label" skin="png.comp.button" x="766" y="0" layer="1" width="96" height="96"/>
+  <Button label="label" skin="png.comp.button" x="670" y="80" layer="1" width="96" height="96"/>
+  <Button label="label" skin="png.comp.button" x="766" y="160" layer="1" width="96" height="96"/>
+  <Button label="label" skin="png.comp.button" x="862" y="80" layer="1" width="96" height="96"/>
+  <Button label="label" skin="png.comp.button" x="0" y="0" layer="1" width="96" height="96" var="btnUpLeft" name="btnUpLeft"/>
+  <Button label="label" skin="png.comp.button" x="192" y="0" layer="1" width="96" height="96" var="btnUpRight" name="btnUpRight"/>
+  <Button label="label" skin="png.comp.button" x="0" y="160" layer="1" width="96" height="96" var="btnDownLeft" name="btnDownLeft"/>
+  <Button label="label" skin="png.comp.button" x="192" y="160" layer="1" width="96" height="96" var="btnDownRight" name="btnDownRight"/>
+  <Button label="label" skin="png.comp.button" x="96" y="0" layer="1" width="96" height="96" var="btnUp" name="btnUp"/>
+  <Button label="label" skin="png.comp.button" x="96" y="160" layer="1" width="96" height="96" var="btnDown" name="btnDown"/>
+  <Button label="label" skin="png.comp.button" x="192" y="80" layer="1" width="96" height="96" var="btnRight" name="btnRight"/>
+  <Button label="label" skin="png.comp.button" x="0" y="80" layer="1" width="96" height="96" var="btnLeft" name="btnLeft"/>
+</Dialog>

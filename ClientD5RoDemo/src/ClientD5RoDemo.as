@@ -4,7 +4,6 @@ package
     import com.inoah.ro.interfaces.ITickable;
     import com.inoah.ro.mediators.GameMediator;
     
-    import flash.display.Sprite;
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
     import flash.events.Event;
@@ -14,7 +13,7 @@ package
     import as3.patterns.facade.Facade;
     
     [SWF(width="960",height="560",frameRate="60",backgroundColor="#000000")]
-    public class ClientD5RoDemo extends Sprite
+    public class ClientD5RoDemo extends VersionSprite
     {
         private var _lastTimeStamp:Number;
         private var _gameMediator:ITickable;

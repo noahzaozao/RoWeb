@@ -10,6 +10,7 @@ package com.inoah.ro.displays.actspr
     import com.inoah.ro.displays.actspr.structs.acth.AnyPatSprV0205;
     import com.inoah.ro.displays.actspr.structs.sprh.AnySprite;
     import com.inoah.ro.events.ActSprViewEvent;
+    import com.inoah.ro.interfaces.IViewObject;
     import com.inoah.ro.managers.MainMgr;
     import com.inoah.ro.managers.SprMgr;
     import com.inoah.ro.utils.Counter;

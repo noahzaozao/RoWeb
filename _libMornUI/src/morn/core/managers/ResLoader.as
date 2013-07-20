@@ -49,6 +49,7 @@ package morn.core.managers {
 		private var _lastLoaded:Number;
 		
 		public function ResLoader() {
+            _loaderContext.allowCodeImport = true;
 			_loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onProgress);
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
 			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);

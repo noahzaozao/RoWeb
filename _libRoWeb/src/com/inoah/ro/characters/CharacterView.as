@@ -8,26 +8,22 @@ package com.inoah.ro.characters
     import com.inoah.ro.displays.actspr.structs.CACT;
     import com.inoah.ro.events.ActSprViewEvent;
     import com.inoah.ro.infos.CharacterInfo;
+    import com.inoah.ro.interfaces.IViewObject;
     import com.inoah.ro.loaders.ActSprLoader;
     import com.inoah.ro.loaders.ILoader;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.MainMgr;
     
-    import flash.display.Bitmap;
-    import flash.display.BitmapData;
-    import flash.display.Shape;
     import flash.display.Sprite;
     import flash.events.Event;
-    import flash.geom.Matrix;
     import flash.geom.Point;
-    import flash.geom.Rectangle;
     
     /**
      * 
      * @author inoah
      * 
      */    
-    public class CharacterView extends Sprite
+    public class CharacterView extends Sprite implements IViewObject
     {
         protected var _charInfo:CharacterInfo;
         protected var _bodyView:ActSprBodyView;
@@ -55,14 +51,12 @@ package com.inoah.ro.characters
         
         protected var _weaponLoader:ILoader;
         protected var _weaponShadowLoader:ILoader;
-        
-        protected var _bmd:Bitmap;
-        
         /**
          * 方向转换数组 
          */        
         protected var _dirChangeArr:Array = [4, 5, 6, 7, 8, -7, -6, -5];
         protected var _isPlayEnd:Boolean;
+        protected var _action:int;
         
         public function setChooseCircle( bool:Boolean ):void
         {
@@ -72,7 +66,6 @@ package com.inoah.ro.characters
         {
             _otherViews = new Vector.<ActSprOtherView>( 4 );
             
-            _bmd = new Bitmap();
             _isMoving = false;
             _targetPoint = new Point( 0, 0 );
             if( charInfo )
@@ -339,7 +332,7 @@ package com.inoah.ro.characters
         
         public function actionAttack():void
         {
-//            _currentIndex = 88;
+            //            _currentIndex = 88;
             _currentIndex = 80;
             //            _currentIndex = 40;
             if( _bodyView )
@@ -460,11 +453,6 @@ package com.inoah.ro.characters
             return _bodyView;
         }
         
-        public function get actionIndex():uint
-        {
-            return _currentIndex;
-        }
-        
         public function setDirIndex( value:uint ):void
         {
             _dirIndex = value;
@@ -494,6 +482,11 @@ package com.inoah.ro.characters
             return _isMoving;
         }
         
+        public function get currentIndex():uint
+        {
+            return _currentIndex;
+        }
+        
         public function set dirIndex( value:uint ):void
         {
             _dirIndex = value;
@@ -504,77 +497,70 @@ package com.inoah.ro.characters
             return _dirIndex;
         }
         
-        /**
-         * 渲染接口
-         */ 
-        public function render():void
+        public function get action():int
         {
-            if( _otherViews[0] && _otherViews[1] )
-            {
-                _bmd.bitmapData = new BitmapData( width * 2 , height * 3 , true , 0x0 );
-                _bmd.x = - width;
-                _bmd.y = - height * 2;
-                var matrix:Matrix;
-                matrix = new Matrix();
-                matrix.translate( width , height * 2 );
-                _bmd.bitmapData.draw( this , matrix , null, null, new Rectangle( 0, 0, width * 2 , height * 3 ) , false );
-            }
+            return _action;
         }
-        /**
-         * 更换SWF接口
-         */ 
-        public function changeSWF(f:String,needMirror:Boolean=false):void
-        {
-            
-        }
-        
         /**
          * 更换动作接口
          */ 
         public function set action(v:int):void
         {
+            _action = v;
             switch( v )
             {
-//                case Actions.Wait:
-//                {
-//                    actionStand();
-//                    break;
-//                }
-//                case Actions.Run:
-//                {
-//                    actionWalk();
-//                    break;
-//                }
-//                case Actions.Attack:
-//                {
-//                    actionAttack();
-//                    break;
-//                }
-//                case Actions.Pickup:
-//                {
-//                    actionPickup();
-//                    break;
-//                }
-//                case Actions.Sit:
-//                {
-//                    actionSit();
-//                    break;
-//                }
-//                case Actions.BeAtk:
-//                {
-//                    actionHit();
-//                    break;
-//                }
-//                case Actions.Die:
-//                {
-//                    actionDead();
-//                    break;
-//                }
-//                default:
-//                {
-//                    break;
-//                }
+                case Actions.Wait:
+                {
+                    actionStand();
+                    break;
+                }
+                case Actions.Run:
+                {
+                    actionWalk();
+                    break;
+                }
+                case Actions.Attack:
+                {
+                    actionAttack();
+                    break;
+                }
+                case Actions.Pickup:
+                {
+                    actionPickup();
+                    break;
+                }
+                case Actions.Sit:
+                {
+                    actionSit();
+                    break;
+                }
+                case Actions.BeAtk:
+                {
+                    actionHit();
+                    break;
+                }
+                case Actions.Die:
+                {
+                    actionDead();
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
             }
+        }
+        
+        /**
+         * 更换方向接口
+         */ 
+        public function set direction(v:int):void
+        {
+            dirIndex = _dirChangeArr.indexOf( v );
+        }
+        public function get direction():int
+        {
+            return _dirChangeArr[dirIndex];
         }
         
         public function set isPlayEnd( value:Boolean ):void
@@ -585,27 +571,10 @@ package com.inoah.ro.characters
         {
             return _isPlayEnd;
         }
-        /**
-         * 更换方向接口
-         */ 
-        public function set direction(v:int):void
-        {
-            dirIndex = _dirChangeArr.indexOf( v );
-        }
         
-        
-        public function get monitor():Bitmap
+        public function get couldTick():Boolean
         {
-            if( !_otherViews[0] && !_otherViews[1] )
-            {
-                return _bodyView.bitmap;
-            }
-            return _bmd;
-        }
-        
-        public function get shadow():Shape
-        {
-            return null;
+            return true;
         }
     }
 }

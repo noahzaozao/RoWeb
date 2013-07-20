@@ -1,11 +1,12 @@
 package com.inoah.ro.maps
 {
     import com.inoah.ro.consts.MgrTypeConsts;
-    import com.inoah.ro.displays.BaseObject;
     import com.inoah.ro.loaders.AtfLoader;
     import com.inoah.ro.loaders.ILoader;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.MainMgr;
+    import com.inoah.ro.managers.TextureMgr;
+    import com.inoah.ro.objects.BaseObject;
     
     import flash.display.DisplayObject;
     import flash.display.DisplayObjectContainer;
@@ -18,15 +19,24 @@ package com.inoah.ro.maps
     public class BaseMap extends starling.display.Sprite
     {
         protected var _mapBg:Image;
-        protected var _container:flash.display.Sprite;
+        /**
+         * 屏幕对象列表 
+         */        
         protected var _screenObj:Vector.<BaseObject>;
+        /**
+         * 对象列表 
+         */        
         protected var _unitList:Vector.<BaseObject>;
+        /**
+         * 玩家自己 
+         */        
         protected var _player:BaseObject;
         
-        protected var _lastZorder:uint;
-        protected var _nowRend:uint;
         protected var _offsetY:Number;
         protected var _offsetX:Number;
+        /**
+         *  显示对象容器
+         */        
         protected var _unitContainer:DisplayObjectContainer;
         
         public function BaseMap( unitContainer:DisplayObjectContainer )
@@ -38,25 +48,29 @@ package com.inoah.ro.maps
         
         public function init( mapId:uint ):void
         {
-            _container = new flash.display.Sprite();
-            //            addChild( _container );
-            
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
             assetMgr.getRes( "map/" + mapId + ".atf" , onMapLoadComplete );
         }
         
         private function onMapLoadComplete( loader:ILoader ):void
         {
-            var texture:Texture = Texture.fromAtfData(  (loader as AtfLoader).data , 1 , false );
-            _mapBg = new Image( texture );
-            addChild( _mapBg );
-            _unitContainer.addChild( _container );
+            var textureMgr:TextureMgr = MainMgr.instance.getMgr( MgrTypeConsts.TEXTURE_MGR ) as TextureMgr;
+            var texture:Texture = textureMgr.getTexture( "1" , (loader as AtfLoader).data );
+            if( !_mapBg )
+            {
+                _mapBg = new Image( texture );
+                addChild( _mapBg );
+            }
+            else
+            {
+                _mapBg.texture = texture;
+            }
         }
         
-        public function addObject( o:DisplayObject ):void
+        public function addObject( o:BaseObject ):void
         {
             _unitList.push( o );
-            _container.addChild( o );
+            _unitContainer.addChild( o.viewObject as DisplayObject );
         }
         
         public function ReCut(update:Boolean=true):void
@@ -111,12 +125,12 @@ package com.inoah.ro.maps
             //            }
         }
         
-        public function set posX( value:Number ):void
+        public function set offsetX( value:Number ):void
         {
             _offsetX = value;
         }
         
-        public function set posY( value:Number ):void
+        public function set offsetY( value:Number ):void
         {
             _offsetY = value;
         }
