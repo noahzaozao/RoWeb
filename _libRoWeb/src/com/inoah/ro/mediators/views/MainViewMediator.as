@@ -28,17 +28,20 @@ package com.inoah.ro.mediators.views
             
             var joyStickview:JoyStickView = new JoyStickView( mainView.joyStick );
             facade.registerMediator( new JoyStickViewMediator( joyStickview ) );
+            //
             if( !RoGlobal.isIPhone )
             {
                 mainView.joyStick.visible = false;
-                
+                var chatView:ChatView = new ChatView( mainView.chatView );
+                facade.registerMediator( new ChatViewMediator( chatView ) );
+                var skillView:SkillBarView = new SkillBarView ( mainView.skillBarView );
+                facade.registerMediator( new SkillBarViewMediator( skillView ) );
             }
-            
-            var chatView:ChatView = new ChatView( mainView.chatView );
-            facade.registerMediator( new ChatViewMediator( chatView ) );
-            
-            var skillView:SkillBarView = new SkillBarView ( mainView.skillBarView );
-            facade.registerMediator( new SkillBarViewMediator( skillView ) );
+            else
+            {
+                mainView.chatView.visible = false;
+                mainView.skillBarView.visible = false;
+            }
         }
         
         public function tick(delta:Number):void

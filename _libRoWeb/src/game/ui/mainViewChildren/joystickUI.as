@@ -13,18 +13,21 @@ package game.ui.mainViewChildren {
 		public var btnLeft:Button;
 		private var uiXML:XML =
 			<Dialog>
-			  <Button label="label" skin="png.comp.button" x="766" y="0" width="96" height="96"/>
-			  <Button label="label" skin="png.comp.button" x="670" y="80" width="96" height="96" var="btnAttack" name="btnAttack"/>
-			  <Button label="label" skin="png.comp.button" x="766" y="160" width="96" height="96"/>
-			  <Button label="label" skin="png.comp.button" x="862" y="80" width="96" height="96"/>
-			  <Button label="label" skin="png.comp.button" x="0" y="0" width="96" height="96" var="btnUpLeft" name="btnUpLeft"/>
-			  <Button label="label" skin="png.comp.button" x="192" y="0" width="96" height="96" var="btnUpRight" name="btnUpRight"/>
-			  <Button label="label" skin="png.comp.button" x="0" y="160" width="96" height="96" var="btnDownLeft" name="btnDownLeft"/>
-			  <Button label="label" skin="png.comp.button" x="192" y="160" width="96" height="96" var="btnDownRight" name="btnDownRight"/>
-			  <Button label="label" skin="png.comp.button" x="96" y="0" width="96" height="96" var="btnUp" name="btnUp"/>
-			  <Button label="label" skin="png.comp.button" x="96" y="160" width="96" height="96" var="btnDown" name="btnDown"/>
-			  <Button label="label" skin="png.comp.button" x="192" y="80" width="96" height="96" var="btnRight" name="btnRight"/>
-			  <Button label="label" skin="png.comp.button" x="0" y="80" width="96" height="96" var="btnLeft" name="btnLeft"/>
+			  <Button skin="png.comp.button" x="694" y="177" width="80" height="80" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="815" y="113" width="144" height="144" var="btnAttack" name="btnAttack" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="879" y="17" width="80" height="80" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="779" y="17" width="80" height="80" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="16" y="12" width="80" height="80" var="btnUpLeft" name="btnUpLeft" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="176" y="12" width="80" height="80" var="btnUpRight" name="btnUpRight" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="16" y="172" width="80" height="80" var="btnDownLeft" name="btnDownLeft" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="176" y="172" width="80" height="80" var="btnDownRight" name="btnDownRight" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="96" y="12" width="80" height="80" var="btnUp" name="btnUp" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="96" y="172" width="80" height="80" var="btnDown" name="btnDown" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="176" y="92" width="80" height="80" var="btnRight" name="btnRight" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="16" y="92" width="80" height="80" var="btnLeft" name="btnLeft" alpha="0.5"/>
+			  <Button label="l" skin="png.comp.button" x="694" y="78" width="80" height="80" alpha="0.5"/>
+			  <Button label="l" skin="png.comp.button" x="594" y="177" width="80" height="80" alpha="0.5"/>
+			  <Button label="l" skin="png.comp.button" x="494" y="177" width="80" height="80" alpha="0.5"/>
 			</Dialog>;
 		override protected function createChildren():void {
 			createView(uiXML);

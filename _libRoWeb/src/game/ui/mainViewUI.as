@@ -54,7 +54,7 @@ package game.ui {
 			  <ProgressBar skin="png.basic_interface.progress_exp" x="65" y="88" var="baseExpBar" name="baseExpBar"/>
 			  <ProgressBar skin="png.basic_interface.progress_exp" x="65" y="100" var="jobExpBar" name="jobExpBar"/>
 			  <mapView x="760" y="0" var="mapView" name="mapView"/>
-			  <joystick x="0" y="360" var="joyStick" name="joyStick"/>
+			  <joystick x="0" y="385" var="joyStick" name="joyStick"/>
 			</View>;
 		override protected function createChildren():void {
 			viewClassMap = {"chatView":chatViewUI,"joystick":joystickUI,"mapView":mapViewUI,"skillBarView":skillBarViewUI};

@@ -10,7 +10,6 @@ package com.inoah.ro.maps
     
     import flash.display.DisplayObject;
     import flash.display.DisplayObjectContainer;
-    import flash.display.Sprite;
     
     import starling.display.Image;
     import starling.display.Sprite;

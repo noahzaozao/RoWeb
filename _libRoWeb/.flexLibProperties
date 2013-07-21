@@ -2,7 +2,6 @@
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
     <classEntry path="com.inoah.ro.RoGlobal"/>
-    <classEntry path="com.inoah.ro.RoGame"/>
     <classEntry path="com.inoah.ro.objects.BattleCharacterObject"/>
     <classEntry path="com.inoah.ro.controllers.PlayerController"/>
     <classEntry path="com.inoah.ro.displays.actspr.ActSprPlayerView"/>

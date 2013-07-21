@@ -29,6 +29,7 @@ package
             stage.align = StageAlign.TOP_LEFT;
             stage.scaleMode = StageScaleMode.NO_SCALE;
             
+            //            RoGlobal.isIPhone = true;
             RoGlobal.W = stage.stageWidth;
             RoGlobal.H = stage.stageHeight;
             

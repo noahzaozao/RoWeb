@@ -10,7 +10,7 @@ package com.inoah.ro
         public static var MAP_W:uint = 2048;
         public static var MAP_H:uint = 2048;
         public static var isStarling:Boolean = false;
-        public static var username:String = 'D5Power';
+        public static var username:String = 'player';
         
         public static var userInfo:UserInfo;
         public static var TILE_W:int = 10;
