@@ -14,6 +14,7 @@ package com.inoah.ro.mediators
     import com.inoah.ro.managers.DisplayMgr;
     import com.inoah.ro.managers.MainMgr;
     import com.inoah.ro.managers.MapMgr;
+    import com.inoah.ro.maps.BattleMap;
     import com.inoah.ro.mediators.views.MainViewMediator;
     import com.inoah.ro.ui.MainView;
     
@@ -175,11 +176,12 @@ package com.inoah.ro.mediators
             facade.sendNotification( GameCommands.CHANGE_MAP , [ 1 ] );
             
             //初始化战斗管理器
-            _battleMgr = new BattleMgr();
+            _battleMgr = new BattleMgr( (_mapMgr as MapMgr).scene as BattleMap );
             MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, _battleMgr as IMgr );
             facade.registerMediator( _battleMgr as IMediator );
             
             facade.sendNotification( GameCommands.RECV_CHAT , [ "\n\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>" ] );
+            facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#00ff00'>WASD to move and J to attack!</font>" ] );
         }
         
         public function tick( delta:Number ):void

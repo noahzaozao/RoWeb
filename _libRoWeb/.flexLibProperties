@@ -52,6 +52,8 @@
     <classEntry path="com.inoah.ro.controllers.BaseController"/>
     <classEntry path="com.inoah.ro.ui.mainViewChildren.JoyStickView"/>
     <classEntry path="com.inoah.ro.mediators.views.JoyStickViewMediator"/>
+    <classEntry path="com.inoah.ro.maps.BattleMap"/>
+    <classEntry path="com.inoah.ro.objects.PlayerObject"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

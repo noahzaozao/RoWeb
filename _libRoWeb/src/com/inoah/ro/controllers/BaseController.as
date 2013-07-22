@@ -11,8 +11,9 @@ package com.inoah.ro.controllers
         protected var _animationUnitList:Vector.<IAnimatable>;
         protected var _me:BaseObject;
         
-        public function BaseController()
+        public function BaseController( mediatorName:String = null , viewComponent:Object = null)
         {
+            super( mediatorName, viewComponent );
             _animationUnitList = new Vector.<IAnimatable>();
         }
         

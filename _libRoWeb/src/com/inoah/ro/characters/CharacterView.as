@@ -463,6 +463,11 @@ package com.inoah.ro.characters
             return _bodyView;
         }
         
+        public function dispose():void
+        {
+            
+        }
+        
         public function setDirIndex( value:uint ):void
         {
             _dirIndex = value;

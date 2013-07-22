@@ -1,26 +1,117 @@
 package com.inoah.ro.objects
 {
-//    import com.D5Power.Controler.BaseControler;
-//    import com.D5Power.Stuff.HSpbar;
-//    import com.inoah.ro.infos.BattleCharacterInfo;
+    import com.inoah.ro.characters.Actions;
+    import com.inoah.ro.utils.GMath;
+    
+    import flash.geom.Point;
 
-    public class MonsterObject //extends PlayerObject
+    public class MonsterObject extends BattleCharacterObject
     {
-        public function MonsterObject()//ctrl:BaseControler=null)
+        public function MonsterObject()
         {
-//            super(ctrl);
+            super();
+            _atkCd = 3;
+            _moveCd = 3;
         }
         
-//        override public function set info( value:BattleCharacterInfo ):void
-//        {
-//            _info = value;
-//            setName( _info.name , (camp==2 ? 0xff0000 : 0xffff00), 0, -80 );
-//            hp = _info.hpCurrent;
-//            hpMax = _info.hpMax;
-//            hpBar = new HSpbar( this,'hp','hpMax',10 , 0x33ff33 );
-//            sp = _info.spCurrent;
-//            spMax = _info.spMax;
-//            spBar = new HSpbar( this,'sp','spMax',14 , 0x2868FF);
-//        }
+        override public function tick(delta:Number):void
+        {
+            var isMovingX:Boolean;
+            var speed:Number = 100;
+            if( _endTarget )
+            {
+                var radian:Number = GMath.getPointAngle( _endTarget.x - posX , _endTarget.y -  posY );
+                var angle:int = GMath.R2A(radian)+90;
+                if( posX - _endTarget.x > 0 )
+                {
+                    direction = directions.Left;
+                    posX -= speed * delta;
+                    if(posX - _endTarget.x <= 0 )
+                    {
+                        posX = _endTarget.x;
+                    }
+                    changeDirectionByAngle( angle );
+                }
+                else if( posX - _endTarget.x < 0 )
+                {
+                    direction = directions.Right;
+                    posX += speed * delta;
+                    if(posX - _endTarget.x >= 0 )
+                    {
+                        posX = _endTarget.x;
+                    }
+                    changeDirectionByAngle( angle );
+                }
+                else
+                {
+                    isMovingX = true;
+                }
+                if( posY - _endTarget.y > 0 )
+                {
+                    direction = directions.Up;
+                    posY -= speed * delta;
+                    if(posY - _endTarget.y <= 0 )
+                    {
+                        posY = _endTarget.y;
+                    }
+                    changeDirectionByAngle( angle );
+                }
+                else if( posY - _endTarget.y < 0 )
+                {
+                    direction = directions.Down;
+                    posY += speed * delta;
+                    if(posY - _endTarget.y >= 0 )
+                    {
+                        posY = _endTarget.y;
+                    }
+                    changeDirectionByAngle( angle );
+                }
+                else
+                {
+                    if( isMovingX )
+                    {
+                        action = Actions.Wait;
+                    }
+                }
+            }
+            super.tick( delta );
+        }
+        
+        public function moveTo(nextX:int, nextY:int):void
+        {
+            _endTarget = new Point( nextX, nextY );
+        }
+        //        override public function set info( value:BattleCharacterInfo ):void
+        //        {
+        //            _info = value;
+        //            setName( _info.name , (camp==2 ? 0xff0000 : 0xffff00), 0, -80 );
+        //            hp = _info.hpCurrent;
+        //            hpMax = _info.hpMax;
+        //            hpBar = new HSpbar( this,'hp','hpMax',10 , 0x33ff33 );
+        //            sp = _info.spCurrent;
+        //            spMax = _info.spMax;
+        //            spBar = new HSpbar( this,'sp','spMax',14 , 0x2868FF);
+        //        }
+        
+        public function stopMove():void
+        {
+            
+        }
+        
+        public function walk2Target():void
+        {
+            
+        }
+        
+        
+        public function get endTarget():Point
+        {
+            return _endTarget
+        }
+        
+        public function set endTarget( value:Point ):void
+        {
+            _endTarget = value;
+        }
     }
 }

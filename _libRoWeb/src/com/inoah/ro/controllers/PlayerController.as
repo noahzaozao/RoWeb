@@ -2,11 +2,17 @@ package com.inoah.ro.controllers
 {
     import com.inoah.ro.RoGlobal;
     import com.inoah.ro.characters.Actions;
+    import com.inoah.ro.consts.BattleCommands;
     import com.inoah.ro.consts.GameCommands;
+    import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.managers.KeyMgr;
     import com.inoah.ro.managers.MainMgr;
+    import com.inoah.ro.maps.QTree;
+    import com.inoah.ro.objects.BattleCharacterObject;
+    import com.inoah.ro.objects.PlayerObject;
     
+    import flash.geom.Point;
     import flash.ui.Keyboard;
     
     import as3.interfaces.INotification;
@@ -22,36 +28,15 @@ package com.inoah.ro.controllers
         protected var _joyStickAttack:Boolean;
         
         protected var _isAttacking:Boolean;
-        //        protected var _fightMode:uint = 0; // 攻击模式 0-无  1-追击 2-攻击
-        //        protected var _atkTarget:CharacterObject;
-        //        protected var _chooseTarget:CharacterObject;
-        //
-        //        protected var _lastHurt:uint; 
-        //        protected var _atkCd:uint = 2000;
-        //        
-        //        protected var _lastRecover:uint; 
-        //        protected var _recoverCd:uint = 3000;
-        //        
-        //        public function get atkCd():uint
-        //        {
-        //            var rate:Number = 1- (_me as PlayerObject).info.aspd / 100;
-        //            if( rate >=  1 )
-        //            {
-        //                rate = 0.01;
-        //            }
-        //            return _atkCd * rate;
-        //        }
-        //        
+        protected var _fightMode:uint = 0;
+        protected var _atkTarget:BattleCharacterObject;
+        protected var _chooseTarget:BattleCharacterObject;
+        
         public function PlayerController()
         {
-            super();
+            super( GameConsts.PLAYER_CONTROLLER );
         }
         
-        //        protected function posCheck( value:int ):Boolean
-        //        {
-        //            return int(Point.distance(_atkTarget._POS,_me._POS))<=value;
-        //        }
-        //        
         //        override protected function onClick(e:MouseEvent):void
         //        {
         //            _atkTarget = null;
@@ -194,7 +179,7 @@ package com.inoah.ro.controllers
         //                }
         //            }
         //        }
-                
+        
         override public function listNotificationInterests():Array
         {
             var arr:Array = super.listNotificationInterests();
@@ -295,10 +280,65 @@ package com.inoah.ro.controllers
                 var tween:Tween = new Tween( _me , 0.6 );
                 tween.onComplete = onAttacked;
                 appendAnimateUnit( tween );
+                
+                if( _atkTarget && _atkTarget.isDead )
+                {
+                    _atkTarget = null;
+                }
+                if( !_atkTarget )
+                {
+                    var objList:Vector.<BattleCharacterObject> = new Vector.<BattleCharacterObject>();
+                    var mqTree:QTree;
+                    var len:int;
+                    var i:int;
+                    mqTree = _me.qTree.parent.q1;
+                    len = mqTree.data.length;
+                    for ( i = 0 ; i< len;i++ )
+                    {
+                        objList.push( mqTree.data[i] );
+                    }
+                    mqTree = _me.qTree.parent.q2;
+                    len = mqTree.data.length;
+                    for ( i = 0 ; i< len;i++ )
+                    {
+                        objList.push( mqTree.data[i] );
+                    }
+                    mqTree = _me.qTree.parent.q3;
+                    len = mqTree.data.length;
+                    for ( i = 0 ; i< len;i++ )
+                    {
+                        objList.push( mqTree.data[i] );
+                    }
+                    mqTree = _me.qTree.parent.q4;
+                    len = mqTree.data.length;
+                    for ( i = 0 ; i< len;i++ )
+                    {
+                        objList.push( mqTree.data[i] );
+                    }
+                    
+                    //临时随机找怪，随后可以根据面向找四象限的怪
+                    len = objList.length;
+                    for ( i = 0 ; i< len;i++ )
+                    {
+                        if( _fightMode==0  && Point.distance( objList[i].POS , _me.POS ) <= (_me as PlayerObject).atkRange )
+                        {
+                            if( objList[i] != _me && !objList[i].isDead )
+                            {
+                                _atkTarget = objList[i];
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                if( _atkTarget )
+                {
+                    facade.sendNotification( BattleCommands.PLAYER_ATTACK , [_me , _atkTarget]); 
+                }
             }
-            //攻击控制逻辑结束
-            
-            //八方向移动控制逻辑
+                //攻击控制逻辑结束
+                
+                //八方向移动控制逻辑
             else if( keyMgr.isDown( Keyboard.D ) && !keyMgr.isDown( Keyboard.A ) || _joyStickRight && !_joyStickLeft )
             {
                 _me.posX +=speed * delta;
@@ -368,47 +408,6 @@ package com.inoah.ro.controllers
         {
             _isAttacking = false;
             _me.action = Actions.Wait;
-        }
-        
-        public function changeDirectionByAngle(angle:int):void
-        {
-            if(_me==null) return;
-            if(angle<-22.5) angle+=360;
-            
-            //_me.Angle = angle;
-            
-            if(angle>=-22.5 && angle<22.5)
-            {
-                _me.direction(_me.directions.Up);
-            }
-            else if(angle>=22.5 && angle<67.5)
-            {
-                _me.direction(_me.directions.RightUp);
-            }
-            else if(angle>=67.5 && angle<112.5)
-            {
-                _me.direction(_me.directions.Right);
-            }
-            else if(angle>=112.5 && angle<157.5)
-            {
-                _me.direction(_me.directions.RightDown);
-            }
-            else if(angle>=157.5 && angle<202.5)
-            {
-                _me.direction(_me.directions.Down);
-            }
-            else if(angle>=202.5 && angle<247.5)
-            {
-                _me.direction(_me.directions.LeftDown);
-            }
-            else if(angle>=247.5 && angle<292.5)
-            {
-                _me.direction(_me.directions.Left);
-            }
-            else
-            {
-                _me.direction(_me.directions.LeftUp);
-            }
         }
     }
 }

@@ -1,10 +1,11 @@
-<View sceneWidth="960" sceneHeight="640" sceneColor="0xffffff" sceneBg="" layers="3,1,2,0,第 3 层;2,1,2,0,第 2 层;1,1,2,0,第 1 层" height="100">
+<View sceneWidth="960" sceneHeight="640" sceneColor="0xffffff" sceneBg="" layers="2,1,1,0,第 2 层;3,1,1,0,第 3 层;1,1,1,0,第 1 层" height="100">
   <Button skin="png.basic_interface.btn_info" x="0" y="135" layer="1" var="btnStatus" name="btnStatus"/>
   <Button skin="png.basic_interface.btn_item" x="108" y="135" layer="1" var="btnItem" name="btnItem"/>
   <Button skin="png.basic_interface.btn_map" x="162" y="135" layer="1" var="btnMap" name="btnMap"/>
   <Button skin="png.basic_interface.btn_option" x="54" y="153" layer="1" var="btnOption" name="btnOption"/>
   <Button skin="png.basic_interface.btn_quest" x="0" y="153" layer="1" var="btnTask" name="btnTask"/>
   <Button skin="png.basic_interface.btn_skill" x="54" y="135" layer="1" var="btnSkill" name="btnSkill"/>
+  <UIView source="mainViewChildren/joystick.xml" x="1" y="384" layer="3" var="joyStick" name="joyStick"/>
   <Image url="png.basic_interface.basewin_bg2" x="0" y="0" layer="2"/>
   <Label text="name" x="10" y="18" layer="2" size="12" var="labName" name="labName"/>
   <Label text="Novice" x="9" y="32" layer="2" size="12" var="labJob" name="labJob"/>
@@ -20,9 +21,8 @@
   <ProgressBar skin="png.basic_interface.progress_gzeblue" x="35" y="52" layer="2" var="hpBar" name="hpBar"/>
   <ProgressBar skin="png.basic_interface.progress_gzeblue" x="35" y="69" layer="2" var="spBar" name="spBar"/>
   <UIView source="mainViewChildren/skillBarView.xml" x="350" y="0" layer="2" var="skillBarView" name="skillBarView"/>
-  <UIView source="mainViewChildren/chatView.xml" x="0" y="405" layer="2" var="chatView" name="chatView"/>
+  <UIView source="mainViewChildren/chatView.xml" x="0" y="488" layer="2" var="chatView" name="chatView"/>
   <ProgressBar skin="png.basic_interface.progress_exp" x="65" y="88" layer="2" var="baseExpBar" name="baseExpBar"/>
   <ProgressBar skin="png.basic_interface.progress_exp" x="65" y="100" layer="2" var="jobExpBar" name="jobExpBar"/>
   <UIView source="mainViewChildren/mapView.xml" x="760" y="0" layer="2" var="mapView" name="mapView"/>
-  <UIView source="mainViewChildren/joystick.xml" x="0" y="385" layer="3" var="joyStick" name="joyStick"/>
 </View>

@@ -8,7 +8,8 @@ package com.inoah.ro.mediators.map
     import com.inoah.ro.controllers.PlayerController;
     import com.inoah.ro.interfaces.ITickable;
     import com.inoah.ro.maps.BaseMap;
-    import com.inoah.ro.objects.BaseObject;
+    import com.inoah.ro.maps.BattleMap;
+    import com.inoah.ro.objects.PlayerObject;
     
     import flash.display.DisplayObjectContainer;
     import flash.display.Sprite;
@@ -26,7 +27,7 @@ package com.inoah.ro.mediators.map
         protected var _camera:RoCamera;
         
         protected var _playerController:PlayerController;
-        protected var _player:BaseObject;
+        protected var _player:PlayerObject;
         
         protected var _unitLevel:flash.display.Sprite;
         protected var _mapLevel:starling.display.Sprite;
@@ -68,22 +69,32 @@ package com.inoah.ro.mediators.map
             _mapId = mapId;
             if( !_map )
             {
-                _map = new BaseMap( _unitLevel as flash.display.DisplayObjectContainer );
+                _map = new BattleMap( _unitLevel as flash.display.DisplayObjectContainer , _mapLevel as starling.display.DisplayObjectContainer );
+                facade.registerMediator( _map );
                 _camera = new RoCamera( _map );
+                facade.registerMediator( _map );
             }
             _map.init( _mapId );
-            mapContainer.addChild( _map );
             
+            //创建用户
             _playerController = new PlayerController();
             facade.registerMediator( _playerController );
-            var playerView:PlayerView = new PlayerView( RoGlobal.userInfo);
-            _player = new BaseObject();
+            var playerView:PlayerView = new PlayerView( RoGlobal.userInfo );
+            _player = new PlayerObject();
             _player.controller = _playerController;
             _player.viewObject = playerView;
             _player.posX = 400;
             _player.posY = 400;
+            _player.info = RoGlobal.userInfo;
             _map.addObject( _player );
             _camera.focus( _player );
+            
+            var count:int = 0;
+            while( count < 50 )
+            {
+                (_map as BattleMap).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100  );
+                count++;
+            }
         }
         
         public function tick( delta:Number ):void
@@ -94,6 +105,11 @@ package com.inoah.ro.mediators.map
             _map.offsetY = -_camera.zeroY;
             _map.tick( delta ); //unit offset
             _player.tick( delta ); 
+        }
+        
+        public function get scene():BaseMap
+        {
+            return _map;
         }
         
         public function get mapContainer():starling.display.DisplayObjectContainer

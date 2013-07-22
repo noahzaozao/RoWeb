@@ -25,9 +25,9 @@ package game.ui.mainViewChildren {
 			  <Button skin="png.comp.button" x="96" y="172" width="80" height="80" var="btnDown" name="btnDown" alpha="0.5"/>
 			  <Button skin="png.comp.button" x="176" y="92" width="80" height="80" var="btnRight" name="btnRight" alpha="0.5"/>
 			  <Button skin="png.comp.button" x="16" y="92" width="80" height="80" var="btnLeft" name="btnLeft" alpha="0.5"/>
-			  <Button label="l" skin="png.comp.button" x="694" y="78" width="80" height="80" alpha="0.5"/>
-			  <Button label="l" skin="png.comp.button" x="594" y="177" width="80" height="80" alpha="0.5"/>
-			  <Button label="l" skin="png.comp.button" x="494" y="177" width="80" height="80" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="694" y="78" width="80" height="80" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="594" y="177" width="80" height="80" alpha="0.5"/>
+			  <Button skin="png.comp.button" x="494" y="177" width="80" height="80" alpha="0.5"/>
 			</Dialog>;
 		override protected function createChildren():void {
 			createView(uiXML);

@@ -1,7 +1,7 @@
 package com.inoah.ro.managers
 {
     import com.inoah.ro.interfaces.IMgr;
-    import com.inoah.ro.interfaces.ITickable;
+    import com.inoah.ro.maps.BattleMap;
     import com.inoah.ro.mediators.battle.BattleMediator;
     
     /**
@@ -10,8 +10,9 @@ package com.inoah.ro.managers
      */    
     public class BattleMgr extends BattleMediator implements IMgr
     {
-        public function BattleMgr()
+        public function BattleMgr( scene:BattleMap )
         {
+            super( scene );
         }
         
         public function dispose():void

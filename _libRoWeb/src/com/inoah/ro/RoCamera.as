@@ -251,7 +251,7 @@ package com.inoah.ro
         {
             if(_timer!=null)
             {
-                trace("[D5Camera] Camera is moving,can not do this operation.");
+                trace("[ROCamera] Camera is moving,can not do this operation.");
                 return;
             }
             this.focus(null);

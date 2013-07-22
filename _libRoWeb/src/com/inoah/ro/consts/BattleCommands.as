@@ -5,6 +5,7 @@ package com.inoah.ro.consts
         public static const BATTLE_END:uint = 0;
         public static const BATTLE_START:uint = 1;
         
-        public static const ATTACK:String = "BattleCommands.ATTACK";
+        public static const PLAYER_ATTACK:String = "BattleCommands.PLAYER_ATTACK";
+        public static const MONSTER_ATTACK:String = "BattleCommands.MONSTER_ATTACK";
     }
 }
