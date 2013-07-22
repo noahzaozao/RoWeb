@@ -89,10 +89,9 @@ package com.inoah.ro.mediators.map
             _camera.focus( _player );
             
             var count:int = 0;
-            while( count < 1 )
+            while( count < 250 )
             {
-                (_map as BattleMap).createMonser( 400 , 400 );
-//                (_map as BattleMap).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100  );
+                (_map as BattleMap).createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200  );
                 count++;
             }
         }

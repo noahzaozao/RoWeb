@@ -162,7 +162,7 @@ package com.inoah.ro.characters
                     _bodyView = new TpcBodyView();
                 }
             }
-            _bodyView.initTpc( (_bodyLoader as TPCLoader).tpcData );
+            _bodyView.initTpc( _bodyLoader.url , (_bodyLoader as TPCLoader).tpcData );
             _bodyView.addEventListener( TPMovieClipEvent.MOTION_FINISHED , onActionEndHandler );
             _bodyView.addEventListener( TPMovieClipEvent.MOTION_NEXT_FRAME , onNextFrameHandler );
             //noah
@@ -208,7 +208,7 @@ package com.inoah.ro.characters
             {
                 _otherViews[0] = new TpcOtherView( _bodyView );
             }
-            _otherViews[0].initTpc( (_headLoader as TPCLoader).tpcData );
+            _otherViews[0].initTpc( _headLoader.url , (_headLoader as TPCLoader).tpcData );
             _otherViews[0].actionIndex = _bodyView.actionIndex;
             addChild( _bodyView );
             addChild( _otherViews[0] );
@@ -222,7 +222,7 @@ package com.inoah.ro.characters
             {
                 _otherViews[1] = new TpcWeaponView( _bodyView );
             }
-            _otherViews[1].initTpc( (_weaponLoader as TPCLoader).tpcData );
+            _otherViews[1].initTpc( _weaponLoader.url , (_weaponLoader as TPCLoader).tpcData );
             _otherViews[1].actionIndex = _bodyView.actionIndex;
             addChild( _bodyView );
             addChild( _otherViews[0] );
@@ -237,7 +237,7 @@ package com.inoah.ro.characters
             {
                 _otherViews[2] = new TpcWeaponView( _bodyView );
             }
-            _otherViews[2].initTpc( (_weaponShadowLoader as TPCLoader).tpcData );
+            _otherViews[2].initTpc( _weaponShadowLoader.url ,  (_weaponShadowLoader as TPCLoader).tpcData );
             _otherViews[2].actionIndex = _bodyView.actionIndex;
             addChild( _bodyView );
             addChild( _otherViews[0] );

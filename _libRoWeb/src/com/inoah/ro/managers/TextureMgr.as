@@ -1,5 +1,7 @@
 package com.inoah.ro.managers
 {
+    import com.inoah.ro.displays.starling.structs.TPAnimation;
+    import com.inoah.ro.events.TPAnimationEvent;
     import com.inoah.ro.interfaces.IMgr;
     
     import flash.utils.ByteArray;
@@ -13,18 +15,42 @@ package com.inoah.ro.managers
     public class TextureMgr implements IMgr
     {
         private var _atfDataListIndex:Vector.<ByteArray>;
+        private var _tpAnimationList:Vector.<TPAnimation>;
         private var _textureList:Vector.<Texture>;
         private var _usedCountList:Vector.<int>;
         private var _resIdList:Vector.<String>;
         
         private var _isDisposed:Boolean;
+        private var _tpcDataListIndex:Vector.<ByteArray>;;
         
         public function TextureMgr()
         {
             _atfDataListIndex= new Vector.<ByteArray>();
+            _tpcDataListIndex = new Vector.<ByteArray>();
+            _tpAnimationList = new Vector.<TPAnimation>();
             _textureList = new Vector.<Texture>();
             _usedCountList = new Vector.<int>();
             _resIdList = new Vector.<String>();
+        }
+        
+        public function getTpAnimation( resId:String , bytes:ByteArray, loadAsync:Function = null ):TPAnimation
+        {
+            var index:int = _tpcDataListIndex.indexOf( bytes );
+            if( index == - 1)
+            {
+                _tpcDataListIndex.push( bytes );
+                var tpAnimation:TPAnimation = new TPAnimation();
+                tpAnimation.addEventListener( TPAnimationEvent.INITIALIZED, loadAsync );
+                tpAnimation.decode( bytes );
+                _tpAnimationList.push( tpAnimation );
+                index = _tpcDataListIndex.indexOf( bytes );
+                _resIdList[index] = resId;
+            }
+            else
+            {
+                loadAsync( null , _tpAnimationList[index] );
+            }
+            return _tpAnimationList[index];
         }
         
         public function getTexture( resId:String , atfByte:ByteArray, loadAsync:Function=null):Texture
@@ -41,10 +67,6 @@ package com.inoah.ro.managers
             else
             {
                 loadAsync( _textureList[index] );
-            }
-            if(resId == "hy_cha_normal_muye1_0"  )
-            {
-                var bool:Boolean = true;
             }
             _usedCountList[index]++;
             return _textureList[index];

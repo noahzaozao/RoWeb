@@ -85,16 +85,16 @@ package com.inoah.ro.maps
                 _monsterObjList[i].tick( delta );
             }
             
-            //            _newMonsterCounter.tick( delta );
-            //            if( _newMonsterCounter.expired )
-            //            {
-            //                if( _monsterObjList.length < 50 )
-            //                {
-            //                    createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
-            //                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );
-            //                }
-            //                _newMonsterCounter.reset( 3 );
-            //            }
+            _newMonsterCounter.tick( delta );
+            if( _newMonsterCounter.expired )
+            {
+                if( _monsterObjList.length < 250 )
+                {
+                    createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200 );
+                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );
+                }
+                _newMonsterCounter.reset( 3 );
+            }
         }
     }
 }

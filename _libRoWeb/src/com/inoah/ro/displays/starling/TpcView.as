@@ -1,10 +1,13 @@
 package com.inoah.ro.displays.starling
 {
+    import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.displays.actspr.structs.acth.AnyActAnyPat;
     import com.inoah.ro.displays.actspr.structs.acth.AnyPatSprV0101;
     import com.inoah.ro.displays.starling.structs.TPAnimation;
     import com.inoah.ro.events.TPAnimationEvent;
     import com.inoah.ro.events.TPMovieClipEvent;
+    import com.inoah.ro.managers.MainMgr;
+    import com.inoah.ro.managers.TextureMgr;
     import com.inoah.ro.utils.Counter;
     
     import flash.display.BitmapData;
@@ -101,21 +104,24 @@ package com.inoah.ro.displays.starling
             _loop = value;
         }
         
-        public function initTpc( data:ByteArray ):void
+        public function initTpc( resId:String , data:ByteArray ):void
         {
             _couldTick = false;
-            if( _tpAnimation )
-            {
-//                _tpAnimation.destory();
-            }
             var cactData:ByteArray = new ByteArray();
-            _tpAnimation = new TPAnimation();
-            _tpAnimation.addEventListener( TPAnimationEvent.INITIALIZED, onInited );
-            _tpAnimation.decode( data );
+            var textureMgr:TextureMgr = MainMgr.instance.getMgr( MgrTypeConsts.TEXTURE_MGR ) as TextureMgr;
+            _tpAnimation = textureMgr.getTpAnimation( resId , data , onInited );
         }
         
-        protected function onInited( e:Event):void
+        protected function onInited( e:TPAnimationEvent , tpAnimation:TPAnimation = null ):void
         {
+            if( e != null )
+            {
+                _tpAnimation = e.tpAnimation;
+            }
+            else
+            {
+                _tpAnimation = tpAnimation;
+            }
             actionIndex = 0;
             currentFrame = 0;
             _counter.initialize();

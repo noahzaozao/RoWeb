@@ -16,7 +16,7 @@ package com.inoah.ro
         public static const TILE_W:int = 300;
         public static const TILE_H:int = 300;
         public static const ORDER_TIME:Number = 0.15;
-        public static const MAX_MONSTER_NUM:uint = 200;
+        public static const MAX_MONSTER_NUM:uint = 1000;
         
         
         public function RoGlobal()

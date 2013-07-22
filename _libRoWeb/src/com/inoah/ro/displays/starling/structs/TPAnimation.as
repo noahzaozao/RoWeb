@@ -159,7 +159,7 @@ package com.inoah.ro.displays.starling.structs
         {
             if( _remainTextureSettingAnimation.length == 0 )
             {
-                dispatchEvent(new TPAnimationEvent(TPAnimationEvent.INITIALIZED));
+                dispatchEvent(new TPAnimationEvent(TPAnimationEvent.INITIALIZED , this));
                 return;
             }
             //parse subtexture setting;
