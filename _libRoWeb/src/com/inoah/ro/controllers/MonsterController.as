@@ -69,7 +69,7 @@ package com.inoah.ro.controllers
                 {
                     continue;
                 }
-                if( _fightModeList[i] != 1 )
+                if( _fightModeList[i] == 0 )
                 {
                     calMove( currentMonsterObj , i , delta );
                 }
@@ -163,11 +163,16 @@ package com.inoah.ro.controllers
                 }
                 else
                 {
+                    currentMonsterObj.action = Actions.Run;
                     currentMonsterObj.moveTo( atkTarget.posX , atkTarget.posY );
                 }
                 
                 if( fightMode==2 && posCheck( currentMonsterObj , index, currentMonsterObj.atkRange ) )
                 {
+                    if( currentMonsterObj.action == Actions.Run )
+                    {
+                        currentMonsterObj.action = Actions.Wait;
+                    }
                     if( currentMonsterObj.endTarget )
                     {
                         currentMonsterObj.endTarget = null;

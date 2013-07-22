@@ -1,7 +1,5 @@
 package com.inoah.ro.loaders
 {
-    import flash.display.DisplayObject;
-    import flash.display.Loader;
     import flash.events.Event;
     import flash.events.EventDispatcher;
     import flash.net.URLLoader;

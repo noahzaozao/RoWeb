@@ -44,20 +44,14 @@ package com.inoah.ro.managers
             var len:int = resPathList.length;
             for( var i:int =0;i<len;i++)
             {
-                _loaderList.push( new ActSprLoader( resPathList[i] ) );
                 if( i == len - 1 )
                 {
-                    _callBackList.push( callBack );
+                    getRes( resPathList[i] , callBack );
                 }
                 else
                 {
-                    _callBackList.push( null );
+                    getRes( resPathList[i] , null );
                 }
-            }
-            
-            if( _isLoading == false )
-            {
-                loadNext();
             }
         }
         public function getRes( resPath:String, callBack:Function ):void

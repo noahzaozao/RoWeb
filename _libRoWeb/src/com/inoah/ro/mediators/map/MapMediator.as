@@ -90,7 +90,7 @@ package com.inoah.ro.mediators.map
             _camera.focus( _player );
             
             var count:int = 0;
-            while( count < 50 )
+            while( count < 10 )
             {
                 (_map as BattleMap).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100  );
                 count++;

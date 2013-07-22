@@ -25,6 +25,7 @@ package com.inoah.ro.maps
     {
         protected var _qTree:QTree;
         
+        protected var _smapBg:Image;
         protected var _mapBg:Image;
         /**
          * 屏幕对象列表 
@@ -67,7 +68,25 @@ package com.inoah.ro.maps
         public function init( mapId:uint ):void
         {
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
+            assetMgr.getRes( "map/" + mapId + "s.atf" , onSMapLoadComplete );
             assetMgr.getRes( "map/" + mapId + ".atf" , onMapLoadComplete );
+        }
+        
+        private function onSMapLoadComplete ( loader:ILoader ):void
+        {
+            var textureMgr:TextureMgr = MainMgr.instance.getMgr( MgrTypeConsts.TEXTURE_MGR ) as TextureMgr;
+            var texture:Texture = textureMgr.getTexture( "1s" , (loader as AtfLoader).data );
+            if( !_smapBg )
+            {
+                _smapBg = new Image( texture );
+                _mapContainer.addChild( _smapBg );
+            }
+            else
+            {
+                _smapBg.texture = texture;
+            }
+            _smapBg.width = 2048;
+            _smapBg.height = 2048;
         }
         
         private function onMapLoadComplete( loader:ILoader ):void
@@ -199,10 +218,15 @@ package com.inoah.ro.maps
         
         public function tick(delta:Number):void
         {
+            if( _smapBg )
+            {
+                _smapBg.x = int(_offsetX);
+                _smapBg.y = int(_offsetY);
+            }
             if( _mapBg )
             {
-                _mapBg.pivotX = -int(_offsetX);
-                _mapBg.pivotY = -int(_offsetY);
+                _mapBg.x = int(_offsetX);
+                _mapBg.y = int(_offsetY);
             }
             
             if(_unitList.length==0) 
