@@ -71,6 +71,16 @@ package com.inoah.ro.objects
             }
         }
         
+        public function stopMove():void
+        {
+            
+        }
+        
+        public function moveTo(nextX:int, nextY:int):void
+        {
+            _endTarget = new Point( nextX, nextY );
+        }
+        
         public function get atkCd():Number
         {
             return _atkCd;
@@ -79,6 +89,11 @@ package com.inoah.ro.objects
         public function get moveCd():Number
         {
             return _moveCd;
+        }
+        
+        public function get recoverCd():Number
+        {
+            return _recoverCd;
         }
         
         public function set hpBar(bar:HSpbar):void
@@ -138,6 +153,16 @@ package com.inoah.ro.objects
         public function get isDead():Boolean
         {
             return _isDead;
+        }
+        
+        public function get endTarget():Point
+        {
+            return _endTarget
+        }
+        
+        public function set endTarget( value:Point ):void
+        {
+            _endTarget = value;
         }
         
         public function get info():BattleCharacterInfo

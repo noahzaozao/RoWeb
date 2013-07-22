@@ -2,8 +2,6 @@ package com.inoah.ro.objects
 {
     import com.inoah.ro.characters.Actions;
     import com.inoah.ro.utils.GMath;
-    
-    import flash.geom.Point;
 
     public class MonsterObject extends BattleCharacterObject
     {
@@ -77,10 +75,6 @@ package com.inoah.ro.objects
             super.tick( delta );
         }
         
-        public function moveTo(nextX:int, nextY:int):void
-        {
-            _endTarget = new Point( nextX, nextY );
-        }
         //        override public function set info( value:BattleCharacterInfo ):void
         //        {
         //            _info = value;
@@ -92,26 +86,5 @@ package com.inoah.ro.objects
         //            spMax = _info.spMax;
         //            spBar = new HSpbar( this,'sp','spMax',14 , 0x2868FF);
         //        }
-        
-        public function stopMove():void
-        {
-            
-        }
-        
-        public function walk2Target():void
-        {
-            
-        }
-        
-        
-        public function get endTarget():Point
-        {
-            return _endTarget
-        }
-        
-        public function set endTarget( value:Point ):void
-        {
-            _endTarget = value;
-        }
     }
 }

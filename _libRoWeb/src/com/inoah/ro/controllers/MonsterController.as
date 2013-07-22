@@ -3,7 +3,6 @@ package com.inoah.ro.controllers
     import com.inoah.ro.RoGlobal;
     import com.inoah.ro.characters.Actions;
     import com.inoah.ro.consts.BattleCommands;
-    import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.maps.BattleMap;
     import com.inoah.ro.objects.BattleCharacterObject;
@@ -66,11 +65,14 @@ package com.inoah.ro.controllers
             for ( var i:int = 0;i<len;i++)
             {
                 currentMonsterObj = _monsterList[i];
-                if( currentMonsterObj.action == Actions.Die )
+                if( currentMonsterObj.isDead )
                 {
                     continue;
                 }
-                calMove( currentMonsterObj , i , delta );
+                if( _fightModeList[i] != 1 )
+                {
+                    calMove( currentMonsterObj , i , delta );
+                }
                 calAttackMove( currentMonsterObj, i, delta );
                 calAttack( currentMonsterObj, i, delta );
             }
@@ -162,7 +164,6 @@ package com.inoah.ro.controllers
                 else
                 {
                     currentMonsterObj.moveTo( atkTarget.posX , atkTarget.posY );
-                    currentMonsterObj.walk2Target();
                 }
                 
                 if( fightMode==2 && posCheck( currentMonsterObj , index, currentMonsterObj.atkRange ) )

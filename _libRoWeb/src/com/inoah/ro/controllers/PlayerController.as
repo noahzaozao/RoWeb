@@ -9,8 +9,11 @@ package com.inoah.ro.controllers
     import com.inoah.ro.managers.KeyMgr;
     import com.inoah.ro.managers.MainMgr;
     import com.inoah.ro.maps.QTree;
+    import com.inoah.ro.objects.BaseObject;
     import com.inoah.ro.objects.BattleCharacterObject;
     import com.inoah.ro.objects.PlayerObject;
+    import com.inoah.ro.utils.Counter;
+    import com.inoah.ro.utils.GMath;
     
     import flash.geom.Point;
     import flash.ui.Keyboard;
@@ -31,154 +34,20 @@ package com.inoah.ro.controllers
         protected var _fightMode:uint = 0;
         protected var _atkTarget:BattleCharacterObject;
         protected var _chooseTarget:BattleCharacterObject;
+        private var _recoverCounter:Counter;
         
         public function PlayerController()
         {
             super( GameConsts.PLAYER_CONTROLLER );
         }
         
-        //        override protected function onClick(e:MouseEvent):void
-        //        {
-        //            _atkTarget = null;
-        //            if( _chooseTarget  )
-        //            {
-        //                _chooseTarget.setChooseCircle( false );
-        //                _chooseTarget = null;
-        //            }
-        //            super.onClick(e);
-        //            
-        //        }
-        //        
-        //        override protected function clickSomeBody(o:GameObject):void
-        //        {
-        //            //if(o is NCharacterObject) Main.me.talk2NPC((o as NCharacterObject).uid)
-        //            if(o.camp!=Global.userdata.camp)
-        //            {
-        //                // 敌人，设置为攻击目标
-        //                _atkTarget = o as CharacterObject;
-        //                _fightMode = 0;
-        //            }
-        //            if( o != _me )
-        //            {
-        //                _chooseTarget = o as CharacterObject;
-        //                _chooseTarget.setChooseCircle( true );
-        //                
-        //            }
-        //            super.clickSomeBody(o);
-        //        }
-        //        
-        //        override public function calcAction():void
-        //        {
-        //            if(_atkTarget!=null)
-        //            {
-        //                calAttackMove();
-        //                calAttack();
-        //            }
-        //            calRecover();
-        //            super.calcAction();
-        //        }
-        //        
-        //        private function calAttackMove():void
-        //        {
-        //            // 先判断攻击距离
-        //            if(_fightMode==0 && posCheck( 100 ) )
-        //            {
-        //                if( _endTarget )
-        //                {
-        //                    _endTarget = null;
-        //                    stopMove();
-        //                }
-        //                _fightMode = 2;
-        //            }
-        //            else 
-        //            {
-        //                _fightMode = 1;
-        //            }
-        //            
-        //            if(_fightMode==1 && posCheck( 100 ))
-        //            {
-        //                // 走入攻击范围，开始攻击
-        //                (_atkTarget.controler as MonsterController).fightTo(_me);
-        //                if( _endTarget )
-        //                {
-        //                    _endTarget = null;
-        //                    stopMove();
-        //                }
-        //                _fightMode = 2;
-        //            }
-        //            else
-        //            {
-        //                _endTarget = new Point( _atkTarget.PosX , _atkTarget.PosY );
-        //                walk2Target();
-        //            }
-        //        }
-        //        
-        //        private function calAttack():void
-        //        {
-        //            if(_fightMode==2 && posCheck( 100 ) )
-        //            {
-        //                if( _endTarget )
-        //                {
-        //                    _endTarget = null;
-        //                    stopMove();
-        //                }
-        //                if( Global.Timer - _lastHurt > atkCd )
-        //                {
-        //                    if( _atkTarget.action == Actions.Die )
-        //                    {
-        //                        _atkTarget = null;
-        //                        return;
-        //                    }
-        //                    var radian:Number = GMath.getPointAngle(_atkTarget.PosX-_me.PosX,_atkTarget.PosY-_me.PosY);
-        //                    var angle:int = GMath.R2A(radian)+90;
-        //                    changeDirectionByAngle( angle );
-        //                    
-        //                    _me.action = Actions.Attack;
-        //                    _lastHurt = Global.Timer;
-        //                    var tween:Tween = new Tween( _atkTarget , 0.4 );
-        //                    tween.onComplete = onAttacked;
-        //                    tween.onCompleteArgs = [_atkTarget]
-        //                    appendAnimateUnit( tween );
-        //                }
-        //            }
-        //            else
-        //            {
-        //                _fightMode = 1;
-        //            }
-        //        }
-        //        
-        //        private function calRecover():void
-        //        {
-        //            if( Global.Timer - _lastRecover > _recoverCd )
-        //            {
-        //                (_me as PlayerObject).hp += 1;
-        //                (_me as PlayerObject).sp += 1;
-        //                _lastRecover = Global.Timer;
-        //            }
-        //        }
-        //        
-        //        private function onAttacked( atkTarget:CharacterObject ):void
-        //        {
-        //            (atkTarget.controler as MonsterController).fightTo(_me);
-        //            
-        //            if( atkTarget.action != Actions.Attack && atkTarget.action != Actions.Die )
-        //            {
-        //                atkTarget.action = Actions.BeAtk;
-        //            }
-        //            _me.action = Actions.Wait;
-        //            
-        //            Facade.getInstance().sendNotification( BattleCommands.ATTACK , [_me, atkTarget] );
-        //            
-        //            if(atkTarget.hp==0)
-        //            {
-        //                _atkTarget = null;
-        //                if( _chooseTarget )
-        //                {
-        //                    _chooseTarget.setChooseCircle( false );
-        //                    _chooseTarget = null;
-        //                }
-        //            }
-        //        }
+        override public function set me(value:BaseObject):void
+        {
+            super.me = value;
+            _recoverCounter = new Counter();
+            _recoverCounter.initialize();
+            _recoverCounter.reset( (_me as PlayerObject).recoverCd );
+        }
         
         override public function listNotificationInterests():Array
         {
@@ -261,6 +130,8 @@ package com.inoah.ro.controllers
         {
             super.tick( delta );
             
+            calRecover( delta );
+            
             var speed:Number = 200;
             var keyMgr:KeyMgr = MainMgr.instance.getMgr( MgrTypeConsts.KEY_MGR ) as KeyMgr;
             //攻击控制逻辑
@@ -274,66 +145,21 @@ package com.inoah.ro.controllers
             }
             else if( keyMgr.isDown( Keyboard.J ) || _joyStickAttack )
             {
-                _isAttacking = true;
-                _me.playRate = 1;
-                _me.action = Actions.Attack;
-                var tween:Tween = new Tween( _me , 0.6 );
-                tween.onComplete = onAttacked;
-                appendAnimateUnit( tween );
-                
                 if( _atkTarget && _atkTarget.isDead )
                 {
                     _atkTarget = null;
                 }
                 if( !_atkTarget )
                 {
-                    var objList:Vector.<BattleCharacterObject> = new Vector.<BattleCharacterObject>();
-                    var mqTree:QTree;
-                    var len:int;
-                    var i:int;
-                    mqTree = _me.qTree.parent.q1;
-                    len = mqTree.data.length;
-                    for ( i = 0 ; i< len;i++ )
-                    {
-                        objList.push( mqTree.data[i] );
-                    }
-                    mqTree = _me.qTree.parent.q2;
-                    len = mqTree.data.length;
-                    for ( i = 0 ; i< len;i++ )
-                    {
-                        objList.push( mqTree.data[i] );
-                    }
-                    mqTree = _me.qTree.parent.q3;
-                    len = mqTree.data.length;
-                    for ( i = 0 ; i< len;i++ )
-                    {
-                        objList.push( mqTree.data[i] );
-                    }
-                    mqTree = _me.qTree.parent.q4;
-                    len = mqTree.data.length;
-                    for ( i = 0 ; i< len;i++ )
-                    {
-                        objList.push( mqTree.data[i] );
-                    }
-                    
-                    //临时随机找怪，随后可以根据面向找四象限的怪
-                    len = objList.length;
-                    for ( i = 0 ; i< len;i++ )
-                    {
-                        if( _fightMode==0  && Point.distance( objList[i].POS , _me.POS ) <= (_me as PlayerObject).atkRange )
-                        {
-                            if( objList[i] != _me && !objList[i].isDead )
-                            {
-                                _atkTarget = objList[i];
-                                break;
-                            }
-                        }
-                    }
+                    calFindTarget();
                 }
                 
                 if( _atkTarget )
                 {
-                    facade.sendNotification( BattleCommands.PLAYER_ATTACK , [_me , _atkTarget]); 
+                    _chooseTarget = _atkTarget;
+                    _chooseTarget.viewObject.setChooseCircle( true );
+                    
+                    calAttack( delta );
                 }
             }
                 //攻击控制逻辑结束
@@ -404,10 +230,109 @@ package com.inoah.ro.controllers
             //八方向移动控制逻辑结束
         }
         
-        protected function onAttacked():void
+        private function calFindTarget():void
+        {
+            var objList:Vector.<BattleCharacterObject> = new Vector.<BattleCharacterObject>();
+            var mqTree:QTree;
+            var len:int;
+            var i:int;
+            mqTree = _me.qTree.parent.q1;
+            len = mqTree.data.length;
+            for ( i = 0 ; i< len;i++ )
+            {
+                objList.push( mqTree.data[i] );
+            }
+            mqTree = _me.qTree.parent.q2;
+            len = mqTree.data.length;
+            for ( i = 0 ; i< len;i++ )
+            {
+                objList.push( mqTree.data[i] );
+            }
+            mqTree = _me.qTree.parent.q3;
+            len = mqTree.data.length;
+            for ( i = 0 ; i< len;i++ )
+            {
+                objList.push( mqTree.data[i] );
+            }
+            mqTree = _me.qTree.parent.q4;
+            len = mqTree.data.length;
+            for ( i = 0 ; i< len;i++ )
+            {
+                objList.push( mqTree.data[i] );
+            }
+            
+            //临时随机找怪，随后可以根据面向找四象限的怪
+            len = objList.length;
+            for ( i = 0 ; i< len;i++ )
+            {
+                if( _fightMode==0  && Point.distance( objList[i].POS , _me.POS ) <= (_me as PlayerObject).atkRange )
+                {
+                    if( objList[i] != _me && !objList[i].isDead )
+                    {
+                        _atkTarget = objList[i];
+                        break;
+                    }
+                }
+            }
+        }
+        
+        private function calAttack( delta:Number ):void
+        {
+            if( _atkTarget.action == Actions.Die )
+            {
+                _atkTarget = null;
+                return;
+            }
+            var radian:Number = GMath.getPointAngle(_atkTarget.posX-_me.posX,_atkTarget.posY-_me.posY);
+            var angle:int = GMath.R2A(radian)+90;
+            (_me as PlayerObject).changeDirectionByAngle( angle );
+            
+            radian = GMath.getPointAngle(_me.posX - _atkTarget.posX,_me.posY - _atkTarget.posY);
+            angle = GMath.R2A(radian)+90;
+            _atkTarget.changeDirectionByAngle( angle );
+            
+            _isAttacking = true;
+            _me.playRate = 1;
+            _me.action = Actions.Attack;
+            var tween:Tween = new Tween( _me , 0.4 );
+            tween.onComplete = onAttacked;
+            tween.onCompleteArgs = [_atkTarget];
+            appendAnimateUnit( tween );
+        }
+        
+        private function onAttacked( atkTarget:BattleCharacterObject ):void
         {
             _isAttacking = false;
             _me.action = Actions.Wait;
+            
+            if( atkTarget.action != Actions.Attack && atkTarget.action != Actions.Die )
+            {
+                atkTarget.action = Actions.BeAtk;
+            }
+            _me.action = Actions.Wait;
+            
+            facade.sendNotification( BattleCommands.PLAYER_ATTACK , [_me , _atkTarget]); 
+            
+            if(atkTarget.hp==0)
+            {
+                _atkTarget = null;
+                if( _chooseTarget )
+                {
+                    _chooseTarget.viewObject.setChooseCircle( false );
+                    _chooseTarget = null;
+                }
+            }
+        }
+        
+        private function calRecover( delta:Number ):void
+        {
+            _recoverCounter.tick( delta );
+            if(_recoverCounter.expired)
+            {
+                (_me as PlayerObject).hp += 1;
+                (_me as PlayerObject).sp += 1;
+                _recoverCounter.reset( (_me as PlayerObject).recoverCd );
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ package com.inoah.ro.interfaces
         function set isPlayEnd( value:Boolean ):void;
         
         function set playRate( value:Number ):void;
-        
+        function setChooseCircle( value:Boolean ):void;
         function dispose():void;
     }
 }

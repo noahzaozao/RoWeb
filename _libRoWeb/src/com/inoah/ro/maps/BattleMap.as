@@ -40,11 +40,11 @@ package com.inoah.ro.maps
         {
             var monsterInfo:BattleCharacterInfo = new BattleCharacterInfo();
             monsterInfo.name = (randMonster==0)?"poring":(randMonster==1)?"porpring":"ghostpring";
-            monsterInfo.hpMax = 50;
+            monsterInfo.hpMax = 100;
             monsterInfo.spMax = 50;
             monsterInfo.hpCurrent = monsterInfo.hpMax;
             monsterInfo.spCurrent = monsterInfo.spMax;
-            monsterInfo.atk = 1;
+            monsterInfo.atk = 5;
             var randMonster:int =  int(Math.random() * 3);
             if( randMonster == 0 )
             {

@@ -14,6 +14,7 @@ package com.inoah.ro.characters
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.MainMgr;
     
+    import flash.display.Shape;
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.geom.Point;
@@ -61,6 +62,7 @@ package com.inoah.ro.characters
          * 动画播放倍率 
          */        
         protected var _playRate:Number = 1;
+        protected var _chooseCircle:Shape;
         
         public function set playRate( value:Number ):void
         {
@@ -69,8 +71,19 @@ package com.inoah.ro.characters
         
         public function setChooseCircle( bool:Boolean ):void
         {
-            
+            if( bool )
+            {
+                addChildAt( _chooseCircle , 0 );
+            }
+            else
+            {
+                if( _chooseCircle.parent )
+                {
+                    _chooseCircle.parent.removeChild( _chooseCircle );
+                }
+            }
         }
+        
         public function CharacterView( charInfo:CharacterInfo = null )
         {
             _otherViews = new Vector.<ActSprOtherView>( 4 );
@@ -82,6 +95,9 @@ package com.inoah.ro.characters
                 _charInfo = charInfo;
                 init();
             }
+            _chooseCircle = new Shape();
+            _chooseCircle.graphics.lineStyle( 2, 0x00ff00 );
+            _chooseCircle.graphics.drawEllipse(-25, -15, 50, 30);
         }
         
         public function get charInfo():CharacterInfo
