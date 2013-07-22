@@ -12,7 +12,6 @@ package com.inoah.ro.mediators.map
     import com.inoah.ro.objects.PlayerObject;
     
     import flash.display.DisplayObjectContainer;
-    import flash.display.Sprite;
     
     import as3.interfaces.INotification;
     import as3.patterns.mediator.Mediator;
@@ -29,10 +28,10 @@ package com.inoah.ro.mediators.map
         protected var _playerController:PlayerController;
         protected var _player:PlayerObject;
         
-        protected var _unitLevel:flash.display.Sprite;
+        protected var _unitLevel:starling.display.Sprite;
         protected var _mapLevel:starling.display.Sprite;
         
-        public function MapMediator( unitLevel:flash.display.Sprite , mapLevel:starling.display.Sprite )
+        public function MapMediator( unitLevel:starling.display.Sprite , mapLevel:starling.display.Sprite )
         {
             super(GameConsts.MAP_MEDIATOR);
             _unitLevel = unitLevel;
@@ -69,7 +68,7 @@ package com.inoah.ro.mediators.map
             _mapId = mapId;
             if( !_map )
             {
-                _map = new BattleMap( _unitLevel as flash.display.DisplayObjectContainer , _mapLevel as starling.display.DisplayObjectContainer );
+                _map = new BattleMap( _unitLevel as starling.display.DisplayObjectContainer , _mapLevel as starling.display.DisplayObjectContainer );
                 facade.registerMediator( _map );
                 _camera = new RoCamera( _map );
                 facade.registerMediator( _map );
@@ -89,12 +88,12 @@ package com.inoah.ro.mediators.map
             _map.addObject( _player );
             _camera.focus( _player );
             
-            var count:int = 0;
-            while( count < 10 )
-            {
-                (_map as BattleMap).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100  );
-                count++;
-            }
+//            var count:int = 0;
+//            while( count < 10 )
+//            {
+//                (_map as BattleMap).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100  );
+//                count++;
+//            }
         }
         
         public function tick( delta:Number ):void

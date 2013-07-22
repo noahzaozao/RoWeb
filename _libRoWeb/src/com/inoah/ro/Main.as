@@ -63,13 +63,14 @@ package com.inoah.ro
         private function onInitRes( assetMgr:AssetMgr ):void
         {
             var resPathList:Vector.<String> = new Vector.<String>();
-            resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
-            resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
-            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
-            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
-            resPathList.push( "data/sprite/阁胶磐/poring.act" );
-            resPathList.push( "data/sprite/阁胶磐/poporing.act" );
-            resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
+            resPathList.push( "data/1.tpc" );
+            //            resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
+            //            resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
+            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
+            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
+            //            resPathList.push( "data/sprite/阁胶磐/poring.act" );
+            //            resPathList.push( "data/sprite/阁胶磐/poporing.act" );
+            //            resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
             assetMgr.getResList( resPathList , function():void{} );
             
 //            assetMgr.getRes( "asset/1.tpc" , onLoaded );

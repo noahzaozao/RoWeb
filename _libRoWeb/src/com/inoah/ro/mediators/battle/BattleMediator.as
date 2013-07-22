@@ -12,7 +12,6 @@ package com.inoah.ro.mediators.battle
     import com.inoah.ro.objects.MonsterObject;
     import com.inoah.ro.objects.PlayerObject;
     
-    import flash.display.DisplayObjectContainer;
     import flash.filters.GlowFilter;
     import flash.text.TextField;
     import flash.text.TextFormat;
@@ -22,6 +21,7 @@ package com.inoah.ro.mediators.battle
     
     import starling.animation.IAnimatable;
     import starling.animation.Tween;
+    import starling.display.DisplayObjectContainer;
     
     public class BattleMediator extends Mediator implements ITickable
     {
@@ -78,7 +78,7 @@ package com.inoah.ro.mediators.battle
             textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
             textField.y = -50;
             textField.x = - textField.textWidth >> 1;
-            (atkTarget.viewObject as DisplayObjectContainer).addChild( textField );
+//            (atkTarget.viewObject as DisplayObjectContainer).addChild( textField );
             var tween:Tween = new Tween( textField , 0.6 );
             tween.moveTo( - textField.textWidth >> 1, - 150 );
             tween.onComplete = onBlooded;
@@ -128,7 +128,7 @@ package com.inoah.ro.mediators.battle
             textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
             textField.y = -50;
             textField.x = - textField.textWidth >> 1;
-            (atkTarget.viewObject as DisplayObjectContainer).addChild( textField );
+//            (atkTarget.viewObject as DisplayObjectContainer).addChild( textField );
             var tween:Tween = new Tween( textField , 0.6 );
             tween.moveTo( - textField.textWidth >> 1, - 150 );
             tween.onComplete = onBlooded;

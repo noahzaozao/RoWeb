@@ -3,8 +3,6 @@ package com.inoah.ro.managers
     import com.inoah.ro.interfaces.IMgr;
     import com.inoah.ro.mediators.map.MapMediator;
     
-    import flash.display.Sprite;
-    
     import starling.display.Sprite;
     
     /**
@@ -13,7 +11,7 @@ package com.inoah.ro.managers
      */    
     public class MapMgr extends MapMediator implements IMgr
     {
-        public function MapMgr( unitLevel:flash.display.Sprite , mapLevel:starling.display.Sprite )
+        public function MapMgr( unitLevel:starling.display.Sprite , mapLevel:starling.display.Sprite )
         {
             super( unitLevel , mapLevel );
         }

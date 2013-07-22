@@ -33,8 +33,8 @@ package
             stage.setOrientation( StageOrientation.ROTATED_RIGHT );
             
             RoGlobal.isIPhone = true;
-            RoGlobal.W = stage.stageWidth;
-            RoGlobal.H = stage.stageHeight;
+            RoGlobal.W = 960;
+            RoGlobal.H = 640;
             
             var facade:IFacade = Facade.getInstance();
             _gameMediator = new GameMediator( stage , this );

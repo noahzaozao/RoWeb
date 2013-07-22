@@ -9,8 +9,6 @@ package com.inoah.ro.maps
     import com.inoah.ro.objects.MonsterObject;
     import com.inoah.ro.utils.Counter;
     
-    import flash.display.DisplayObjectContainer;
-    
     import as3.patterns.facade.Facade;
     
     import starling.display.DisplayObjectContainer;
@@ -22,7 +20,7 @@ package com.inoah.ro.maps
         protected var _monsterList:Vector.<MonsterView>;
         protected var _newMonsterCounter:Counter;
         
-        public function BattleMap(unitContainer:flash.display.DisplayObjectContainer , mapContainer:starling.display.DisplayObjectContainer)
+        public function BattleMap(unitContainer:starling.display.DisplayObjectContainer , mapContainer:starling.display.DisplayObjectContainer)
         {
             mediatorName = GameConsts.BATTLE_MAP;
             _newMonsterCounter = new Counter();
@@ -87,16 +85,16 @@ package com.inoah.ro.maps
                 _monsterObjList[i].tick( delta );
             }
             
-            _newMonsterCounter.tick( delta );
-            if( _newMonsterCounter.expired )
-            {
-                if( _monsterObjList.length < 50 )
-                {
-                    createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
-                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );
-                }
-                _newMonsterCounter.reset( 3 );
-            }
+            //            _newMonsterCounter.tick( delta );
+            //            if( _newMonsterCounter.expired )
+            //            {
+            //                if( _monsterObjList.length < 50 )
+            //                {
+            //                    createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100 );
+            //                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );
+            //                }
+            //                _newMonsterCounter.reset( 3 );
+            //            }
         }
     }
 }

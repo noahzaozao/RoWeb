@@ -9,6 +9,7 @@ package com.inoah.ro.mediators
     import com.inoah.ro.interfaces.IMgr;
     import com.inoah.ro.interfaces.ITickable;
     import com.inoah.ro.loaders.ActSprLoader;
+    import com.inoah.ro.loaders.ILoader;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.BattleMgr;
     import com.inoah.ro.managers.DisplayMgr;
@@ -41,7 +42,7 @@ package com.inoah.ro.mediators
         private var _mainViewMediator:ITickable;;
         private var _mapMgr:ITickable;
         private var _battleMgr:ITickable;
-
+        
         private var _couldTick:Boolean;
         
         public function GameMediator( stage:Stage , viewComponent:Object=null )
@@ -57,7 +58,7 @@ package com.inoah.ro.mediators
             _starling.showStatsAt(HAlign.RIGHT, VAlign.CENTER);
             _starling.start();
             
-//            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
+            //            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
         }
         
         protected function onRightClick( e:MouseEvent):void
@@ -106,17 +107,14 @@ package com.inoah.ro.mediators
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
             
             var resPathList:Vector.<String> = new Vector.<String>();
-            //            resPathList.push( "data/sprite/牢埃练/赣府烹/咯/2_咯.act" );
-            //            resPathList.push( "data/sprite/牢埃练/个烹/咯/檬焊磊_咯.act" );
-            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八.act" );
-            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八_八堡.act" );
-            resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
-            resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
-            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
-            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
-            resPathList.push( "data/sprite/阁胶磐/poring.act" );
-            resPathList.push( "data/sprite/阁胶磐/poporing.act" );
-            resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
+            resPathList.push( "data/1.tpc" );
+            //            resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
+            //            resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
+            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
+            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
+            //            resPathList.push( "data/sprite/阁胶磐/poring.act" );
+            //            resPathList.push( "data/sprite/阁胶磐/poporing.act" );
+            //            resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
             
             assetMgr.getResList( resPathList , onInitLoadComplete );
         }
@@ -128,12 +126,10 @@ package com.inoah.ro.mediators
         {
             RoGlobal.userInfo = new UserInfo();
             var userInfo:UserInfo = RoGlobal.userInfo;
-            userInfo.init( "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", true );
-            userInfo.setWeaponRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
-            userInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
-            //            userInfo.init( "data/sprite/牢埃练/赣府烹/咯/2_咯.act", "data/sprite/牢埃练/个烹/咯/檬焊磊_咯.act", true );
-            //            userInfo.setWeaponRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八.act" );
-            //            userInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_咯_窜八_八堡.act" );
+            userInfo.init( "", "data/1.tpc", true );
+            //            userInfo.init( "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", true );
+            //            userInfo.setWeaponRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
+            //            userInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
             userInfo.name = username;
             userInfo.job = "Novice";
             userInfo.strength = 1;
@@ -157,7 +153,7 @@ package com.inoah.ro.mediators
          * 必备资源加载完毕 ，进入游戏主体
          * @param loader
          */        
-        private function onInitLoadComplete( loader:ActSprLoader = null ):void
+        private function onInitLoadComplete( loader:ILoader = null ):void
         {
             _noteTxt.parent.removeChild( _noteTxt );
             var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;

@@ -99,12 +99,12 @@ package com.inoah.ro.objects
         public function set hpBar(bar:HSpbar):void
         {
             _hpBar = bar;
-            (viewObject as DisplayObjectContainer).addChild(_hpBar);
+//            (viewObject as DisplayObjectContainer).addChild(_hpBar);
         }
         public function set spBar(bar:HSpbar):void
         {
             _spBar = bar;
-            (viewObject as DisplayObjectContainer).addChild(_spBar);
+//            (viewObject as DisplayObjectContainer).addChild(_spBar);
         }
         
         public function set hp(val:int):void

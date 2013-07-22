@@ -11,12 +11,11 @@ package com.inoah.ro.maps
     import com.inoah.ro.objects.BaseObject;
     import com.inoah.ro.utils.Counter;
     
-    import flash.display.DisplayObject;
-    import flash.display.DisplayObjectContainer;
     import flash.geom.Rectangle;
     
     import as3.patterns.mediator.Mediator;
     
+    import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
     import starling.display.Image;
     import starling.textures.Texture;
@@ -45,14 +44,14 @@ package com.inoah.ro.maps
         /**
          *  显示对象容器
          */        
-        protected var _unitContainer:flash.display.DisplayObjectContainer;
+        protected var _unitContainer:starling.display.DisplayObjectContainer;
         protected var _mapContainer:starling.display.DisplayObjectContainer;
         /**
          * 排序计时器 
          */        
         protected var _orderCounter:Counter;
         
-        public function BaseMap( unitContainer:flash.display.DisplayObjectContainer, mapContainer:starling.display.DisplayObjectContainer )
+        public function BaseMap( unitContainer:starling.display.DisplayObjectContainer, mapContainer:starling.display.DisplayObjectContainer )
         {
             super();
             _orderCounter = new Counter();

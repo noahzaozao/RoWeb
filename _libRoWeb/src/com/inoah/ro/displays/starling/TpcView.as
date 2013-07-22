@@ -342,6 +342,11 @@ package com.inoah.ro.displays.starling
             return _motionFinishedStop
         }
         
+        public function get currentAction():int
+        {
+            return _currentAction;
+        }
+        
         public function get currentFrame():int
         {
             return _currentFrame;

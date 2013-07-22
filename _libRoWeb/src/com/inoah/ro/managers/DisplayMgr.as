@@ -25,13 +25,13 @@ package com.inoah.ro.managers
             _stage = stage;
             _starlingRoot = starlingRoot as DisplayObjectContainer;
             _displayList = new Vector.<flash.display.Sprite>();
-            for( var i:int = 0;i< 3; i++)
+            for( var i:int = 0;i< 2; i++)
             {
                 _displayList[i] = new flash.display.Sprite();
                 _stage.addChild( _displayList[i] );
             }
             _displayStarlingList = new Vector.<starling.display.Sprite>();
-            for( i = 0;i< 3; i++)
+            for( i = 0;i< 2; i++)
             {
                 _displayStarlingList[i] = new starling.display.Sprite();
                 _starlingRoot.addChild( _displayStarlingList[i] );
@@ -40,15 +40,15 @@ package com.inoah.ro.managers
         
         public function get topLevel():flash.display.Sprite
         {
-            return _displayList[2];
+            return _displayList[1];
         }
         public function get uiLevel():flash.display.Sprite
         {
-            return _displayList[1];
-        }
-        public function get unitLevel():flash.display.Sprite
-        {
             return _displayList[0];
+        }
+        public function get unitLevel():starling.display.Sprite
+        {
+            return _displayStarlingList[1];
         }
         public function get mapLevel():starling.display.Sprite
         {

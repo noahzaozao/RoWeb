@@ -13,8 +13,8 @@ package com.inoah.ro
         public static var username:String = 'player';
         
         public static var userInfo:UserInfo;
-        public static const TILE_W:int = 10;
-        public static const TILE_H:int = 10;
+        public static const TILE_W:int = 300;
+        public static const TILE_H:int = 300;
         public static const ORDER_TIME:Number = 0.15;
         public static const MAX_MONSTER_NUM:uint = 200;
         
