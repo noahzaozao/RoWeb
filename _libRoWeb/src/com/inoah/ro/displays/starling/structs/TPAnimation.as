@@ -3,8 +3,6 @@ package com.inoah.ro.displays.starling.structs
     import com.inoah.ro.consts.MgrTypeConsts;
     import com.inoah.ro.displays.actspr.structs.CACT;
     import com.inoah.ro.displays.actspr.structs.acth.AnyActAnyPat;
-    import com.inoah.ro.displays.actspr.structs.acth.AnyPatSprV0101;
-    import com.inoah.ro.displays.actspr.structs.sprh.AnySprite;
     import com.inoah.ro.events.TPAnimationEvent;
     import com.inoah.ro.managers.MainMgr;
     import com.inoah.ro.managers.TextureMgr;
@@ -61,7 +59,6 @@ package com.inoah.ro.displays.starling.structs
         /**
          * 动作序列数据列表 
          */        
-        private var _sequenceList:Vector.<Vector.<SequenceData>>;
         
         /**
          * 帧序列何位置偏移列表
@@ -78,12 +75,6 @@ package com.inoah.ro.displays.starling.structs
          */        
         private var _isDisposed:Boolean;
         
-        /**
-         * 判断可点区域的透明度
-         * 范围是0~255
-         */        
-        private var _threshold:int;
-        
         private var _tpaId:String;
         private var _currentAaapList:Vector.<AnyActAnyPat>;
         
@@ -91,18 +82,9 @@ package com.inoah.ro.displays.starling.structs
          * 构造
          * @param threshold        (默认值255)判断可点区域的透明度, 范围是0~255
          */        
-        public function TPAnimation(id:String = "", threshold:int=255)
+        public function TPAnimation( id:String = "" )
         {
-            _tpaId = id;
-            _threshold = threshold;
-            if(_threshold>255)
-            {
-                threshold = 255;
-            }
-            else if(_threshold<0)
-            {
-                _threshold = 0;
-            }
+            
         }
         
         public function get currentAction():uint
@@ -110,33 +92,6 @@ package com.inoah.ro.displays.starling.structs
             return _actionIndex;
         }
         
-        public function getAaap( currentFrame:uint ):AnyActAnyPat
-        {
-            return _currentAaapList[ currentFrame ];
-        }
-        public function getAspv( currentFrame:uint ):AnyPatSprV0101
-        {
-            var aspv:AnyPatSprV0101 = _currentAaapList[ currentFrame ].apsList[0];
-            var isExt:Boolean = false;
-            if( _currentAaapList[ currentFrame ].apsList.length == 0 )
-            {
-                return null;
-            }
-            var apsv:AnyPatSprV0101 = _currentAaapList[ currentFrame ].apsList[0];
-            if( !apsv )
-            {
-                return null;
-            }
-            if( apsv.sprNo == 0xffffffff )
-            {
-                if( _currentAaapList[ currentFrame ].apsList.length > 1)
-                {
-                    apsv = _currentAaapList[ currentFrame ].apsList[1];
-                    isExt = true;
-                }
-            }
-            return aspv;
-        }
         /**
          * 解析tpa文件 
          * @param data      tpa文件字节流
@@ -157,7 +112,6 @@ package com.inoah.ro.displays.starling.structs
             
             var len:int = compressData.readByte();
             
-            _sequenceList = new Vector.<Vector.<SequenceData>>();
             _textureNameSet = new Vector.<Vector.<String>>();
             _textureCollideList = new Vector.<BitmapData>();
             
@@ -182,38 +136,12 @@ package com.inoah.ro.displays.starling.structs
             var j:int;
             var k:int
             
-            len = _sequenceList.length;
-            for(i = 0; i<len; i++)
-            {
-                _sequenceList[i].sort(sortSequence);
-            }
-            
             ///end init animation sequences//////////////////////////////////////////
             _textureOffsetIndex = new Vector.<String>();
             _textureOffsetList = new Vector.<Point>();
             _textureAtlasSettingList = new Vector.<XML>();
             
             prepareTextureData();
-        }
-        
-        public function getAnimation( value:uint ):Vector.<TPSequence>
-        {
-            var returnList:Vector.<TPSequence> = new Vector.<TPSequence>();
-            
-            if( _actionIndex != value )
-            {
-                _actionIndex = value;
-            }
-            _currentAaapList = _cact.aall.aa[_actionIndex].aaap;
-            var len:int = _currentAaapList.length;
-            var currentAaap:AnyActAnyPat;
-            for( var i:int = 0;i<len;i++)
-            {
-                currentAaap = _currentAaapList[i]
-                var apsv:AnyPatSprV0101 = getAspv( i )
-                returnList.push( getTextureByName( apsv.sprNo.toString()) );
-            }
-            return returnList;
         }
         
         /**
@@ -295,7 +223,7 @@ package com.inoah.ro.displays.starling.structs
          * @param name      序列帧名
          * @return          目标贴图,如果找不到则返回空
          */        
-        protected function getTextureByName(name:String):TPSequence
+        protected function getTextureByName(name:String):Texture
         {
             if(name == "")
             {
@@ -332,63 +260,13 @@ package com.inoah.ro.displays.starling.structs
             
             texture = textureAtlas.getTexture(name);
             
-            if(texture != null)
-            {
-                return new TPSequence(texture, _textureOffsetList[_textureOffsetIndex.indexOf(name)]);
-            }
-            
-            return null;
+            return texture;
         }
         
         protected function onTextureUploaded(texture:Texture):void
         {
             
         }
-        
-        /**
-         * 检测TPCClip是不是可以被点到
-         * @param clip          TPMovieClip对象
-         * @param localPoint    检测点
-         * @return              如果可以点到返回TPMovieClip对象否则返回null
-         */        
-//        internal function hitTestByTPAClipDisplay(clip:TPMovieClip,  localPoint:Point):DisplayObject
-//        {
-//            var display:Image = clip.animationDisplay;//取到显示对象的tp序列显示容器
-//            if(display == null)
-//            {
-//                //                trace("found null display");
-//                return null;
-//            }
-//            
-//            var subTexture:SubTexture = display.texture as SubTexture;  //取到显示容器中的当前贴图
-//            var index:int;
-//            if(subTexture == null || (index = _textureList.indexOf(subTexture.parent))<0)
-//            {
-//                return null;
-//            }
-//            
-//            var collideData:BitmapData = _textureCollideList[index];
-//            var frameRect:Rectangle = subTexture.frame;
-//            var clipRect:Rectangle = subTexture.clipping;
-//            
-//            var collideAreaWidth:Number = subTexture.width/clipRect.width;
-//            var collideAreaHeight:Number = subTexture.height/clipRect.height;
-//            
-//            var renderArea:Rectangle = new Rectangle(0,0,subTexture.width,subTexture.height);
-//            var mousePoint:Point = new Point(display.pivotX+localPoint.x, display.pivotY+localPoint.y);
-//            
-//            if(renderArea.containsPoint(mousePoint)) 
-//            {
-//                var color:uint =collideData.getPixel(collideAreaWidth*clipRect.x + mousePoint.x, collideAreaHeight*clipRect.y + mousePoint.y)
-//                color = (color>>16)&255;
-//                
-//                if(color >= _threshold)
-//                {
-//                    return clip;
-//                }
-//            }
-//            return null
-//        }
         
         /**
          * 释放 
@@ -442,12 +320,21 @@ package com.inoah.ro.displays.starling.structs
             
             _atfDatasList = null;
             _textureCollideList = null;
-            _sequenceList = null;
         }
         
         public function get tpaId():String
         {
             return _tpaId;
+        }
+        
+        public function get act():CACT
+        {
+            return _cact;
+        }
+        
+        public function getTexture(sprNo:uint):Texture
+        {
+            return getTextureByName( sprNo.toString() );
         }
     }
 }

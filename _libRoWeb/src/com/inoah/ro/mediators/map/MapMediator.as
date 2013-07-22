@@ -88,12 +88,13 @@ package com.inoah.ro.mediators.map
             _map.addObject( _player );
             _camera.focus( _player );
             
-//            var count:int = 0;
-//            while( count < 10 )
-//            {
+            var count:int = 0;
+            while( count < 1 )
+            {
+                (_map as BattleMap).createMonser( 400 , 400 );
 //                (_map as BattleMap).createMonser( 1200 * Math.random() + 100, 1200 * Math.random() + 100  );
-//                count++;
-//            }
+                count++;
+            }
         }
         
         public function tick( delta:Number ):void

@@ -96,9 +96,9 @@ package panels
             {
                 if( _charView )
                 {
-                    if( _charView.actionIndex > 0 )
+                    if( _charView.action > 0 )
                     {
-                        _charView.setActionIndex( _charView.actionIndex - 8 );
+                        _charView.setActionIndex( _charView.action - 8 );
                     }
                 }
             }
@@ -106,13 +106,13 @@ package panels
             {
                 if( _charView )
                 {
-                    if( _charView.actionIndex < _charView.actions.GetNumAction() - 8 )
+                    if( _charView.action < _charView.actions.GetNumAction() - 8 )
                     {
-                        _charView.setActionIndex( _charView.actionIndex + 8 );
+                        _charView.setActionIndex( _charView.action + 8 );
                     }
                 }
             }
-            _actionTxt.text = _charView.actionIndex.toString();
+            _actionTxt.text = _charView.action.toString();
         }        
         
         protected function onClickPanelHandler( e:MouseEvent):void

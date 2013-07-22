@@ -63,37 +63,14 @@ package com.inoah.ro
         private function onInitRes( assetMgr:AssetMgr ):void
         {
             var resPathList:Vector.<String> = new Vector.<String>();
-            resPathList.push( "data/1.tpc" );
-            //            resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
-            //            resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
-            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
-            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
-            //            resPathList.push( "data/sprite/阁胶磐/poring.act" );
-            //            resPathList.push( "data/sprite/阁胶磐/poporing.act" );
-            //            resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
+            resPathList.push( "data/novice_man_body.tpc" );
+            resPathList.push( "data/2_head_man.tpc" );
+            resPathList.push( "data/novice_main_knife.tpc" );
+            resPathList.push( "data/novice_main_knife_ef.tpc" );
+            resPathList.push( "data/poring.tpc" );
+            resPathList.push( "data/poporing.tpc" );
+            resPathList.push( "data/ghostring.tpc" );
             assetMgr.getResList( resPathList , function():void{} );
-            
-//            assetMgr.getRes( "asset/1.tpc" , onLoaded );
-        }
-        
-        private function onLoaded( loader:ILoader ):void
-        {
-//            var quad:Quad = new Quad( 960 , 1 , 0xff0000 );
-//            quad.x = 0;
-//            quad.y = 400;
-//            addChild(quad);
-//            quad = new Quad( 1 , 560 , 0xff0000 );
-//            quad.x = 400;
-//            quad.y = 0;
-//            addChild(quad);
-            
-            _tpc = new TpcView();
-            _tpc.init(  (loader as TPCLoader).tpcData );
-            addChild( _tpc );
-            _tpc.play();
-            _tpc.x = 400;
-            _tpc.y = 400;
-            _tpc.switchAction( 8 + 6 );
         }
         
         public function tick( delta:Number ):void

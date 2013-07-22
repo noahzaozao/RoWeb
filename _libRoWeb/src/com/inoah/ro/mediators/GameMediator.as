@@ -8,7 +8,6 @@ package com.inoah.ro.mediators
     import com.inoah.ro.infos.UserInfo;
     import com.inoah.ro.interfaces.IMgr;
     import com.inoah.ro.interfaces.ITickable;
-    import com.inoah.ro.loaders.ActSprLoader;
     import com.inoah.ro.loaders.ILoader;
     import com.inoah.ro.managers.AssetMgr;
     import com.inoah.ro.managers.BattleMgr;
@@ -107,14 +106,13 @@ package com.inoah.ro.mediators
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
             
             var resPathList:Vector.<String> = new Vector.<String>();
-            resPathList.push( "data/1.tpc" );
-            //            resPathList.push( "data/sprite/牢埃练/赣府烹/巢/2_巢.act" );
-            //            resPathList.push( "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act" );
-            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
-            //            resPathList.push( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
-            //            resPathList.push( "data/sprite/阁胶磐/poring.act" );
-            //            resPathList.push( "data/sprite/阁胶磐/poporing.act" );
-            //            resPathList.push( "data/sprite/阁胶磐/ghostring.act" );
+            resPathList.push( "data/novice_man_body.tpc" );
+            resPathList.push( "data/2_head_man.tpc" );
+            resPathList.push( "data/novice_main_knife.tpc" );
+            resPathList.push( "data/novice_main_knife_ef.tpc" );
+            resPathList.push( "data/poring.tpc" );
+            resPathList.push( "data/poporing.tpc" );
+            resPathList.push( "data/ghostring.tpc" );
             
             assetMgr.getResList( resPathList , onInitLoadComplete );
         }
@@ -126,10 +124,9 @@ package com.inoah.ro.mediators
         {
             RoGlobal.userInfo = new UserInfo();
             var userInfo:UserInfo = RoGlobal.userInfo;
-            userInfo.init( "", "data/1.tpc", true );
-            //            userInfo.init( "data/sprite/牢埃练/赣府烹/巢/2_巢.act", "data/sprite/牢埃练/个烹/巢/檬焊磊_巢.act", true );
-            //            userInfo.setWeaponRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八.act" );
-            //            userInfo.setWeaponShadowRes( "data/sprite/牢埃练/檬焊磊/檬焊磊_巢_窜八_八堡.act" );
+            userInfo.init( "data/2_head_man.tpc", "data/novice_man_body.tpc", true );
+            userInfo.setWeaponRes( "data/novice_main_knife.tpc" );
+            userInfo.setWeaponShadowRes( "data/novice_main_knife_ef.tpc" );
             userInfo.name = username;
             userInfo.job = "Novice";
             userInfo.strength = 1;

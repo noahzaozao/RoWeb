@@ -1,50 +1,113 @@
 package com.inoah.ro.displays.starling
 {
+    import com.inoah.ro.displays.actspr.structs.acth.AnyActAnyPat;
     import com.inoah.ro.displays.actspr.structs.acth.AnyPatSprV0101;
     import com.inoah.ro.displays.starling.structs.TPAnimation;
-    import com.inoah.ro.displays.starling.structs.TPSequence;
     import com.inoah.ro.events.TPAnimationEvent;
     import com.inoah.ro.events.TPMovieClipEvent;
-    import com.inoah.ro.interfaces.ITickable;
     import com.inoah.ro.utils.Counter;
     
     import flash.display.BitmapData;
     import flash.events.Event;
-    import flash.geom.Point;
     import flash.utils.ByteArray;
     
-    import starling.animation.IAnimatable;
-    import starling.animation.Tween;
     import starling.display.Image;
     import starling.display.Sprite;
     import starling.textures.Texture;
     import starling.textures.TextureSmoothing;
     
-    public class TpcView extends Sprite implements ITickable, IAnimatable
+    public class TpcView extends Sprite
     {
         protected static const NULL_TEXTURE:Texture = Texture.fromBitmapData(new BitmapData(1,1,true,0));
+        
         protected var _tpAnimation:TPAnimation;
+        
+        protected var _actionIndex:uint;
+        protected var _currentFrame:uint;
+        protected var _currentAaap:AnyActAnyPat;
         protected var _animationDisplay:Image;
+        protected var _baseCounterTarget:Number;
+        protected var _counterTarget:Number;
         protected var _counter:Counter;
-        protected var _animationUnitList:Object;
-        protected var _currentFrame:int;
         protected var _couldTick:Boolean;
-        protected var _isDisposed:Boolean;
-        protected var _motionFinishedStop:Boolean;
-        protected var _threshold:int;
-        protected var _isPlay:Boolean;
-        protected var _motionIsFinished:Boolean;
-        protected var _currentFrameRate:Number;
-        protected var _currentActionFrames:Vector.<TPSequence>;;
-        protected var _currentAction:int = -1
+        /**
+         * 动作速率
+         */        
+        protected var _currentTargetRate:Number;
+        protected var _loop:Boolean;
+        
+        public function get tpAnimation():TPAnimation
+        {
+            return _tpAnimation;
+        }
+        public function get texture():Texture
+        {
+            return _animationDisplay.texture;
+        }
         
         public function TpcView()
         {
-            
+            _counter = new Counter();
+            _baseCounterTarget = 0.075 ;
+            _counterTarget = _baseCounterTarget;
         }
         
-        public function init( data:ByteArray ):void
+        public function get currentAaap():AnyActAnyPat
         {
+            return _currentAaap;
+        }
+        
+        public function get counterTargetRate():Number
+        {
+            return _currentTargetRate;
+        }
+        
+        public function set counterTargetRate( value:Number ):void
+        {
+            _currentTargetRate = value;
+            if( _currentTargetRate >= 1 )
+            {
+                _currentTargetRate = 0.8;
+            }
+            _counterTarget = _baseCounterTarget * ( 1-  _currentTargetRate );
+        }
+        
+        public function set actionIndex( value:uint ):void 
+        {
+            if( _actionIndex != value )
+            {
+                _actionIndex = value;
+                currentFrame = 0;
+            }
+        }
+        
+        public function get actionIndex():uint
+        {
+            return   _actionIndex;
+        }
+        
+        public function get currentFrame():uint
+        {
+            return _currentFrame;
+        }
+        
+        public function set currentFrame( value:uint ):void
+        {
+            _currentFrame = value;
+        }
+        
+        public function set loop( value:Boolean ):void
+        {
+            _loop = value;
+        }
+        
+        public function initTpc( data:ByteArray ):void
+        {
+            _couldTick = false;
+            if( _tpAnimation )
+            {
+//                _tpAnimation.destory();
+            }
             var cactData:ByteArray = new ByteArray();
             _tpAnimation = new TPAnimation();
             _tpAnimation.addEventListener( TPAnimationEvent.INITIALIZED, onInited );
@@ -53,145 +116,51 @@ package com.inoah.ro.displays.starling
         
         protected function onInited( e:Event):void
         {
-            _counter = new Counter();
-            _animationUnitList = new Vector.<IAnimatable>();
-            //初始化第1帧
-            _currentFrame = 0;
+            actionIndex = 0;
+            currentFrame = 0;
+            _counter.initialize();
+            _counter.reset( _counterTarget );
+            
             _animationDisplay = new Image(NULL_TEXTURE);
             _animationDisplay.smoothing = TextureSmoothing.TRILINEAR;
-            switchAction();
             addChildAt(_animationDisplay, 0);
             _animationDisplay.touchable = true;
-            //            addEventListener(Event.ADDED_TO_STAGE, onStageEventHandle);
+            
+            _counter.initialize();
+            _counter.reset( _counterTarget );
+            updateFrame();
             _couldTick = true;
-        }
-        
-        public function switchAction( actionIndex:uint = 0, force:Boolean = false):Boolean
-        {
-            if(_currentAction == actionIndex && force == false)
-            {
-                return false;
-            }
-            
-            var nextActionFrames:Vector.<TPSequence> = _tpAnimation.getAnimation( actionIndex );
-            if(!nextActionFrames)
-            {
-                return false;
-            }
-            var len:int = nextActionFrames.length;
-            for(var i:int = 0; i<len; i++)
-            {
-                if(nextActionFrames[i] == null)
-                {
-                    nextActionFrames.splice(i,1);
-                    len--;
-                    i--;
-                }
-            }
-            _currentAction = actionIndex;
-            
-            if(nextActionFrames == null || 
-                nextActionFrames.length == 0 )
-            {
-                trace("try to switch unknow action{"+actionIndex+"}!");
-                return false
-            }
-            
-            _currentActionFrames = nextActionFrames;
-            _currentFrameRate = 0.075;
-            _counter.initialize();
-            _counter.reset(_currentFrameRate);
-            _motionIsFinished = false;
-            initNextAction( actionIndex );
-            return true;
-        }
-        
-        public function appendAnimateUnit(animateUnit:IAnimatable):void
-        {
-            if(_animationUnitList.indexOf(animateUnit)<0)
-            {
-                _animationUnitList.push(animateUnit);
-            }
-        }
-        
-        public function play():void
-        {
-            _isPlay = true;
-            _counter.initialize();
-            _counter.reset(_currentFrameRate);
-            if(_motionIsFinished == true)
-            {
-                _motionIsFinished = false;
-                _currentFrame = 0;
-            }
-        }
-        
-        public function updateAnimation(animation:TPAnimation):void
-        {
-            if(_tpAnimation == animation)
-            {
-                return;
-            }
-            
-            _tpAnimation = animation;
-            switchAction(_currentAction, true);
         }
         
         public function tick(delta:Number):void
         {
-            advanceTime( delta ); 
-        }
-        
-        public function advanceTime(time:Number):void
-        {
-            var len:int = _animationUnitList.length;
-            var animateUnit:IAnimatable;
-            
-            for(var i:int = 0; i<len; i++)
-            {
-                animateUnit = _animationUnitList[i];
-                animateUnit.advanceTime(time);
-                
-                if((animateUnit as Object).hasOwnProperty("isComplete") == true &&
-                    animateUnit["isComplete"] == true )
-                {
-                    _animationUnitList.splice(i,1);
-                    len--;
-                    i--;
-                    continue;
-                }
-            }
-            
-            if(_couldTick == false || _isPlay == false)
+            if( !_couldTick )
             {
                 return;
             }
-            
-            _counter.tick(time);
+            _counter.tick( delta );
             var couldRender:Boolean;
-            while(_counter.expired == true) //判断是否距离上一帧渲染后已经过了多帧
+            while( _counter.expired == true )
             {
-                if(checkMotionIsFinished())
+                if( _tpAnimation.act.aall.aa.length <= _actionIndex )
                 {
-                    if(_motionFinishedStop == true)
+                    _actionIndex = 0;
+                    return;
+                }
+                if( _currentFrame >= _tpAnimation.act.aall.aa[_actionIndex].aaap.length - 1 )
+                {
+                    if( _loop )
                     {
-                        if(_motionIsFinished == false)
-                        {
-                            _motionIsFinished = true;
-                            stop();
-                            dispatchEvent(new TPMovieClipEvent(TPMovieClipEvent.MOTION_FINISHED));
-                        }
-                        return;
+                        _currentFrame = 0;
                     }
-                    
-                    _currentFrame = 0;
+                    dispatchEvent(new TPMovieClipEvent( TPMovieClipEvent.MOTION_FINISHED, true ));
                 }
                 else
                 {
-                    _currentFrame += 1
+                    _currentFrame++;
                 }
                 couldRender = true;
-                _counter.reset(_currentFrameRate);
+                _counter.reset( _counterTarget );
             }
             
             if(couldRender == true)
@@ -200,32 +169,48 @@ package com.inoah.ro.displays.starling
             }
         }
         
-        public function stop():void
+        public function updateFrame():void
         {
-            _isPlay = false;
-        }
-        
-        override public function dispose():void
-        {
-            if(_isDisposed == false)
+            _currentAaap = _tpAnimation.act.aall.aa[_actionIndex].aaap[_currentFrame];
+            
+            var isExt:Boolean = false;
+            if( _currentAaap.apsList.length == 0 )
             {
-                _isDisposed = true;
-                distruct();
+                return;
             }
-        }
-        
-        protected function killTweensOf(target:Object):void
-        {
-            var tween:Tween;
-            var len:int = _animationUnitList.length;
-            for(var i:int = 0; i<len; i++)
+            var apsv:AnyPatSprV0101 = _currentAaap.apsList[0];
+            if( !apsv )
             {
-                tween = _animationUnitList[i] as Tween;
-                if(tween!=null && tween.target == target)
+                return;
+            }
+            if( apsv.sprNo == 0xffffffff )
+            {
+                if( _currentAaap.apsList.length > 1)
                 {
-                    _animationUnitList.splice(i,1);
-                    return;
+                    apsv = _currentAaap.apsList[1];
+                    isExt = true;
                 }
+            }
+            if( apsv as AnyPatSprV0101 && apsv.sprNo != 0xffffffff )
+            {
+                var mTexture:Texture = _tpAnimation.getTexture( apsv.sprNo );
+                if( mTexture )
+                {
+                    _animationDisplay.texture = mTexture ;
+                }
+                if( apsv.mirrorOn == 0 )
+                {
+                    _animationDisplay.x = int(-_animationDisplay.texture.width / 2 + apsv.xOffs);
+                    _animationDisplay.y = int(-_animationDisplay.texture.height / 2 + apsv.yOffs);
+                    _animationDisplay.scaleX = 1;
+                }
+                else
+                {
+                    _animationDisplay.x = int(_animationDisplay.texture.width / 2 + apsv.xOffs);
+                    _animationDisplay.y = int(-_animationDisplay.texture.height / 2 + apsv.yOffs);
+                    _animationDisplay.scaleX = -1;
+                }
+                _animationDisplay.readjustSize();
             }
         }
         
@@ -238,172 +223,9 @@ package com.inoah.ro.displays.starling
             super.dispose();
         }
         
-        protected function initNextAction( actionIndex:uint ):void
-        {
-            _currentFrame = 0;
-            updateFrame();   
-        }
-        
-        protected function checkMotionIsFinished():Boolean
-        {
-            if(_currentFrame+1 >= _currentActionFrames.length)
-            {
-                return true
-            }
-            else
-            {
-                return false;
-            }
-        }
-        
-        protected function updateFrame():void
-        {
-            if(_isDisposed == true)
-            {
-                return;
-            }
-            
-            if(_currentActionFrames.length == 0 || _currentActionFrames[_currentFrame] == null)
-            {
-                _animationDisplay.texture = NULL_TEXTURE;
-                _animationDisplay.x = 0;
-                _animationDisplay.y = 0;
-                dispatchEvent(new TPMovieClipEvent(TPMovieClipEvent.EMPTY_FRAME));
-            }
-            else
-            {
-                var apsv:AnyPatSprV0101 = _tpAnimation.getAspv(_currentFrame);
-                var actionSequence:TPSequence =_currentActionFrames[_currentFrame];
-                _animationDisplay.texture = actionSequence.texture;
-                var w:int = _animationDisplay.texture.width;
-                var h:int = _animationDisplay.texture.height;
-                var offset:Point = new Point( apsv.xOffs , apsv.yOffs );
-                if( apsv.mirrorOn == 0 )
-                {
-                    _animationDisplay.x = -int(w >> 1) + offset.x;
-                    _animationDisplay.y = -int(h >> 1) + offset.y;
-                    _animationDisplay.scaleX = 1;
-                }
-                else
-                {
-                    _animationDisplay.x = int(w >> 1) + offset.x;
-                    _animationDisplay.y = -int(h >> 1) + offset.y;
-                    _animationDisplay.scaleX = -1;
-                }
-            }
-            
-            dispatchEvent(new TPMovieClipEvent(TPMovieClipEvent.MOTION_NEXT_FRAME));
-            _animationDisplay.readjustSize();
-        }
-        
-        protected function onAddToStage():void { }
-        
-        protected function onRemovedFromStage():void  { }
-        
-        private function onStageEventHandle(e:Event = null):void
-        {
-            //            switch(e.type)
-            //            {
-            //                case Event.REMOVED_FROM_STAGE:
-            //                {
-            //                    removeEventListener(Event.REMOVED_FROM_STAGE, onStageEventHandle);
-            //                    addEventListener(Event.ADDED_TO_STAGE, onStageEventHandle);
-            //                    
-            //                    onRemovedFromStage();
-            //                    break;
-            //                }
-            //                    
-            //                case Event.ADDED_TO_STAGE:
-            //                {
-            //                    removeEventListener(Event.ADDED_TO_STAGE, onStageEventHandle);
-            //                    addEventListener(Event.REMOVED_FROM_STAGE, onStageEventHandle);
-            //                    onAddToStage();
-            //                    break;
-            //                }
-            //            }
-        }
-        
-        public function get tpAnimation():TPAnimation
-        {
-            return _tpAnimation;
-        }
-        
-        public function set motionFinishedStop(value:Boolean):void
-        {
-            if(value == false)
-            {
-                var bool:Boolean = false;
-            }
-            _motionFinishedStop = value;
-        }
-        
-        public function get motionFinishedStop():Boolean
-        {
-            return _motionFinishedStop
-        }
-        
-        public function get currentAction():int
-        {
-            return _currentAction;
-        }
-        
-        public function get currentFrame():int
-        {
-            return _currentFrame;
-        }
-        
-        public function set currentFrame(value:int):void
-        {
-            _currentFrame = value;
-            var totalFrames:int = _currentActionFrames.length;
-            if(value < 0)
-            {
-                _currentFrame = 0;
-            }
-            else if(value < totalFrames)
-            {
-                _currentFrame = value;
-            }
-            else
-            {
-                _currentFrame = totalFrames-1;
-            }
-        }
-        
-        public function get totalFrames():int
-        {
-            return _currentActionFrames.length;
-        }
-        
-        public function get color():uint { return _animationDisplay.color; }
-        public function set color(value:uint):void
-        {
-            _animationDisplay.color = value;
-        }
-        
-        public function get currentTexture():Texture
-        {
-            return _animationDisplay.texture;
-        }
-        
-        public function get animationDisplay():Image
-        {
-            return _animationDisplay;
-        }
-        
-        public function get threshold():int
-        {
-            return _threshold;
-        }
-        
         public function get couldTick():Boolean
         {
             return _couldTick;
-        }
-        
-        public function get isDisposed():Boolean
-        {
-            return _isDisposed;
         }
     }
 }

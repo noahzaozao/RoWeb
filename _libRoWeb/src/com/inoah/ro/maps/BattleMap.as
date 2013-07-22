@@ -46,15 +46,15 @@ package com.inoah.ro.maps
             var randMonster:int =  int(Math.random() * 3);
             if( randMonster == 0 )
             {
-                monsterInfo.init(  "" , "data/sprite/阁胶磐/poring.act" , false );
+                monsterInfo.init(  "" , "data/poring.tpc" , false );
             }
             else if( randMonster == 1 )
             {
-                monsterInfo.init( "" , "data/sprite/阁胶磐/poporing.act", false );
+                monsterInfo.init( "" , "data/poporing.tpc", false );
             }
             else 
             {
-                monsterInfo.init( "" , "data/sprite/阁胶磐/ghostring.act", false );
+                monsterInfo.init( "" , "data/ghostring.tpc", false );
             }
             var monsterView:MonsterView = new MonsterView( monsterInfo );
             _monsterList[ _monsterList.length ] = monsterView

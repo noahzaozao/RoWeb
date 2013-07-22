@@ -29,11 +29,6 @@ package com.inoah.ro.displays.actspr
         protected var _act:CACT;
         protected var _spr:CSPR;
         
-        public function get spr():CSPR
-        {
-            return _spr;
-        }
-        
         protected var _actionIndex:uint;
         protected var _currentFrame:uint;
         protected var _currentAaap:AnyActAnyPat;
@@ -42,11 +37,6 @@ package com.inoah.ro.displays.actspr
         protected var _counterTarget:Number;
         protected var _counter:Counter;
         protected var _couldTick:Boolean;
-        
-        public function get bitmap():Bitmap
-        {
-            return _bitmap;
-        }
         /**
          * 动作速率
          */        
@@ -56,6 +46,14 @@ package com.inoah.ro.displays.actspr
         public function get actions():CACT
         {
             return _act;
+        }
+        public function get spr():CSPR
+        {
+            return _spr;
+        }
+        public function get bitmap():Bitmap
+        {
+            return _bitmap;
         }
         
         public function ActSprView()

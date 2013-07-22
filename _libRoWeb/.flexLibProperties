@@ -54,6 +54,8 @@
     <classEntry path="com.inoah.ro.mediators.views.JoyStickViewMediator"/>
     <classEntry path="com.inoah.ro.maps.BattleMap"/>
     <classEntry path="com.inoah.ro.objects.PlayerObject"/>
+    <classEntry path="com.inoah.ro.displays.starling.TpcWeaponView"/>
+    <classEntry path="com.inoah.ro.displays.starling.TpcPlayerView"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
