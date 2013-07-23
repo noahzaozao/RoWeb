@@ -33,7 +33,6 @@
       <libraryPathEntry kind="3" linkType="1" path="/_libCommon/bin/_libCommon.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/_libMinimalcomps/bin/_libMinimalcomps.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/_libRoWeb/bin/_libRoWeb.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/_libD5Rpg/bin/_libD5Rpg.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
