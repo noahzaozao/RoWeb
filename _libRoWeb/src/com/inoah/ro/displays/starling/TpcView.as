@@ -11,7 +11,6 @@ package com.inoah.ro.displays.starling
     import com.inoah.ro.utils.Counter;
     
     import flash.display.BitmapData;
-    import flash.events.Event;
     import flash.utils.ByteArray;
     
     import starling.display.Image;

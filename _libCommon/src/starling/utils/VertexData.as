@@ -311,10 +311,10 @@ package starling.utils
                         y = mRawData[int(offset+1)];
                         offset += ELEMENTS_PER_VERTEX;
                         
-                        minX = minX < x ? minX : x;
-                        maxX = maxX > x ? maxX : x;
-                        minY = minY < y ? minY : y;
-                        maxY = maxY > y ? maxY : y;
+                        if (minX > x) minX = x;
+                        if (maxX < x) maxX = x;
+                        if (minY > y) minY = y;
+                        if (maxY < y) maxY = y;
                     }
                 }
                 else
@@ -326,10 +326,11 @@ package starling.utils
                         offset += ELEMENTS_PER_VERTEX;
                         
                         MatrixUtil.transformCoords(transformationMatrix, x, y, sHelperPoint);
-                        minX = minX < sHelperPoint.x ? minX : sHelperPoint.x;
-                        maxX = maxX > sHelperPoint.x ? maxX : sHelperPoint.x;
-                        minY = minY < sHelperPoint.y ? minY : sHelperPoint.y;
-                        maxY = maxY > sHelperPoint.y ? maxY : sHelperPoint.y;
+                        
+                        if (minX > sHelperPoint.x) minX = sHelperPoint.x;
+                        if (maxX < sHelperPoint.x) maxX = sHelperPoint.x;
+                        if (minY > sHelperPoint.y) minY = sHelperPoint.y;
+                        if (maxY < sHelperPoint.y) maxY = sHelperPoint.y;
                     }
                 }
                 
@@ -392,15 +393,10 @@ package starling.utils
         public function set numVertices(value:int):void
         {
             mRawData.fixed = false;
+            mRawData.length = value * ELEMENTS_PER_VERTEX;
             
-            var i:int;
-            var delta:int = value - mNumVertices;
-            
-            for (i=0; i<delta; ++i)
-                mRawData.push(0, 0,  0, 0, 0, 1,  0, 0); // alpha should be '1' per default
-            
-            for (i=0; i<-(delta*ELEMENTS_PER_VERTEX); ++i)
-                mRawData.pop();
+            for (var i:int=mNumVertices; i<value; ++i) // alpha should be '1' per default
+                mRawData[int(i * ELEMENTS_PER_VERTEX + COLOR_OFFSET + 3)] = 1.0;
             
             mNumVertices = value;
             mRawData.fixed = true;

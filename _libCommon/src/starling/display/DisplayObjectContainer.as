@@ -430,13 +430,14 @@ package starling.display
             }
         }
         
-        private function getChildEventListeners(object:DisplayObject, eventType:String, 
-                                                listeners:Vector.<DisplayObject>):void
+        /** @private */
+        internal function getChildEventListeners(object:DisplayObject, eventType:String, 
+                                                 listeners:Vector.<DisplayObject>):void
         {
             var container:DisplayObjectContainer = object as DisplayObjectContainer;
             
             if (object.hasEventListener(eventType))
-                listeners.push(object);
+                listeners[listeners.length] = object; // avoiding 'push'                
             
             if (container)
             {

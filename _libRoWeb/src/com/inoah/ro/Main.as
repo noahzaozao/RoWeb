@@ -43,6 +43,20 @@ package com.inoah.ro
             
             App.init( displayMgr.uiLevel );
             App.loader.loadAssets( ["assets/comp.swf","assets/login_interface.swf", "assets/basic_interface.swf"] , new Handler( loadComplete ) );
+            
+            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
+            assetMgr.getRes( "data/novice_man_body.tpc" , onLoadOk );
+        }
+        
+        private function onLoadOk( loader:ILoader ):void
+        {
+            _tpc = new TpcView();
+            _tpc.x = 400;
+            _tpc.y = 300;
+            _tpc.initTpc( loader.url , (loader as TPCLoader).tpcData );
+            _tpc.loop = true;
+            _tpc.actionIndex = 8;
+            addChild( _tpc );
         }
         
         private function loadComplete():void
@@ -64,12 +78,12 @@ package com.inoah.ro
         {
             var resPathList:Vector.<String> = new Vector.<String>();
             resPathList.push( "data/novice_man_body.tpc" );
-            resPathList.push( "data/2_head_man.tpc" );
-            resPathList.push( "data/novice_main_knife.tpc" );
-            resPathList.push( "data/novice_main_knife_ef.tpc" );
-            resPathList.push( "data/poring.tpc" );
-            resPathList.push( "data/poporing.tpc" );
-            resPathList.push( "data/ghostring.tpc" );
+//            resPathList.push( "data/2_head_man.tpc" );
+//            resPathList.push( "data/novice_main_knife.tpc" );
+//            resPathList.push( "data/novice_main_knife_ef.tpc" );
+//            resPathList.push( "data/poring.tpc" );
+//            resPathList.push( "data/poporing.tpc" );
+//            resPathList.push( "data/ghostring.tpc" );
             assetMgr.getResList( resPathList , function():void{} );
         }
         

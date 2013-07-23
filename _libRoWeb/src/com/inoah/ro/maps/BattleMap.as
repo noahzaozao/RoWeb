@@ -1,7 +1,7 @@
 package com.inoah.ro.maps
 {
     import com.inoah.ro.characters.Actions;
-    import com.inoah.ro.characters.MonsterView;
+    import com.inoah.ro.characters.gpu.MonsterViewGpu;
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.controllers.MonsterController;
@@ -17,7 +17,7 @@ package com.inoah.ro.maps
     {
         protected var _monsterController:MonsterController;
         protected var _monsterObjList:Vector.<MonsterObject>;
-        protected var _monsterList:Vector.<MonsterView>;
+        protected var _monsterList:Vector.<MonsterViewGpu>;
         protected var _newMonsterCounter:Counter;
         
         public function BattleMap(unitContainer:starling.display.DisplayObjectContainer , mapContainer:starling.display.DisplayObjectContainer)
@@ -27,7 +27,7 @@ package com.inoah.ro.maps
             _newMonsterCounter.initialize();
             _newMonsterCounter.reset( 3 );
             _monsterObjList = new Vector.<MonsterObject>();
-            _monsterList = new Vector.<MonsterView>(); 
+            _monsterList = new Vector.<MonsterViewGpu>(); 
             _monsterController = new MonsterController( this );
             Facade.getInstance().registerMediator( _monsterController );
             _monsterController.monsterList = _monsterObjList; 
@@ -56,7 +56,7 @@ package com.inoah.ro.maps
             {
                 monsterInfo.init( "" , "data/ghostring.tpc", false );
             }
-            var monsterView:MonsterView = new MonsterView( monsterInfo );
+            var monsterView:MonsterViewGpu = new MonsterViewGpu( monsterInfo );
             _monsterList[ _monsterList.length ] = monsterView
             
             var monster:MonsterObject = new MonsterObject();
@@ -85,16 +85,16 @@ package com.inoah.ro.maps
                 _monsterObjList[i].tick( delta );
             }
             
-            _newMonsterCounter.tick( delta );
-            if( _newMonsterCounter.expired )
-            {
-                if( _monsterObjList.length < 250 )
-                {
-                    createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200 );
-                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );
-                }
-                _newMonsterCounter.reset( 3 );
-            }
+//            _newMonsterCounter.tick( delta );
+//            if( _newMonsterCounter.expired )
+//            {
+//                if( _monsterObjList.length < 250 )
+//                {
+//                    createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200 );
+//                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );
+//                }
+//                _newMonsterCounter.reset( 3 );
+//            }
         }
     }
 }

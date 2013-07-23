@@ -19,8 +19,8 @@ package com.inoah.ro.ui
         {
             super();
             
-            _mapView = new MapView( mapView );
-//            _mapView.update();
+            //            _mapView = new MapView( mapView );
+            //            _mapView.update();
             
             updateInfo();
             

@@ -2,7 +2,7 @@ package com.inoah.ro.mediators.map
 {
     import com.inoah.ro.RoCamera;
     import com.inoah.ro.RoGlobal;
-    import com.inoah.ro.characters.PlayerView;
+    import com.inoah.ro.characters.gpu.PlayerViewGpu;
     import com.inoah.ro.consts.GameCommands;
     import com.inoah.ro.consts.GameConsts;
     import com.inoah.ro.controllers.PlayerController;
@@ -78,7 +78,7 @@ package com.inoah.ro.mediators.map
             //创建用户
             _playerController = new PlayerController();
             facade.registerMediator( _playerController );
-            var playerView:PlayerView = new PlayerView( RoGlobal.userInfo );
+            var playerView:PlayerViewGpu = new PlayerViewGpu( RoGlobal.userInfo );
             _player = new PlayerObject();
             _player.controller = _playerController;
             _player.viewObject = playerView;
@@ -88,12 +88,12 @@ package com.inoah.ro.mediators.map
             _map.addObject( _player );
             _camera.focus( _player );
             
-            var count:int = 0;
-            while( count < 250 )
-            {
-                (_map as BattleMap).createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200  );
-                count++;
-            }
+//            var count:int = 0;
+//            while( count < 250 )
+//            {
+//                (_map as BattleMap).createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200  );
+//                count++;
+//            }
         }
         
         public function tick( delta:Number ):void

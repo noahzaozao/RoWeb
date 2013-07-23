@@ -31,7 +31,7 @@ package com.inoah.ro.mediators.views
             //
             if( !RoGlobal.isIPhone )
             {
-                mainView.joyStick.visible = false;
+                mainView.joyStick.remove();
                 var chatView:ChatView = new ChatView( mainView.chatView );
                 facade.registerMediator( new ChatViewMediator( chatView ) );
                 var skillView:SkillBarView = new SkillBarView ( mainView.skillBarView );
@@ -39,8 +39,8 @@ package com.inoah.ro.mediators.views
             }
             else
             {
-                mainView.chatView.visible = false;
-                mainView.skillBarView.visible = false;
+                mainView.chatView.remove();
+                mainView.skillBarView.remove();
             }
         }
         

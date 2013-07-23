@@ -107,12 +107,12 @@ package com.inoah.ro.mediators
             
             var resPathList:Vector.<String> = new Vector.<String>();
             resPathList.push( "data/novice_man_body.tpc" );
-            resPathList.push( "data/2_head_man.tpc" );
-            resPathList.push( "data/novice_main_knife.tpc" );
-            resPathList.push( "data/novice_main_knife_ef.tpc" );
-            resPathList.push( "data/poring.tpc" );
-            resPathList.push( "data/poporing.tpc" );
-            resPathList.push( "data/ghostring.tpc" );
+//            resPathList.push( "data/2_head_man.tpc" );
+//            resPathList.push( "data/novice_main_knife.tpc" );
+//            resPathList.push( "data/novice_main_knife_ef.tpc" );
+//            resPathList.push( "data/poring.tpc" );
+//            resPathList.push( "data/poporing.tpc" );
+//            resPathList.push( "data/ghostring.tpc" );
             
             assetMgr.getResList( resPathList , onInitLoadComplete );
         }
@@ -124,9 +124,10 @@ package com.inoah.ro.mediators
         {
             RoGlobal.userInfo = new UserInfo();
             var userInfo:UserInfo = RoGlobal.userInfo;
-            userInfo.init( "data/2_head_man.tpc", "data/novice_man_body.tpc", true );
-            userInfo.setWeaponRes( "data/novice_main_knife.tpc" );
-            userInfo.setWeaponShadowRes( "data/novice_main_knife_ef.tpc" );
+            userInfo.init( "", "data/novice_man_body.tpc", true );
+//            userInfo.init( "data/2_head_man.tpc", "data/novice_man_body.tpc", true );
+//            userInfo.setWeaponRes( "data/novice_main_knife.tpc" );
+//            userInfo.setWeaponShadowRes( "data/novice_main_knife_ef.tpc" );
             userInfo.name = username;
             userInfo.job = "Novice";
             userInfo.strength = 1;
