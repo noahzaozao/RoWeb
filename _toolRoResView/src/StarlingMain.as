@@ -1,6 +1,6 @@
 package
 {
-    import com.inoah.ro.displays.actspr.ActSprView;
+    import inoah.game.displays.actspr.ActSprView;
     
     import flash.utils.ByteArray;
     

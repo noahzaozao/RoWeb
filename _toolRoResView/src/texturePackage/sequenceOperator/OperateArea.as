@@ -190,21 +190,7 @@ package texturePackage.sequenceOperator
             }
             else
             {
-                file = new File( StarlingMain.filePath );
-                fileStream = new FileStream();
-                fileStream.open( file , FileMode.READ );
-                var actBytes:ByteArray = new ByteArray();
-                fileStream.position = 0;
-                fileStream.readBytes( actBytes );
-                fileStream.close();
-                
                 _cachedByteArrayData.deflate();
-                var exportData:ByteArray = new ByteArray();
-                exportData.writeInt( actBytes.length );
-                exportData.writeBytes( actBytes );
-                exportData.writeInt(_cachedByteArrayData.length);
-                exportData.writeBytes(_cachedByteArrayData);
-                exportData.deflate();
                 
                 var pathFolder:String = "F:\\RoData\\dataAtf\\" + StarlingMain.filePath;
                 pathFolder = pathFolder.replace( "F:\\RoData\\data\\" , "" );
@@ -214,10 +200,10 @@ package texturePackage.sequenceOperator
                 
                 var fileStream:FileStream = new FileStream();
                 fileStream.open( outFile, FileMode.WRITE );
-                fileStream.writeBytes( exportData );
+                fileStream.writeBytes( _cachedByteArrayData );
                 fileStream.close();
                 
-                StarlingMain.tpcData = exportData;
+                StarlingMain.tpcData = _cachedByteArrayData;
             }
         }
         
@@ -306,10 +292,11 @@ package texturePackage.sequenceOperator
             var sequence:Sequence;
             var source:BitmapData;
             var colorRect:Rectangle;
-            var textureInfo:XML;
-            var sequenceInfo:XML;
             
-            textureInfo = XML('<texture id="'+textureId+'" width="'+2048+'" height="'+2048+'"></texture>');
+            var atlasSetting:XML = XML(<altasSetting></altasSetting>);
+            var sequenceSetting:XML;
+            var subTexture:XML;
+            
             textureUnits = textureView.textureUnitList;
             unitCount = textureUnits.length;
             for(var j:int = 0; j<unitCount; j++)
@@ -318,21 +305,23 @@ package texturePackage.sequenceOperator
                 sequence = unit.sequence;
                 source = sequence.bitmapData;
                 colorRect = sequence.colorRect;
-                sequenceInfo = <sequence/>
-                sequenceInfo.@name = sequence.sequenceName;
-                sequenceInfo.@x = unit.x;
-                sequenceInfo.@y = unit.y;
-                sequenceInfo.@xOffset = colorRect.x;
-                sequenceInfo.@yOffset = colorRect.y;
-                sequenceInfo.@width = colorRect.width;
-                sequenceInfo.@height = colorRect.height;
-                textureInfo.appendChild(sequenceInfo);
+                subTexture = <SubTexture/>
+                subTexture.@name = sequence.sequenceName;
+                subTexture.@width = colorRect.width;
+                subTexture.@height = colorRect.height;
+                subTexture.@x = unit.x;
+                subTexture.@y = unit.y;
+                subTexture.@frameX = colorRect.x;
+                subTexture.@frameY = colorRect.y;
+                subTexture.@frameWidth = colorRect.width;
+                subTexture.@frameHeight = colorRect.height;
+                atlasSetting.appendChild(subTexture);
             }
-            var textureInfoStr:String = encodeURI(textureInfo.toXMLString());
+            var atlasSettingStr:String = encodeURI(atlasSetting.toXMLString());
             
             var tDatas:ByteArray = new ByteArray();
-            tDatas.writeInt(textureInfoStr.length);
-            tDatas.writeUTFBytes(textureInfoStr);
+            tDatas.writeInt(atlasSettingStr.length);
+            tDatas.writeUTFBytes(atlasSettingStr);
             
             return tDatas;
         }

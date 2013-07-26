@@ -4,8 +4,6 @@ package panels
     import com.bit101.components.Label;
     import com.bit101.components.Panel;
     import com.bit101.components.PushButton;
-    import com.inoah.ro.consts.DirIndexConsts;
-    import com.inoah.ro.infos.CharacterInfo;
     
     import flash.display.DisplayObjectContainer;
     import flash.display.Shape;
@@ -13,6 +11,9 @@ package panels
     import flash.net.URLLoader;
     
     import consts.AppConsts;
+    
+    import inoah.game.consts.DirIndexConsts;
+    import inoah.game.infos.CharacterInfo;
     
     public class ViewPanel extends Panel
     {

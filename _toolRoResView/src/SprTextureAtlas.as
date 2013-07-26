@@ -1,7 +1,7 @@
 package 
 {
-    import com.inoah.ro.displays.actspr.structs.CSPR;
-    import com.inoah.ro.displays.actspr.structs.sprh.AnySprite;
+    import inoah.game.displays.actspr.structs.CSPR;
+    import inoah.game.displays.actspr.structs.sprh.AnySprite;
     
     import flash.display.Bitmap;
     import flash.geom.Rectangle;

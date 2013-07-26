@@ -5,7 +5,7 @@ package texturePackage.sequenceOperator.viewer
     import com.bit101.components.Panel;
     import com.bit101.components.PushButton;
     import com.bit101.components.Slider;
-    import com.inoah.ro.displays.actspr.ActSprView;
+    import inoah.game.displays.actspr.ActSprView;
     
     import flash.display.DisplayObjectContainer;
     import flash.display.Sprite;

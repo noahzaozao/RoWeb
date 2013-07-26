@@ -1,7 +1,7 @@
 package
 {
-    import com.inoah.ro.characters.nogpu.CharacterView;
-    import com.inoah.ro.infos.CharacterInfo;
+    import inoah.game.characters.nogpu.CharacterView;
+    import inoah.game.infos.CharacterInfo;
     
     public class ECharacterView extends CharacterView
     {

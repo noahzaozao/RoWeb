@@ -51,7 +51,7 @@ package panels
             fileList = new List( this, 0, 50 );
             fileList.listItemClass = FileListItem;
             fileList.listItemHeight = 20;
-            fileList.setSize( _width , _height - 50 );
+            fileList.setSize( _width , _height - 100 );
             fileList.addEventListener( Event.SELECT , onListSelected );
             
             fileDir = new File( AppConsts.filePath + "\\sprite" );

@@ -1,11 +1,7 @@
 package
 {
     import com.bit101.components.Style;
-    import com.inoah.ro.consts.MgrTypeConsts;
-    import com.inoah.ro.managers.AssetMgr;
-    import com.inoah.ro.managers.KeyMgr;
-    import com.inoah.ro.managers.MainMgr;
-    import com.inoah.ro.managers.SprMgr;
+    import inoah.game.managers.SprMgr;
     
     import flash.display.Sprite;
     import flash.display.StageAlign;
@@ -17,6 +13,10 @@ package
     import flash.utils.getTimer;
     
     import consts.AppConsts;
+    
+    import inoah.game.consts.MgrTypeConsts;
+    import inoah.game.managers.AssetMgr;
+    import inoah.game.managers.MainMgr;
     
     import starling.core.Starling;
     import starling.utils.HAlign;
