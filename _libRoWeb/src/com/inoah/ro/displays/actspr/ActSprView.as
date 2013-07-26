@@ -1,6 +1,6 @@
 package com.inoah.ro.displays.actspr
 {
-    import com.inoah.ro.consts.MgrTypeConsts;
+    import inoah.game.consts.MgrTypeConsts;
     import com.inoah.ro.displays.actspr.structs.CACT;
     import com.inoah.ro.displays.actspr.structs.CSPR;
     import com.inoah.ro.displays.actspr.structs.acth.AnyActAnyPat;
@@ -10,7 +10,7 @@ package com.inoah.ro.displays.actspr
     import com.inoah.ro.displays.actspr.structs.acth.AnyPatSprV0205;
     import com.inoah.ro.displays.actspr.structs.sprh.AnySprite;
     import com.inoah.ro.events.ActSprViewEvent;
-    import com.inoah.ro.managers.MainMgr;
+    import inoah.game.managers.MainMgr;
     import com.inoah.ro.managers.SprMgr;
     import com.inoah.ro.utils.Counter;
     

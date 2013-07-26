@@ -1,13 +1,13 @@
 package com.inoah.ro.controllers
 {
-    import com.inoah.ro.RoGlobal;
+    import inoah.game.Global;
     import com.inoah.ro.characters.Actions;
-    import com.inoah.ro.consts.BattleCommands;
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.consts.GameConsts;
-    import com.inoah.ro.consts.MgrTypeConsts;
+    import inoah.game.consts.BattleCommands;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.consts.GameConsts;
+    import inoah.game.consts.MgrTypeConsts;
     import com.inoah.ro.managers.KeyMgr;
-    import com.inoah.ro.managers.MainMgr;
+    import inoah.game.managers.MainMgr;
     import com.inoah.ro.maps.QTree;
     import com.inoah.ro.objects.BaseObject;
     import com.inoah.ro.objects.BattleCharacterObject;
@@ -18,7 +18,7 @@ package com.inoah.ro.controllers
     import flash.geom.Point;
     import flash.ui.Keyboard;
     
-    import as3.interfaces.INotification;
+    import pureMVC.interfaces.INotification;
     
     import starling.animation.Tween;
     
@@ -168,7 +168,7 @@ package com.inoah.ro.controllers
             else if( keyMgr.isDown( Keyboard.D ) && !keyMgr.isDown( Keyboard.A ) || _joyStickRight && !_joyStickLeft )
             {
                 _me.posX +=speed * delta;
-                if( _me.posX > RoGlobal.MAP_W ) _me.posX = RoGlobal.MAP_W;
+                if( _me.posX > Global.MAP_W ) _me.posX = Global.MAP_W;
                 if( keyMgr.isDown( Keyboard.W ) || _joyStickUp )
                 {
                     _me.posY -=speed * delta;
@@ -178,7 +178,7 @@ package com.inoah.ro.controllers
                 else if( keyMgr.isDown( Keyboard.S ) || _joyStickDown )
                 {
                     _me.posY +=speed * delta;
-                    if( _me.posY > RoGlobal.MAP_H ) _me.posY = RoGlobal.MAP_H;
+                    if( _me.posY > Global.MAP_H ) _me.posY = Global.MAP_H;
                     _me.direction = _me.directions.RightDown;
                 }
                 else
@@ -200,7 +200,7 @@ package com.inoah.ro.controllers
                 else if( keyMgr.isDown( Keyboard.S ) || _joyStickDown )
                 {
                     _me.posY +=speed * delta;
-                    if( _me.posY > RoGlobal.MAP_H ) _me.posY = RoGlobal.MAP_H;
+                    if( _me.posY > Global.MAP_H ) _me.posY = Global.MAP_H;
                     _me.direction = _me.directions.LeftDown;
                 }
                 else
@@ -219,7 +219,7 @@ package com.inoah.ro.controllers
             else if( keyMgr.isDown( Keyboard.S ) && !keyMgr.isDown( Keyboard.W ) || _joyStickDown && !_joyStickUp )
             {
                 _me.posY +=speed * delta;
-                if( _me.posY > RoGlobal.MAP_H ) _me.posY = RoGlobal.MAP_H;
+                if( _me.posY > Global.MAP_H ) _me.posY = Global.MAP_H;
                 _me.direction = _me.directions.Down;
                 _me.action = Actions.Run;
             }

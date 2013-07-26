@@ -1,6 +1,6 @@
 package com.inoah.ro.characters.nogpu
 {
-    import com.inoah.ro.infos.CharacterInfo;
+    import inoah.game.infos.CharacterInfo;
     
     public class PlayerView extends CharacterView
     {

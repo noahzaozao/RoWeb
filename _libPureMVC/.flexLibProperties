@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
-  <includeClasses>
-    <classEntry path="as3.patterns.command.MacroCommand"/>
-    <classEntry path="as3.patterns.observer.Notification"/>
-    <classEntry path="as3.interfaces.INotifier"/>
-    <classEntry path="as3.interfaces.IView"/>
-    <classEntry path="as3.patterns.mediator.Mediator"/>
-    <classEntry path="as3.patterns.observer.Observer"/>
-    <classEntry path="as3.interfaces.ICommand"/>
-    <classEntry path="as3.interfaces.IFacade"/>
-    <classEntry path="as3.interfaces.INotification"/>
-    <classEntry path="as3.patterns.command.SimpleCommand"/>
-    <classEntry path="as3.patterns.proxy.Proxy"/>
-    <classEntry path="as3.core.Model"/>
-    <classEntry path="as3.interfaces.IObserver"/>
-    <classEntry path="as3.interfaces.IProxy"/>
-    <classEntry path="as3.core.Controller"/>
-    <classEntry path="as3.interfaces.IController"/>
-    <classEntry path="as3.patterns.observer.Notifier"/>
-    <classEntry path="as3.interfaces.IModel"/>
-    <classEntry path="as3.patterns.facade.Facade"/>
-    <classEntry path="as3.core.View"/>
-    <classEntry path="as3.interfaces.IMediator"/>
-  </includeClasses>
+  <includeClasses/>
   <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>

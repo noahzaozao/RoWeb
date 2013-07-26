@@ -1,12 +1,12 @@
 package com.inoah.ro.ui.sysView
 {
-    import com.inoah.ro.RoGlobal;
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.infos.UserInfo;
+    import inoah.game.Global;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.infos.UserInfo;
     
     import flash.events.MouseEvent;
     
-    import as3.patterns.facade.Facade;
+    import pureMVC.patterns.facade.Facade;
     
     import game.ui.sysViews.statusViewUI;
     
@@ -29,7 +29,7 @@ package com.inoah.ro.ui.sysView
         
         protected function onAddPointHandler( e:MouseEvent):void
         {
-            var userInfo:UserInfo = RoGlobal.userInfo;
+            var userInfo:UserInfo = Global.userInfo;
             switch( e.currentTarget )
             {
                 case btnStr:
@@ -78,7 +78,7 @@ package com.inoah.ro.ui.sysView
         
         private function updateInfo():void
         {
-            var userInfo:UserInfo = RoGlobal.userInfo;
+            var userInfo:UserInfo = Global.userInfo;
             
             this.labStr.text = userInfo.strength + "";
             this.labAgi.text = userInfo.agile + "";

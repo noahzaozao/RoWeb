@@ -1,11 +1,11 @@
 package com.inoah.ro.mediators.battle
 {
     import com.inoah.ro.characters.Actions;
-    import com.inoah.ro.consts.BattleCommands;
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.consts.GameConsts;
+    import inoah.game.consts.BattleCommands;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.consts.GameConsts;
     import com.inoah.ro.controllers.MonsterController;
-    import com.inoah.ro.interfaces.ITickable;
+    import inoah.game.interfaces.ITickable;
     import com.inoah.ro.maps.BattleMap;
     import com.inoah.ro.objects.BattleCharacterObject;
     import com.inoah.ro.objects.CharacterObject;
@@ -16,12 +16,11 @@ package com.inoah.ro.mediators.battle
     import flash.text.TextField;
     import flash.text.TextFormat;
     
-    import as3.interfaces.INotification;
-    import as3.patterns.mediator.Mediator;
+    import pureMVC.interfaces.INotification;
+    import pureMVC.patterns.mediator.Mediator;
     
     import starling.animation.IAnimatable;
     import starling.animation.Tween;
-    import starling.display.DisplayObjectContainer;
     
     public class BattleMediator extends Mediator implements ITickable
     {

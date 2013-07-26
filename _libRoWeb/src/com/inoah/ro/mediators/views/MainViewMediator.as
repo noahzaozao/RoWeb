@@ -1,9 +1,9 @@
 package com.inoah.ro.mediators.views
 {
-    import com.inoah.ro.RoGlobal;
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.consts.GameConsts;
-    import com.inoah.ro.interfaces.ITickable;
+    import inoah.game.Global;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.consts.GameConsts;
+    import inoah.game.interfaces.ITickable;
     import com.inoah.ro.ui.MainView;
     import com.inoah.ro.ui.mainViewChildren.ChatView;
     import com.inoah.ro.ui.mainViewChildren.JoyStickView;
@@ -12,8 +12,8 @@ package com.inoah.ro.mediators.views
     import com.inoah.ro.ui.sysView.ItemView;
     import com.inoah.ro.ui.sysView.StatusView;
     
-    import as3.interfaces.INotification;
-    import as3.patterns.mediator.Mediator;
+    import pureMVC.interfaces.INotification;
+    import pureMVC.patterns.mediator.Mediator;
     
     public class MainViewMediator extends Mediator implements ITickable
     {
@@ -29,7 +29,7 @@ package com.inoah.ro.mediators.views
             var joyStickview:JoyStickView = new JoyStickView( mainView.joyStick );
             facade.registerMediator( new JoyStickViewMediator( joyStickview ) );
             //
-            if( !RoGlobal.isIPhone )
+            if( !Global.IS_MOBILE )
             {
                 mainView.joyStick.remove();
                 var chatView:ChatView = new ChatView( mainView.chatView );

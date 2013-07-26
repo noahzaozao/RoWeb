@@ -1,13 +1,13 @@
 package com.inoah.ro.ui
 {
-    import com.inoah.ro.RoGlobal;
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.infos.UserInfo;
+    import inoah.game.Global;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.infos.UserInfo;
     import com.inoah.ro.ui.mainViewChildren.MapView;
     
     import flash.events.MouseEvent;
     
-    import as3.patterns.facade.Facade;
+    import pureMVC.patterns.facade.Facade;
     
     import game.ui.mainViewUI;
     
@@ -19,8 +19,7 @@ package com.inoah.ro.ui
         {
             super();
             
-            //            _mapView = new MapView( mapView );
-            //            _mapView.update();
+            _mapView = new MapView( mapView );
             
             updateInfo();
             
@@ -34,21 +33,21 @@ package com.inoah.ro.ui
         
         public function updateHp():void
         {
-            var userInfo:UserInfo = RoGlobal.userInfo;
+            var userInfo:UserInfo = Global.userInfo;
             hpBar.value = userInfo.hpPer;
             hpBar.barLabel.text = userInfo.hpCurrent + " / " + userInfo.hpMax;
             labHpPer.text = uint(userInfo.hpPer * 100) + "%";
         }
         public function updateSp():void
         {
-            var userInfo:UserInfo = RoGlobal.userInfo;
+            var userInfo:UserInfo = Global.userInfo;
             spBar.value = userInfo.spPer;
             spBar.barLabel.text = userInfo.spCurrent + " / " + userInfo.spMax;
             labSpPer.text = uint(userInfo.spPer * 100) + "%";
         }
         public function updateExp():void
         {
-            var userInfo:UserInfo = RoGlobal.userInfo;
+            var userInfo:UserInfo = Global.userInfo;
             baseExpBar.value = userInfo.baseExp / Math.pow( userInfo.baseLv + 1 , 3 );
             jobExpBar.value = userInfo.jobExp / Math.pow( userInfo.jobLv + 1 , 3 );
         }
@@ -62,7 +61,7 @@ package com.inoah.ro.ui
         }
         private function updateInfo():void
         {
-            var userInfo:UserInfo = RoGlobal.userInfo;
+            var userInfo:UserInfo = Global.userInfo;
             labName.text = userInfo.name;
             labJob.text = userInfo.job;
             hpBar.value = userInfo.hpPer;

@@ -7,6 +7,7 @@ package com.inoah.ro
     import flash.geom.Point;
     import flash.geom.Rectangle;
     import flash.utils.Timer;
+    import inoah.game.Global;
     
     /**
      * 摄像机控制类
@@ -101,11 +102,11 @@ package com.inoah.ro
             _zeroX = x;
             _zeroY = y;
             
-            var value:Number = RoGlobal.MAP_W-RoGlobal.W;
+            var value:Number = Global.MAP_W-Global.SCREEN_W;
             _zeroX = _zeroX<0 ? 0 : _zeroX;
             _zeroX = _zeroX>value ? value : _zeroX;
             
-            value = RoGlobal.MAP_H-RoGlobal.H;
+            value = Global.MAP_H-Global.SCREEN_H;
             _zeroY = _zeroY<0 ? 0 : _zeroY;
             _zeroY = _zeroY>value ? value : _zeroY;
         }
@@ -114,14 +115,14 @@ package com.inoah.ro
         {
             if(_focus)
             {
-                _zeroX = _focus.posX - (RoGlobal.W>>1);
-                _zeroY = _focus.posY - (RoGlobal.H>>1);
+                _zeroX = _focus.posX - (Global.SCREEN_W>>1);
+                _zeroY = _focus.posY - (Global.SCREEN_H>>1);
                 
-                var value:Number = RoGlobal.MAP_W-RoGlobal.W;
+                var value:Number = Global.MAP_W-Global.SCREEN_W;
                 _zeroX = _zeroX<0 ? 0 : _zeroX;
                 _zeroX = _zeroX>value ? value : _zeroX;
                 
-                value = RoGlobal.MAP_H-RoGlobal.H;
+                value = Global.MAP_H-Global.SCREEN_H;
                 _zeroY = _zeroY<0 ? 0 : _zeroY;
                 _zeroY = _zeroY>value ? value : _zeroY;
             }
@@ -129,8 +130,8 @@ package com.inoah.ro
             _cameraView.x = _zeroX;
             _cameraView.y = _zeroY;
             
-            _cameraView.width = RoGlobal.W;
-            _cameraView.height = RoGlobal.H;
+            _cameraView.width = Global.SCREEN_W;
+            _cameraView.height = Global.SCREEN_H;
         }
         
         /**
@@ -173,8 +174,8 @@ package com.inoah.ro
             var zero_x:int = _zeroX;
             var zero_y:int = _zeroY;
             
-            zero_x-=RoGlobal.TILE_W*2;
-            zero_y-=zero_y-RoGlobal.TILE_H*2;
+            zero_x-=Global.TILE_W*2;
+            zero_y-=zero_y-Global.TILE_H*2;
             
             zero_x = zero_x<0 ? 0 : zero_x;
             zero_y = zero_y<0 ? 0 : zero_y;
@@ -182,8 +183,8 @@ package com.inoah.ro
             
             _cameraCutView.x = zero_x;
             _cameraCutView.y = zero_y;
-            _cameraCutView.width = RoGlobal.W+RoGlobal.TILE_W*2;
-            _cameraCutView.height = RoGlobal.H+RoGlobal.TILE_H*2;
+            _cameraCutView.width = Global.SCREEN_W+Global.TILE_W*2;
+            _cameraCutView.height = Global.SCREEN_H+Global.TILE_H*2;
             
             return _cameraCutView;
         }
@@ -243,7 +244,7 @@ package com.inoah.ro
         public function lookAt(x:uint,y:uint):void
         {
             this.focus(null);
-            setZero(x-(RoGlobal.W>>1),y-(RoGlobal.H>>1));
+            setZero(x-(Global.SCREEN_W>>1),y-(Global.SCREEN_H>>1));
             _map.ReCut();
         }
         
@@ -257,9 +258,9 @@ package com.inoah.ro
             this.focus(null);
             _moveCallBack = callback;
             
-            _moveStart = new Point(_zeroX-(RoGlobal.W>>1),_zeroY-(RoGlobal.H>>1));
+            _moveStart = new Point(_zeroX-(Global.SCREEN_W>>1),_zeroY-(Global.SCREEN_H>>1));
             
-            _moveEnd = new Point(x-(RoGlobal.W>>1),y-(RoGlobal.H>>1));
+            _moveEnd = new Point(x-(Global.SCREEN_W>>1),y-(Global.SCREEN_H>>1));
             
             _timer = new Timer(50);
             _timer.addEventListener(TimerEvent.TIMER,moveCamera);

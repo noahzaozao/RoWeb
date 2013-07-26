@@ -1,13 +1,13 @@
 package com.inoah.ro.ui.mainViewChildren
 {
-    import com.inoah.ro.RoGlobal;
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.infos.UserInfo;
+    import inoah.game.Global;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.infos.UserInfo;
     
     import flash.events.KeyboardEvent;
     import flash.ui.Keyboard;
     
-    import as3.patterns.facade.Facade;
+    import pureMVC.patterns.facade.Facade;
     
     import game.ui.mainViewChildren.chatViewUI;
     
@@ -30,7 +30,7 @@ package com.inoah.ro.ui.mainViewChildren
             {
                 if( this._chatView.txtChat.text != "" )
                 {
-                    var userInfo:UserInfo = RoGlobal.userInfo;
+                    var userInfo:UserInfo = Global.userInfo;
                     var msg:String = userInfo.name + ": " + this._chatView.txtChat.text;
                     Facade.getInstance().sendNotification( GameCommands.SEND_CHAT, [msg] );
                     this._chatView.txtChat.text = "";

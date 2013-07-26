@@ -1,18 +1,18 @@
 package com.inoah.ro.characters.gpu
 {
-    import com.inoah.ro.consts.MgrTypeConsts;
+    import inoah.game.consts.MgrTypeConsts;
     import com.inoah.ro.displays.actspr.structs.CACT;
     import com.inoah.ro.displays.starling.TpcBodyView;
     import com.inoah.ro.displays.starling.TpcOtherView;
     import com.inoah.ro.displays.starling.TpcPlayerView;
     import com.inoah.ro.displays.starling.TpcWeaponView;
     import com.inoah.ro.events.TPMovieClipEvent;
-    import com.inoah.ro.infos.CharacterInfo;
-    import com.inoah.ro.interfaces.IViewObject;
-    import com.inoah.ro.loaders.ILoader;
-    import com.inoah.ro.loaders.TPCLoader;
-    import com.inoah.ro.managers.AssetMgr;
-    import com.inoah.ro.managers.MainMgr;
+    import inoah.game.infos.CharacterInfo;
+    import inoah.game.interfaces.IViewObject;
+    import inoah.game.loaders.ILoader;
+    import inoah.game.loaders.TPCLoader;
+    import inoah.game.managers.AssetMgr;
+    import inoah.game.managers.MainMgr;
     
     import flash.display.Shape;
     import flash.geom.Point;

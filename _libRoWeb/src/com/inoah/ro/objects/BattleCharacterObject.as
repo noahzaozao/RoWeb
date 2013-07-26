@@ -1,7 +1,7 @@
 package com.inoah.ro.objects
 {
     import com.inoah.ro.displays.valueBar.HSpbar;
-    import com.inoah.ro.infos.BattleCharacterInfo;
+    import inoah.game.infos.BattleCharacterInfo;
     
     import flash.display.DisplayObjectContainer;
     import flash.geom.Point;

@@ -1,6 +1,6 @@
 package com.inoah.ro.characters.gpu
 {
-    import com.inoah.ro.infos.CharacterInfo;
+    import inoah.game.infos.CharacterInfo;
     import com.inoah.ro.utils.Counter;
     
     public class MonsterViewGpu extends CharacterViewGpu

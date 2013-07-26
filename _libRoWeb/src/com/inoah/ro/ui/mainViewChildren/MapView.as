@@ -1,10 +1,10 @@
 package com.inoah.ro.ui.mainViewChildren
 {
-    import com.inoah.ro.consts.MgrTypeConsts;
-    import com.inoah.ro.loaders.ILoader;
-    import com.inoah.ro.loaders.JpgLoader;
-    import com.inoah.ro.managers.AssetMgr;
-    import com.inoah.ro.managers.MainMgr;
+    import inoah.game.consts.MgrTypeConsts;
+    import inoah.game.loaders.ILoader;
+    import inoah.game.loaders.JpgLoader;
+    import inoah.game.managers.AssetMgr;
+    import inoah.game.managers.MainMgr;
     
     import flash.display.Bitmap;
     import flash.display.BitmapData;

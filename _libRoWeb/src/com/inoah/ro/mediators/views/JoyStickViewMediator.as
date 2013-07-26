@@ -1,9 +1,9 @@
 package com.inoah.ro.mediators.views
 {
-    import com.inoah.ro.consts.GameConsts;
+    import inoah.game.consts.GameConsts;
     import com.inoah.ro.ui.mainViewChildren.JoyStickView;
     
-    import as3.patterns.mediator.Mediator;
+    import pureMVC.patterns.mediator.Mediator;
     
     public class JoyStickViewMediator extends Mediator
     {

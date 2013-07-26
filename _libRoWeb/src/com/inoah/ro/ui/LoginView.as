@@ -1,11 +1,10 @@
 package com.inoah.ro.ui
 {
-    import com.inoah.ro.consts.GameCommands;
+    import inoah.game.consts.GameCommands;
     
-    import flash.events.Event;
     import flash.events.MouseEvent;
     
-    import as3.patterns.facade.Facade;
+    import pureMVC.patterns.facade.Facade;
     
     import game.ui.loginViewUI;
     

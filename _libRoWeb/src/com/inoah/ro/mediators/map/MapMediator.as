@@ -1,20 +1,20 @@
 package com.inoah.ro.mediators.map
 {
     import com.inoah.ro.RoCamera;
-    import com.inoah.ro.RoGlobal;
+    import inoah.game.Global;
     import com.inoah.ro.characters.gpu.PlayerViewGpu;
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.consts.GameConsts;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.consts.GameConsts;
     import com.inoah.ro.controllers.PlayerController;
-    import com.inoah.ro.interfaces.ITickable;
+    import inoah.game.interfaces.ITickable;
     import com.inoah.ro.maps.BaseMap;
     import com.inoah.ro.maps.BattleMap;
     import com.inoah.ro.objects.PlayerObject;
     
     import flash.display.DisplayObjectContainer;
     
-    import as3.interfaces.INotification;
-    import as3.patterns.mediator.Mediator;
+    import pureMVC.interfaces.INotification;
+    import pureMVC.patterns.mediator.Mediator;
     
     import starling.display.DisplayObjectContainer;
     import starling.display.Sprite;
@@ -78,22 +78,22 @@ package com.inoah.ro.mediators.map
             //创建用户
             _playerController = new PlayerController();
             facade.registerMediator( _playerController );
-            var playerView:PlayerViewGpu = new PlayerViewGpu( RoGlobal.userInfo );
+            var playerView:PlayerViewGpu = new PlayerViewGpu( Global.userInfo );
             _player = new PlayerObject();
             _player.controller = _playerController;
             _player.viewObject = playerView;
             _player.posX = 400;
             _player.posY = 400;
-            _player.info = RoGlobal.userInfo;
+            _player.info = Global.userInfo;
             _map.addObject( _player );
             _camera.focus( _player );
             
-//            var count:int = 0;
-//            while( count < 250 )
-//            {
-//                (_map as BattleMap).createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200  );
-//                count++;
-//            }
+            var count:int = 0;
+            while( count < 50 )
+            {
+                (_map as BattleMap).createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200  );
+                count++;
+            }
         }
         
         public function tick( delta:Number ):void

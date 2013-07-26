@@ -1,6 +1,6 @@
 package com.inoah.ro.managers
 {
-    import com.inoah.ro.interfaces.IMgr;
+    import inoah.game.interfaces.IMgr;
     import com.inoah.ro.maps.BattleMap;
     import com.inoah.ro.mediators.battle.BattleMediator;
     

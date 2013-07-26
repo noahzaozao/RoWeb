@@ -1,12 +1,12 @@
 package com.inoah.ro.displays.starling
 {
-    import com.inoah.ro.consts.MgrTypeConsts;
+    import inoah.game.consts.MgrTypeConsts;
     import com.inoah.ro.displays.actspr.structs.acth.AnyActAnyPat;
     import com.inoah.ro.displays.actspr.structs.acth.AnyPatSprV0101;
     import com.inoah.ro.displays.starling.structs.TPAnimation;
     import com.inoah.ro.events.TPAnimationEvent;
     import com.inoah.ro.events.TPMovieClipEvent;
-    import com.inoah.ro.managers.MainMgr;
+    import inoah.game.managers.MainMgr;
     import com.inoah.ro.managers.TextureMgr;
     import com.inoah.ro.utils.Counter;
     
@@ -121,13 +121,14 @@ package com.inoah.ro.displays.starling
             {
                 _tpAnimation = tpAnimation;
             }
+            
             actionIndex = 0;
             currentFrame = 0;
             _counter.initialize();
             _counter.reset( _counterTarget );
             
             _animationDisplay = new Image(NULL_TEXTURE);
-            _animationDisplay.smoothing = TextureSmoothing.TRILINEAR;
+            _animationDisplay.smoothing = TextureSmoothing.BILINEAR;
             addChildAt(_animationDisplay, 0);
             _animationDisplay.touchable = true;
             
@@ -176,6 +177,8 @@ package com.inoah.ro.displays.starling
         
         public function updateFrame():void
         {
+            //            RoGlobal.debugTxt.appendText( "updateFrame" + _animationDisplay.x + _animationDisplay.y + "\n" );
+            
             _currentAaap = _tpAnimation.act.aall.aa[_actionIndex].aaap[_currentFrame];
             
             var isExt:Boolean = false;

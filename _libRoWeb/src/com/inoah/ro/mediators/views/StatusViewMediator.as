@@ -1,12 +1,12 @@
 package com.inoah.ro.mediators.views
 {
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.consts.GameConsts;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.consts.GameConsts;
     import com.inoah.ro.ui.MainView;
     import com.inoah.ro.ui.sysView.StatusView;
     
-    import as3.interfaces.INotification;
-    import as3.patterns.mediator.Mediator;
+    import pureMVC.interfaces.INotification;
+    import pureMVC.patterns.mediator.Mediator;
     
     public class StatusViewMediator extends Mediator
     {

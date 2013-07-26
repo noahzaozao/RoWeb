@@ -2,7 +2,7 @@ package com.inoah.ro.controllers
 {
     import com.inoah.ro.objects.BaseObject;
     
-    import as3.patterns.mediator.Mediator;
+    import pureMVC.patterns.mediator.Mediator;
     
     import starling.animation.IAnimatable;
 

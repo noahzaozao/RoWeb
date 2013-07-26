@@ -1,7 +1,7 @@
 package com.inoah.ro.managers
 {
     import com.inoah.ro.displays.actspr.structs.CSPR;
-    import com.inoah.ro.interfaces.IMgr;
+    import inoah.game.interfaces.IMgr;
     
     import flash.utils.ByteArray;
     

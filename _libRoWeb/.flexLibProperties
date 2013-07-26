@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
-    <classEntry path="com.inoah.ro.RoGlobal"/>
     <classEntry path="com.inoah.ro.objects.BattleCharacterObject"/>
     <classEntry path="com.inoah.ro.controllers.PlayerController"/>
     <classEntry path="com.inoah.ro.displays.actspr.ActSprPlayerView"/>
     <classEntry path="com.inoah.ro.displays.actspr.ActSprSkillIconView"/>
-    <classEntry path="com.inoah.ro.Main"/>
+    <classEntry path="com.inoah.ro.starlingMain"/>
     <classEntry path="com.inoah.ro.displays.starling.TpcView"/>
     <classEntry path="com.inoah.ro.displays.starling.structs.TPAnimation"/>
     <classEntry path="com.inoah.ro.managers.TextureMgr"/>
-    <classEntry path="com.inoah.ro.loaders.ILoader"/>
-    <classEntry path="com.inoah.ro.loaders.TPCLoader"/>
     <classEntry path="com.inoah.ro.displays.starling.TpcBodyView"/>
     <classEntry path="com.inoah.ro.displays.starling.TpcOtherView"/>
     <classEntry path="com.inoah.ro.managers.SprMgr"/>
     <classEntry path="com.inoah.ro.displays.actspr.ActSprWeaponView"/>
     <classEntry path="com.inoah.ro.ui.LoginView"/>
     <classEntry path="com.inoah.ro.mediators.GameMediator"/>
-    <classEntry path="com.inoah.ro.consts.GameConsts"/>
-    <classEntry path="com.inoah.ro.consts.GameCommands"/>
     <classEntry path="com.inoah.ro.ui.MainView"/>
     <classEntry path="com.inoah.ro.mediators.views.MainViewMediator"/>
     <classEntry path="com.inoah.ro.managers.DisplayMgr"/>
@@ -31,23 +26,17 @@
     <classEntry path="com.inoah.ro.ui.sysView.AlertView"/>
     <classEntry path="com.inoah.ro.ui.mainViewChildren.ChatView"/>
     <classEntry path="com.inoah.ro.ui.mainViewChildren.SkillBarView"/>
-    <classEntry path="com.inoah.ro.infos.UserInfo"/>
-    <classEntry path="com.inoah.ro.infos.BattleCharacterInfo"/>
     <classEntry path="com.inoah.ro.managers.BattleMgr"/>
     <classEntry path="com.inoah.ro.mediators.views.ChatViewMediator"/>
     <classEntry path="com.inoah.ro.mediators.views.SkillBarViewMediator"/>
     <classEntry path="com.inoah.ro.mediators.battle.BattleMediator"/>
-    <classEntry path="com.inoah.ro.consts.BattleCommands"/>
     <classEntry path="com.inoah.ro.objects.MonsterObject"/>
     <classEntry path="com.inoah.ro.ui.mainViewChildren.MapView"/>
-    <classEntry path="com.inoah.ro.loaders.JpgLoader"/>
     <classEntry path="com.inoah.ro.mediators.map.MapMediator"/>
     <classEntry path="com.inoah.ro.managers.MapMgr"/>
     <classEntry path="com.inoah.ro.maps.BaseMap"/>
     <classEntry path="com.inoah.ro.RoCamera"/>
     <classEntry path="com.inoah.ro.objects.BaseObject"/>
-    <classEntry path="com.inoah.ro.loaders.AtfLoader"/>
-    <classEntry path="com.inoah.ro.interfaces.IViewObject"/>
     <classEntry path="com.inoah.ro.objects.CharacterObject"/>
     <classEntry path="com.inoah.ro.controllers.BaseController"/>
     <classEntry path="com.inoah.ro.ui.mainViewChildren.JoyStickView"/>

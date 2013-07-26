@@ -1,9 +1,9 @@
 package com.inoah.ro.controllers
 {
-    import com.inoah.ro.RoGlobal;
+    import inoah.game.Global;
     import com.inoah.ro.characters.Actions;
-    import com.inoah.ro.consts.BattleCommands;
-    import com.inoah.ro.consts.GameConsts;
+    import inoah.game.consts.BattleCommands;
+    import inoah.game.consts.GameConsts;
     import com.inoah.ro.maps.BattleMap;
     import com.inoah.ro.objects.BattleCharacterObject;
     import com.inoah.ro.objects.MonsterObject;
@@ -30,10 +30,10 @@ package com.inoah.ro.controllers
         {
             super( GameConsts.MONSTER_CONTROLLER );
             _scene = scene;
-            _atkTargetList = new Vector.<BattleCharacterObject>( RoGlobal.MAX_MONSTER_NUM );
-            _moveCounterList = new Vector.<Counter>( RoGlobal.MAX_MONSTER_NUM );
-            _atkCounterList = new Vector.<Counter>( RoGlobal.MAX_MONSTER_NUM );
-            _fightModeList = new Vector.<int>( RoGlobal.MAX_MONSTER_NUM );
+            _atkTargetList = new Vector.<BattleCharacterObject>( Global.MAX_MONSTER_NUM );
+            _moveCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
+            _atkCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
+            _fightModeList = new Vector.<int>( Global.MAX_MONSTER_NUM );
         }
         
         public function fightTo( monster:MonsterObject ,  obj:BattleCharacterObject ):void
@@ -102,8 +102,8 @@ package com.inoah.ro.controllers
                     var nextX:int = Math.random()>0.5 ? currentMonsterObj.posX+int(Math.random()*50) : currentMonsterObj.posX-int(Math.random()*50);
                     var nextY:int = Math.random()>0.5 ? currentMonsterObj.posY+int(Math.random()*50) : currentMonsterObj.posY-int(Math.random()*50);
                     // 不可移出屏幕
-                    if(nextX>RoGlobal.MAP_W || nextX<0) return;
-                    if(nextY>RoGlobal.MAP_H || nextY<0) return;
+                    if(nextX>Global.MAP_W || nextX<0) return;
+                    if(nextY>Global.MAP_H || nextY<0) return;
                     // 不可移动到地图非0区域
                     
                     currentMonsterObj.action = Actions.Run;

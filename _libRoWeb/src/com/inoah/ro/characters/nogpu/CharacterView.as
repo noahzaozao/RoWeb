@@ -1,18 +1,18 @@
 package com.inoah.ro.characters.nogpu
 {
-    import com.inoah.ro.consts.MgrTypeConsts;
+    import inoah.game.consts.MgrTypeConsts;
     import com.inoah.ro.displays.actspr.ActSprBodyView;
     import com.inoah.ro.displays.actspr.ActSprOtherView;
     import com.inoah.ro.displays.actspr.ActSprPlayerView;
     import com.inoah.ro.displays.actspr.ActSprWeaponView;
     import com.inoah.ro.displays.actspr.structs.CACT;
     import com.inoah.ro.events.ActSprViewEvent;
-    import com.inoah.ro.infos.CharacterInfo;
-    import com.inoah.ro.interfaces.IViewObject;
-    import com.inoah.ro.loaders.ActSprLoader;
-    import com.inoah.ro.loaders.ILoader;
-    import com.inoah.ro.managers.AssetMgr;
-    import com.inoah.ro.managers.MainMgr;
+    import inoah.game.infos.CharacterInfo;
+    import inoah.game.interfaces.IViewObject;
+    import inoah.game.loaders.ActSprLoader;
+    import inoah.game.loaders.ILoader;
+    import inoah.game.managers.AssetMgr;
+    import inoah.game.managers.MainMgr;
     
     import flash.display.Shape;
     import flash.display.Sprite;

@@ -1,8 +1,8 @@
 package com.inoah.ro.mediators.views
 {
-    import com.inoah.ro.consts.GameConsts;
+    import inoah.game.consts.GameConsts;
     
-    import as3.patterns.mediator.Mediator;
+    import pureMVC.patterns.mediator.Mediator;
     
     public class SkillBarViewMediator extends Mediator
     {

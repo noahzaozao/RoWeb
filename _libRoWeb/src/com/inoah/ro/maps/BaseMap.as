@@ -1,19 +1,19 @@
 package com.inoah.ro.maps
 {
     import com.inoah.ro.RoCamera;
-    import com.inoah.ro.RoGlobal;
-    import com.inoah.ro.consts.MgrTypeConsts;
-    import com.inoah.ro.loaders.AtfLoader;
-    import com.inoah.ro.loaders.ILoader;
-    import com.inoah.ro.managers.AssetMgr;
-    import com.inoah.ro.managers.MainMgr;
+    import inoah.game.Global;
+    import inoah.game.consts.MgrTypeConsts;
+    import inoah.game.loaders.AtfLoader;
+    import inoah.game.loaders.ILoader;
+    import inoah.game.managers.AssetMgr;
+    import inoah.game.managers.MainMgr;
     import com.inoah.ro.managers.TextureMgr;
     import com.inoah.ro.objects.BaseObject;
     import com.inoah.ro.utils.Counter;
     
     import flash.geom.Rectangle;
     
-    import as3.patterns.mediator.Mediator;
+    import pureMVC.patterns.mediator.Mediator;
     
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
@@ -56,12 +56,12 @@ package com.inoah.ro.maps
             super();
             _orderCounter = new Counter();
             _orderCounter.initialize();
-            _orderCounter.reset( RoGlobal.ORDER_TIME );
+            _orderCounter.reset( Global.ORDER_TIME );
             _unitContainer = unitContainer;
             _mapContainer = mapContainer;
             _unitList = new Vector.<BaseObject>();
             _screenObj = new Vector.<BaseObject>();
-            _qTree = new QTree(new Rectangle(0,0,RoGlobal.MAP_W,RoGlobal.MAP_H), 3 );
+            _qTree = new QTree(new Rectangle(0,0,Global.MAP_W,Global.MAP_H), 3 );
         }
         
         public function init( mapId:uint ):void
@@ -266,7 +266,7 @@ package com.inoah.ro.maps
                     }
                 }
                 
-                _orderCounter.reset( RoGlobal.ORDER_TIME );
+                _orderCounter.reset( Global.ORDER_TIME );
                 ReCut();
             }
             else if( RoCamera.needReCut )

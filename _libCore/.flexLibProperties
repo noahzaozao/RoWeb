@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="inoah.data.map.MapObjectInfo"/>
+    <classEntry path="inoah.data.map.MapLayerInfo"/>
+    <classEntry path="inoah.data.map.MapInfo"/>
+    <classEntry path="inoah.data.map.MapTileSetInfo"/>
+    <classEntry path="inoah.game.map.MapBase"/>
+    <classEntry path="inoah.game.interfaces.IMapLevel"/>
+    <classEntry path="inoah.game.interfaces.ITickable"/>
+    <classEntry path="inoah.game.interfaces.IViewObject"/>
+    <classEntry path="inoah.game.interfaces.IMgr"/>
+    <classEntry path="inoah.game.managers.MainMgr"/>
+    <classEntry path="inoah.game.managers.BaseMgr"/>
+    <classEntry path="inoah.game.managers.AssetMgr"/>
+    <classEntry path="inoah.game.loaders.JpgLoader"/>
+    <classEntry path="inoah.game.loaders.ActSprLoader"/>
+    <classEntry path="inoah.game.loaders.TPCLoader"/>
+    <classEntry path="inoah.game.loaders.ILoader"/>
+    <classEntry path="inoah.game.loaders.AtfLoader"/>
+    <classEntry path="inoah.game.consts.GameConsts"/>
+    <classEntry path="inoah.game.consts.BattleCommands"/>
+    <classEntry path="inoah.game.consts.DirIndexConsts"/>
+    <classEntry path="inoah.game.consts.GameCommands"/>
+    <classEntry path="inoah.game.consts.MgrTypeConsts"/>
+    <classEntry path="inoah.game.Global"/>
+    <classEntry path="inoah.game.infos.CharacterInfo"/>
+    <classEntry path="inoah.game.infos.BattleCharacterInfo"/>
+    <classEntry path="inoah.game.infos.UserInfo"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

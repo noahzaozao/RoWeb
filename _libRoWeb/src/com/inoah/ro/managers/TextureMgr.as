@@ -1,8 +1,9 @@
 package com.inoah.ro.managers
 {
+    import inoah.game.Global;
     import com.inoah.ro.displays.starling.structs.TPAnimation;
     import com.inoah.ro.events.TPAnimationEvent;
-    import com.inoah.ro.interfaces.IMgr;
+    import inoah.game.interfaces.IMgr;
     
     import flash.utils.ByteArray;
     
@@ -39,12 +40,12 @@ package com.inoah.ro.managers
             if( index == - 1)
             {
                 _tpcDataListIndex.push( bytes );
+                index = _tpcDataListIndex.indexOf( bytes );
                 var tpAnimation:TPAnimation = new TPAnimation();
+                _tpAnimationList.push( tpAnimation );
+                _resIdList[index] = resId;
                 tpAnimation.addEventListener( TPAnimationEvent.INITIALIZED, loadAsync );
                 tpAnimation.decode( bytes );
-                _tpAnimationList.push( tpAnimation );
-                index = _tpcDataListIndex.indexOf( bytes );
-                _resIdList[index] = resId;
             }
             else
             {

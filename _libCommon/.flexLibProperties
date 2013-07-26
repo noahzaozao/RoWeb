@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
-  <includeClasses/>
+  <includeClasses>
+    <classEntry path="pureMVC.interfaces.ICommand"/>
+    <classEntry path="pureMVC.patterns.observer.Observer"/>
+    <classEntry path="pureMVC.core.Model"/>
+    <classEntry path="pureMVC.core.View"/>
+    <classEntry path="pureMVC.patterns.proxy.Proxy"/>
+    <classEntry path="pureMVC.patterns.command.MacroCommand"/>
+    <classEntry path="pureMVC.interfaces.IController"/>
+    <classEntry path="pureMVC.interfaces.IMediator"/>
+    <classEntry path="pureMVC.patterns.mediator.Mediator"/>
+    <classEntry path="pureMVC.interfaces.INotifier"/>
+    <classEntry path="pureMVC.interfaces.IFacade"/>
+    <classEntry path="pureMVC.interfaces.IModel"/>
+    <classEntry path="pureMVC.patterns.observer.Notification"/>
+    <classEntry path="pureMVC.interfaces.IView"/>
+    <classEntry path="pureMVC.interfaces.IObserver"/>
+    <classEntry path="pureMVC.interfaces.INotification"/>
+    <classEntry path="pureMVC.core.Controller"/>
+    <classEntry path="pureMVC.patterns.command.SimpleCommand"/>
+    <classEntry path="pureMVC.patterns.facade.Facade"/>
+    <classEntry path="pureMVC.patterns.observer.Notifier"/>
+    <classEntry path="pureMVC.interfaces.IProxy"/>
+  </includeClasses>
   <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>

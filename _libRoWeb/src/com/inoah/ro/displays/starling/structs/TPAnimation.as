@@ -1,10 +1,10 @@
 package com.inoah.ro.displays.starling.structs
 {
-    import com.inoah.ro.consts.MgrTypeConsts;
+    import inoah.game.consts.MgrTypeConsts;
     import com.inoah.ro.displays.actspr.structs.CACT;
     import com.inoah.ro.displays.actspr.structs.acth.AnyActAnyPat;
     import com.inoah.ro.events.TPAnimationEvent;
-    import com.inoah.ro.managers.MainMgr;
+    import inoah.game.managers.MainMgr;
     import com.inoah.ro.managers.TextureMgr;
     
     import flash.display.BitmapData;

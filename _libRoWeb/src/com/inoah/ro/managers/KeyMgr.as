@@ -1,6 +1,6 @@
 package com.inoah.ro.managers
 {
-    import com.inoah.ro.interfaces.IMgr;
+    import inoah.game.interfaces.IMgr;
     
     import flash.display.DisplayObject;
     import flash.display.Stage;

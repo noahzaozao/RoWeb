@@ -2,14 +2,14 @@ package com.inoah.ro.maps
 {
     import com.inoah.ro.characters.Actions;
     import com.inoah.ro.characters.gpu.MonsterViewGpu;
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.consts.GameConsts;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.consts.GameConsts;
     import com.inoah.ro.controllers.MonsterController;
-    import com.inoah.ro.infos.BattleCharacterInfo;
+    import inoah.game.infos.BattleCharacterInfo;
     import com.inoah.ro.objects.MonsterObject;
     import com.inoah.ro.utils.Counter;
     
-    import as3.patterns.facade.Facade;
+    import pureMVC.patterns.facade.Facade;
     
     import starling.display.DisplayObjectContainer;
     

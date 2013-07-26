@@ -1,18 +1,18 @@
 package com.inoah.ro.mediators
 {
-    import com.inoah.ro.Main;
-    import com.inoah.ro.RoGlobal;
-    import com.inoah.ro.consts.GameCommands;
-    import com.inoah.ro.consts.GameConsts;
-    import com.inoah.ro.consts.MgrTypeConsts;
-    import com.inoah.ro.infos.UserInfo;
-    import com.inoah.ro.interfaces.IMgr;
-    import com.inoah.ro.interfaces.ITickable;
-    import com.inoah.ro.loaders.ILoader;
-    import com.inoah.ro.managers.AssetMgr;
+    import com.inoah.ro.starlingMain;
+    import inoah.game.Global;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.consts.GameConsts;
+    import inoah.game.consts.MgrTypeConsts;
+    import inoah.game.infos.UserInfo;
+    import inoah.game.interfaces.IMgr;
+    import inoah.game.interfaces.ITickable;
+    import inoah.game.loaders.ILoader;
+    import inoah.game.managers.AssetMgr;
     import com.inoah.ro.managers.BattleMgr;
     import com.inoah.ro.managers.DisplayMgr;
-    import com.inoah.ro.managers.MainMgr;
+    import inoah.game.managers.MainMgr;
     import com.inoah.ro.managers.MapMgr;
     import com.inoah.ro.maps.BattleMap;
     import com.inoah.ro.mediators.views.MainViewMediator;
@@ -24,9 +24,9 @@ package com.inoah.ro.mediators
     import flash.text.TextField;
     import flash.text.TextFormat;
     
-    import as3.interfaces.IMediator;
-    import as3.interfaces.INotification;
-    import as3.patterns.mediator.Mediator;
+    import pureMVC.interfaces.IMediator;
+    import pureMVC.interfaces.INotification;
+    import pureMVC.patterns.mediator.Mediator;
     
     import starling.core.Starling;
     import starling.utils.HAlign;
@@ -51,7 +51,7 @@ package com.inoah.ro.mediators
             
             Starling.handleLostContext = true;
             Starling.multitouchEnabled = true;
-            _starling = new Starling( Main, _stage );
+            _starling = new Starling( starlingMain, _stage );
             _starling.enableErrorChecking = false;
             _starling.showStats = true;
             _starling.showStatsAt(HAlign.RIGHT, VAlign.CENTER);
@@ -107,12 +107,12 @@ package com.inoah.ro.mediators
             
             var resPathList:Vector.<String> = new Vector.<String>();
             resPathList.push( "data/novice_man_body.tpc" );
-//            resPathList.push( "data/2_head_man.tpc" );
-//            resPathList.push( "data/novice_main_knife.tpc" );
-//            resPathList.push( "data/novice_main_knife_ef.tpc" );
-//            resPathList.push( "data/poring.tpc" );
-//            resPathList.push( "data/poporing.tpc" );
-//            resPathList.push( "data/ghostring.tpc" );
+            resPathList.push( "data/2_head_man.tpc" );
+            resPathList.push( "data/novice_main_knife.tpc" );
+            resPathList.push( "data/novice_main_knife_ef.tpc" );
+            resPathList.push( "data/poring.tpc" );
+            resPathList.push( "data/poporing.tpc" );
+            resPathList.push( "data/ghostring.tpc" );
             
             assetMgr.getResList( resPathList , onInitLoadComplete );
         }
@@ -122,12 +122,11 @@ package com.inoah.ro.mediators
          */        
         private function initUserinfo( username:String ):void
         {
-            RoGlobal.userInfo = new UserInfo();
-            var userInfo:UserInfo = RoGlobal.userInfo;
-            userInfo.init( "", "data/novice_man_body.tpc", true );
-//            userInfo.init( "data/2_head_man.tpc", "data/novice_man_body.tpc", true );
-//            userInfo.setWeaponRes( "data/novice_main_knife.tpc" );
-//            userInfo.setWeaponShadowRes( "data/novice_main_knife_ef.tpc" );
+            Global.userInfo = new UserInfo();
+            var userInfo:UserInfo = Global.userInfo;
+            userInfo.init( "data/2_head_man.tpc", "data/novice_man_body.tpc", true );
+            userInfo.setWeaponRes( "data/novice_main_knife.tpc" );
+            userInfo.setWeaponShadowRes( "data/novice_main_knife_ef.tpc" );
             userInfo.name = username;
             userInfo.job = "Novice";
             userInfo.strength = 1;

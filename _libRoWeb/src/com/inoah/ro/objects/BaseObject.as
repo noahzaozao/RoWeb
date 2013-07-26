@@ -3,7 +3,7 @@ package com.inoah.ro.objects
     import com.inoah.ro.RoCamera;
     import com.inoah.ro.characters.Actions;
     import com.inoah.ro.controllers.BaseController;
-    import com.inoah.ro.interfaces.IViewObject;
+    import inoah.game.interfaces.IViewObject;
     import com.inoah.ro.maps.QTree;
     
     import flash.geom.Point;
