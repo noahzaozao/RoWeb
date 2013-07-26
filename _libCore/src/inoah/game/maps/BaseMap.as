@@ -1,15 +1,14 @@
 package inoah.game.maps
 {
+    import flash.events.Event;
     import flash.geom.Rectangle;
+    import flash.net.URLLoader;
+    import flash.net.URLRequest;
     
+    import inoah.data.map.MapInfo;
     import inoah.game.Global;
     import inoah.game.RoCamera;
-    import inoah.game.consts.MgrTypeConsts;
-    import inoah.game.loaders.AtfLoader;
-    import inoah.game.loaders.ILoader;
-    import inoah.game.managers.AssetMgr;
-    import inoah.game.managers.MainMgr;
-    import inoah.game.managers.TextureMgr;
+    import inoah.game.map.MapBase;
     import inoah.game.objects.BaseObject;
     import inoah.game.utils.Counter;
     
@@ -17,14 +16,12 @@ package inoah.game.maps
     
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
-    import starling.display.Image;
-    import starling.textures.Texture;
     
     public class BaseMap extends Mediator
     {
         protected var _qTree:QTree;
         
-        protected var _mapBg:Image;
+        protected var _mapBase:MapBase;
         /**
          * 屏幕对象列表 
          */        
@@ -65,23 +62,20 @@ package inoah.game.maps
         
         public function init( mapId:uint ):void
         {
-            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            assetMgr.getRes( "map/" + mapId + ".atf" , onMapLoadComplete );
+            var loader:URLLoader = new URLLoader();
+            loader.addEventListener( flash.events.Event.COMPLETE , onMapLoadComplete );
+            loader.load( new URLRequest( "map/map001.json" ));
         }
         
-        private function onMapLoadComplete( loader:ILoader ):void
+        private function onMapLoadComplete( e:flash.events.Event):void
         {
-            var textureMgr:TextureMgr = MainMgr.instance.getMgr( MgrTypeConsts.TEXTURE_MGR ) as TextureMgr;
-            var texture:Texture = textureMgr.getTexture( "1" , (loader as AtfLoader).data );
-            if( !_mapBg )
-            {
-                _mapBg = new Image( texture );
-                _mapContainer.addChild( _mapBg );
-            }
-            else
-            {
-                _mapBg.texture = texture;
-            }
+            var loader:URLLoader = e.currentTarget as URLLoader;
+            loader.removeEventListener( flash.events.Event.COMPLETE , onMapLoadComplete );
+            var jsonStr:String = loader.data as String;
+            var jsonObj:Object = JSON.parse( jsonStr );
+            var mapInfo:MapInfo = new MapInfo( jsonObj );
+            var mapBase:MapBase = new MapBase( _mapContainer );
+            mapBase.init( mapInfo ); 
         }
         
         public function addObject( o:BaseObject ):void
@@ -198,10 +192,10 @@ package inoah.game.maps
         
         public function tick(delta:Number):void
         {
-            if( _mapBg )
+            if( _mapContainer )
             {
-                _mapBg.x = int(_offsetX);
-                _mapBg.y = int(_offsetY);
+                _mapContainer.x = int(_offsetX);
+                _mapContainer.y = int(_offsetY);
             }
             
             if(_unitList.length==0) 

@@ -4,7 +4,6 @@ package com.inoah.ro.mediators
     import com.inoah.ro.managers.BattleMgr;
     import com.inoah.ro.managers.DisplayMgr;
     import com.inoah.ro.managers.MapMgr;
-    import inoah.game.maps.BattleMap;
     import com.inoah.ro.mediators.views.MainViewMediator;
     import com.inoah.ro.ui.MainView;
     
@@ -24,6 +23,7 @@ package com.inoah.ro.mediators
     import inoah.game.loaders.ILoader;
     import inoah.game.managers.AssetMgr;
     import inoah.game.managers.MainMgr;
+    import inoah.game.maps.BattleMap;
     
     import pureMVC.interfaces.IMediator;
     import pureMVC.interfaces.INotification;
