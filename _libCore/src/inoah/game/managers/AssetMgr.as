@@ -4,10 +4,10 @@ package inoah.game.managers
     
     import inoah.game.interfaces.IMgr;
     import inoah.game.loaders.ActSprLoader;
+    import inoah.game.loaders.ActTpcLoader;
     import inoah.game.loaders.AtfLoader;
     import inoah.game.loaders.ILoader;
     import inoah.game.loaders.JpgLoader;
-    import inoah.game.loaders.TPCLoader;
     
     /**
      * 资源加载管理器 
@@ -68,7 +68,7 @@ package inoah.game.managers
             {
                 case "tpc":
                 {
-                    _loaderList.push( new TPCLoader( resPath ) );
+                    _loaderList.push( new ActTpcLoader( resPath ) );
                     break;
                 }
                 case "act":
