@@ -1,11 +1,11 @@
 package com.inoah.ro.ui.mainViewChildren
 {
-    import inoah.game.consts.GameCommands;
-    
     import flash.events.MouseEvent;
     import flash.events.TouchEvent;
     
     import game.ui.mainViewChildren.joystickUI;
+    
+    import inoah.game.consts.GameCommands;
     
     import pureMVC.interfaces.IFacade;
     import pureMVC.patterns.facade.Facade;

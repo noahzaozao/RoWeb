@@ -1,15 +1,15 @@
 package com.inoah.ro.ui.mainViewChildren
 {
+    import flash.events.KeyboardEvent;
+    import flash.ui.Keyboard;
+    
+    import game.ui.mainViewChildren.chatViewUI;
+    
     import inoah.game.Global;
     import inoah.game.consts.GameCommands;
     import inoah.game.infos.UserInfo;
     
-    import flash.events.KeyboardEvent;
-    import flash.ui.Keyboard;
-    
     import pureMVC.patterns.facade.Facade;
-    
-    import game.ui.mainViewChildren.chatViewUI;
     
     public class ChatView
     {

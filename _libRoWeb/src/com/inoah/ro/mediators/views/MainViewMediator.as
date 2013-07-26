@@ -1,9 +1,5 @@
 package com.inoah.ro.mediators.views
 {
-    import inoah.game.Global;
-    import inoah.game.consts.GameCommands;
-    import inoah.game.consts.GameConsts;
-    import inoah.game.interfaces.ITickable;
     import com.inoah.ro.ui.MainView;
     import com.inoah.ro.ui.mainViewChildren.ChatView;
     import com.inoah.ro.ui.mainViewChildren.JoyStickView;
@@ -11,6 +7,11 @@ package com.inoah.ro.mediators.views
     import com.inoah.ro.ui.sysView.AlertView;
     import com.inoah.ro.ui.sysView.ItemView;
     import com.inoah.ro.ui.sysView.StatusView;
+    
+    import inoah.game.Global;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.consts.GameConsts;
+    import inoah.game.interfaces.ITickable;
     
     import pureMVC.interfaces.INotification;
     import pureMVC.patterns.mediator.Mediator;

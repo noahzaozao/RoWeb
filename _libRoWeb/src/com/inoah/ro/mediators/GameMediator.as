@@ -1,6 +1,19 @@
 package com.inoah.ro.mediators
 {
     import com.inoah.ro.starlingMain;
+    import com.inoah.ro.managers.BattleMgr;
+    import com.inoah.ro.managers.DisplayMgr;
+    import com.inoah.ro.managers.MapMgr;
+    import inoah.game.maps.BattleMap;
+    import com.inoah.ro.mediators.views.MainViewMediator;
+    import com.inoah.ro.ui.MainView;
+    
+    import flash.display.Sprite;
+    import flash.display.Stage;
+    import flash.events.MouseEvent;
+    import flash.text.TextField;
+    import flash.text.TextFormat;
+    
     import inoah.game.Global;
     import inoah.game.consts.GameCommands;
     import inoah.game.consts.GameConsts;
@@ -10,19 +23,7 @@ package com.inoah.ro.mediators
     import inoah.game.interfaces.ITickable;
     import inoah.game.loaders.ILoader;
     import inoah.game.managers.AssetMgr;
-    import com.inoah.ro.managers.BattleMgr;
-    import com.inoah.ro.managers.DisplayMgr;
     import inoah.game.managers.MainMgr;
-    import com.inoah.ro.managers.MapMgr;
-    import com.inoah.ro.maps.BattleMap;
-    import com.inoah.ro.mediators.views.MainViewMediator;
-    import com.inoah.ro.ui.MainView;
-    
-    import flash.display.Sprite;
-    import flash.display.Stage;
-    import flash.events.MouseEvent;
-    import flash.text.TextField;
-    import flash.text.TextFormat;
     
     import pureMVC.interfaces.IMediator;
     import pureMVC.interfaces.INotification;
@@ -106,13 +107,13 @@ package com.inoah.ro.mediators
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
             
             var resPathList:Vector.<String> = new Vector.<String>();
-            resPathList.push( "data/novice_man_body.tpc" );
-            resPathList.push( "data/2_head_man.tpc" );
-            resPathList.push( "data/novice_main_knife.tpc" );
-            resPathList.push( "data/novice_main_knife_ef.tpc" );
-            resPathList.push( "data/poring.tpc" );
-            resPathList.push( "data/poporing.tpc" );
-            resPathList.push( "data/ghostring.tpc" );
+            resPathList.push( "data/sprite/characters/body/man/novice_man.tpc" );
+            resPathList.push( "data/sprite/characters/head/man/2_man.tpc" );
+            resPathList.push( "data/sprite/characters/novice/weapon_man_knife.tpc" );
+            resPathList.push( "data/sprite/characters/novice/weapon_man_knife_ef.tpc" );
+            resPathList.push( "data/sprite/monsters/poring.tpc" );
+            resPathList.push( "data/sprite/monsters/poporing.tpc" );
+            resPathList.push( "data/sprite/monsters/ghostring.tpc" );
             
             assetMgr.getResList( resPathList , onInitLoadComplete );
         }
@@ -124,9 +125,9 @@ package com.inoah.ro.mediators
         {
             Global.userInfo = new UserInfo();
             var userInfo:UserInfo = Global.userInfo;
-            userInfo.init( "data/2_head_man.tpc", "data/novice_man_body.tpc", true );
-            userInfo.setWeaponRes( "data/novice_main_knife.tpc" );
-            userInfo.setWeaponShadowRes( "data/novice_main_knife_ef.tpc" );
+            userInfo.init( "data/sprite/characters/head/man/2_man.tpc", "data/sprite/characters/body/man/novice_man.tpc", true );
+            userInfo.setWeaponRes( "data/sprite/characters/novice/weapon_man_knife.tpc" );
+            userInfo.setWeaponShadowRes( "data/sprite/characters/novice/weapon_man_knife_ef.tpc" );
             userInfo.name = username;
             userInfo.job = "Novice";
             userInfo.strength = 1;

@@ -3,10 +3,10 @@ package com.inoah.ro
     import inoah.game.consts.MgrTypeConsts;
     import inoah.game.managers.AssetMgr;
     import com.inoah.ro.managers.DisplayMgr;
-    import com.inoah.ro.managers.KeyMgr;
+    import inoah.game.managers.KeyMgr;
     import inoah.game.managers.MainMgr;
-    import com.inoah.ro.managers.SprMgr;
-    import com.inoah.ro.managers.TextureMgr;
+    import inoah.game.managers.SprMgr;
+    import inoah.game.managers.TextureMgr;
     import com.inoah.ro.ui.LoginView;
     
     import morn.core.handlers.Handler;
@@ -59,15 +59,8 @@ package com.inoah.ro
          */        
         private function onInitRes( assetMgr:AssetMgr ):void
         {
-            var resPathList:Vector.<String> = new Vector.<String>();
-            resPathList.push( "data/novice_man_body.tpc" );
-            resPathList.push( "data/2_head_man.tpc" );
-            resPathList.push( "data/novice_main_knife.tpc" );
-            resPathList.push( "data/novice_main_knife_ef.tpc" );
-            resPathList.push( "data/poring.tpc" );
-            resPathList.push( "data/poporing.tpc" );
-            resPathList.push( "data/ghostring.tpc" );
-            assetMgr.getResList( resPathList , function():void{} );
+            //            var resPathList:Vector.<String> = new Vector.<String>();
+            //            assetMgr.getResList( resPathList , function():void{} );
         }
         
         public function tick( delta:Number ):void

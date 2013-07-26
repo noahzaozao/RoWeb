@@ -1,15 +1,16 @@
 package com.inoah.ro.ui
 {
-    import inoah.game.Global;
-    import inoah.game.consts.GameCommands;
-    import inoah.game.infos.UserInfo;
     import com.inoah.ro.ui.mainViewChildren.MapView;
     
     import flash.events.MouseEvent;
     
-    import pureMVC.patterns.facade.Facade;
-    
     import game.ui.mainViewUI;
+    
+    import inoah.game.Global;
+    import inoah.game.consts.GameCommands;
+    import inoah.game.infos.UserInfo;
+    
+    import pureMVC.patterns.facade.Facade;
     
     public class MainView extends mainViewUI
     {

@@ -1,12 +1,12 @@
 package com.inoah.ro.ui.sysView
 {
-    import inoah.game.consts.GameCommands;
-    
     import flash.events.MouseEvent;
     
-    import pureMVC.patterns.facade.Facade;
-    
     import game.ui.sysViews.alertViewUI;
+    
+    import inoah.game.consts.GameCommands;
+    
+    import pureMVC.patterns.facade.Facade;
     
     public class AlertView extends alertViewUI
     {

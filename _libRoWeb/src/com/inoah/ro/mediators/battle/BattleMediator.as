@@ -1,16 +1,16 @@
 package com.inoah.ro.mediators.battle
 {
-    import com.inoah.ro.characters.Actions;
+    import inoah.game.characters.Actions;
     import inoah.game.consts.BattleCommands;
     import inoah.game.consts.GameCommands;
     import inoah.game.consts.GameConsts;
-    import com.inoah.ro.controllers.MonsterController;
+    import inoah.game.controllers.MonsterController;
     import inoah.game.interfaces.ITickable;
-    import com.inoah.ro.maps.BattleMap;
-    import com.inoah.ro.objects.BattleCharacterObject;
-    import com.inoah.ro.objects.CharacterObject;
-    import com.inoah.ro.objects.MonsterObject;
-    import com.inoah.ro.objects.PlayerObject;
+    import inoah.game.maps.BattleMap;
+    import inoah.game.objects.BattleCharacterObject;
+    import inoah.game.objects.CharacterObject;
+    import inoah.game.objects.MonsterObject;
+    import inoah.game.objects.PlayerObject;
     
     import flash.filters.GlowFilter;
     import flash.text.TextField;

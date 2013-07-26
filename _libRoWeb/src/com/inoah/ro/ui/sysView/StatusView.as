@@ -1,14 +1,14 @@
 package com.inoah.ro.ui.sysView
 {
+    import flash.events.MouseEvent;
+    
+    import game.ui.sysViews.statusViewUI;
+    
     import inoah.game.Global;
     import inoah.game.consts.GameCommands;
     import inoah.game.infos.UserInfo;
     
-    import flash.events.MouseEvent;
-    
     import pureMVC.patterns.facade.Facade;
-    
-    import game.ui.sysViews.statusViewUI;
     
     public class StatusView extends statusViewUI
     {

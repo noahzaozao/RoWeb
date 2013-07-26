@@ -1,8 +1,9 @@
 package com.inoah.ro.mediators.views
 {
+    import com.inoah.ro.ui.sysView.ItemView;
+    
     import inoah.game.consts.GameCommands;
     import inoah.game.consts.GameConsts;
-    import com.inoah.ro.ui.sysView.ItemView;
     
     import pureMVC.interfaces.INotification;
     import pureMVC.patterns.mediator.Mediator;

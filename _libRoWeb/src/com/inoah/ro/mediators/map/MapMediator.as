@@ -1,15 +1,15 @@
 package com.inoah.ro.mediators.map
 {
-    import com.inoah.ro.RoCamera;
+    import inoah.game.RoCamera;
     import inoah.game.Global;
-    import com.inoah.ro.characters.gpu.PlayerViewGpu;
+    import inoah.game.characters.gpu.PlayerViewGpu;
     import inoah.game.consts.GameCommands;
     import inoah.game.consts.GameConsts;
-    import com.inoah.ro.controllers.PlayerController;
+    import inoah.game.controllers.PlayerController;
     import inoah.game.interfaces.ITickable;
-    import com.inoah.ro.maps.BaseMap;
-    import com.inoah.ro.maps.BattleMap;
-    import com.inoah.ro.objects.PlayerObject;
+    import inoah.game.maps.BaseMap;
+    import inoah.game.maps.BattleMap;
+    import inoah.game.objects.PlayerObject;
     
     import flash.display.DisplayObjectContainer;
     

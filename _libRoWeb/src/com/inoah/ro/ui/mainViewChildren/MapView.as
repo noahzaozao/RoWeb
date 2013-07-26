@@ -1,16 +1,16 @@
 package com.inoah.ro.ui.mainViewChildren
 {
-    import inoah.game.consts.MgrTypeConsts;
-    import inoah.game.loaders.ILoader;
-    import inoah.game.loaders.JpgLoader;
-    import inoah.game.managers.AssetMgr;
-    import inoah.game.managers.MainMgr;
-    
     import flash.display.Bitmap;
     import flash.display.BitmapData;
     import flash.display.Shape;
     
     import game.ui.mainViewChildren.mapViewUI;
+    
+    import inoah.game.consts.MgrTypeConsts;
+    import inoah.game.loaders.ILoader;
+    import inoah.game.loaders.JpgLoader;
+    import inoah.game.managers.AssetMgr;
+    import inoah.game.managers.MainMgr;
 
     public class MapView
     {
