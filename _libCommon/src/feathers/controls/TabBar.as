@@ -220,6 +220,8 @@ package feathers.controls
 		 *     { label: "Advanced", defaultIcon: new Image( advancedTexture ) },
 		 * ]);</listing>
 		 *
+		 * @default null
+		 *
 		 * @see #tabInitializer
 		 */
 		public function get dataProvider():ListCollection
@@ -307,7 +309,7 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * tabs.gap = 20;</listing>
 		 *
-		 * @deafult 0
+		 * @default 0
 		 */
 		public function get gap():Number
 		{
@@ -355,6 +357,8 @@ package feathers.controls
 		 *     tab.downSkin = new Image( downTexture );
 		 *     return tab;
 		 * };</listing>
+		 *
+		 * @default null
 		 *
 		 * @see feathers.controls.Button
 		 * @see #firstTabFactory
@@ -409,6 +413,8 @@ package feathers.controls
 		 *     return tab;
 		 * };</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.controls.Button
 		 * @see #tabFactory
 		 * @see #lastTabFactory
@@ -462,6 +468,8 @@ package feathers.controls
 		 *     return tab;
 		 * };</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.controls.Button
 		 * @see #tabFactory
 		 * @see #firstTabFactory
@@ -507,6 +515,8 @@ package feathers.controls
 		 *     tab.label = item.text;
 		 *     tab.defaultIcon = item.icon;
 		 * };</listing>
+		 *
+		 * @see #dataProvider
 		 */
 		public function get tabInitializer():Function
 		{
@@ -653,6 +663,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * setInitializerForClass( Button, customTabInitializer, "my-custom-tab");</listing>
 		 *
+		 * @default null
+		 *
 		 * @see #DEFAULT_CHILD_NAME_TAB
 		 * @see feathers.core.FeathersControl#nameList
 		 * @see feathers.core.DisplayListWatcher
@@ -703,6 +715,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * setInitializerForClass( Button, customFirstTabInitializer, "my-custom-first-tab");</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.core.FeathersControl#nameList
 		 * @see feathers.core.DisplayListWatcher
 		 */
@@ -749,6 +763,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * setInitializerForClass( Button, customLastTabInitializer, "my-custom-last-tab");</listing>
+		 *
+		 * @default null
 		 *
 		 * @see feathers.core.FeathersControl#nameList
 		 * @see feathers.core.DisplayListWatcher
@@ -805,6 +821,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * tabs.tabProperties.iconPosition = Button.ICON_POSITION_RIGHT;</listing>
+		 *
+		 * @default null
 		 *
 		 * @see #tabFactory
 		 * @see feathers.controls.Button
@@ -1201,7 +1219,20 @@ package feathers.controls
 		}
 
 		/**
-		 * @private
+		 * If the component's dimensions have not been set explicitly, it will
+		 * measure its content and determine an ideal size for itself. If the
+		 * <code>explicitWidth</code> or <code>explicitHeight</code> member
+		 * variables are set, those value will be used without additional
+		 * measurement. If one is set, but not the other, the dimension with the
+		 * explicit value will not be measured, but the other non-explicit
+		 * dimension will still need measurement.
+		 *
+		 * <p>Calls <code>setSizeInternal()</code> to set up the
+		 * <code>actualWidth</code> and <code>actualHeight</code> member
+		 * variables used for layout.</p>
+		 *
+		 * <p>Meant for internal use, and subclasses may override this function
+		 * with a custom implementation.</p>
 		 */
 		protected function autoSizeIfNeeded():Boolean
 		{

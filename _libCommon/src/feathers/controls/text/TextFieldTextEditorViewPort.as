@@ -226,6 +226,16 @@ package feathers.controls.text
 			this.invalidate(INVALIDATION_FLAG_SIZE);
 		}
 
+		public function get contentX():Number
+		{
+			return 0;
+		}
+
+		public function get contentY():Number
+		{
+			return 0;
+		}
+
 		/**
 		 * @private
 		 */
@@ -425,7 +435,7 @@ package feathers.controls.text
 		override protected function checkIfNewSnapshotIsNeeded():void
 		{
 			super.checkIfNewSnapshotIsNeeded();
-			this._needsNewBitmap ||= this.isInvalid(INVALIDATION_FLAG_SCROLL);
+			this._needsNewTexture ||= this.isInvalid(INVALIDATION_FLAG_SCROLL);
 		}
 
 		/**

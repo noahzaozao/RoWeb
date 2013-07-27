@@ -125,6 +125,13 @@ package feathers.controls
 		public static const INTERACTION_MODE_MOUSE:String = "mouse";
 
 		/**
+		 * @copy feathers.controls.Scroller#INTERACTION_MODE_TOUCH_AND_SCROLL_BARS
+		 *
+		 * @see feathers.controls.Scroller#interactionMode
+		 */
+		public static const INTERACTION_MODE_TOUCH_AND_SCROLL_BARS:String = "touchAndScrollBars";
+
+		/**
 		 * @private
 		 */
 		protected static const INVALIDATION_FLAG_HEADER_FACTORY:String = "headerFactory";
@@ -152,11 +159,21 @@ package feathers.controls
 
 		/**
 		 * The header sub-component.
+		 *
+		 * <p>For internal use in subclasses.</p>
+		 *
+		 * @see #headerFactory
+		 * @see #createHeader()
 		 */
 		protected var header:IFeathersControl;
 
 		/**
 		 * The footer sub-component.
+		 *
+		 * <p>For internal use in subclasses.</p>
+		 *
+		 * @see #footerFactory
+		 * @see #createFooter()
 		 */
 		protected var footer:IFeathersControl;
 
@@ -223,6 +240,8 @@ package feathers.controls
 		 *     return header;
 		 * };</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.core.IFeathersControl
 		 * @see feathers.controls.Header
 		 * @see #headerProperties
@@ -270,6 +289,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * setInitializerForClass( Header, customHeaderInitializer, "my-custom-header");</listing>
+		 *
+		 * @default null
 		 *
 		 * @see #DEFAULT_CHILD_NAME_HEADER
 		 * @see feathers.core.FeathersControl#nameList
@@ -326,6 +347,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * panel.headerProperties.title = "Hello World";</listing>
+		 *
+		 * @default null
 		 *
 		 * @see #headerFactory
 		 * @see feathers.controls.Header
@@ -398,6 +421,8 @@ package feathers.controls
 		 *     return new ScrollContainer();
 		 * };</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.core.IFeathersControl
 		 * @see #footerProperties
 		 */
@@ -444,6 +469,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * setInitializerForClass( ScrollContainer, customFooterInitializer, "my-custom-footer");</listing>
+		 *
+		 * @default null
 		 *
 		 * @see #DEFAULT_CHILD_NAME_FOOTER
 		 * @see feathers.core.FeathersControl#nameList
@@ -499,6 +526,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * panel.footerProperties.verticalScrollPolicy = ScrollContainer.SCROLL_POLICY_OFF;</listing>
+		 *
+		 * @default null
 		 *
 		 * @see #footerFactory
 		 */
@@ -578,7 +607,7 @@ package feathers.controls
 		}
 
 		/**
-		 * @private
+		 * @inheritDoc
 		 */
 		override protected function autoSizeIfNeeded():Boolean
 		{
@@ -641,7 +670,15 @@ package feathers.controls
 		}
 
 		/**
-		 * @private
+		 * Creates and adds the <code>header</code> sub-component and
+		 * removes the old instance, if one exists.
+		 *
+		 * <p>Meant for internal use, and subclasses may override this function
+		 * with a custom implementation.</p>
+		 *
+		 * @see #header
+		 * @see #headerFactory
+		 * @see #customHeaderName
 		 */
 		protected function createHeader():void
 		{
@@ -662,7 +699,15 @@ package feathers.controls
 		}
 
 		/**
-		 * @private
+		 * Creates and adds the <code>footer</code> sub-component and
+		 * removes the old instance, if one exists.
+		 *
+		 * <p>Meant for internal use, and subclasses may override this function
+		 * with a custom implementation.</p>
+		 *
+		 * @see #footer
+		 * @see #footerFactory
+		 * @see #customFooterName
 		 */
 		protected function createFooter():void
 		{

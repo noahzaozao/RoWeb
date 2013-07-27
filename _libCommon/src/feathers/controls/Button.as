@@ -359,23 +359,38 @@ package feathers.controls
 		
 		/**
 		 * The text renderer for the button's label.
+		 *
+		 * <p>For internal use in subclasses.</p>
+		 *
+		 * @see #label
+		 * @see #labelFactory
+		 * @see #createLabel()
 		 */
 		protected var labelTextRenderer:ITextRenderer;
 		
 		/**
-		 * @private
+		 * The currently visible skin. The value will be <code>null</code> if
+		 * there is no currently visible skin.
+		 *
+		 * <p>For internal use in subclasses.</p>
 		 */
 		protected var currentSkin:DisplayObject;
 		
 		/**
-		 * @private
+		 * The currently visible icon. The value will be <code>null</code> if
+		 * there is no currently visible icon.
+		 *
+		 * <p>For internal use in subclasses.</p>
 		 */
 		protected var currentIcon:DisplayObject;
 		
 		/**
-		 * @private
+		 * The saved ID of the currently active touch. The value will be
+		 * <code>-1</code> if there is no currently active touch.
+		 *
+		 * <p>For internal use in subclasses.</p>
 		 */
-		protected var _touchPointID:int = -1;
+		protected var touchPointID:int = -1;
 
 		/**
 		 * @private
@@ -396,7 +411,7 @@ package feathers.controls
 			{
 				this.touchable = false;
 				this.currentState = STATE_DISABLED;
-				this._touchPointID = -1;
+				this.touchPointID = -1;
 			}
 			else
 			{
@@ -416,7 +431,9 @@ package feathers.controls
 		protected var _currentState:String = STATE_UP;
 		
 		/**
-		 * @private
+		 * The current touch state of the button.
+		 *
+		 * <p>For internal use in subclasses.</p>
 		 */
 		protected function get currentState():String
 		{
@@ -452,6 +469,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.label = "Click Me";</listing>
+		 *
+		 * @default null
 		 */
 		public function get label():String
 		{
@@ -486,6 +505,8 @@ package feathers.controls
 		 * button.isToggle = true;
 		 * button.addEventListener( Event.CHANGE, button_changeHandler );</listing>
 		 *
+		 * @default false
+		 *
 		 * @see #event:change
 		 */
 		public function get isToggle():Boolean
@@ -518,6 +539,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.isToggle = true;
 		 * button.isSelected = true;</listing>
+		 *
+		 * @default false
 		 * 
 		 * @see #isToggle
 		 */
@@ -607,6 +630,8 @@ package feathers.controls
 		 * button.label = "Click Me";
 		 * button.defaultIcon = new Image( texture );
 		 * button.gap = 50;</listing>
+		 *
+		 * @default 0
 		 * 
 		 * @see #iconPosition
 		 */
@@ -717,6 +742,13 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.padding = 20;</listing>
+		 *
+		 * @default 0
+		 *
+		 * @see #paddingTop
+		 * @see #paddingRight
+		 * @see #paddingBottom
+		 * @see #paddingLeft
 		 */
 		public function get padding():Number
 		{
@@ -748,6 +780,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.paddingTop = 20;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get paddingTop():Number
 		{
@@ -781,6 +815,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.paddingRight = 20;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get paddingRight():Number
 		{
@@ -814,6 +850,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.paddingBottom = 20;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get paddingBottom():Number
 		{
@@ -847,6 +885,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.paddingLeft = 20;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get paddingLeft():Number
 		{
@@ -879,6 +919,10 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.labelOffsetX = 20;</listing>
+		 *
+		 * @default 0
+		 *
+		 * @see #labelOffsetY
 		 */
 		public function get labelOffsetX():Number
 		{
@@ -911,6 +955,10 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.labelOffsetY = 20;</listing>
+		 *
+		 * @default 0
+		 *
+		 * @see #labelOffsetX
 		 */
 		public function get labelOffsetY():Number
 		{
@@ -943,6 +991,10 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.iconOffsetX = 20;</listing>
+		 *
+		 * @default 0
+		 *
+		 * @see #iconOffsetY
 		 */
 		public function get iconOffsetX():Number
 		{
@@ -975,6 +1027,10 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.iconOffsetY = 20;</listing>
+		 *
+		 * @default 0
+		 *
+		 * @see #iconOffsetX
 		 */
 		public function get iconOffsetY():Number
 		{
@@ -1018,7 +1074,11 @@ package feathers.controls
 		];
 
 		/**
-		 * A list of all valid state names.
+		 * A list of all valid touch state names for use with <code>currentState</code>.
+		 *
+		 * <p>For internal use in subclasses.</p>
+		 *
+		 * @see #currentState
 		 */
 		protected function get stateNames():Vector.<String>
 		{
@@ -1045,6 +1105,8 @@ package feathers.controls
 		 *
 		 * <p>The following function signature is expected:</p>
 		 * <pre>function(target:Button, state:Object, oldSkin:DisplayObject = null):DisplayObject</pre>
+		 *
+		 * @default null
 		 */
 		public function get stateToSkinFunction():Function
 		{
@@ -1074,6 +1136,8 @@ package feathers.controls
 		 *
 		 * <p>The following function signature is expected:</p>
 		 * <pre>function(target:Button, state:Object, oldIcon:DisplayObject = null):DisplayObject</pre>
+		 *
+		 * @default null
 		 */
 		public function get stateToIconFunction():Function
 		{
@@ -1103,6 +1167,8 @@ package feathers.controls
 		 *
 		 * <p>The following function signature is expected:</p>
 		 * <pre>function(target:Button, state:Object):Object</pre>
+		 *
+		 * @default null
 		 */
 		public function get stateToLabelPropertiesFunction():Function
 		{
@@ -1137,6 +1203,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.defaultSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 *
 		 * @see #stateToSkinFunction
 		 * @see #upSkin
@@ -1178,6 +1246,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.defaultSelectedSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultSkin
 		 * @see #selectedUpSkin
@@ -1211,6 +1281,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.upSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultSkin
 		 * @see #selectedUpSkin
@@ -1241,6 +1313,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.downSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultSkin
 		 * @see #selectedDownSkin
@@ -1272,6 +1346,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.hoverSkin = new Image( texture );</listing>
 		 *
+		 * @default null
+		 *
 		 * @see #defaultSkin
 		 * @see #selectedHoverSkin
 		 */
@@ -1301,6 +1377,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.disabledSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultSkin
 		 * @see #selectedDisabledSkin
@@ -1333,6 +1411,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.selectedUpSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultSkin
 		 * @see #defaultSelectedSkin
@@ -1365,6 +1445,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.selectedDownSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultSkin
 		 * @see #defaultSelectedSkin
@@ -1398,6 +1480,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.selectedHoverSkin = new Image( texture );</listing>
 		 *
+		 * @default null
+		 *
 		 * @see #defaultSkin
 		 * @see #defaultSelectedSkin
 		 */
@@ -1429,6 +1513,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.selectedDisabledSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 *
 		 * @see #defaultSkin
 		 * @see #defaultSelectedSkin
@@ -1478,6 +1564,8 @@ package feathers.controls
 		 *     return new TextFieldTextRenderer();
 		 * }</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.core.FeathersControl#defaultTextRendererFactory
 		 * @see feathers.controls.text.BitmapFontTextRenderer
@@ -1525,6 +1613,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.defaultLabelProperties.textFormat = new BitmapFontTextFormat( bitmapFont );
 		 * button.defaultLabelProperties.wordWrap = true;</listing>
+		 *
+		 * @default null
 		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.controls.text.BitmapFontTextRenderer
@@ -1581,6 +1671,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.upLabelProperties.textFormat = new BitmapFontTextFormat( bitmapFont );</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.controls.text.BitmapFontTextRenderer
 		 * @see feathers.controls.text.TextFieldTextRenderer
@@ -1635,6 +1727,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.downLabelProperties.textFormat = new BitmapFontTextFormat( bitmapFont );</listing>
+		 *
+		 * @default null
 		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.controls.text.BitmapFontTextRenderer
@@ -1691,6 +1785,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.hoverLabelProperties.textFormat = new BitmapFontTextFormat( bitmapFont );</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.controls.text.BitmapFontTextRenderer
 		 * @see feathers.controls.text.TextFieldTextRenderer
@@ -1745,6 +1841,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.disabledLabelProperties.textFormat = new BitmapFontTextFormat( bitmapFont );</listing>
+		 *
+		 * @default null
 		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.controls.text.BitmapFontTextRenderer
@@ -1805,6 +1903,8 @@ package feathers.controls
 		 * button.defaultSelectedLabelProperties.textFormat = new BitmapFontTextFormat( bitmapFont );
 		 * button.defaultSelectedLabelProperties.wordWrap = true;</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.controls.text.BitmapFontTextRenderer
 		 * @see feathers.controls.text.TextFieldTextRenderer
@@ -1860,6 +1960,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.selectedUpLabelProperties.textFormat = new BitmapFontTextFormat( bitmapFont );</listing>
+		 *
+		 * @default null
 		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.controls.text.BitmapFontTextRenderer
@@ -1919,6 +2021,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.selectedDownLabelProperties.textFormat = new BitmapFontTextFormat( bitmapFont );</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.controls.text.BitmapFontTextRenderer
 		 * @see feathers.controls.text.TextFieldTextRenderer
@@ -1976,6 +2080,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.selectedHoverLabelProperties.textFormat = new BitmapFontTextFormat( bitmapFont );</listing>
+		 *
+		 * @default null
 		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.controls.text.BitmapFontTextRenderer
@@ -2035,6 +2141,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.selectedDisabledLabelProperties.textFormat = new BitmapFontTextFormat( bitmapFont );</listing>
 		 *
+		 * @default null
+		 *
 		 * @see feathers.core.ITextRenderer
 		 * @see feathers.controls.text.BitmapFontTextRenderer
 		 * @see feathers.controls.text.TextFieldTextRenderer
@@ -2090,6 +2198,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.defaultIcon = new Image( texture );</listing>
 		 *
+		 * @default null
+		 *
 		 * @see #stateToIconFunction
 		 * @see #upIcon
 		 * @see #downIcon
@@ -2130,6 +2240,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.defaultSelectedIcon = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultIcon
 		 * @see #selectedUpIcon
@@ -2163,6 +2275,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.upIcon = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultIcon
 		 * @see #selectedUpIcon
@@ -2193,6 +2307,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.downIcon = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultIcon
 		 * @see #selectedDownIcon
@@ -2224,6 +2340,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.hoverIcon = new Image( texture );</listing>
 		 *
+		 * @default null
+		 *
 		 * @see #defaultIcon
 		 * @see #selectedDownIcon
 		 */
@@ -2253,6 +2371,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.disabledIcon = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultIcon
 		 * @see #selectedDisabledIcon
@@ -2285,6 +2405,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.selectedUpIcon = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultIcon
 		 * @see #defaultSelectedIcon
@@ -2317,6 +2439,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.selectedDownIcon = new Image( texture );</listing>
+		 *
+		 * @default null
 		 * 
 		 * @see #defaultIcon
 		 * @see #defaultSelectedIcon
@@ -2350,6 +2474,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * button.selectedHoverIcon = new Image( texture );</listing>
 		 *
+		 * @default null
+		 *
 		 * @see #defaultIcon
 		 * @see #defaultSelectedIcon
 		 */
@@ -2381,6 +2507,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.selectedDisabledIcon = new Image( texture );</listing>
+		 *
+		 * @default null
 		 *
 		 * @see #defaultIcon
 		 * @see #defaultSelectedIcon
@@ -2417,6 +2545,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * button.autoFlatten = true;</listing>
+		 *
+		 * @default false
 		 */
 		public function get autoFlatten():Boolean
 		{
@@ -2445,6 +2575,11 @@ package feathers.controls
 		 * Used for determining the duration of a long press.
 		 */
 		protected var _touchBeginTime:int;
+
+		/**
+		 * @private
+		 */
+		protected var _hasLongPressed:Boolean = false;
 
 		/**
 		 * @private
@@ -2576,7 +2711,20 @@ package feathers.controls
 		}
 
 		/**
-		 * @private
+		 * If the component's dimensions have not been set explicitly, it will
+		 * measure its content and determine an ideal size for itself. If the
+		 * <code>explicitWidth</code> or <code>explicitHeight</code> member
+		 * variables are set, those value will be used without additional
+		 * measurement. If one is set, but not the other, the dimension with the
+		 * explicit value will not be measured, but the other non-explicit
+		 * dimension will still need measurement.
+		 *
+		 * <p>Calls <code>setSizeInternal()</code> to set up the
+		 * <code>actualWidth</code> and <code>actualHeight</code> member
+		 * variables used for layout.</p>
+		 *
+		 * <p>Meant for internal use, and subclasses may override this function
+		 * with a custom implementation.</p>
 		 */
 		protected function autoSizeIfNeeded():Boolean
 		{
@@ -2679,7 +2827,14 @@ package feathers.controls
 		}
 
 		/**
-		 * @private
+		 * Creates the label text renderer sub-component and
+		 * removes the old instance, if one exists.
+		 *
+		 * <p>Meant for internal use, and subclasses may override this function
+		 * with a custom implementation.</p>
+		 *
+		 * @see #labelTextRenderer
+		 * @see #labelFactory
 		 */
 		protected function createLabel():void
 		{
@@ -2705,7 +2860,9 @@ package feathers.controls
 		}
 
 		/**
-		 * @private
+		 * Sets the <code>currentSkin</code> property.
+		 *
+		 * <p>For internal use in subclasses.</p>
 		 */
 		protected function refreshSkin():void
 		{
@@ -2741,7 +2898,9 @@ package feathers.controls
 		}
 		
 		/**
-		 * @private
+		 * Sets the <code>currentIcon</code> property.
+		 *
+		 * <p>For internal use in subclasses.</p>
 		 */
 		protected function refreshIcon():void
 		{
@@ -2814,7 +2973,9 @@ package feathers.controls
 		}
 		
 		/**
-		 * @private
+		 * Positions and sizes the button's content.
+		 *
+		 * <p>For internal use in subclasses.</p>
 		 */
 		protected function layoutContent():void
 		{
@@ -3046,6 +3207,32 @@ package feathers.controls
 		/**
 		 * @private
 		 */
+		protected function resetTouchState(touch:Touch = null):void
+		{
+			this.touchPointID = -1;
+			this.removeEventListener(Event.ENTER_FRAME, longPress_enterFrameHandler);
+			if(this._isEnabled)
+			{
+				if(this._isHoverSupported && touch)
+				{
+					touch.getLocation(this.stage, HELPER_POINT);
+					const isInBounds:Boolean = this.contains(this.stage.hitTest(HELPER_POINT, true));
+					this.currentState = isInBounds ? STATE_HOVER : STATE_UP;
+				}
+				else
+				{
+					this.currentState = STATE_UP;
+				}
+			}
+			else
+			{
+				this.currentState = STATE_DISABLED;
+			}
+		}
+
+		/**
+		 * @private
+		 */
 		protected function childProperties_onChange(proxy:PropertyProxy, name:Object):void
 		{
 			this.invalidate(INVALIDATION_FLAG_STYLES);
@@ -3076,9 +3263,7 @@ package feathers.controls
 		 */
 		protected function button_removedFromStageHandler(event:Event):void
 		{
-			this._touchPointID = -1;
-			this.removeEventListener(Event.ENTER_FRAME, longPress_enterFrameHandler);
-			this.currentState = this._isEnabled ? STATE_UP : STATE_DISABLED;
+			this.resetTouchState();
 		}
 		
 		/**
@@ -3088,13 +3273,13 @@ package feathers.controls
 		{
 			if(!this._isEnabled)
 			{
-				this._touchPointID = -1;
+				this.touchPointID = -1;
 				return;
 			}
 
-			if(this._touchPointID >= 0)
+			if(this.touchPointID >= 0)
 			{
-				var touch:Touch = event.getTouch(this, null, this._touchPointID);
+				var touch:Touch = event.getTouch(this, null, this.touchPointID);
 				if(!touch)
 				{
 					return;
@@ -3115,27 +3300,16 @@ package feathers.controls
 				}
 				else if(touch.phase == TouchPhase.ENDED)
 				{
-					this._touchPointID = -1;
-					this.removeEventListener(Event.ENTER_FRAME, longPress_enterFrameHandler);
-					if(isInBounds)
+					this.resetTouchState(touch);
+					//we we dispatched a long press, then triggered and change
+					//won't be able to happen until the next touch begins
+					if(!this._hasLongPressed && isInBounds)
 					{
-						if(this._isHoverSupported)
-						{
-							this.currentState = (isInBounds && this._isHoverSupported) ? STATE_HOVER : STATE_UP;
-						}
-						else
-						{
-							this.currentState = STATE_UP;
-						}
 						this.dispatchEventWith(Event.TRIGGERED);
 						if(this._isToggle)
 						{
 							this.isSelected = !this._isSelected;
 						}
-					}
-					else
-					{
-						this.currentState = STATE_UP;
 					}
 				}
 				return;
@@ -3146,10 +3320,11 @@ package feathers.controls
 				if(touch)
 				{
 					this.currentState = STATE_DOWN;
-					this._touchPointID = touch.id;
+					this.touchPointID = touch.id;
 					if(this._isLongPressEnabled)
 					{
 						this._touchBeginTime = getTimer();
+						this._hasLongPressed = false;
 						this.addEventListener(Event.ENTER_FRAME, longPress_enterFrameHandler);
 					}
 					return;
@@ -3176,6 +3351,7 @@ package feathers.controls
 			if(accumulatedTime >= this._longPressDuration)
 			{
 				this.removeEventListener(Event.ENTER_FRAME, longPress_enterFrameHandler);
+				this._hasLongPressed = true;
 				this.dispatchEventWith(FeathersEventType.LONG_PRESS);
 			}
 		}
@@ -3187,14 +3363,14 @@ package feathers.controls
 		{
 			if(event.keyCode == Keyboard.ESCAPE)
 			{
-				this._touchPointID = -1;
+				this.touchPointID = -1;
 				this.currentState = STATE_UP;
 			}
-			if(this._touchPointID >= 0 || event.keyCode != Keyboard.SPACE)
+			if(this.touchPointID >= 0 || event.keyCode != Keyboard.SPACE)
 			{
 				return;
 			}
-			this._touchPointID = int.MAX_VALUE;
+			this.touchPointID = int.MAX_VALUE;
 			this.currentState = STATE_DOWN;
 		}
 
@@ -3203,11 +3379,11 @@ package feathers.controls
 		 */
 		protected function stage_keyUpHandler(event:KeyboardEvent):void
 		{
-			if(this._touchPointID != int.MAX_VALUE || event.keyCode != Keyboard.SPACE)
+			if(this.touchPointID != int.MAX_VALUE || event.keyCode != Keyboard.SPACE)
 			{
 				return;
 			}
-			this._touchPointID = -1;
+			this.touchPointID = -1;
 			this.currentState = STATE_UP;
 			this.dispatchEventWith(Event.TRIGGERED);
 			if(this._isToggle)

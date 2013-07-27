@@ -176,6 +176,20 @@ package feathers.controls.supportClasses
 			this.invalidate(INVALIDATION_FLAG_SIZE);
 		}
 
+		protected var _contentX:Number = 0;
+
+		public function get contentX():Number
+		{
+			return this._contentX;
+		}
+
+		protected var _contentY:Number = 0;
+
+		public function get contentY():Number
+		{
+			return this._contentY;
+		}
+
 		public function get horizontalScrollStep():Number
 		{
 			if(this._typicalItemWidth < this._typicalItemHeight)
@@ -438,7 +452,7 @@ package feathers.controls.supportClasses
 				return;
 			}
 			this._typicalItem = value;
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
+			this.invalidate(INVALIDATION_FLAG_DATA);
 		}
 
 		private var _itemRendererProperties:PropertyProxy;
@@ -692,7 +706,7 @@ package feathers.controls.supportClasses
 				return;
 			}
 			this._typicalHeader = value;
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
+			this.invalidate(INVALIDATION_FLAG_DATA);
 		}
 
 		private var _headerRendererProperties:PropertyProxy;
@@ -787,7 +801,7 @@ package feathers.controls.supportClasses
 				return;
 			}
 			this._typicalFooter = value;
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
+			this.invalidate(INVALIDATION_FLAG_DATA);
 		}
 
 		private var _footerRendererProperties:PropertyProxy;
@@ -846,7 +860,7 @@ package feathers.controls.supportClasses
 				}
 				this._layout.addEventListener(Event.CHANGE, layout_changeHandler);
 			}
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
+			this.invalidate(INVALIDATION_FLAG_LAYOUT);
 		}
 
 		private var _horizontalScrollPosition:Number = 0;
@@ -936,37 +950,40 @@ package feathers.controls.supportClasses
 			const itemRendererInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_ITEM_RENDERER_FACTORY);
 			const stylesInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STYLES);
 			const stateInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_STATE);
+			const layoutInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_LAYOUT);
 
-			if(stylesInvalid || dataInvalid || itemRendererInvalid)
+			if(stylesInvalid || sizeInvalid || dataInvalid || layoutInvalid || itemRendererInvalid)
 			{
 				this.calculateTypicalValues();
 			}
 
-			if(scrollInvalid || sizeInvalid || dataInvalid || itemRendererInvalid)
+			if(scrollInvalid || sizeInvalid || dataInvalid || layoutInvalid || itemRendererInvalid)
 			{
 				this.refreshRenderers(itemRendererInvalid);
 			}
-			if(scrollInvalid || sizeInvalid || dataInvalid || stylesInvalid || itemRendererInvalid)
+			if(scrollInvalid || stylesInvalid || sizeInvalid || dataInvalid || layoutInvalid || itemRendererInvalid)
 			{
 				this.refreshHeaderRendererStyles();
 				this.refreshFooterRendererStyles();
 				this.refreshItemRendererStyles();
 			}
-			if(scrollInvalid || selectionInvalid || sizeInvalid || dataInvalid || itemRendererInvalid)
+			if(scrollInvalid || selectionInvalid || sizeInvalid || dataInvalid || layoutInvalid || itemRendererInvalid)
 			{
 				this.refreshSelection();
 			}
 
-			if(scrollInvalid || stateInvalid || sizeInvalid || dataInvalid || itemRendererInvalid)
+			if(scrollInvalid || stateInvalid || sizeInvalid || dataInvalid || layoutInvalid || itemRendererInvalid)
 			{
 				this.refreshEnabled();
 			}
 
-			if(scrollInvalid || dataInvalid || itemRendererInvalid || sizeInvalid || stylesInvalid)
+			if(scrollInvalid || stylesInvalid || sizeInvalid || dataInvalid || layoutInvalid || itemRendererInvalid)
 			{
 				this._ignoreRendererResizing = true;
 				this._layout.layout(this._layoutItems, HELPER_BOUNDS, HELPER_LAYOUT_RESULT);
 				this._ignoreRendererResizing = false;
+				this._contentX = HELPER_LAYOUT_RESULT.contentX;
+				this._contentY = HELPER_LAYOUT_RESULT.contentY;
 				this.setSizeInternal(HELPER_LAYOUT_RESULT.contentWidth, HELPER_LAYOUT_RESULT.contentHeight, false);
 				this.actualVisibleWidth = HELPER_LAYOUT_RESULT.viewPortWidth;
 				this.actualVisibleHeight = HELPER_LAYOUT_RESULT.viewPortHeight;
@@ -1039,14 +1056,15 @@ package feathers.controls.supportClasses
 				}
 			}
 		}
-		
-		private function invalidateParent():void
+
+		private function invalidateParent(flag:String = INVALIDATION_FLAG_ALL):void
 		{
-			Scroller(this.parent).invalidate(INVALIDATION_FLAG_DATA);
+			Scroller(this.parent).invalidate(flag);
 		}
 
 		private function calculateTypicalValues():void
 		{
+			this._ignoreRendererResizing = true;
 			var typicalHeader:Object = this._typicalHeader;
 			var typicalFooter:Object = this._typicalFooter;
 			if(!typicalHeader || !typicalFooter)
@@ -1066,9 +1084,9 @@ package feathers.controls.supportClasses
 				else
 				{
 					this._typicalHeaderWidth = 0;
-					this._typicalFooterWidth = 0;
-					this._typicalFooterHeight= 0;
 					this._typicalHeaderHeight = 0;
+					this._typicalFooterWidth = 0;
+					this._typicalFooterHeight = 0;
 				}
 			}
 
@@ -1127,24 +1145,59 @@ package feathers.controls.supportClasses
 					this.destroyFooterRenderer(typicalFooterRenderer);
 				}
 			}
+			this._ignoreRendererResizing = false;
+
+			const hasCustomFirstItemRenderer:Boolean = this._firstItemRendererType || this._firstItemRendererFactory != null || this._firstItemRendererName;
+			const hasCustomSingleItemRenderer:Boolean = this._singleItemRendererType || this._singleItemRendererFactory != null || this._singleItemRendererName;
 
 			var typicalItem:Object = this._typicalItem;
-			if(!typicalItem)
+			var groupCount:int = 0;
+			var firstGroupLength:int = 0;
+			if(!typicalItem && this._dataProvider)
 			{
-				if(this._dataProvider && this._dataProvider.getLength() > 0)
+				groupCount = this._dataProvider.getLength();
+				if(groupCount > 0)
 				{
-					typicalItem = this._dataProvider.getItemAt(0);
-				}
-				else
-				{
-					this._typicalItemWidth = 0;
-					this._typicalItemHeight = 0;
-					return;
+					firstGroupLength = this._dataProvider.getLength(0);
+					if(firstGroupLength > 0)
+					{
+						typicalItem = this._dataProvider.getItemAt(0, 0);
+					}
 				}
 			}
+			if(!typicalItem)
+			{
+				this._typicalItemWidth = 0;
+				this._typicalItemHeight = 0;
+				return;
+			}
 
+			this._ignoreRendererResizing = true;
 			needsDestruction = true;
-			var typicalItemRenderer:IGroupedListItemRenderer = this._itemRendererMap[typicalItem];
+			var isFirst:Boolean = false;
+			var isSingle:Boolean = false;
+			var typicalItemRenderer:IGroupedListItemRenderer;
+			if(hasCustomSingleItemRenderer && firstGroupLength == 1)
+			{
+				if(this._singleItemRendererMap)
+				{
+					typicalItemRenderer = this._singleItemRendererMap[typicalItem];
+				}
+				isSingle = true;
+			}
+			else if(hasCustomFirstItemRenderer && firstGroupLength > 1)
+			{
+				if(this._firstItemRendererMap)
+				{
+					typicalItemRenderer = this._firstItemRendererMap[typicalItem];
+				}
+				isFirst = true;
+			}
+			else
+			{
+				typicalItemRenderer = this._itemRendererMap[typicalItem];
+			}
+
 			if(typicalItemRenderer)
 			{
 				needsDestruction = false;
@@ -1153,9 +1206,30 @@ package feathers.controls.supportClasses
 			}
 			else
 			{
-				typicalItemRenderer = this.createItemRenderer(this._inactiveItemRenderers,
-				this._activeItemRenderers, this._itemRendererMap, this._itemRendererType, this._itemRendererFactory,
-				this._itemRendererName, typicalItem, 0, 0, 0, true);
+				if(isFirst)
+				{
+					var type:Class = this._firstItemRendererType ? this._firstItemRendererType : this._itemRendererType;
+					var factory:Function = this._firstItemRendererFactory != null ? this._firstItemRendererFactory : this._itemRendererFactory;
+					var name:String = this._firstItemRendererName ? this._firstItemRendererName : this._itemRendererName;
+					typicalItemRenderer = this.createItemRenderer(this._inactiveFirstItemRenderers,
+						this._activeFirstItemRenderers, this._firstItemRendererMap, type, factory,
+						name, typicalItem, 0, 0, 0, true);
+				}
+				else if(isSingle)
+				{
+					type = this._singleItemRendererType ? this._singleItemRendererType : this._itemRendererType;
+					factory = this._singleItemRendererFactory != null ? this._singleItemRendererFactory : this._itemRendererFactory;
+					name = this._singleItemRendererName ? this._singleItemRendererName : this._itemRendererName;
+					typicalItemRenderer = this.createItemRenderer(this._inactiveSingleItemRenderers,
+						this._activeSingleItemRenderers, this._singleItemRendererMap, type, factory,
+						name, typicalItem, 0, 0, 0, true);
+				}
+				else
+				{
+					typicalItemRenderer = this.createItemRenderer(this._inactiveItemRenderers,
+						this._activeItemRenderers, this._itemRendererMap, this._itemRendererType, this._itemRendererFactory,
+						this._itemRendererName, typicalItem, 0, 0, 0, true);
+				}
 			}
 			this.refreshOneItemRendererStyles(typicalItemRenderer);
 			if(typicalItemRenderer is FeathersControl)
@@ -1168,6 +1242,7 @@ package feathers.controls.supportClasses
 			{
 				this.destroyItemRenderer(typicalItemRenderer);
 			}
+			this._ignoreRendererResizing = false;
 		}
 
 		private function refreshItemRendererStyles():void
@@ -2114,7 +2189,6 @@ package feathers.controls.supportClasses
 		private function dataProvider_changeHandler(event:Event):void
 		{
 			this.invalidate(INVALIDATION_FLAG_DATA);
-			this.invalidateParent();
 		}
 
 		private function dataProvider_addItemHandler(event:Event, indices:Array):void
@@ -2269,8 +2343,8 @@ package feathers.controls.supportClasses
 			{
 				return;
 			}
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
-			this.invalidateParent();
+			this.invalidate(INVALIDATION_FLAG_LAYOUT);
+			this.invalidateParent(INVALIDATION_FLAG_LAYOUT);
 		}
 
 		private function itemRenderer_resizeHandler(event:Event):void
@@ -2286,8 +2360,8 @@ package feathers.controls.supportClasses
 			}
 			const renderer:IGroupedListItemRenderer = IGroupedListItemRenderer(event.currentTarget);
 			layout.resetVariableVirtualCacheAtIndex(renderer.layoutIndex, DisplayObject(renderer));
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
-			this.invalidateParent();
+			this.invalidate(INVALIDATION_FLAG_LAYOUT);
+			this.invalidateParent(INVALIDATION_FLAG_LAYOUT);
 		}
 
 		private function headerOrFooterRenderer_resizeHandler(event:Event):void
@@ -2303,7 +2377,8 @@ package feathers.controls.supportClasses
 			}
 			const renderer:IGroupedListHeaderOrFooterRenderer = IGroupedListHeaderOrFooterRenderer(event.currentTarget);
 			layout.resetVariableVirtualCacheAtIndex(renderer.layoutIndex, DisplayObject(renderer));
-			this.invalidate(INVALIDATION_FLAG_SCROLL);
+			this.invalidate(INVALIDATION_FLAG_LAYOUT);
+			this.invalidateParent(INVALIDATION_FLAG_LAYOUT);
 		}
 
 		private function renderer_changeHandler(event:Event):void

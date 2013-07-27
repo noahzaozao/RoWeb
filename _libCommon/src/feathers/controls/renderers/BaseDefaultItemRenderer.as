@@ -186,7 +186,7 @@ package feathers.controls.renderers
 		/**
 		 * @private
 		 */
-		protected var _owner:IFeathersControl;
+		protected var _owner:Scroller;
 
 		/**
 		 * @private
@@ -582,7 +582,12 @@ package feathers.controls.renderers
 		/**
 		 * @private
 		 */
-		protected var _accessoryTouchPointID:int = -1;
+		protected var accessoryTouchPointID:int = -1;
+
+		/**
+		 * @private
+		 */
+		protected var _stopScrollingOnAccessoryTouch:Boolean = true;
 
 		/**
 		 * If enabled, calls owner.stopScrolling() when TouchEvents are
@@ -596,7 +601,52 @@ package feathers.controls.renderers
 		 *
 		 * @default true
 		 */
-		public var stopScrollingOnAccessoryTouch:Boolean = true;
+		public function get stopScrollingOnAccessoryTouch():Boolean
+		{
+			return this._stopScrollingOnAccessoryTouch;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set stopScrollingOnAccessoryTouch(value:Boolean):void
+		{
+			this._stopScrollingOnAccessoryTouch = value;
+		}
+
+		/**
+		 * @private
+		 */
+		protected var _delayTextureCreationOnScroll:Boolean = false;
+
+		/**
+		 * If enabled, automatically manages the <code>delayTextureCreation</code>
+		 * property on accessory and icon <code>ImageLoader</code> instances
+		 * when the owner scrolls. This applies to the loaders created when the
+		 * following properties are set: <code>accessorySourceField</code>,
+		 * <code>accessorySourceFunction</code>, <code>iconSourceField</code>,
+		 * and <code>iconSourceFunction</code>.
+		 *
+		 * <p>In the following example, any loaded textures won't be uploaded to
+		 * the GPU until the owner stops scrolling:</p>
+		 *
+		 * <listing version="3.0">
+		 * renderer.delayTextureCreationOnScroll = true;</listing>
+		 *
+		 * @default false
+		 */
+		public function get delayTextureCreationOnScroll():Boolean
+		{
+			return this._delayTextureCreationOnScroll;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set delayTextureCreationOnScroll(value:Boolean):void
+		{
+			this._delayTextureCreationOnScroll = value;
+		}
 
 		/**
 		 * @private
@@ -1745,7 +1795,7 @@ package feathers.controls.renderers
 		}
 
 		/**
-		 * @private
+		 * @inheritDoc
 		 */
 		override protected function autoSizeIfNeeded():Boolean
 		{
@@ -1843,6 +1893,12 @@ package feathers.controls.renderers
 			{
 				return width;
 			}
+
+			if(isNaN(width))
+			{
+				width = 0;
+			}
+
 			if(this._iconPosition == ICON_POSITION_LEFT || this._iconPosition == ICON_POSITION_LEFT_BASELINE || this._iconPosition == ICON_POSITION_RIGHT || this._iconPosition == ICON_POSITION_RIGHT_BASELINE)
 			{
 				width += this.currentIcon.width + gap;
@@ -1862,6 +1918,11 @@ package feathers.controls.renderers
 			if(!this.accessory || isNaN(this.accessory.width))
 			{
 				return width;
+			}
+
+			if(isNaN(width))
+			{
+				width = 0;
 			}
 
 			if(this._accessoryPosition == ACCESSORY_POSITION_LEFT || this._accessoryPosition == ACCESSORY_POSITION_RIGHT)
@@ -1890,6 +1951,12 @@ package feathers.controls.renderers
 			{
 				return height;
 			}
+
+			if(isNaN(height))
+			{
+				height = 0;
+			}
+
 			if(this._iconPosition == ICON_POSITION_TOP || this._iconPosition == ICON_POSITION_BOTTOM)
 			{
 				height += this.currentIcon.height + gap;
@@ -1910,6 +1977,12 @@ package feathers.controls.renderers
 			{
 				return height;
 			}
+
+			if(isNaN(height))
+			{
+				height = 0;
+			}
+
 			if(this._accessoryPosition == ACCESSORY_POSITION_TOP || this._accessoryPosition == ACCESSORY_POSITION_BOTTOM)
 			{
 				var adjustedAccessoryGap:Number = isNaN(this._accessoryGap) ? gap : this._accessoryGap;
@@ -1931,7 +2004,7 @@ package feathers.controls.renderers
 		 */
 		protected function commitData():void
 		{
-			if(this._owner)
+			if(this._data && this._owner)
 			{
 				if(this._itemHasLabel)
 				{
@@ -1990,6 +2063,11 @@ package feathers.controls.renderers
 			//wondering, that's intentional. the currentIcon will set to the
 			//defaultIcon elsewhere.
 			this.defaultIcon = newIcon;
+
+			if(this.iconImage)
+			{
+				this.iconImage.delayTextureCreation = this._delayTextureCreationOnScroll && this._owner.isScrolling;
+			}
 		}
 
 		/**
@@ -2047,6 +2125,11 @@ package feathers.controls.renderers
 					this.accessory.addEventListener(FeathersEventType.RESIZE, accessory_resizeHandler);
 				}
 				this.addChild(this.accessory);
+			}
+			
+			if(this.accessoryImage)
+			{
+				this.accessoryImage.delayTextureCreation = this._delayTextureCreationOnScroll && this._owner.isScrolling;
 			}
 		}
 
@@ -2450,22 +2533,52 @@ package feathers.controls.renderers
 		/**
 		 * @private
 		 */
-		protected function handleOwnerScroll():void
+		protected function owner_scrollStartHandler(event:Event):void
 		{
-			this._touchPointID = -1;
+			if(this._delayTextureCreationOnScroll)
+			{
+				if(this.accessoryImage)
+				{
+					this.accessoryImage.delayTextureCreation = true;
+				}
+				if(this.iconImage)
+				{
+					this.iconImage.delayTextureCreation = true;
+				}
+			}
+
+			if(this.touchPointID < 0 && this.accessoryTouchPointID < 0)
+			{
+				return;
+			}
+			this.resetTouchState();
 			if(this._stateDelayTimer && this._stateDelayTimer.running)
 			{
 				this._stateDelayTimer.stop();
 			}
 			this._delayedCurrentState = null;
-			if(this._currentState != Button.STATE_UP)
-			{
-				super.currentState = Button.STATE_UP;
-			}
 
-			if(this._accessoryTouchPointID >= 0)
+			if(this.accessoryTouchPointID >= 0)
 			{
-				Scroller(this._owner).stopScrolling();
+				this._owner.stopScrolling();
+			}
+		}
+
+		/**
+		 * @private
+		 */
+		protected function owner_scrollCompleteHandler(event:Event):void
+		{
+			if(this._delayTextureCreationOnScroll)
+			{
+				if(this.accessoryImage)
+				{
+					this.accessoryImage.delayTextureCreation = false;
+				}
+				if(this.iconImage)
+				{
+					this.iconImage.delayTextureCreation = false;
+				}
 			}
 		}
 
@@ -2475,7 +2588,7 @@ package feathers.controls.renderers
 		override protected function button_removedFromStageHandler(event:Event):void
 		{
 			super.button_removedFromStageHandler(event);
-			this._accessoryTouchPointID = -1;
+			this.accessoryTouchPointID = -1;
 		}
 
 		/**
@@ -2510,11 +2623,29 @@ package feathers.controls.renderers
 		/**
 		 * @private
 		 */
+		override protected function button_touchHandler(event:TouchEvent):void
+		{
+			if(this.accessory && this.touchPointID < 0)
+			{
+				//ignore all touches on accessory. return to up state.
+				var touch:Touch = event.getTouch(this.accessory);
+				if(touch)
+				{
+					this.currentState = Button.STATE_UP;
+					return;
+				}
+			}
+			super.button_touchHandler(event);
+		}
+
+		/**
+		 * @private
+		 */
 		protected function accessory_touchHandler(event:TouchEvent):void
 		{
 			if(!this._isEnabled)
 			{
-				this._accessoryTouchPointID = -1;
+				this.accessoryTouchPointID = -1;
 				return;
 			}
 			if(!this.stopScrollingOnAccessoryTouch ||
@@ -2525,14 +2656,14 @@ package feathers.controls.renderers
 				return;
 			}
 
-			if(this._accessoryTouchPointID >= 0)
+			if(this.accessoryTouchPointID >= 0)
 			{
-				var touch:Touch = event.getTouch(this.accessory, TouchPhase.ENDED, this._accessoryTouchPointID);
+				var touch:Touch = event.getTouch(this.accessory, TouchPhase.ENDED, this.accessoryTouchPointID);
 				if(!touch)
 				{
 					return;
 				}
-				this._accessoryTouchPointID = -1;
+				this.accessoryTouchPointID = -1;
 			}
 			else //if we get here, we don't have a saved touch ID yet
 			{
@@ -2541,7 +2672,7 @@ package feathers.controls.renderers
 				{
 					return;
 				}
-				this._accessoryTouchPointID = touch.id;
+				this.accessoryTouchPointID = touch.id;
 			}
 		}
 

@@ -11,6 +11,7 @@ package feathers.controls
 	import feathers.core.IFeathersControl;
 	import feathers.core.PopUpManager;
 	import feathers.events.FeathersEventType;
+	import feathers.utils.display.getDisplayObjectDepthFromStage;
 
 	import flash.events.KeyboardEvent;
 	import flash.geom.Point;
@@ -662,6 +663,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.content = new Image( texture );</listing>
+		 *
+		 * @default null
 		 */
 		public function get content():DisplayObject
 		{
@@ -725,6 +728,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * callout.origin = button;</listing>
 		 *
+		 * @default null
+		 *
 		 * @see #supportedDirections
 		 * @see #arrowPosition
 		 * @see #arrowOffset
@@ -781,6 +786,8 @@ package feathers.controls
 		 * <listing version="3.0">
 		 * callout.supportedDirections = Callout.DIRECTION_VERTICAL;</listing>
 		 *
+		 * @default Callout.DIRECTION_ANY
+		 *
 		 * @see #origin
 		 * @see #DIRECTION_ANY
 		 * @see #DIRECTION_VERTICAL
@@ -812,6 +819,13 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.padding = 20;</listing>
+		 *
+		 * @default 0
+		 *
+		 * @see #paddingTop
+		 * @see #paddingRight
+		 * @see #paddingBottom
+		 * @see #paddingLeft
 		 */
 		public function get padding():Number
 		{
@@ -843,6 +857,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.paddingTop = 20;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get paddingTop():Number
 		{
@@ -876,6 +892,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.paddingRight = 20;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get paddingRight():Number
 		{
@@ -909,6 +927,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.paddingBottom = 20;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get paddingBottom():Number
 		{
@@ -942,6 +962,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.paddingLeft = 20;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get paddingLeft():Number
 		{
@@ -1039,6 +1061,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.backgroundSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 */
 		public function get backgroundSkin():DisplayObject
 		{
@@ -1089,6 +1113,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.bottomArrowSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 */
 		public function get bottomArrowSkin():DisplayObject
 		{
@@ -1141,6 +1167,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.topArrowSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 */
 		public function get topArrowSkin():DisplayObject
 		{
@@ -1193,6 +1221,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.leftArrowSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 */
 		public function get leftArrowSkin():DisplayObject
 		{
@@ -1245,6 +1275,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.rightArrowSkin = new Image( texture );</listing>
+		 *
+		 * @default null
 		 */
 		public function get rightArrowSkin():DisplayObject
 		{
@@ -1298,6 +1330,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.topArrowGap = -4;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get topArrowGap():Number
 		{
@@ -1333,6 +1367,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.bottomArrowGap = -4;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get bottomArrowGap():Number
 		{
@@ -1368,6 +1404,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.rightArrowGap = -4;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get rightArrowGap():Number
 		{
@@ -1403,6 +1441,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.leftArrowGap = -4;</listing>
+		 *
+		 * @default 0
 		 */
 		public function get leftArrowGap():Number
 		{
@@ -1447,6 +1487,8 @@ package feathers.controls
 		 *
 		 * <listing version="3.0">
 		 * callout.arrowOffset = 20;</listing>
+		 *
+		 * @default 0
 		 *
 		 * @see #arrowPosition
 		 * @see #origin
@@ -1519,7 +1561,6 @@ package feathers.controls
 		override protected function initialize():void
 		{
 			this.stage.addEventListener(TouchEvent.TOUCH, stage_touchHandler);
-			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler, false, int.MAX_VALUE, true);
 			this.addEventListener(Event.REMOVED_FROM_STAGE, callout_removedFromStageHandler);
 		}
 
@@ -1561,7 +1602,20 @@ package feathers.controls
 		}
 
 		/**
-		 * @private
+		 * If the component's dimensions have not been set explicitly, it will
+		 * measure its content and determine an ideal size for itself. If the
+		 * <code>explicitWidth</code> or <code>explicitHeight</code> member
+		 * variables are set, those value will be used without additional
+		 * measurement. If one is set, but not the other, the dimension with the
+		 * explicit value will not be measured, but the other non-explicit
+		 * dimension will still need measurement.
+		 *
+		 * <p>Calls <code>setSizeInternal()</code> to set up the
+		 * <code>actualWidth</code> and <code>actualHeight</code> member
+		 * variables used for layout.</p>
+		 *
+		 * <p>Meant for internal use, and subclasses may override this function
+		 * with a custom implementation.</p>
 		 */
 		protected function autoSizeIfNeeded():Boolean
 		{
@@ -1785,6 +1839,11 @@ package feathers.controls
 		 */
 		protected function callout_addedToStageHandler(event:Event):void
 		{
+			//using priority here is a hack so that objects higher up in the
+			//display list have a chance to cancel the event first.
+			var priority:int = -getDisplayObjectDepthFromStage(this);
+			Starling.current.nativeStage.addEventListener(KeyboardEvent.KEY_DOWN, callout_nativeStage_keyDownHandler, false, priority, true);
+
 			//to avoid touch events bubbling up to the callout and causing it to
 			//close immediately, we wait one frame before allowing it to close
 			//based on touches.
@@ -1798,7 +1857,7 @@ package feathers.controls
 		protected function callout_removedFromStageHandler(event:Event):void
 		{
 			this.stage.removeEventListener(TouchEvent.TOUCH, stage_touchHandler);
-			Starling.current.nativeStage.removeEventListener(KeyboardEvent.KEY_DOWN, stage_keyDownHandler);
+			Starling.current.nativeStage.removeEventListener(KeyboardEvent.KEY_DOWN, callout_nativeStage_keyDownHandler);
 		}
 
 		/**
@@ -1859,16 +1918,19 @@ package feathers.controls
 		/**
 		 * @private
 		 */
-		protected function stage_keyDownHandler(event:KeyboardEvent):void
+		protected function callout_nativeStage_keyDownHandler(event:KeyboardEvent):void
 		{
+			if(event.isDefaultPrevented())
+			{
+				//someone else already handled this one
+				return;
+			}
 			if(!this.closeOnKeys || this.closeOnKeys.indexOf(event.keyCode) < 0)
 			{
 				return;
 			}
 			//don't let the OS handle the event
 			event.preventDefault();
-			//don't let other event handlers handle the event
-			event.stopImmediatePropagation();
 			this.close(this.disposeOnSelfClose);
 		}
 

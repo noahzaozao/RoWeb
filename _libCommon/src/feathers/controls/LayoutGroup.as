@@ -17,6 +17,7 @@ package feathers.controls
 	import feathers.layout.ViewPortBounds;
 
 	import flash.geom.Point;
+	import flash.geom.Rectangle;
 
 	import starling.display.DisplayObject;
 	import starling.events.Event;
@@ -96,6 +97,8 @@ package feathers.controls
 		 * layout.gap = 20;
 		 * layout.padding = 20;
 		 * container.layout = layout;</listing>
+		 *
+		 * @default null
 		 */
 		public function get layout():ILayout
 		{
@@ -287,7 +290,8 @@ package feathers.controls
 		override protected function draw():void
 		{
 			const layoutInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_LAYOUT);
-			const sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
+			var sizeInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_SIZE);
+			const clippingInvalid:Boolean = this.isInvalid(INVALIDATION_FLAG_CLIPPING);
 
 			if(sizeInvalid || layoutInvalid)
 			{
@@ -305,7 +309,7 @@ package feathers.controls
 					this._ignoreChildChanges = true;
 					this._layout.layout(this.items, HELPER_BOUNDS, HELPER_LAYOUT_RESULT);
 					this._ignoreChildChanges = false;
-					this.setSizeInternal(HELPER_LAYOUT_RESULT.contentWidth, HELPER_LAYOUT_RESULT.contentHeight, false);
+					sizeInvalid = this.setSizeInternal(HELPER_LAYOUT_RESULT.contentWidth, HELPER_LAYOUT_RESULT.contentHeight, false) || sizeInvalid;
 				}
 				else
 				{
@@ -332,8 +336,13 @@ package feathers.controls
 						}
 					}
 					this._ignoreChildChanges = false;
-					this.setSizeInternal(maxX, maxY, false);
+					sizeInvalid = this.setSizeInternal(maxX, maxY, false) || sizeInvalid;
 				}
+			}
+
+			if(sizeInvalid || clippingInvalid)
+			{
+				this.refreshClipRect();
 			}
 		}
 
@@ -353,6 +362,31 @@ package feathers.controls
 				this.addChild(child);
 			}
 			this._mxmlContentIsReady = true;
+		}
+
+		/**
+		 * @private
+		 */
+		protected function refreshClipRect():void
+		{
+			if(this._clipContent && this.actualWidth > 0 && this.actualHeight > 0)
+			{
+				if(!this.clipRect)
+				{
+					this.clipRect = new Rectangle();
+				}
+
+				const clipRect:Rectangle = this.clipRect;
+				clipRect.x = 0;
+				clipRect.y = 0;
+				clipRect.width = this.actualWidth;
+				clipRect.height = this.actualHeight;
+				this.clipRect = clipRect;
+			}
+			else
+			{
+				this.clipRect = null;
+			}
 		}
 
 		/**
