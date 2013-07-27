@@ -34,9 +34,9 @@ package com.inoah.ro.managers
         
         public function BattleMgr( scene:BattleMap )
         {
-            super(GameConsts.BATTLE_MEDIATOR, viewComponent);
+            super(GameConsts.BATTLE_MEDIATOR);
             _animationUnitList = new Vector.<IAnimatable>();
-            _scene = viewComponent as BattleMap;
+            _scene = scene
         }
         
         override public function listNotificationInterests():Array
@@ -178,7 +178,6 @@ package com.inoah.ro.managers
         private function onRemoveAtkTarget( atkTarget:CharacterObject ):void
         {
             _scene.removeObject( atkTarget );
-            
         }
         
         public function appendAnimateUnit(animateUnit:IAnimatable):void
