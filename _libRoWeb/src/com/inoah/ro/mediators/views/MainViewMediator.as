@@ -1,5 +1,6 @@
 package com.inoah.ro.mediators.views
 {
+    import com.inoah.ro.managers.DisplayMgr;
     import com.inoah.ro.ui.MainView;
     import com.inoah.ro.ui.mainViewChildren.ChatView;
     import com.inoah.ro.ui.mainViewChildren.JoyStickView;
@@ -11,7 +12,9 @@ package com.inoah.ro.mediators.views
     import inoah.game.Global;
     import inoah.game.consts.GameCommands;
     import inoah.game.consts.GameConsts;
+    import inoah.game.consts.MgrTypeConsts;
     import inoah.game.interfaces.ITickable;
+    import inoah.game.managers.MainMgr;
     
     import pureMVC.interfaces.INotification;
     import pureMVC.patterns.mediator.Mediator;
@@ -27,7 +30,10 @@ package com.inoah.ro.mediators.views
             view.y = 280 - view.height / 2;
             facade.registerMediator( new AlertViewMediator( view ) );
             
-            var joyStickview:JoyStickView = new JoyStickView( mainView.joyStick );
+            mainView.joyStick.remove();
+            var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
+            var joyStickview:JoyStickView = new JoyStickView();
+            displayMgr.joyStickLevel.addChild( joyStickview );
             facade.registerMediator( new JoyStickViewMediator( joyStickview ) );
             //
             if( !Global.IS_MOBILE )

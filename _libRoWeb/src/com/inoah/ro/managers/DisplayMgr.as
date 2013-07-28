@@ -31,9 +31,13 @@ package com.inoah.ro.managers
                 _stage.addChild( _displayList[i] );
             }
             _displayStarlingList = new Vector.<starling.display.Sprite>();
-            for( i = 0;i< 2; i++)
+            for( i = 0;i< 4; i++)
             {
                 _displayStarlingList[i] = new starling.display.Sprite();
+                if( i < 3 )
+                {
+                    _displayStarlingList[i].touchable = false;
+                }
                 _starlingRoot.addChild( _displayStarlingList[i] );
             }
         }
@@ -46,11 +50,19 @@ package com.inoah.ro.managers
         {
             return _displayList[0];
         }
+        public function get joyStickLevel():starling.display.Sprite
+        {
+            return _displayStarlingList[3];
+        }
         public function get unitLevel():starling.display.Sprite
+        {
+            return _displayStarlingList[2];
+        }
+        public function get mapLevel():starling.display.Sprite
         {
             return _displayStarlingList[1];
         }
-        public function get mapLevel():starling.display.Sprite
+        public function get bgLevel():starling.display.Sprite
         {
             return _displayStarlingList[0];
         }

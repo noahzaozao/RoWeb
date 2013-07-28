@@ -14,7 +14,7 @@ package
     import flash.text.TextFieldAutoSize;
     import flash.text.TextFormat;
     
-    [SWF(width="960", height="560", backgroundColor="0x0")]
+    [SWF(width="960", height="640", backgroundColor="0x0")]
     public class perloader extends VersionSprite
     {
         private var _gameLoader:Loader;

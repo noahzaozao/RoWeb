@@ -152,6 +152,7 @@ package inoah.game.map
                 
                 textureIndex = _currentTextureAtlasIndexList[ _mapInfo.layers[ index ].objects[ i ].gid ];
                 image = new Image( _currentTextureAtlasList[textureIndex].getTexture( _mapInfo.layers[ index ].objects[ i ].gid.toString() ) );
+                image.touchable = false;
                 
                 if( bx > by )
                 {
@@ -187,7 +188,8 @@ package inoah.game.map
                 for( var j:int=0;j< bh;j++)
                 {
                     textureIndex = _currentTextureAtlasIndexList[ _mapInfo.layers[index].data[ j + i * bw ]];
-                    image = new Image( _currentTextureAtlasList[textureIndex].getTexture( _mapInfo.layers[index].data[ j + i * bw ].toString() ) )
+                    image = new Image( _currentTextureAtlasList[textureIndex].getTexture( _mapInfo.layers[index].data[ j + i * bw ].toString() ) );
+                    image.touchable = false;
                     image.x =w / 2 - ( i + 1 ) * Global.TILE_W / 2 + j * Global.TILE_W / 2;
                     image.y = i * Global.TILE_H / 4 + j * Global.TILE_H / 4;
                     _container.addChild( image );

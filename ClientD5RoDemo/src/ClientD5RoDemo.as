@@ -1,12 +1,13 @@
 package
 {
-    import inoah.game.Global;
-    import inoah.game.interfaces.ITickable;
     import com.inoah.ro.mediators.GameMediator;
     
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
     import flash.events.Event;
+    
+    import inoah.game.Global;
+    import inoah.game.interfaces.ITickable;
     
     import pureMVC.interfaces.IFacade;
     import pureMVC.interfaces.IMediator;
@@ -29,7 +30,7 @@ package
             stage.align = StageAlign.TOP_LEFT;
             stage.scaleMode = StageScaleMode.NO_SCALE;
             
-            //            RoGlobal.isIPhone = true;
+            Global.IS_MOBILE = true;
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;
             
