@@ -1,6 +1,7 @@
 package inoah.game.map
 {
     import flash.display.Bitmap;
+    import flash.geom.Point;
     
     import inoah.data.map.MapInfo;
     import inoah.data.map.MapTileSetInfo;
@@ -14,6 +15,7 @@ package inoah.game.map
     
     import starling.display.DisplayObjectContainer;
     import starling.display.Image;
+    import starling.textures.RenderTexture;
     import starling.textures.Texture;
     import starling.textures.TextureAtlas;
     
@@ -33,6 +35,7 @@ package inoah.game.map
         
         protected var _levelList:Vector.<IMapLevel>;
         
+        protected var _mapImageList:Vector.<Image>;
         
         public function MapBase(  container:DisplayObjectContainer )
         {
@@ -43,6 +46,7 @@ package inoah.game.map
             _currentResList = new Vector.<Bitmap>();
             _currentTextureAtlasIndexList = new Vector.<int>();
             _currentTextureAtlasList = new Vector.<TextureAtlas>();
+            _mapImageList = new Vector.<Image>();
         }
         
         public function init( mapInfo:MapInfo ):void
@@ -116,7 +120,7 @@ package inoah.game.map
                 }
                 else if( _mapInfo.layers[i].type == "objectgroup" )
                 {
-                    drawObject( i );
+//                    drawObject( i );
                 }
             }
         }
@@ -177,24 +181,80 @@ package inoah.game.map
         {
             var textureIndex:int;
             
+            var mapDataArr:Vector.<uint> = _mapInfo.layers[index].data;
             var bw:int = _mapInfo.layers[index].width;
             var bh:int = _mapInfo.layers[index].height;
             var w:int = _mapInfo.layers[index].width * Global.TILE_W;
             var h:int = _mapInfo.layers[index].height * Global.TILE_H;
             
+            var pointList:Vector.<Point> = new Vector.<Point>();
+            pointList.push( new Point() );
+            pointList.push( new Point() );
+            pointList.push( new Point() );
+            pointList.push( new Point() );
+            
+            var tmpRenderTexture:Vector.<RenderTexture> = new Vector.<RenderTexture>();
+            tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
+            tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
+            tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
+            tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
+            
             var image:Image;
-            for( var i:int=0;i< bw;i++)
+            //0-25 , 25-50
+            for( var i:int = 0 ;i< bh ;i++)
             {
-                for( var j:int=0;j< bh;j++)
+                for( var j:int = 0;j< bw ;j++)
                 {
-                    textureIndex = _currentTextureAtlasIndexList[ _mapInfo.layers[index].data[ j + i * bw ]];
-                    image = new Image( _currentTextureAtlasList[textureIndex].getTexture( _mapInfo.layers[index].data[ j + i * bw ].toString() ) );
-                    image.touchable = false;
-                    image.x =w / 2 - ( i + 1 ) * Global.TILE_W / 2 + j * Global.TILE_W / 2;
-                    image.y = i * Global.TILE_H / 4 + j * Global.TILE_H / 4;
-                    _container.addChild( image );
+                    textureIndex = _currentTextureAtlasIndexList[ mapDataArr[ j + i * bw ]];
+                    image = new Image( _currentTextureAtlasList[textureIndex].getTexture( mapDataArr[ j + i * bw ].toString() ) );
+                    //                    image.x =w / 2 - ( i + 1 ) * Global.TILE_W / 2 + j * Global.TILE_W / 2;
+                    //                    image.y = i * Global.TILE_H / 2 + j * Global.TILE_H / 2;
+                    if( j < 25 && i < 25 )
+                    {
+                        image.x =w / 4 - ( i + 1 ) * Global.TILE_W / 2 + j * Global.TILE_W / 2;
+                        image.y = i * Global.TILE_H / 2 + j * Global.TILE_H / 2;
+                        tmpRenderTexture[0].draw( image );
+                    }
+                    else if( j >= 25 && i < 25 )
+                    {
+                        image.x =w / 4 - ( i + 1 ) * Global.TILE_W / 2 + ( j - 25 ) * Global.TILE_W / 2;
+                        image.y = i * Global.TILE_H / 2 + ( j - 25 ) * Global.TILE_H / 2;
+                        tmpRenderTexture[1].draw( image );
+                    }
+                    else if( j < 25 && i >= 25 )
+                    {
+                        image.x =w / 4 - ( i + 1 - 25 ) * Global.TILE_W / 2 +  j * Global.TILE_W / 2;
+                        image.y = ( i - 25 ) * Global.TILE_H / 2 + j * Global.TILE_H / 2;
+                        tmpRenderTexture[2].draw( image );
+                    }
+                    else if( j>= 25 && i >= 25 )
+                    {
+                        image.x =w / 4 - ( i + 1 - 25 ) * Global.TILE_W / 2 + ( j - 25 ) * Global.TILE_W / 2;
+                        image.y = ( i - 25 ) * Global.TILE_H / 2 + ( j - 25 ) * Global.TILE_H / 2;
+                        tmpRenderTexture[3].draw( image );
+                    }
                 }
             }
+            _mapImageList[ 0 ] = new Image( tmpRenderTexture[0] );
+            _mapImageList[ 0 ].touchable = false;
+            _mapImageList[ 0 ].x = 800;
+            _mapImageList[ 0 ].y = 0;
+            _container.addChild( _mapImageList[ 0 ] );
+            _mapImageList[ 1 ] = new Image( tmpRenderTexture[1] );
+            _mapImageList[ 1 ].touchable = false;
+            _mapImageList[ 1 ].x = 1600;
+            _mapImageList[ 1 ].y = 400;
+            _container.addChild( _mapImageList[ 1 ] );
+            _mapImageList[ 2 ] = new Image( tmpRenderTexture[2] );
+            _mapImageList[ 2 ].touchable = false;
+            _mapImageList[ 2 ].x = 0;
+            _mapImageList[ 2 ].y = 400;
+            _container.addChild( _mapImageList[ 2 ] );
+            _mapImageList[ 3 ] = new Image( tmpRenderTexture[3] );
+            _mapImageList[ 3 ].touchable = false;
+            _mapImageList[ 3 ].x = 800;
+            _mapImageList[ 3 ].y = 800;
+            _container.addChild( _mapImageList[ 3 ] );
         }
     }
 }

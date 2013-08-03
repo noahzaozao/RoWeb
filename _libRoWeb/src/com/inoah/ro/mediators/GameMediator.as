@@ -1,5 +1,7 @@
 package com.inoah.ro.mediators
 {
+    import com.adobe.utils.AGALMacroAssembler;
+    import com.inoah.ro.LuaDisplayObject;
     import com.inoah.ro.starlingMain;
     import com.inoah.ro.managers.BattleMgr;
     import com.inoah.ro.managers.DisplayMgr;
@@ -7,11 +9,22 @@ package com.inoah.ro.mediators
     import com.inoah.ro.mediators.views.MainViewMediator;
     import com.inoah.ro.ui.MainView;
     
+    import flash.display.Loader;
     import flash.display.Sprite;
     import flash.display.Stage;
+    import flash.events.AsyncErrorEvent;
+    import flash.events.Event;
+    import flash.events.IOErrorEvent;
     import flash.events.MouseEvent;
+    import flash.events.SecurityErrorEvent;
+    import flash.external.ExternalInterface;
+    import flash.net.URLLoader;
+    import flash.net.URLRequest;
+    import flash.system.ApplicationDomain;
+    import flash.system.LoaderContext;
     import flash.text.TextField;
     import flash.text.TextFormat;
+    import flash.utils.getDefinitionByName;
     
     import inoah.game.Global;
     import inoah.game.consts.GameCommands;
@@ -24,6 +37,8 @@ package com.inoah.ro.mediators
     import inoah.game.managers.AssetMgr;
     import inoah.game.managers.MainMgr;
     import inoah.game.maps.BattleMap;
+    
+    import interfaces.ILuaMain;
     
     import pureMVC.interfaces.IMediator;
     import pureMVC.interfaces.INotification;
@@ -44,12 +59,48 @@ package com.inoah.ro.mediators
         private var _battleMgr:ITickable;
         
         private var _couldTick:Boolean;
+        private var _luaDllLoader:Loader;
+        public static var luaMain:ILuaMain;
+        private var _luaScriptLoader:URLLoader;
         
         public function GameMediator( stage:Stage , viewComponent:Object=null )
         {
             super( GameConsts.GAME_MEDIATOR , viewComponent);
             _stage = stage;
             
+            var loaderContext:LoaderContext = new LoaderContext( false , ApplicationDomain.currentDomain );
+            loaderContext.applicationDomain = ApplicationDomain.currentDomain;
+            _luaDllLoader = new Loader();
+            _luaDllLoader.contentLoaderInfo.addEventListener( Event.COMPLETE , onLuaDllLoaded );
+            _luaDllLoader.load( new URLRequest( "dll/dllLua.swf" ) , loaderContext );
+        }
+        
+        protected function onLuaDllLoaded( e:Event ):void
+        {
+            _luaDllLoader.contentLoaderInfo.removeEventListener( Event.COMPLETE , onLuaDllLoaded );
+            var classLuaMain:Class = getDefinitionByName( "LuaMain" ) as Class;
+            LuaDisplayObject;
+            AGALMacroAssembler;
+            luaMain = new classLuaMain();
+            
+            _luaScriptLoader = new URLLoader(new URLRequest("game2.lua"))
+            _luaScriptLoader.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onError)
+            _luaScriptLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onError)
+            _luaScriptLoader.addEventListener(IOErrorEvent.IO_ERROR, onError)
+            _luaScriptLoader.addEventListener(Event.COMPLETE, onComplete)
+            
+            //            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
+        }
+        
+        private function onComplete(e:*):void
+        {
+            starlingMain.luascript = _luaScriptLoader.data;
+            _luaScriptLoader = null;
+            initStarling()
+        }
+        
+        private function initStarling():void
+        {
             Starling.handleLostContext = true;
             Starling.multitouchEnabled = true;
             _starling = new Starling( starlingMain, _stage );
@@ -57,8 +108,18 @@ package com.inoah.ro.mediators
             _starling.showStats = true;
             _starling.showStatsAt(HAlign.RIGHT, VAlign.CENTER);
             _starling.start();
-            
-            //            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
+        }
+        
+        public static function onError(e:*):void
+        {
+            if(ExternalInterface.available) 
+            {
+                ExternalInterface.call("reportError", e.toString());
+            }
+            else
+            {
+                trace(e);
+            }
         }
         
         protected function onRightClick( e:MouseEvent):void
@@ -70,6 +131,7 @@ package com.inoah.ro.mediators
         {
             var arr:Array = super.listNotificationInterests();
             arr.push( GameCommands.LOGIN );
+            arr.push( GameCommands.RUN_LUA_SCRIPT );
             return arr;
         }
         
@@ -82,6 +144,12 @@ package com.inoah.ro.mediators
                 {
                     arr = notification.getBody() as Array;
                     onLoginHandler( arr[0] );
+                    break;
+                }
+                case GameCommands.RUN_LUA_SCRIPT:
+                {
+                    arr = notification.getBody() as Array;
+                    luaMain.runScript( arr[0] );
                     break;
                 }
                 default:

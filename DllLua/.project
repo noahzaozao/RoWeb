@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>ClientD5RoDemo</name>
+	<name>DllLua</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -14,11 +14,4 @@
 	<natures>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>[source path] _resClientRo</name>
-			<type>2</type>
-			<location>F:/RoWeb/_resClientRo</location>
-		</link>
-	</linkedResources>
 </projectDescription>

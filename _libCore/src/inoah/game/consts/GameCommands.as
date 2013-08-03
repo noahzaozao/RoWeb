@@ -3,6 +3,7 @@ package inoah.game.consts
     public class GameCommands
     {
         public static const LOGIN:String = "GameCommands.LOGIN";
+        public static const RUN_LUA_SCRIPT:String = "GameCommands.RUN_LUA_SCRIPT";
         public static const RIGHT_CLICK:String = "GameCommands.RIGHT_CLICK";
         
         public static const JOY_STICK_UP:String = "GameCommands.JOY_STICK_UP";

@@ -45,7 +45,7 @@ package
             _gameLoader.contentLoaderInfo.addEventListener( Event.COMPLETE, onGameLoaded );
             _gameLoader.contentLoaderInfo.addEventListener( ProgressEvent.PROGRESS, onGameLoadProgress );
             _gameLoader.contentLoaderInfo.addEventListener( ErrorEvent.ERROR , onGameLoadError );
-            _gameLoader.load( new URLRequest("ClientD5RoDemo.swf?v=" + Math.random() ) );
+            _gameLoader.load( new URLRequest("Client.swf?v=" + Math.random() ) );
         }
         
         protected function onUncaughtErrorHandle(event:UncaughtErrorEvent):void

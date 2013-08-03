@@ -64,7 +64,7 @@ package inoah.game.maps
         {
             var loader:URLLoader = new URLLoader();
             loader.addEventListener( flash.events.Event.COMPLETE , onMapLoadComplete );
-            loader.load( new URLRequest( "map/map001.json" ));
+            loader.load( new URLRequest( "map/map002.json" ));
         }
         
         private function onMapLoadComplete( e:flash.events.Event):void

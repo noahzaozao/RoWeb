@@ -14,12 +14,12 @@ package
     import pureMVC.patterns.facade.Facade;
     
     [SWF(width="960",height="640",frameRate="60",backgroundColor="#000000")]
-    public class ClientD5RoDemo extends VersionSprite
+    public class Client extends VersionSprite
     {
         private var _lastTimeStamp:Number;
         private var _gameMediator:ITickable;
         
-        public function ClientD5RoDemo()
+        public function Client()
         {
             addEventListener( Event.ADDED_TO_STAGE , init );
         }
@@ -27,10 +27,14 @@ package
         private function init( e:Event = null ):void
         {
             removeEventListener( Event.ADDED_TO_STAGE , init );
+            
+            stage.frameRate = 60;
             stage.align = StageAlign.TOP_LEFT;
             stage.scaleMode = StageScaleMode.NO_SCALE;
+            tabChildren = false;
+            tabEnabled = false;
             
-            Global.IS_MOBILE = true;
+//            Global.IS_MOBILE = true;
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;
             

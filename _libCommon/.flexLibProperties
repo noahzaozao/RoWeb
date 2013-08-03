@@ -22,6 +22,7 @@
     <classEntry path="pureMVC.patterns.facade.Facade"/>
     <classEntry path="pureMVC.patterns.observer.Notifier"/>
     <classEntry path="pureMVC.interfaces.IProxy"/>
+    <classEntry path="interfaces.ILuaMain"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -31,10 +31,6 @@ package com.inoah.ro.mediators.views
             facade.registerMediator( new AlertViewMediator( view ) );
             
             mainView.joyStick.remove();
-            var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
-            var joyStickview:JoyStickView = new JoyStickView();
-            displayMgr.joyStickLevel.addChild( joyStickview );
-            facade.registerMediator( new JoyStickViewMediator( joyStickview ) );
             //
             if( !Global.IS_MOBILE )
             {
@@ -48,6 +44,10 @@ package com.inoah.ro.mediators.views
             {
                 mainView.chatView.remove();
                 mainView.skillBarView.remove();
+                var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
+                var joyStickview:JoyStickView = new JoyStickView();
+                displayMgr.joyStickLevel.addChild( joyStickview );
+                facade.registerMediator( new JoyStickViewMediator( joyStickview ) );
             }
         }
         

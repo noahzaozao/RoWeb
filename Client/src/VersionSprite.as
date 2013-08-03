@@ -10,7 +10,7 @@ package
 	
     public class VersionSprite extends Sprite
     {
-        protected const VERSION:String = "ver0.0.5 ";
+        protected const VERSION:String = "ver0.1.0 ";
 		
         private var _modifyDate:String;
         private var _swfBytes:ByteArray;

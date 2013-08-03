@@ -1,20 +1,23 @@
 package com.inoah.ro
 {
     import com.inoah.ro.managers.DisplayMgr;
+    import com.inoah.ro.mediators.GameMediator;
     import com.inoah.ro.ui.LoginView;
     
-    import flash.display.Bitmap;
+    import flash.external.ExternalInterface;
+    import flash.utils.Dictionary;
     
     import inoah.game.Global;
     import inoah.game.consts.MgrTypeConsts;
     import inoah.game.loaders.AtfLoader;
     import inoah.game.loaders.ILoader;
-    import inoah.game.loaders.JpgLoader;
     import inoah.game.managers.AssetMgr;
     import inoah.game.managers.KeyMgr;
     import inoah.game.managers.MainMgr;
     import inoah.game.managers.SprMgr;
     import inoah.game.managers.TextureMgr;
+    
+    import interfaces.ILuaMain;
     
     import morn.core.handlers.Handler;
     
@@ -26,17 +29,67 @@ package com.inoah.ro
     
     public class starlingMain extends Sprite
     {
+        public static var luascript:String;
+        public static function get luaMain():ILuaMain
+        {
+            return _luaMain;
+        }
+        public var luastate:int
+        private var panicabort:Boolean = false
+        
         private var _loginView:LoginView;
         private var _bgImage:Image;
+        private static var _luaMain:ILuaMain;
         
         public function starlingMain()
         {
+            _luaMain = GameMediator.luaMain;
+            
             super();
-            addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+            
+            addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler)
+            addEventListener(Event.ENTER_FRAME, update)
         }
         
         private function addedToStageHandler(event:Event):void
         {
+            // Initialize Lua and load our script
+            var err:int = 0
+            luastate = _luaMain.luaL_newstate();
+            panicabort = false
+            _luaMain.lua_atpanic(luastate, atPanic)
+            _luaMain.luaL_openlibs(luastate)
+            
+            err =_luaMain.luaL_loadstring(luastate, luascript)
+            if(err) 
+            {
+                onError("Error " + err + ": " + _luaMain.luaL_checklstring(luastate, 1, 0));
+                _luaMain.lua_close(luastate);
+                return
+            }
+            
+            try {
+                _luaMain.__lua_objrefs = new Dictionary();
+                
+                // This runs everything in the global scope
+                err = _luaMain.lua_pcallk(luastate, 0, _luaMain.LUA_MULTRET, 0, 0, null)
+                
+                // give the lua code a reference to this and Starling
+                _luaMain.lua_getglobal(luastate, "setupGame")
+                push_objref(this)
+                push_objref(Starling.current.nativeStage.stage3Ds[0].context3D)
+                _luaMain.lua_pushinteger(luastate, Starling.current.viewPort.width)
+                _luaMain.lua_pushinteger(luastate, Starling.current.viewPort.height)
+                _luaMain.lua_callk(luastate, 4, 0, 0, null)
+            } 
+            catch(e:*) 
+            {
+                onError("Exception thrown while initializing code:\n" + e + e.getStackTrace());
+            }
+            
+            return;
+            //从这里开始，完成了Lua的整合，之后需要映射一些类到Lua中并搭建LuaCore
+            
             MainMgr.instance;
             MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, new AssetMgr() );
             
@@ -51,6 +104,43 @@ package com.inoah.ro
             
             App.init( displayMgr.uiLevel );
             App.loader.loadAssets( ["assets/comp.swf","assets/login_interface.swf", "assets/basic_interface.swf"] , new Handler( loadComplete ) );
+        }
+        
+        public function atPanic(e:*): void
+        {
+            onError("Lua Panic: " + _luaMain.luaL_checklstring(luastate, -1, 0))
+            panicabort = true
+        }
+        
+        private function update(e:*):void 
+        {
+            try 
+            {
+                _luaMain.lua_getglobal(luastate, "starlingUpdate")
+                _luaMain.lua_callk(luastate, 0, 0, 0, null)
+            } 
+            catch(e:*) 
+            {
+                if(!panicabort)
+                    onError("Exception thrown while calling starlingUpdate:\n" + e + e.getStackTrace());
+            }
+        }
+        
+        private function push_objref(o:*):void
+        {
+            var udptr:int = _luaMain.push_flashref(luastate)
+            _luaMain.__lua_objrefs[udptr] = o
+        }
+        
+        public function onError(e:*):void
+        {
+            trace(e)
+            
+            if(ExternalInterface.available) {
+                ExternalInterface.call("reportError", e.toString())
+            }
+            
+            Starling.current.stop()
         }
         
         private function addBgImage():void

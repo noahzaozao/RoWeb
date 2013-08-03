@@ -10,11 +10,11 @@ package inoah.game
         public static var SCREEN_W:uint;
         public static var SCREEN_H:uint;
 
-        public static const MAP_W:uint = 2048;
-        public static const MAP_H:uint = 2048;
+        public static const MAP_W:uint = 3200;
+        public static const MAP_H:uint = 1600;
 
         public static const TILE_W:int = 64;
-        public static const TILE_H:int = 64;
+        public static const TILE_H:int = 32;
 
         public static var userInfo:UserInfo;
 

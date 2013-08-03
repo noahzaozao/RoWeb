@@ -30,10 +30,17 @@ package com.inoah.ro.ui.mainViewChildren
             {
                 if( this._chatView.txtChat.text != "" )
                 {
-                    var userInfo:UserInfo = Global.userInfo;
-                    var msg:String = userInfo.name + ": " + this._chatView.txtChat.text;
-                    Facade.getInstance().sendNotification( GameCommands.SEND_CHAT, [msg] );
-                    this._chatView.txtChat.text = "";
+                    if( _chatView.txtChat.text.charAt( 0 ) == "@" )
+                    {
+                        Facade.getInstance().sendNotification( GameCommands.RUN_LUA_SCRIPT , [_chatView.txtChat.text.slice( 1 )] );
+                    }
+                    else
+                    {
+                        var userInfo:UserInfo = Global.userInfo;
+                        var msg:String = userInfo.name + ": " + this._chatView.txtChat.text;
+                        Facade.getInstance().sendNotification( GameCommands.SEND_CHAT, [msg] );
+                        this._chatView.txtChat.text = "";
+                    }
                 }
             }
         }
