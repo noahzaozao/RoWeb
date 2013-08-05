@@ -1,18 +1,12 @@
-package
+package com.inoah.lua
 {
-    import com.adobe.utils.AGALMacroAssembler;
-    import com.inoah.ro.LuaDisplayObject;
-    
     import flash.utils.Dictionary;
-    import flash.utils.getTimer;
     
     import interfaces.ILuaMain;
     
     import sample.lua.CModule;
     import sample.lua.__lua_objrefs;
     import sample.lua.vfs.ISpecialFile;
-    
-    import starling.textures.RenderTexture;
     
     public class LuaMain implements ISpecialFile, ILuaMain
     {
@@ -21,10 +15,6 @@ package
         
         public function LuaMain()
         {
-            var pointlessref1:LuaDisplayObject = null;
-            var pointlessref2:AGALMacroAssembler = null;
-            var pointlesref3:RenderTexture = null;
-            
             _luaMain = this;
             
             CModule.rootSprite = this;
