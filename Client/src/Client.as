@@ -6,9 +6,10 @@ package
     import flash.display.StageScaleMode;
     import flash.events.Event;
     
+    import inoah.core.Global;
     import inoah.core.interfaces.ITickable;
-    import inoah.game.ro.Global;
-    import inoah.game.ro.mediators.GameMediator;
+    import inoah.core.mediators.GameMediator;
+    import inoah.game.ro.mediators.views.RoGameMediator;
     import inoah.lua.LuaEngine;
     
     import pureMVC.interfaces.IFacade;
@@ -41,7 +42,7 @@ package
             Global.SCREEN_H = stage.stageHeight;
             
             var facade:IFacade = Facade.getInstance();
-            _gameMediator = new GameMediator( stage , this );
+            _gameMediator = new RoGameMediator( stage , this );
             facade.registerMediator( _gameMediator as IMediator );
             var luaEngine:LuaEngine = new LuaEngine( new LuaMain() );
             facade.registerMediator( luaEngine );
