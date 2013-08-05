@@ -7,6 +7,7 @@ package morn.core.components {
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import morn.core.handlers.Handler;
+	import morn.App;
 	
 	/**滑动条变化后触发*/
 	[Event(name="change",type="flash.events.Event")]

@@ -6,6 +6,7 @@ package morn.core.managers {
 	import flash.events.Event;
 	import flash.utils.Dictionary;
 	import morn.core.events.UIEvent;
+	import morn.App;
 	
 	/**渲染管理器*/
 	public class RenderManager {

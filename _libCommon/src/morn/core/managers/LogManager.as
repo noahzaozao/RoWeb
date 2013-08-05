@@ -14,6 +14,7 @@ package morn.core.managers {
 	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
 	import morn.core.utils.ObjectUtils;
+	import morn.App;
 	
 	/**日志管理器*/
 	public class LogManager extends Sprite {

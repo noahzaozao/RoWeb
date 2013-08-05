@@ -6,6 +6,7 @@ package morn.core.components {
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import morn.core.handlers.Handler;
+	import morn.App;
 	
 	/**滚动位置变化后触发*/
 	[Event(name="change",type="flash.events.Event")]

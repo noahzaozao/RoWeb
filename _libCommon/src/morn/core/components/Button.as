@@ -8,6 +8,7 @@ package morn.core.components {
 	import morn.core.handlers.Handler;
 	import morn.core.utils.ObjectUtils;
 	import morn.core.utils.StringUtils;
+	import morn.App;
 	
 	/**选择改变后触发*/
 	[Event(name="select",type="flash.events.Event")]

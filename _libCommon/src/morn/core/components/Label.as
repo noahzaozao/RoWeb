@@ -10,6 +10,7 @@ package morn.core.components {
 	import flash.text.TextFormat;
 	import morn.core.utils.ObjectUtils;
 	import morn.core.utils.StringUtils;
+	import morn.App;
 	
 	/**文本发生改变后触发*/
 	[Event(name="change",type="flash.events.Event")]

@@ -10,6 +10,8 @@ package morn.core.components {
 	import morn.core.utils.BitmapUtils;
 	import morn.core.utils.StringUtils;
 	import morn.editor.core.IClip;
+	import morn.App;
+	import morn.Config;
 	
 	/**图片加载后触发*/
 	[Event(name="imageLoaded",type="morn.core.events.UIEvent")]

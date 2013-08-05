@@ -6,6 +6,7 @@ package morn.core.managers {
 	import flash.display.BitmapData;
 	import flash.system.ApplicationDomain;
 	import morn.core.utils.BitmapUtils;
+	import morn.App;
 	
 	/**资源管理器*/
 	public class AssetManager {

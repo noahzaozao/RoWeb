@@ -23,8 +23,8 @@
     <classEntry path="pureMVC.patterns.observer.Notifier"/>
     <classEntry path="pureMVC.interfaces.IProxy"/>
     <classEntry path="interfaces.ILuaMain"/>
-    <classEntry path="Config"/>
-    <classEntry path="App"/>
+    <classEntry path="morn.Config"/>
+    <classEntry path="morn.App"/>
     <classEntry path="morn.core.components.Dialog"/>
     <classEntry path="morn.core.managers.LoaderManager"/>
     <classEntry path="morn.core.components.ScrollBar"/>

@@ -8,6 +8,7 @@ package morn.core.components {
 	import flash.geom.Rectangle;
 	import morn.core.handlers.Handler;
 	import morn.core.utils.StringUtils;
+	import morn.App;
 	
 	/**对话框*/
 	public class Dialog extends View {

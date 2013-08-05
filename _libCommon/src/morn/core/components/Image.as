@@ -7,6 +7,7 @@ package morn.core.components {
 	import morn.core.events.UIEvent;
 	import morn.core.handlers.Handler;
 	import morn.core.utils.StringUtils;
+	import morn.App;
 	
 	/**图片被加载后触发*/
 	[Event(name="imageLoaded",type="morn.core.events.UIEvent")]

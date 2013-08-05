@@ -2,7 +2,7 @@
  * Morn UI Version 2.1.0623 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
-package  {
+package morn  {
 	
 	/**全局配置*/
 	public class Config {

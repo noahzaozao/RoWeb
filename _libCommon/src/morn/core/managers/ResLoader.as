@@ -19,6 +19,7 @@ package morn.core.managers {
 	import flash.utils.ByteArray;
 	import morn.core.handlers.Handler;
 	import morn.core.utils.ObjectUtils;
+	import morn.App;
 	
 	/**资源加载器*/
 	public class ResLoader {

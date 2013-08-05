@@ -9,6 +9,7 @@ package morn.core.managers {
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import morn.core.events.DragEvent;
+	import morn.App;
 	
 	/**拖动管理类*/
 	public class DragManager {

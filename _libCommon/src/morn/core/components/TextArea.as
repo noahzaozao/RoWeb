@@ -5,6 +5,7 @@
 package morn.core.components {
 	import flash.events.Event;
 	import morn.core.events.UIEvent;
+	import morn.App;
 	
 	/**当滚动内容时调用*/
 	[Event(name="scroll",type="morn.core.events.UIEvent")]

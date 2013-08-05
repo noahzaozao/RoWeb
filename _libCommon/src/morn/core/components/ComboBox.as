@@ -10,6 +10,7 @@ package morn.core.components {
 	import flash.geom.Point;
 	import morn.core.handlers.Handler;
 	import morn.core.utils.StringUtils;
+	import morn.App;
 	
 	/**选择项改变后触发*/
 	[Event(name="select",type="flash.events.Event")]

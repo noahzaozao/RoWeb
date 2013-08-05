@@ -10,6 +10,8 @@ package morn.core.managers {
 	import flash.text.TextField;
 	import morn.core.events.UIEvent;
 	import morn.core.handlers.Handler;
+	import morn.App;
+	import morn.Config;
 	
 	/**鼠标提示管理类*/
 	public class TipManager extends Sprite {

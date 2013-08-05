@@ -8,6 +8,8 @@ package morn.core.components {
 	import morn.core.events.UIEvent;
 	import morn.core.handlers.Handler;
 	import morn.editor.core.IClip;
+	import morn.App;
+	import morn.Config;
 	
 	/**当前帧发生变化后触发*/
 	[Event(name="frameChanged",type="morn.core.events.UIEvent")]
