@@ -19,6 +19,7 @@ package com.inoah.ro.mediators
     import flash.events.SecurityErrorEvent;
     import flash.external.ExternalInterface;
     import flash.net.URLLoader;
+    import flash.net.URLLoaderDataFormat;
     import flash.net.URLRequest;
     import flash.system.ApplicationDomain;
     import flash.system.LoaderContext;
@@ -34,6 +35,7 @@ package com.inoah.ro.mediators
     import inoah.game.interfaces.IMgr;
     import inoah.game.interfaces.ITickable;
     import inoah.game.loaders.ILoader;
+    import inoah.game.loaders.LuaLoader;
     import inoah.game.managers.AssetMgr;
     import inoah.game.managers.MainMgr;
     import inoah.game.maps.BattleMap;
@@ -61,7 +63,7 @@ package com.inoah.ro.mediators
         private var _couldTick:Boolean;
         private var _luaDllLoader:Loader;
         public static var luaMain:ILuaMain;
-        private var _luaScriptLoader:URLLoader;
+        private var _starlingMain:ITickable;
         
         public function GameMediator( stage:Stage , viewComponent:Object=null )
         {
@@ -83,20 +85,28 @@ package com.inoah.ro.mediators
             AGALMacroAssembler;
             luaMain = new classLuaMain();
             
-            _luaScriptLoader = new URLLoader(new URLRequest("game2.lua"))
-            _luaScriptLoader.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onError)
-            _luaScriptLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onError)
-            _luaScriptLoader.addEventListener(IOErrorEvent.IO_ERROR, onError)
-            _luaScriptLoader.addEventListener(Event.COMPLETE, onComplete)
+            MainMgr.instance;
+            var assetMgr:AssetMgr = new AssetMgr();
+            MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, assetMgr );
+            
+            var resList:Vector.<String> = new Vector.<String>();
+            resList.push( "libCore.lua" );
+            resList.push( "libPlayer.lua" );
+            resList.push( "main.lua" );
+            assetMgr.getResList( resList , onLuaLoaded );
             
             //            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
         }
         
-        private function onComplete(e:*):void
+        private function onLuaLoaded( loader:ILoader ):void
         {
-            starlingMain.luascript = _luaScriptLoader.data;
-            _luaScriptLoader = null;
-            initStarling()
+            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
+            
+            starlingMain.luaStrList.push( (assetMgr.getRes( "libCore.lua" , null ) as LuaLoader).content );
+            starlingMain.luaStrList.push( (assetMgr.getRes( "libPlayer.lua" , null ) as LuaLoader).content );
+            starlingMain.luaStrList.push( (assetMgr.getRes( "main.lua" , null ) as LuaLoader).content );
+            
+            initStarling();
         }
         
         private function initStarling():void
@@ -108,18 +118,6 @@ package com.inoah.ro.mediators
             _starling.showStats = true;
             _starling.showStatsAt(HAlign.RIGHT, VAlign.CENTER);
             _starling.start();
-        }
-        
-        public static function onError(e:*):void
-        {
-            if(ExternalInterface.available) 
-            {
-                ExternalInterface.call("reportError", e.toString());
-            }
-            else
-            {
-                trace(e);
-            }
         }
         
         protected function onRightClick( e:MouseEvent):void
@@ -248,6 +246,14 @@ package com.inoah.ro.mediators
         
         public function tick( delta:Number ):void
         {
+            if( _starlingMain )
+            {
+                _starlingMain.tick( delta );
+            }
+            else if( Starling.current && Starling.current.root )
+            {
+                _starlingMain = Starling.current.root as ITickable;
+            }
             if( _mainViewMediator )
             {
                 _mainViewMediator.tick( delta )

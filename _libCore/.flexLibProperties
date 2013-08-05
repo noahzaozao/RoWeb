@@ -98,6 +98,7 @@
     <classEntry path="inoah.game.characters.Actions"/>
     <classEntry path="inoah.game.RoCamera"/>
     <classEntry path="inoah.game.managers.KeyMgr"/>
+    <classEntry path="inoah.game.loaders.LuaLoader"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

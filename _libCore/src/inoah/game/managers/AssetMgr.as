@@ -8,6 +8,7 @@ package inoah.game.managers
     import inoah.game.loaders.AtfLoader;
     import inoah.game.loaders.ILoader;
     import inoah.game.loaders.JpgLoader;
+    import inoah.game.loaders.LuaLoader;
     
     /**
      * 资源加载管理器 
@@ -66,6 +67,11 @@ package inoah.game.managers
             }
             switch( resPath.split( "." )[1] )
             {
+                case "lua":
+                {
+                    _loaderList.push( new LuaLoader( resPath ) );
+                    break;
+                }
                 case "tpc":
                 {
                     _loaderList.push( new ActTpcLoader( resPath ) );

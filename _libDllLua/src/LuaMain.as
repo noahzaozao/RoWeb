@@ -13,11 +13,11 @@ package
     import sample.lua.vfs.ISpecialFile;
     
     import starling.textures.RenderTexture;
-
+    
     public class LuaMain implements ISpecialFile, ILuaMain
     {
         private static var _luaMain:LuaMain;
-        private static var luastate:int;
+        private static var _luastate:int;
         
         public function LuaMain()
         {
@@ -30,40 +30,6 @@ package
             CModule.rootSprite = this;
             CModule.vfs.console = this;
             CModule.startAsync(this);
-        }
-        
-        public function runScript( luaStr:String ):void
-        {
-            var err:int = 0;
-            luastate = luaL_newstate();
-            
-            luaL_openlibs(luastate);
-            err = luaL_loadstring(luastate, luaStr);
-            if(err) 
-            {
-                lua_settop(luastate, -2);
-                lua_close(luastate);
-                output("Can't parse script: " + err);
-                return;
-            }
-            
-            var runtime:int = getTimer();
-            err = lua_pcallk(luastate, 0, LUA_MULTRET, 0, 0, null);
-            runtime = getTimer() - runtime;
-            output("Script time: " + runtime + "ms" );/* + " final stack depth: " + Lua.lua_gettop(luastate) */
-            
-            if (err) 
-            {
-                output("Failed to run script: " +  lua_tolstring(luastate, -1, 0));
-            }
-            else
-            {
-                var result:Number = lua_tonumberx(luastate, -1, 0);
-                output("Script returned: " + result);
-            }
-            
-            lua_settop(luastate, -2);
-            lua_close(luastate);
         }
         
         private function lua_tonumberx( L:int , idx:int ,isnum:int ):Number
@@ -84,6 +50,10 @@ package
         public function lua_getglobal( L:int, varname:String ):void
         {
             Lua.lua_getglobal( L, varname );
+        }
+        public function lua_setglobal( L:int, varname:String ):void
+        {
+            Lua.lua_setglobal( L, varname );
         }
         public function lua_callk( L:int, nargs:int , nresults:int , ctx:int , k:Function ):void
         {
@@ -129,9 +99,21 @@ package
         {
             return Lua.lua_pcallk( L , nargs, nresults , errfunc , ctx , k  );
         }
+        public function lua_pushboolean( L:int , b:int ):void
+        {
+            Lua.lua_pushboolean( L ,b );
+        }
         public function lua_pushinteger( L:int , n:* ):void
         {
             Lua.lua_pushinteger( L ,n );
+        }
+        public function lua_pushnumber( L:int , n:Number ):void
+        {
+            Lua.lua_pushnumber( L ,n );
+        }
+        public function lua_pushstring( L:int , s:String ):void
+        {
+            Lua.lua_pushstring( L , s );
         }
         public function get LUA_MULTRET():int
         {
@@ -151,7 +133,7 @@ package
          */
         public function write(fd:int, bufPtr:int, nbyte:int, errnoPtr:int):int
         {
-            var str:String = CModule.readString(bufPtr, nbyte);
+            var str:String = CModule.readString(bufPtr, nbyte - 1);
             output(str);
             return nbyte;
         }
