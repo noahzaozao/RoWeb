@@ -1,16 +1,17 @@
 package
 {
-    import com.inoah.ro.RoGlobal;
-    import com.inoah.ro.interfaces.ITickable;
     import com.inoah.ro.mediators.GameMediator;
     
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
     import flash.events.Event;
     
-    import as3.interfaces.IFacade;
-    import as3.interfaces.IMediator;
-    import as3.patterns.facade.Facade;
+    import inoah.game.Global;
+    import inoah.game.interfaces.ITickable;
+    
+    import pureMVC.interfaces.IFacade;
+    import pureMVC.interfaces.IMediator;
+    import pureMVC.patterns.facade.Facade;
     
     [SWF(width="960",height="640",frameRate="60",backgroundColor="#000000")]
     public class ClientRoDemoPc extends VersionSprite
@@ -29,8 +30,8 @@ package
             stage.align = StageAlign.TOP_LEFT;
             stage.scaleMode = StageScaleMode.NO_SCALE;
             
-            RoGlobal.W = stage.stageWidth;
-            RoGlobal.H = stage.stageHeight;
+            Global.SCREEN_W = stage.stageWidth;
+            Global.SCREEN_H = stage.stageHeight;
             
             var facade:IFacade = Facade.getInstance();
             _gameMediator = new GameMediator( stage , this );

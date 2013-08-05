@@ -1,13 +1,14 @@
 package
 {
-    import com.inoah.ro.mediators.GameMediator;
+    import com.inoah.lua.LuaMain;
     
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
     import flash.events.Event;
     
-    import inoah.game.Global;
-    import inoah.game.interfaces.ITickable;
+    import inoah.core.interfaces.ITickable;
+    import inoah.game.ro.Global;
+    import inoah.game.ro.mediators.GameMediator;
     
     import pureMVC.interfaces.IFacade;
     import pureMVC.interfaces.IMediator;
@@ -37,6 +38,8 @@ package
 //            Global.IS_MOBILE = true;
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;
+            
+            GameMediator.luaMain = new LuaMain();
             
             var facade:IFacade = Facade.getInstance();
             _gameMediator = new GameMediator( stage , this );

@@ -3,6 +3,7 @@
   <compiler additionalCompilerArguments="-locale en_US" advancedTelemetry="false" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
       <compilerSourcePathEntry kind="1" linkType="1" path="F:/RoWeb/_resClientRo"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="F:/RoWeb/luaCore/src"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">
@@ -34,8 +35,8 @@
       </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="/_libCommon/bin/_libCommon.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/_libMornUI/bin/_libMornUI.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/_libPureMVC/bin/_libPureMVC.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/_libRoWeb/bin/_libRoWeb.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/_libCore/bin/_libCore.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

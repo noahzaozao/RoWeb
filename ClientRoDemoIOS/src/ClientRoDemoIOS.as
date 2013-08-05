@@ -1,5 +1,6 @@
 package
 {
+    import com.inoah.lua.LuaMain;
     import com.inoah.ro.mediators.GameMediator;
     
     import flash.display.Sprite;
@@ -36,6 +37,8 @@ package
             Global.IS_MOBILE = true;
             Global.SCREEN_W = 960;
             Global.SCREEN_H = 640;
+            
+            GameMediator.luaMain = new LuaMain();
             
             var facade:IFacade = Facade.getInstance();
             _gameMediator = new GameMediator( stage , this );

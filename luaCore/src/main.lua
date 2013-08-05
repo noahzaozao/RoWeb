@@ -3,7 +3,7 @@ rootsprite = nil
 _width = 0
 _height = 0
 
-function main( starlingMain, _ctx3d, w, h )
+function main()
 
 	print( "lua ready")
 	
@@ -15,7 +15,7 @@ function main( starlingMain, _ctx3d, w, h )
 	local objA = playerClass.new()
 	objA.init( objA , 1 , 2 )
 	print(objA.x , objA.y)
-	--
+
 	--	local objB = playerClass.new()
 	--	objB.init( objB , 2 , 4 )
 	--	print(objB.x , objB.y)
