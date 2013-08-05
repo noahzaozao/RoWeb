@@ -3,6 +3,8 @@ package inoah.game.ro.consts
     public class ConstsGame
     {
         public static const GAME_MEDIATOR:String = "GameConsts.GAME_MEDIATOR";
+        public static const LUA_ENGINE:String = "GameConsts.LUA_ENGINE";
+        
         public static const MAIN_VIEW:String = "GameConsts.MAIN_VIEW";
         public static const ALERT_VIEW:String = "GameConsts.ALERT_VIEW";
         public static const STATUS_VIEW:String = "GameConsts.STATUS_VIEW";

@@ -1,8 +1,5 @@
 package inoah.game.ro
 {
-    import flash.external.ExternalInterface;
-    import flash.utils.Dictionary;
-    
     import inoah.core.consts.MgrTypeConsts;
     import inoah.core.interfaces.ILoader;
     import inoah.core.interfaces.ITickable;
@@ -12,13 +9,14 @@ package inoah.game.ro
     import inoah.core.managers.MainMgr;
     import inoah.core.managers.SprMgr;
     import inoah.core.managers.TextureMgr;
+    import inoah.game.ro.consts.ConstsGame;
     import inoah.game.ro.managers.DisplayMgr;
-    import inoah.game.ro.mediators.GameMediator;
     import inoah.game.ro.ui.LoginView;
-    
-    import interfaces.ILuaMain;
+    import inoah.lua.LuaEngine;
     
     import morn.core.handlers.Handler;
+    
+    import pureMVC.patterns.facade.Facade;
     
     import starling.core.Starling;
     import starling.display.Image;
@@ -28,63 +26,20 @@ package inoah.game.ro
     
     public class starlingMain extends Sprite implements ITickable
     {
-        public static var luaStrList:Vector.<String> = new Vector.<String>();
-        
-        public var luaStrList:Vector.<String>;
-        
-        public static function get luaMain():ILuaMain
-        {
-            return _luaMain;
-        }
-        public var luastate:int
-        protected var panicabort:Boolean = false
-        
         protected var _loginView:LoginView;
         protected var _bgImage:Image;
-        protected static var _luaMain:ILuaMain;
+        protected var _luaEngine:LuaEngine;
         
         public function starlingMain()
         {
-            _luaMain = GameMediator.luaMain;
-            
             super();
-            
             addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler)
         }
         
         protected function addedToStageHandler( e:Event ):void
         {
-            this.luaStrList = starlingMain.luaStrList;
-            
-            var err:int = 0;
-            luastate = _luaMain.luaL_newstate();
-            panicabort = false
-            _luaMain.lua_atpanic(luastate, atPanic)
-            _luaMain.luaL_openlibs(luastate)
-            
-            for( var i:int = 0;i<luaStrList.length;i++)
-            {
-                if( luaL_loadstring( luastate , luaStrList[i] ) )
-                {
-                    return;
-                }
-                err = _luaMain.lua_pcallk(luastate, 0, _luaMain.LUA_MULTRET, 0, 0, null)
-            }
-                
-            try 
-            {
-                _luaMain.__lua_objrefs = new Dictionary();
-                _luaMain.lua_getglobal(luastate, "main")
-                push_objref(this)
-                push_objref(Starling.current.nativeStage.stage3Ds[0].context3D)
-                _luaMain.lua_pushinteger(luastate, Starling.current.viewPort.width)
-                _luaMain.lua_pushinteger(luastate, Starling.current.viewPort.height)
-                _luaMain.lua_callk(luastate, 4, 0, 0, null)
-            } 
-            catch(e:*) 
-            {
-                onError("Exception thrown while initializing code:\n" + e + e.getStackTrace() );
-            }
+            _luaEngine = Facade.getInstance().retrieveMediator( ConstsGame.LUA_ENGINE ) as LuaEngine;
+            _luaEngine.init();
             
             //noah note
             //从这里开始，完成了Lua的整合，之后需要映射一些类到Lua中并搭建LuaCore
@@ -100,39 +55,6 @@ package inoah.game.ro
             
             App.init( displayMgr.uiLevel );
             App.loader.loadAssets( ["assets/comp.swf","assets/login_interface.swf", "assets/basic_interface.swf"] , new Handler( loadComplete ) );
-        }
-        
-        private function luaL_loadstring(luastate:int, luaStr:String):int
-        {
-            var err:int =_luaMain.luaL_loadstring(luastate, luaStr)
-            if(err) 
-            {
-                onError("Error " + err + ": " + _luaMain.luaL_checklstring(luastate, 1, 0));
-                _luaMain.lua_close(luastate);
-            }
-            return err;
-        }
-        
-        public function atPanic(e:*): void
-        {
-            onError("Lua Panic: " + _luaMain.luaL_checklstring(luastate, -1, 0))
-            panicabort = true
-        }
-        
-        protected function push_objref(o:*):void
-        {
-            var udptr:int = _luaMain.push_flashref(luastate)
-            _luaMain.__lua_objrefs[udptr] = o
-        }
-        
-        public function onError(e:*):void
-        {
-            trace(e)
-            if(ExternalInterface.available) 
-            {
-                ExternalInterface.call("reportError", e.toString())
-            }
-            Starling.current.stop()
         }
         
         protected function addBgImage():void
@@ -177,18 +99,9 @@ package inoah.game.ro
         
         public function tick( delta:Number ):void
         {
-            try 
+            if( _luaEngine )
             {
-                _luaMain.lua_getglobal(luastate, "update")
-                _luaMain.lua_pushnumber( luastate , delta )
-                _luaMain.lua_callk(luastate, 1, 0, 0, null)
-            } 
-            catch(e:*) 
-            {
-                if(!panicabort)
-                {
-                    onError("Exception thrown while calling starlingUpdate:\n" + e + e.getStackTrace());
-                }
+                _luaEngine.tick( delta );
             }
         }
         

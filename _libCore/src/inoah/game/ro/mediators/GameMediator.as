@@ -24,11 +24,11 @@ package inoah.game.ro.mediators
     import inoah.game.ro.mediators.maps.BattleMapMediator;
     import inoah.game.ro.mediators.views.MainViewMediator;
     import inoah.game.ro.ui.MainView;
-    
-    import interfaces.ILuaMain;
+    import inoah.lua.LuaEngine;
     
     import pureMVC.interfaces.IMediator;
     import pureMVC.interfaces.INotification;
+    import pureMVC.patterns.facade.Facade;
     import pureMVC.patterns.mediator.Mediator;
     
     import starling.core.Starling;
@@ -37,8 +37,6 @@ package inoah.game.ro.mediators
     
     public class GameMediator extends Mediator implements ITickable
     {
-        public static var luaMain:ILuaMain;
-
         protected var _stage:Stage;
         protected var _starling:Starling;
         protected var _noteTxt:TextField;
@@ -72,9 +70,11 @@ package inoah.game.ro.mediators
         {
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
             
-            starlingMain.luaStrList.push( (assetMgr.getRes( "libCore.lua" , null ) as LuaLoader).content );
-            starlingMain.luaStrList.push( (assetMgr.getRes( "libPlayer.lua" , null ) as LuaLoader).content );
-            starlingMain.luaStrList.push( (assetMgr.getRes( "main.lua" , null ) as LuaLoader).content );
+            var luaEngine:LuaEngine = Facade.getInstance().retrieveMediator( ConstsGame.LUA_ENGINE ) as LuaEngine;
+            
+            luaEngine.luaStrList.push( (assetMgr.getRes( "libCore.lua" , null ) as LuaLoader).content );
+            luaEngine.luaStrList.push( (assetMgr.getRes( "libPlayer.lua" , null ) as LuaLoader).content );
+            luaEngine.luaStrList.push( (assetMgr.getRes( "main.lua" , null ) as LuaLoader).content );
             
             initStarling();
         }

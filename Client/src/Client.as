@@ -9,6 +9,7 @@ package
     import inoah.core.interfaces.ITickable;
     import inoah.game.ro.Global;
     import inoah.game.ro.mediators.GameMediator;
+    import inoah.lua.LuaEngine;
     
     import pureMVC.interfaces.IFacade;
     import pureMVC.interfaces.IMediator;
@@ -39,11 +40,11 @@ package
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;
             
-            GameMediator.luaMain = new LuaMain();
-            
             var facade:IFacade = Facade.getInstance();
             _gameMediator = new GameMediator( stage , this );
             facade.registerMediator( _gameMediator as IMediator );
+            var luaEngine:LuaEngine = new LuaEngine( new LuaMain() );
+            facade.registerMediator( luaEngine );
             
             _lastTimeStamp = new Date().time;
             stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );
