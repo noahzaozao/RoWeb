@@ -2,12 +2,13 @@ package inoah.core.objects
 {
     import flash.geom.Point;
     
+    import inoah.core.consts.ConstsActions;
+    import inoah.core.consts.ConstsDirection;
     import inoah.core.controllers.BaseController;
-    import inoah.game.ro.GameCamera;
-    import inoah.game.ro.QTree;
-    import inoah.game.ro.consts.ConstsActions;
-    import inoah.game.ro.consts.ConstsDirection;
-    import inoah.game.ro.interfaces.IViewObject;
+    import inoah.core.infos.CharacterInfo;
+    import inoah.core.interfaces.IViewObject;
+    import inoah.core.GameCamera;
+    import inoah.core.QTree;
     
     /**
      * 地图物体基类
@@ -37,6 +38,8 @@ package inoah.core.objects
         protected var _viewObj:IViewObject;
         
         protected var _controller:BaseController;
+        
+        protected var _info:CharacterInfo;
         
         protected var _isInScene:Boolean;
         protected var _couldTick:Boolean;
@@ -199,6 +202,16 @@ package inoah.core.objects
         public function get isInScene():Boolean
         {
             return _isInScene;
+        }
+        
+        public function set info( value:CharacterInfo ):void
+        {
+            _info = value;
+        }
+        
+        public function get info():CharacterInfo
+        {
+            return _info;
         }
     }
 }

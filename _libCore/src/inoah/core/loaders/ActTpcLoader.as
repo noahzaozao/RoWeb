@@ -8,7 +8,7 @@ package inoah.core.loaders
     import flash.utils.ByteArray;
     
     import inoah.core.consts.MgrTypeConsts;
-    import inoah.game.ro.viewModels.actSpr.structs.CACT;
+    import inoah.core.viewModels.actSpr.structs.CACT;
     import inoah.core.managers.MainMgr;
     import inoah.core.managers.TextureMgr;
     

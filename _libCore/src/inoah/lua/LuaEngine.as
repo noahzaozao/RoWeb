@@ -3,7 +3,7 @@ package inoah.lua
     import flash.external.ExternalInterface;
     import flash.utils.Dictionary;
     
-    import inoah.game.ro.consts.ConstsGame;
+    import inoah.core.consts.ConstsGame;
     
     import interfaces.ILuaMain;
     

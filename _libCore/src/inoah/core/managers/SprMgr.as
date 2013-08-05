@@ -1,6 +1,6 @@
 package inoah.core.managers
 {
-    import inoah.game.ro.viewModels.actSpr.structs.CSPR;
+    import inoah.core.viewModels.actSpr.structs.CSPR;
     import inoah.core.interfaces.IMgr;
     
     import flash.utils.ByteArray;

@@ -1,6 +1,6 @@
 package inoah.core.managers
 {
-    import inoah.game.ro.viewModels.actSpr.structs.CACT;
+    import inoah.core.viewModels.actSpr.structs.CACT;
     
     import flash.utils.ByteArray;
     
