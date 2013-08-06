@@ -4,6 +4,7 @@ package inoah.game.ro.controllers
     import flash.ui.Keyboard;
     
     import inoah.core.Global;
+    import inoah.core.QTree;
     import inoah.core.consts.ConstsActions;
     import inoah.core.consts.ConstsGame;
     import inoah.core.consts.MgrTypeConsts;
@@ -15,7 +16,6 @@ package inoah.game.ro.controllers
     import inoah.core.objects.BaseObject;
     import inoah.core.utils.Counter;
     import inoah.core.utils.GMath;
-    import inoah.core.QTree;
     import inoah.game.ro.objects.BattleCharacterObject;
     import inoah.game.ro.objects.PlayerObject;
     
@@ -234,33 +234,12 @@ package inoah.game.ro.controllers
         private function calFindTarget():void
         {
             var objList:Vector.<BattleCharacterObject> = new Vector.<BattleCharacterObject>();
-            var mqTree:QTree;
-            var len:int;
             var i:int;
-            mqTree = _me.qTree.parent.q1;
-            len = mqTree.data.length;
-            for ( i = 0 ; i< len;i++ )
-            {
-                objList.push( mqTree.data[i] );
-            }
-            mqTree = _me.qTree.parent.q2;
-            len = mqTree.data.length;
-            for ( i = 0 ; i< len;i++ )
-            {
-                objList.push( mqTree.data[i] );
-            }
-            mqTree = _me.qTree.parent.q3;
-            len = mqTree.data.length;
-            for ( i = 0 ; i< len;i++ )
-            {
-                objList.push( mqTree.data[i] );
-            }
-            mqTree = _me.qTree.parent.q4;
-            len = mqTree.data.length;
-            for ( i = 0 ; i< len;i++ )
-            {
-                objList.push( mqTree.data[i] );
-            }
+            var len:int;
+            
+            //遍历16区域
+            var top:QTree = _me.qTree.parent.parent;
+            objList = objList.concat( getAllDataFromTree( top ) );
             
             //临时随机找怪，随后可以根据面向找四象限的怪
             len = objList.length;
@@ -268,13 +247,65 @@ package inoah.game.ro.controllers
             {
                 if( _fightMode==0  && Point.distance( objList[i].POS , _me.POS ) <= (_me as PlayerObject).atkRange )
                 {
-                    if( objList[i] != _me && !objList[i].isDead )
+                    if( objList[i] != _me )
                     {
-                        _atkTarget = objList[i];
-                        break;
+                        if( !objList[i].isDead )
+                        {
+                            _atkTarget = objList[i];
+                            break;
+                        }
                     }
                 }
             }
+        }
+        
+        private function getAllDataFromTree( top:QTree ):Vector.<BattleCharacterObject>
+        {
+            var objList:Vector.<BattleCharacterObject> = new Vector.<BattleCharacterObject>();
+            var i:int;
+            var len:int;
+            var mqTree:QTree;
+            mqTree = top.q1;
+            len = mqTree.data.length;
+            for ( i = 0 ; i< len;i++ )
+            {
+                objList.push( mqTree.data[i] );
+            }
+            mqTree = top.q2;
+            len = mqTree.data.length;
+            for ( i = 0 ; i< len;i++ )
+            {
+                objList.push( mqTree.data[i] );
+            }
+            mqTree = top.q3;
+            len = mqTree.data.length;
+            for ( i = 0 ; i< len;i++ )
+            {
+                objList.push( mqTree.data[i] );
+            }
+            mqTree = top.q4;
+            len = mqTree.data.length;
+            for ( i = 0 ; i< len;i++ )
+            {
+                objList.push( mqTree.data[i] );
+            }
+            if( top.q1.hasChildren )
+            {
+                objList = objList.concat( getAllDataFromTree( top.q1 ) );
+            }
+            if( top.q2.hasChildren )
+            {
+                objList= objList.concat( getAllDataFromTree( top.q2 ) );
+            }
+            if( top.q3.hasChildren )
+            {
+                objList = objList.concat( getAllDataFromTree( top.q3 ) );
+            }
+            if( top.q4.hasChildren )
+            {
+                objList = objList.concat( getAllDataFromTree( top.q4 ) );
+            }
+            return objList;
         }
         
         private function calAttack( delta:Number ):void

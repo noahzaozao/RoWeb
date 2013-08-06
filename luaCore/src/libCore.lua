@@ -53,6 +53,7 @@ function loadLuaScripts( luaPathList )
 		local len = #luaPathList
 		for i= 1, len do
 			require( luaPathList[i] )
+			print( "onLoadLuaScript: " .. currentLuaPathList[i] )
 			i = i + 1
 		end
 		onLoadLuaScript()

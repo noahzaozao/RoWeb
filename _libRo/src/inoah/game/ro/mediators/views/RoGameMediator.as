@@ -3,18 +3,20 @@ package inoah.game.ro.mediators.views
     import flash.display.Stage;
     
     import inoah.core.Global;
+    import inoah.core.consts.ConstsGame;
     import inoah.core.consts.MgrTypeConsts;
     import inoah.core.consts.commands.GameCommands;
+    import inoah.core.infos.UserInfo;
     import inoah.core.interfaces.ILoader;
     import inoah.core.interfaces.IMgr;
     import inoah.core.interfaces.ITickable;
     import inoah.core.managers.AssetMgr;
-    import inoah.game.ro.managers.BattleMgr;
     import inoah.core.managers.DisplayMgr;
     import inoah.core.managers.MainMgr;
     import inoah.core.mediators.GameMediator;
     import inoah.game.ro.RoMain;
-    import inoah.core.infos.UserInfo;
+    import inoah.game.ro.StatusBar;
+    import inoah.game.ro.managers.BattleMgr;
     import inoah.game.ro.managers.MapMgr;
     import inoah.game.ro.mediators.maps.BattleMapMediator;
     import inoah.game.ro.ui.MainView;
@@ -98,6 +100,12 @@ package inoah.game.ro.mediators.views
             super.onInitLoadComplete( loader );
             
             var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
+            
+            //初始化状态栏
+            var statusBar:StatusBar = new StatusBar();
+            facade.registerMediator( statusBar as IMediator );
+            displayMgr.topLevel.addChild( statusBar );
+            
             //初始化主界面
             var mainView:MainView = new MainView();
             _mainViewMediator = new MainViewMediator( mainView );

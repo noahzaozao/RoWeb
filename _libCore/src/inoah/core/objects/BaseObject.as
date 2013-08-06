@@ -2,13 +2,13 @@ package inoah.core.objects
 {
     import flash.geom.Point;
     
+    import inoah.core.GameCamera;
+    import inoah.core.QTree;
     import inoah.core.consts.ConstsActions;
     import inoah.core.consts.ConstsDirection;
     import inoah.core.controllers.BaseController;
     import inoah.core.infos.CharacterInfo;
     import inoah.core.interfaces.IViewObject;
-    import inoah.core.GameCamera;
-    import inoah.core.QTree;
     
     /**
      * 地图物体基类
@@ -16,6 +16,8 @@ package inoah.core.objects
      */    
     public class BaseObject
     {
+        public static var GID_COUNT:uint = 0;
+        
         protected var _qTree:QTree;
         /**
          * 默认方向配置
@@ -44,9 +46,17 @@ package inoah.core.objects
         protected var _isInScene:Boolean;
         protected var _couldTick:Boolean;
         
+        protected var _gid:uint;
+        
         public function BaseObject()
         {
             super();
+            _gid = GID_COUNT++;
+        }
+        
+        public function get gid():uint
+        {
+            return _gid;
         }
         
         public function set qTree(q:QTree):void
@@ -137,6 +147,7 @@ package inoah.core.objects
         public function set viewObject( value:IViewObject ):void
         {
             _viewObj = value;
+            _viewObj.gid = _gid;
         }
         
         public function get viewObject():IViewObject

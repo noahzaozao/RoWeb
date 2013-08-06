@@ -4,6 +4,7 @@ package inoah.game.ro.mapModels
     import flash.geom.Point;
     
     import inoah.core.Global;
+    import inoah.core.consts.ConstsGame;
     import inoah.core.consts.MgrTypeConsts;
     import inoah.core.interfaces.ILoader;
     import inoah.core.interfaces.IMapLevel;
@@ -13,6 +14,8 @@ package inoah.game.ro.mapModels
     import inoah.core.utils.Counter;
     import inoah.data.map.MapInfo;
     import inoah.data.map.MapTileSetInfo;
+    
+    import pureMVC.patterns.facade.Facade;
     
     import starling.display.DisplayObjectContainer;
     import starling.display.Image;
@@ -35,6 +38,7 @@ package inoah.game.ro.mapModels
         protected var _levelList:Vector.<IMapLevel>;
         protected var _mapImageList:Vector.<Image>;
         
+        protected var _drawTileObjList:Vector.<DrawTileObj>;
         protected var _drawTileObj:DrawTileObj;
         private var _isDrawComplete:Boolean;
         private var _couldTick:Boolean;
@@ -211,7 +215,7 @@ package inoah.game.ro.mapModels
             _drawTileObj.j = 0;
             
             _isDrawComplete = false;
-            _drawCounter.reset( 0.3 );
+            _drawCounter.reset( 0.1 );
         }
         
         public function tick( delta:Number ):void
@@ -227,7 +231,11 @@ package inoah.game.ro.mapModels
                     _drawCounter.tick( delta );
                     if( _drawCounter.expired )
                     {
-                        _drawCounter.reset( 0.3 )
+                        _drawCounter.reset( 0.1 )
+                        break;
+                    }
+                    if( _isDrawComplete )
+                    {
                         break;
                     }
                     drawTileStep();
@@ -275,9 +283,11 @@ package inoah.game.ro.mapModels
                     _drawTileObj.j++;
                 }
             }
+            Facade.getInstance().sendNotification( ConstsGame.UPDATE_STATUS , ["mapLoading..." + (_drawTileObj.i * _drawTileObj.bw + _drawTileObj.j ) + "/" + (_drawTileObj.bw * _drawTileObj.bh) ]  );
             
             if( _drawTileObj.i >= _drawTileObj.bh )
             {
+                _isDrawComplete = true;
                 _mapImageList[ 0 ] = new Image( _drawTileObj.tmpRenderTexture[0] );
                 _mapImageList[ 0 ].touchable = false;
                 _mapImageList[ 0 ].x = 800;
@@ -298,7 +308,7 @@ package inoah.game.ro.mapModels
                 _mapImageList[ 3 ].x = 800;
                 _mapImageList[ 3 ].y = 800;
                 _container.addChild( _mapImageList[ 3 ] );
-                _isDrawComplete = true;
+                _drawTileObj = null;
             }
         }
     }

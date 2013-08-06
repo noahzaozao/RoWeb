@@ -13,6 +13,7 @@ package inoah.core.interfaces
         function set action( value:int ):void;
         function set direction( value:int ):void;
         function set isPlayEnd( value:Boolean ):void;
+        function set gid( value:uint ):void;
         
         function set playRate( value:Number ):void;
         function setChooseCircle( value:Boolean ):void;

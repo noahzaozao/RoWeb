@@ -44,6 +44,7 @@
     <classEntry path="inoah.game.ro.objects.BattleCharacterObject"/>
     <classEntry path="inoah.game.ro.objects.MonsterObject"/>
     <classEntry path="inoah.game.ro.mapModels.DrawTileObj"/>
+    <classEntry path="inoah.game.ro.StatusBar"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

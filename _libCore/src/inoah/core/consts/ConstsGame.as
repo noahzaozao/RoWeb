@@ -4,6 +4,7 @@ package inoah.core.consts
     {
         public static const GAME_MEDIATOR:String = "GameConsts.GAME_MEDIATOR";
         public static const LUA_ENGINE:String = "GameConsts.LUA_ENGINE";
+        public static const UPDATE_STATUS:String = "GameConsts.UPDATE_STATUS";
         
         public static const MAIN_VIEW:String = "GameConsts.MAIN_VIEW";
         public static const ALERT_VIEW:String = "GameConsts.ALERT_VIEW";

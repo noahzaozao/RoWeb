@@ -5,20 +5,21 @@ package inoah.core.characters.gpu
     
     import inoah.core.consts.ConstsActions;
     import inoah.core.consts.MgrTypeConsts;
+    import inoah.core.events.ActTpcEvent;
+    import inoah.core.infos.CharacterInfo;
+    import inoah.core.interfaces.ILoader;
+    import inoah.core.interfaces.IViewObject;
+    import inoah.core.loaders.ActTpcLoader;
+    import inoah.core.managers.AssetMgr;
+    import inoah.core.managers.MainMgr;
     import inoah.core.viewModels.actSpr.structs.CACT;
     import inoah.core.viewModels.actTpc.ActTpcBodyView;
     import inoah.core.viewModels.actTpc.ActTpcOtherView;
     import inoah.core.viewModels.actTpc.ActTpcPlayerView;
     import inoah.core.viewModels.actTpc.ActTpcWeaponView;
-    import inoah.core.events.ActTpcEvent;
-    import inoah.core.infos.CharacterInfo;
-    import inoah.core.interfaces.IViewObject;
-    import inoah.core.loaders.ActTpcLoader;
-    import inoah.core.interfaces.ILoader;
-    import inoah.core.managers.AssetMgr;
-    import inoah.core.managers.MainMgr;
     
     import starling.display.Sprite;
+    import starling.text.TextField;
     
     /**
      * 
@@ -100,6 +101,12 @@ package inoah.core.characters.gpu
             //            _chooseCircle = new Shape();
             //            _chooseCircle.graphics.lineStyle( 2, 0x00ff00 );
             //            _chooseCircle.graphics.drawEllipse(-25, -15, 50, 30);
+        }
+        
+        public function set gid( value:uint ):void
+        {
+            var txt:TextField = new TextField( 100 , 24 , value.toString() );
+            addChild( txt );
         }
         
         public function get charInfo():CharacterInfo

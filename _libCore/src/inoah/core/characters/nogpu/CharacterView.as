@@ -101,6 +101,11 @@ package inoah.core.characters.nogpu
             _chooseCircle.graphics.drawEllipse(-25, -15, 50, 30);
         }
         
+        public function set gid( value:uint ):void
+        {
+            
+        }
+        
         public function get charInfo():CharacterInfo
         {
             return _charInfo;
