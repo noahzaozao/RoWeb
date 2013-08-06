@@ -131,7 +131,7 @@ package inoah.game.ro.mapModels
                 }
                 else if( _mapInfo.layers[i].type == "objectgroup" )
                 {
-//                    drawObject( i );
+                    //                    drawObject( i );
                 }
             }
         }
@@ -285,30 +285,45 @@ package inoah.game.ro.mapModels
             }
             Facade.getInstance().sendNotification( ConstsGame.UPDATE_STATUS , ["mapLoading..." + (_drawTileObj.i * _drawTileObj.bw + _drawTileObj.j ) + "/" + (_drawTileObj.bw * _drawTileObj.bh) ]  );
             
-            if( _drawTileObj.i >= _drawTileObj.bh )
+            if( _drawTileObj.i == 25 )
             {
-                _isDrawComplete = true;
-                _mapImageList[ 0 ] = new Image( _drawTileObj.tmpRenderTexture[0] );
-                _mapImageList[ 0 ].touchable = false;
-                _mapImageList[ 0 ].x = 800;
-                _mapImageList[ 0 ].y = 0;
-                _container.addChild( _mapImageList[ 0 ] );
-                _mapImageList[ 1 ] = new Image( _drawTileObj.tmpRenderTexture[1] );
-                _mapImageList[ 1 ].touchable = false;
-                _mapImageList[ 1 ].x = 1600;
-                _mapImageList[ 1 ].y = 400;
-                _container.addChild( _mapImageList[ 1 ] );
-                _mapImageList[ 2 ] = new Image( _drawTileObj.tmpRenderTexture[2] );
-                _mapImageList[ 2 ].touchable = false;
-                _mapImageList[ 2 ].x = 0;
-                _mapImageList[ 2 ].y = 400;
-                _container.addChild( _mapImageList[ 2 ] );
-                _mapImageList[ 3 ] = new Image( _drawTileObj.tmpRenderTexture[3] );
-                _mapImageList[ 3 ].touchable = false;
-                _mapImageList[ 3 ].x = 800;
-                _mapImageList[ 3 ].y = 800;
-                _container.addChild( _mapImageList[ 3 ] );
-                _drawTileObj = null;
+                if( _drawTileObj.j == 25 )
+                {
+                    _mapImageList[ 0 ] = new Image( _drawTileObj.tmpRenderTexture[0] );
+                    _mapImageList[ 0 ].touchable = false;
+                    _mapImageList[ 0 ].x = 800;
+                    _mapImageList[ 0 ].y = 0;
+                    _container.addChild( _mapImageList[ 0 ] );
+                }
+                else if( _drawTileObj.j == 50 )
+                {
+                    _mapImageList[ 1 ] = new Image( _drawTileObj.tmpRenderTexture[1] );
+                    _mapImageList[ 1 ].touchable = false;
+                    _mapImageList[ 1 ].x = 1600;
+                    _mapImageList[ 1 ].y = 400;
+                    _container.addChild( _mapImageList[ 1 ] );
+                }
+            }
+            else if( _drawTileObj.i == 49 )
+            {
+                if( _drawTileObj.j == 25 )
+                {
+                    _mapImageList[ 2 ] = new Image( _drawTileObj.tmpRenderTexture[2] );
+                    _mapImageList[ 2 ].touchable = false;
+                    _mapImageList[ 2 ].x = 0;
+                    _mapImageList[ 2 ].y = 400;
+                    _container.addChild( _mapImageList[ 2 ] );
+                }
+                else if( _drawTileObj.j == 50 )
+                {
+                    _mapImageList[ 3 ] = new Image( _drawTileObj.tmpRenderTexture[3] );
+                    _mapImageList[ 3 ].touchable = false;
+                    _mapImageList[ 3 ].x = 800;
+                    _mapImageList[ 3 ].y = 800;
+                    _container.addChild( _mapImageList[ 3 ] );
+                    _isDrawComplete = true;
+                    _drawTileObj = null;
+                }
             }
         }
     }

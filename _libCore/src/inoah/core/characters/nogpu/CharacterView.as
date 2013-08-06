@@ -4,16 +4,17 @@ package inoah.core.characters.nogpu
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.geom.Point;
+    import flash.text.TextField;
     
     import inoah.core.consts.ConstsActions;
     import inoah.core.consts.MgrTypeConsts;
     import inoah.core.events.ActSprEvent;
+    import inoah.core.infos.CharacterInfo;
     import inoah.core.interfaces.ILoader;
     import inoah.core.interfaces.IViewObject;
     import inoah.core.loaders.ActSprLoader;
     import inoah.core.managers.AssetMgr;
     import inoah.core.managers.MainMgr;
-    import inoah.core.infos.CharacterInfo;
     import inoah.core.viewModels.actSpr.ActSprBodyView;
     import inoah.core.viewModels.actSpr.ActSprOtherView;
     import inoah.core.viewModels.actSpr.ActSprPlayerView;
@@ -103,7 +104,11 @@ package inoah.core.characters.nogpu
         
         public function set gid( value:uint ):void
         {
-            
+            var txt:TextField = new TextField();
+            txt.width = 100;
+            txt.height = 24;
+            txt.text = value.toString();
+            addChild( txt );
         }
         
         public function get charInfo():CharacterInfo
