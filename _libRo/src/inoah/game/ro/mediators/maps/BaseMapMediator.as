@@ -76,8 +76,8 @@ package inoah.game.ro.mediators.maps
             var jsonStr:String = loader.data as String;
             var jsonObj:Object = JSON.parse( jsonStr );
             var mapInfo:MapInfo = new MapInfo( jsonObj );
-            var mapBase:BaseMapModel = new BaseMapModel( _mapContainer );
-            mapBase.init( mapInfo ); 
+            _baseMapModel = new BaseMapModel( _mapContainer );
+            _baseMapModel.init( mapInfo ); 
         }
         
         public function addObject( o:BaseObject ):void
@@ -194,6 +194,10 @@ package inoah.game.ro.mediators.maps
         
         public function tick(delta:Number):void
         {
+            if( _baseMapModel )
+            {
+                _baseMapModel.tick( delta );
+            }
             if( _mapContainer )
             {
                 _mapContainer.x = int(_offsetX);

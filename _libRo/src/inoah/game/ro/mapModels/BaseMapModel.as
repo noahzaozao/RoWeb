@@ -10,6 +10,7 @@ package inoah.game.ro.mapModels
     import inoah.core.loaders.JpgLoader;
     import inoah.core.managers.AssetMgr;
     import inoah.core.managers.MainMgr;
+    import inoah.core.utils.Counter;
     import inoah.data.map.MapInfo;
     import inoah.data.map.MapTileSetInfo;
     
@@ -27,15 +28,17 @@ package inoah.game.ro.mapModels
     {
         protected var _mapInfo:MapInfo;
         protected var _container:DisplayObjectContainer;
-        
         protected var _currentResIndexList:Vector.<String>;
         protected var _currentResList:Vector.<Bitmap>;
         protected var _currentTextureAtlasIndexList:Vector.<int>;
         protected var _currentTextureAtlasList:Vector.<TextureAtlas>;
-        
         protected var _levelList:Vector.<IMapLevel>;
-        
         protected var _mapImageList:Vector.<Image>;
+        
+        protected var _drawTileObj:DrawTileObj;
+        private var _isDrawComplete:Boolean;
+        private var _couldTick:Boolean;
+        private var _drawCounter:Counter;
         
         public function BaseMapModel(  container:DisplayObjectContainer )
         {
@@ -47,6 +50,8 @@ package inoah.game.ro.mapModels
             _currentTextureAtlasIndexList = new Vector.<int>();
             _currentTextureAtlasList = new Vector.<TextureAtlas>();
             _mapImageList = new Vector.<Image>();
+            _drawCounter = new Counter();
+            _drawCounter.initialize();
         }
         
         public function init( mapInfo:MapInfo ):void
@@ -117,6 +122,8 @@ package inoah.game.ro.mapModels
                 if( _mapInfo.layers[i].type == "tilelayer" )
                 {
                     drawTile( i );
+                    _couldTick = true;
+                    return;
                 }
                 else if( _mapInfo.layers[i].type == "objectgroup" )
                 {
@@ -179,82 +186,120 @@ package inoah.game.ro.mapModels
         
         private function drawTile( index:int ):void
         {
-            var textureIndex:int;
+            _drawTileObj = new DrawTileObj();
+            _drawTileObj.textureIndex = 0;
+            _drawTileObj.mapDataArr = _mapInfo.layers[index].data;
             
-            var mapDataArr:Vector.<uint> = _mapInfo.layers[index].data;
-            var bw:int = _mapInfo.layers[index].width;
-            var bh:int = _mapInfo.layers[index].height;
-            var w:int = _mapInfo.layers[index].width * Global.TILE_W;
-            var h:int = _mapInfo.layers[index].height * Global.TILE_H;
+            _drawTileObj.bw = _mapInfo.layers[index].width;
+            _drawTileObj.bh = _mapInfo.layers[index].height;
+            _drawTileObj.w = _mapInfo.layers[index].width * Global.TILE_W;
+            _drawTileObj.h = _mapInfo.layers[index].height * Global.TILE_H;
             
-            var pointList:Vector.<Point> = new Vector.<Point>();
-            pointList.push( new Point() );
-            pointList.push( new Point() );
-            pointList.push( new Point() );
-            pointList.push( new Point() );
+            _drawTileObj.pointList = new Vector.<Point>();
+            _drawTileObj.pointList.push( new Point() );
+            _drawTileObj.pointList.push( new Point() );
+            _drawTileObj.pointList.push( new Point() );
+            _drawTileObj.pointList.push( new Point() );
             
-            var tmpRenderTexture:Vector.<RenderTexture> = new Vector.<RenderTexture>();
-            tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
-            tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
-            tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
-            tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
+            _drawTileObj.tmpRenderTexture = new Vector.<RenderTexture>();
+            _drawTileObj.tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
+            _drawTileObj.tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
+            _drawTileObj.tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
+            _drawTileObj.tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
             
-            var image:Image;
-            //0-25 , 25-50
-            for( var i:int = 0 ;i< bh ;i++)
+            _drawTileObj.i = 0;
+            _drawTileObj.j = 0;
+            
+            _isDrawComplete = false;
+            _drawCounter.reset( 0.3 );
+        }
+        
+        public function tick( delta:Number ):void
+        {
+            if( !_couldTick )
             {
-                for( var j:int = 0;j< bw ;j++)
+                return;
+            }
+            if( !_isDrawComplete )
+            {
+                while( true )
                 {
-                    textureIndex = _currentTextureAtlasIndexList[ mapDataArr[ j + i * bw ]];
-                    image = new Image( _currentTextureAtlasList[textureIndex].getTexture( mapDataArr[ j + i * bw ].toString() ) );
-                    //                    image.x =w / 2 - ( i + 1 ) * Global.TILE_W / 2 + j * Global.TILE_W / 2;
-                    //                    image.y = i * Global.TILE_H / 2 + j * Global.TILE_H / 2;
-                    if( j < 25 && i < 25 )
+                    _drawCounter.tick( delta );
+                    if( _drawCounter.expired )
                     {
-                        image.x =w / 4 - ( i + 1 ) * Global.TILE_W / 2 + j * Global.TILE_W / 2;
-                        image.y = i * Global.TILE_H / 2 + j * Global.TILE_H / 2;
-                        tmpRenderTexture[0].draw( image );
+                        _drawCounter.reset( 0.3 )
+                        break;
                     }
-                    else if( j >= 25 && i < 25 )
-                    {
-                        image.x =w / 4 - ( i + 1 ) * Global.TILE_W / 2 + ( j - 25 ) * Global.TILE_W / 2;
-                        image.y = i * Global.TILE_H / 2 + ( j - 25 ) * Global.TILE_H / 2;
-                        tmpRenderTexture[1].draw( image );
-                    }
-                    else if( j < 25 && i >= 25 )
-                    {
-                        image.x =w / 4 - ( i + 1 - 25 ) * Global.TILE_W / 2 +  j * Global.TILE_W / 2;
-                        image.y = ( i - 25 ) * Global.TILE_H / 2 + j * Global.TILE_H / 2;
-                        tmpRenderTexture[2].draw( image );
-                    }
-                    else if( j>= 25 && i >= 25 )
-                    {
-                        image.x =w / 4 - ( i + 1 - 25 ) * Global.TILE_W / 2 + ( j - 25 ) * Global.TILE_W / 2;
-                        image.y = ( i - 25 ) * Global.TILE_H / 2 + ( j - 25 ) * Global.TILE_H / 2;
-                        tmpRenderTexture[3].draw( image );
-                    }
+                    drawTileStep();
                 }
             }
-            _mapImageList[ 0 ] = new Image( tmpRenderTexture[0] );
-            _mapImageList[ 0 ].touchable = false;
-            _mapImageList[ 0 ].x = 800;
-            _mapImageList[ 0 ].y = 0;
-            _container.addChild( _mapImageList[ 0 ] );
-            _mapImageList[ 1 ] = new Image( tmpRenderTexture[1] );
-            _mapImageList[ 1 ].touchable = false;
-            _mapImageList[ 1 ].x = 1600;
-            _mapImageList[ 1 ].y = 400;
-            _container.addChild( _mapImageList[ 1 ] );
-            _mapImageList[ 2 ] = new Image( tmpRenderTexture[2] );
-            _mapImageList[ 2 ].touchable = false;
-            _mapImageList[ 2 ].x = 0;
-            _mapImageList[ 2 ].y = 400;
-            _container.addChild( _mapImageList[ 2 ] );
-            _mapImageList[ 3 ] = new Image( tmpRenderTexture[3] );
-            _mapImageList[ 3 ].touchable = false;
-            _mapImageList[ 3 ].x = 800;
-            _mapImageList[ 3 ].y = 800;
-            _container.addChild( _mapImageList[ 3 ] );
+        }
+        
+        private function drawTileStep():void
+        {
+            if( _drawTileObj.j >= _drawTileObj.bw )
+            {
+                _drawTileObj.j = 0;
+                _drawTileObj.i++;
+            }
+            if( _drawTileObj.i < _drawTileObj.bh )
+            {
+                if( _drawTileObj.j < _drawTileObj.bw )
+                {
+                    _drawTileObj.textureIndex = _currentTextureAtlasIndexList[ _drawTileObj.mapDataArr[ _drawTileObj.j + _drawTileObj.i * _drawTileObj.bw ]];
+                    _drawTileObj.image = new Image( _currentTextureAtlasList[ _drawTileObj.textureIndex ].getTexture( _drawTileObj.mapDataArr[ _drawTileObj.j + _drawTileObj.i * _drawTileObj.bw ].toString() ) );
+                    if( _drawTileObj.j < 25 && _drawTileObj.i < 25 )
+                    {
+                        _drawTileObj.image.x =_drawTileObj.w / 4 - ( _drawTileObj.i + 1 ) * Global.TILE_W / 2 + _drawTileObj.j * Global.TILE_W / 2;
+                        _drawTileObj.image.y = _drawTileObj.i * Global.TILE_H / 2 + _drawTileObj.j * Global.TILE_H / 2;
+                        _drawTileObj.tmpRenderTexture[0].draw( _drawTileObj.image );
+                    }
+                    else if( _drawTileObj.j >= 25 && _drawTileObj.i < 25 )
+                    {
+                        _drawTileObj.image.x =_drawTileObj.w / 4 - ( _drawTileObj.i + 1 ) * Global.TILE_W / 2 + ( _drawTileObj.j - 25 ) * Global.TILE_W / 2;
+                        _drawTileObj.image.y = _drawTileObj.i * Global.TILE_H / 2 + ( _drawTileObj.j - 25 ) * Global.TILE_H / 2;
+                        _drawTileObj.tmpRenderTexture[1].draw( _drawTileObj.image );
+                    }
+                    else if( _drawTileObj.j < 25 && _drawTileObj.i >= 25 )
+                    {
+                        _drawTileObj.image.x =_drawTileObj.w / 4 - ( _drawTileObj.i + 1 - 25 ) * Global.TILE_W / 2 +  _drawTileObj.j * Global.TILE_W / 2;
+                        _drawTileObj.image.y = ( _drawTileObj.i - 25 ) * Global.TILE_H / 2 + _drawTileObj.j * Global.TILE_H / 2;
+                        _drawTileObj.tmpRenderTexture[2].draw( _drawTileObj.image );
+                    }
+                    else if( _drawTileObj.j>= 25 && _drawTileObj.i >= 25 )
+                    {
+                        _drawTileObj.image.x =_drawTileObj.w / 4 - ( _drawTileObj.i + 1 - 25 ) * Global.TILE_W / 2 + ( _drawTileObj.j - 25 ) * Global.TILE_W / 2;
+                        _drawTileObj.image.y = ( _drawTileObj.i - 25 ) * Global.TILE_H / 2 + ( _drawTileObj.j - 25 ) * Global.TILE_H / 2;
+                        _drawTileObj.tmpRenderTexture[3].draw( _drawTileObj.image );
+                    }
+                    _drawTileObj.j++;
+                }
+            }
+            
+            if( _drawTileObj.i >= _drawTileObj.bh )
+            {
+                _mapImageList[ 0 ] = new Image( _drawTileObj.tmpRenderTexture[0] );
+                _mapImageList[ 0 ].touchable = false;
+                _mapImageList[ 0 ].x = 800;
+                _mapImageList[ 0 ].y = 0;
+                _container.addChild( _mapImageList[ 0 ] );
+                _mapImageList[ 1 ] = new Image( _drawTileObj.tmpRenderTexture[1] );
+                _mapImageList[ 1 ].touchable = false;
+                _mapImageList[ 1 ].x = 1600;
+                _mapImageList[ 1 ].y = 400;
+                _container.addChild( _mapImageList[ 1 ] );
+                _mapImageList[ 2 ] = new Image( _drawTileObj.tmpRenderTexture[2] );
+                _mapImageList[ 2 ].touchable = false;
+                _mapImageList[ 2 ].x = 0;
+                _mapImageList[ 2 ].y = 400;
+                _container.addChild( _mapImageList[ 2 ] );
+                _mapImageList[ 3 ] = new Image( _drawTileObj.tmpRenderTexture[3] );
+                _mapImageList[ 3 ].touchable = false;
+                _mapImageList[ 3 ].x = 800;
+                _mapImageList[ 3 ].y = 800;
+                _container.addChild( _mapImageList[ 3 ] );
+                _isDrawComplete = true;
+            }
         }
     }
 }
