@@ -4,6 +4,11 @@ package inoah.lua
     import flash.utils.Dictionary;
     
     import inoah.core.consts.ConstsGame;
+    import inoah.core.consts.MgrTypeConsts;
+    import inoah.core.interfaces.ILoader;
+    import inoah.core.loaders.LuaLoader;
+    import inoah.core.managers.AssetMgr;
+    import inoah.core.managers.MainMgr;
     
     import interfaces.ILuaMain;
     
@@ -19,15 +24,22 @@ package inoah.lua
     public class LuaEngine extends Mediator
     {
         protected static var _luaMain:ILuaMain;
-
+        
         public var luaStrList:Vector.<String>;
         public var luastate:int
         protected var panicabort:Boolean = false
+        protected var _luaPathList:Vector.<String>;
+        
+        public function API_ADD_LUA_PATH( luaPath:String ):void
+        {
+            _luaPathList.push( luaPath );
+        }
         
         public function LuaEngine( luaMain:ILuaMain )
         {
             super( ConstsGame.LUA_ENGINE );
             luaStrList = new Vector.<String>();
+            _luaPathList = new Vector.<String>();
             _luaMain = luaMain;
         }
         
@@ -45,7 +57,6 @@ package inoah.lua
                 {
                     return;
                 }
-                err = _luaMain.lua_pcallk(luastate, 0, _luaMain.LUA_MULTRET, 0, 0, null)
             }
             
             try 
@@ -53,17 +64,44 @@ package inoah.lua
                 _luaMain.__lua_objrefs = new Dictionary();
                 _luaMain.lua_getglobal(luastate, "main")
                 push_objref(this)
-                push_objref(Starling.current.nativeStage.stage3Ds[0].context3D)
-                _luaMain.lua_pushinteger(luastate, Starling.current.viewPort.width)
-                _luaMain.lua_pushinteger(luastate, Starling.current.viewPort.height)
-                _luaMain.lua_callk(luastate, 4, 0, 0, null)
+                _luaMain.lua_callk(luastate, 1, 0, 0, null)
             } 
             catch(e:*) 
             {
                 onError("Exception thrown while initializing code:\n" + e + e.getStackTrace() );
             }
         }
-       
+        
+        public function API_LoadLuaScript():void
+        {
+            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
+            var resList:Vector.<String> = new Vector.<String>();
+            var len:int = _luaPathList.length;
+            for( var i:int = 0;i<len;i++)
+            {
+                resList.push( _luaPathList[i] + ".lua" );
+            }
+            assetMgr.getResList( resList , onLoadLuaScript );
+            _luaPathList = new Vector.<String>();
+        }
+        
+        protected function onLoadLuaScript( loader:ILoader ):void
+        {
+            var luaLoader:LuaLoader = loader as LuaLoader;
+            luaStrList.push( luaLoader.content );
+            if( luaL_loadstring( luastate , luaLoader.content ) )
+            {
+                return;
+            }
+            _luaMain.lua_getglobal(luastate, "onLoadLuaScript");
+            _luaMain.lua_callk(luastate, 0, 0, 0, null);
+        }
+        
+        public function API_onLoadLuaScriptComplete():void
+        {
+            trace( "[LuaEngine] API_onLoadLuaScriptComplete" );
+        }
+        
         override public function listNotificationInterests():Array
         {
             var arr:Array = super.listNotificationInterests();
@@ -79,7 +117,7 @@ package inoah.lua
             }
         }
         
-        private function luaL_loadstring(luastate:int, luaStr:String):int
+        protected function luaL_loadstring(luastate:int, luaStr:String):int
         {
             var err:int =_luaMain.luaL_loadstring(luastate, luaStr)
             if(err) 
@@ -87,10 +125,14 @@ package inoah.lua
                 onError("Error " + err + ": " + _luaMain.luaL_checklstring(luastate, 1, 0));
                 _luaMain.lua_close(luastate);
             }
+            else 
+            {
+                err = _luaMain.lua_pcallk(luastate, 0, _luaMain.LUA_MULTRET, 0, 0, null);
+            }
             return err;
         }
         
-        public function atPanic(e:*): void
+        protected function atPanic(e:*): void
         {
             onError("Lua Panic: " + _luaMain.luaL_checklstring(luastate, -1, 0))
             panicabort = true
@@ -102,7 +144,7 @@ package inoah.lua
             _luaMain.__lua_objrefs[udptr] = o
         }
         
-        public function onError(e:*):void
+        protected function onError(e:*):void
         {
             trace(e)
             if(ExternalInterface.available) 
@@ -124,7 +166,7 @@ package inoah.lua
             {
                 if(!panicabort)
                 {
-                    onError("Exception thrown while calling starlingUpdate:\n" + e + e.getStackTrace());
+                    onError("Exception thrown while calling update:\n" + e + e.getStackTrace());
                 }
             }
         }

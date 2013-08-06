@@ -6,6 +6,7 @@ package inoah.core
 
     public class Global
     {
+        public static var ENABLE_LUA:Boolean;
         public static var IS_MOBILE:Boolean;
         public static var SCREEN_W:uint;
         public static var SCREEN_H:uint;

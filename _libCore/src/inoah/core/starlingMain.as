@@ -22,8 +22,15 @@ package inoah.core
         
         protected function addedToStageHandler( e:Event ):void
         {
-            _luaEngine = Facade.getInstance().retrieveMediator( ConstsGame.LUA_ENGINE ) as LuaEngine;
-            _luaEngine.init();
+            if( Global.ENABLE_LUA )
+            {
+                _luaEngine = Facade.getInstance().retrieveMediator( ConstsGame.LUA_ENGINE ) as LuaEngine;
+                _luaEngine.init();
+            }
+            else
+            {
+                
+            }
         }
         
         /**

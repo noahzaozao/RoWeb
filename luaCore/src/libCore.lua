@@ -2,10 +2,10 @@
 -- @module libCore
 module( "libCore", package.seeall)
 -------------------------------------------------------------------------------
+-- @function [parent = #libCore] var_dump
 -- @param data
 -- @param max_level
 -- @param prefix
--- @function [parent = #libCore] var_dump
 function var_dump(data, max_level, prefix)   
 	if type(prefix) ~= "string" then   
 		prefix = ""  
@@ -33,3 +33,37 @@ function var_dump(data, max_level, prefix)
 		end   
 	end   
 end  
+
+currentLuaPathList = nil
+---
+--@function [parent = #libCore] loadLuaScripts
+--@param luaPathList
+function loadLuaScripts( luaPathList )
+	print( "loadLuaScripts..." )
+	currentLuaPathList = luaPathList
+	if AS3_API ~= nil then
+		local len = #luaPathList
+		for i= 1, len do
+			AS3_API:API_ADD_LUA_PATH( luaPathList[i] )
+			print( "AddLuaPath " .. luaPathList[i] )
+		end
+		AS3_API:API_LoadLuaScript()
+	else
+		--just for console test
+		local len = #luaPathList
+		for i= 1, len do
+			require( luaPathList[i] )
+			i = i + 1
+		end
+		onLoadLuaScript()
+	end
+end
+
+---
+--@function [parent = #libCore] onLoadLuaScriptComplete
+function onLoadLuaScriptComplete()
+	print( "onLoadLuaScriptComplete" )
+	if AS3_API ~= nil then
+		AS3_API:API_onLoadLuaScriptComplete()
+	end
+end

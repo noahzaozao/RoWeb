@@ -6,6 +6,7 @@ package inoah.core.mediators
     import flash.text.TextField;
     import flash.text.TextFormat;
     
+    import inoah.core.Global;
     import inoah.core.consts.ConstsGame;
     import inoah.core.consts.MgrTypeConsts;
     import inoah.core.consts.commands.GameCommands;
@@ -15,7 +16,6 @@ package inoah.core.mediators
     import inoah.core.managers.AssetMgr;
     import inoah.core.managers.DisplayMgr;
     import inoah.core.managers.MainMgr;
-    import inoah.core.starlingMain;
     import inoah.lua.LuaEngine;
     
     import pureMVC.interfaces.INotification;
@@ -23,8 +23,6 @@ package inoah.core.mediators
     import pureMVC.patterns.mediator.Mediator;
     
     import starling.core.Starling;
-    import starling.utils.HAlign;
-    import starling.utils.VAlign;
     
     public class GameMediator extends Mediator implements ITickable
     {
@@ -44,13 +42,24 @@ package inoah.core.mediators
             var assetMgr:AssetMgr = new AssetMgr();
             MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, assetMgr );
             
-            var resList:Vector.<String> = new Vector.<String>();
-            resList.push( "libCore.lua" );
-            resList.push( "libPlayer.lua" );
-            resList.push( "main.lua" );
-            assetMgr.getResList( resList , onLuaLoaded );
+            if( Global.ENABLE_LUA )
+            {
+                var resList:Vector.<String> = new Vector.<String>();
+                resList.push( "libCore.lua" );
+                resList.push( "main.lua" );
+                assetMgr.getResList( resList , onLuaLoaded );
+            }
+            else
+            {
+                noLua();
+            }
             
             //            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
+        }
+        
+        private function noLua():void
+        {
+            initStarling();
         }
         
         protected function onLuaLoaded( loader:ILoader ):void
@@ -58,9 +67,7 @@ package inoah.core.mediators
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
             
             var luaEngine:LuaEngine = Facade.getInstance().retrieveMediator( ConstsGame.LUA_ENGINE ) as LuaEngine;
-            
             luaEngine.luaStrList.push( (assetMgr.getRes( "libCore.lua" , null ) as LuaLoader).content );
-            luaEngine.luaStrList.push( (assetMgr.getRes( "libPlayer.lua" , null ) as LuaLoader).content );
             luaEngine.luaStrList.push( (assetMgr.getRes( "main.lua" , null ) as LuaLoader).content );
             
             initStarling();
@@ -68,13 +75,13 @@ package inoah.core.mediators
         
         protected function initStarling():void
         {
-            Starling.handleLostContext = true;
-            Starling.multitouchEnabled = true;
-            _starling = new Starling( starlingMain, _stage );
-            _starling.enableErrorChecking = false;
-            _starling.showStats = true;
-            _starling.showStatsAt(HAlign.RIGHT, VAlign.CENTER);
-            _starling.start();
+            //            Starling.handleLostContext = true;
+            //            Starling.multitouchEnabled = true;
+            //            _starling = new Starling( starlingMain, _stage );
+            //            _starling.enableErrorChecking = false;
+            //            _starling.showStats = true;
+            //            _starling.showStatsAt(HAlign.RIGHT, VAlign.CENTER);
+            //            _starling.start();
         }
         
         protected function onRightClick( e:MouseEvent):void

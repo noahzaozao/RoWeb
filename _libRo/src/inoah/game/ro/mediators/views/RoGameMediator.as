@@ -47,33 +47,6 @@ package inoah.game.ro.mediators.views
             _starling.start();
         }
         
-        override protected function onInitLoadComplete( loader:ILoader = null ):void
-        {
-            super.onInitLoadComplete( loader );
-            
-            var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
-            //初始化主界面
-            var mainView:MainView = new MainView();
-            _mainViewMediator = new MainViewMediator( mainView );
-            facade.registerMediator( _mainViewMediator as IMediator );
-            displayMgr.uiLevel.addChild( mainView );
-            
-            //初始化地图管理器
-            _mapMgr = new MapMgr( displayMgr.unitLevel , displayMgr.mapLevel );
-            MainMgr.instance.addMgr( MgrTypeConsts.MAP_MGR, _mapMgr as IMgr );
-            facade.registerMediator( _mapMgr as IMediator );
-            
-            facade.sendNotification( GameCommands.CHANGE_MAP , [ 1 ] );
-            
-            //初始化战斗管理器
-            _battleMgr = new BattleMgr( (_mapMgr as MapMgr).scene as BattleMapMediator );
-            MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, _battleMgr as IMgr );
-            facade.registerMediator( _battleMgr as IMediator );
-            
-            facade.sendNotification( GameCommands.RECV_CHAT , [ "\n\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>" ] );
-            facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#00ff00'>WASD to move and J to attack!</font>" ] );
-        }
-        
         override protected function onLoginHandler( username:String ):void
         {
             super.onLoginHandler( username );
@@ -118,6 +91,33 @@ package inoah.game.ro.mediators.views
             userInfo.zeny = 10000;
             userInfo.hpCurrent = userInfo.hpMax;
             userInfo.spCurrent = userInfo.spMax;
+        }
+        
+        override protected function onInitLoadComplete( loader:ILoader = null ):void
+        {
+            super.onInitLoadComplete( loader );
+            
+            var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
+            //初始化主界面
+            var mainView:MainView = new MainView();
+            _mainViewMediator = new MainViewMediator( mainView );
+            facade.registerMediator( _mainViewMediator as IMediator );
+            displayMgr.uiLevel.addChild( mainView );
+            
+            //初始化地图管理器
+            _mapMgr = new MapMgr( displayMgr.unitLevel , displayMgr.mapLevel );
+            MainMgr.instance.addMgr( MgrTypeConsts.MAP_MGR, _mapMgr as IMgr );
+            facade.registerMediator( _mapMgr as IMediator );
+            
+            facade.sendNotification( GameCommands.CHANGE_MAP , [ 1 ] );
+            
+            //初始化战斗管理器
+            _battleMgr = new BattleMgr( (_mapMgr as MapMgr).scene as BattleMapMediator );
+            MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, _battleMgr as IMgr );
+            facade.registerMediator( _battleMgr as IMediator );
+            
+            facade.sendNotification( GameCommands.RECV_CHAT , [ "\n\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>" ] );
+            facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#00ff00'>WASD to move and J to attack!</font>" ] );
         }
         
         override public function tick( delta:Number ):void

@@ -1,16 +1,15 @@
 package
 {
-    import com.inoah.lua.LuaMain;
-    import com.inoah.ro.mediators.GameMediator;
-    
     import flash.display.Sprite;
     import flash.display.StageAlign;
     import flash.display.StageOrientation;
     import flash.display.StageScaleMode;
     import flash.events.Event;
     
-    import inoah.game.Global;
-    import inoah.game.interfaces.ITickable;
+    import inoah.core.Global;
+    import inoah.core.interfaces.ITickable;
+    import inoah.core.mediators.GameMediator;
+    import inoah.game.ro.mediators.views.RoGameMediator;
     
     import pureMVC.interfaces.IFacade;
     import pureMVC.interfaces.IMediator;
@@ -35,13 +34,12 @@ package
             stage.setOrientation( StageOrientation.ROTATED_RIGHT );
             
             Global.IS_MOBILE = true;
+            Global.ENABLE_LUA = false;
             Global.SCREEN_W = 960;
             Global.SCREEN_H = 640;
             
-            GameMediator.luaMain = new LuaMain();
-            
             var facade:IFacade = Facade.getInstance();
-            _gameMediator = new GameMediator( stage , this );
+            _gameMediator = new RoGameMediator( stage , this );
             facade.registerMediator( _gameMediator as IMediator );
             
             _lastTimeStamp = new Date().time;

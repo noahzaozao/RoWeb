@@ -1,6 +1,7 @@
 package inoah.game.ro
 {
     import inoah.core.Global;
+    import inoah.core.starlingMain;
     import inoah.core.consts.MgrTypeConsts;
     import inoah.core.interfaces.ILoader;
     import inoah.core.loaders.AtfLoader;
@@ -19,7 +20,6 @@ package inoah.game.ro
     import starling.display.Image;
     import starling.events.Event;
     import starling.textures.Texture;
-    import inoah.core.starlingMain;
     
     public class RoMain extends starlingMain
     {
@@ -43,7 +43,6 @@ package inoah.game.ro
             MainMgr.instance.addMgr( MgrTypeConsts.KEY_MGR, new KeyMgr( Starling.current.nativeStage ) );
             
             addBgImage();
-            
             App.init( displayMgr.uiLevel );
             App.loader.loadAssets( ["assets/comp.swf","assets/login_interface.swf", "assets/basic_interface.swf"] , new Handler( loadComplete ) );
         }

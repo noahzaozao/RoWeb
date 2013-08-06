@@ -8,7 +8,6 @@ package
     
     import inoah.core.Global;
     import inoah.core.interfaces.ITickable;
-    import inoah.core.mediators.GameMediator;
     import inoah.game.ro.mediators.views.RoGameMediator;
     import inoah.lua.LuaEngine;
     
@@ -21,6 +20,7 @@ package
     {
         private var _lastTimeStamp:Number;
         private var _gameMediator:ITickable;
+        private var _luaEngine:LuaEngine;
         
         public function Client()
         {
@@ -38,14 +38,17 @@ package
             tabEnabled = false;
             
 //            Global.IS_MOBILE = true;
+            Global.ENABLE_LUA = true;
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;
             
             var facade:IFacade = Facade.getInstance();
+            
+            _luaEngine = new LuaEngine( new LuaMain() );
+            facade.registerMediator( _luaEngine );
+
             _gameMediator = new RoGameMediator( stage , this );
             facade.registerMediator( _gameMediator as IMediator );
-            var luaEngine:LuaEngine = new LuaEngine( new LuaMain() );
-            facade.registerMediator( luaEngine );
             
             _lastTimeStamp = new Date().time;
             stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );

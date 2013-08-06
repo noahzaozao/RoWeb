@@ -118,7 +118,7 @@ package inoah.core.managers
                     _isLoading = true;
                     _loaderList[0].addEventListener( Event.COMPLETE , onLoadComplete );
                     //                    RoGlobal.debugTxt.appendText( "start load" + _loaderList[0].url + "\n");
-                    trace( "start load" + _loaderList[0].url );
+                    trace( "[AssetMgr] start load... " + _loaderList[0].url );
                     _loaderList[0].load();
                 }
                 else
@@ -144,7 +144,7 @@ package inoah.core.managers
             _loaderList.shift();
             _callBackList.shift();
             //            RoGlobal.debugTxt.appendText( "load complete..." + loader.url + "\n");
-            trace( "load complete..." + loader.url );
+            trace( "[AssetMgr] load complete... " + loader.url );
             _cacheList.push( loader );
             _cacheListIndex.push( loader.url );
             
