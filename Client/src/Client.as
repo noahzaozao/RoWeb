@@ -1,26 +1,26 @@
 package
 {
-    import com.inoah.lua.LuaMain;
-    
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
     import flash.events.Event;
     
+    import inoah.core.CoreConfig;
     import inoah.core.Global;
-    import inoah.core.interfaces.ITickable;
+    import inoah.game.ro.RoConfig;
     import inoah.game.ro.mediators.views.RoGameMediator;
-    import inoah.lua.LuaEngine;
     
-    import pureMVC.interfaces.IFacade;
-    import pureMVC.interfaces.IMediator;
-    import pureMVC.patterns.facade.Facade;
+    import robotlegs.bender.bundles.mvcs.MVCSBundle;
+    import robotlegs.bender.extensions.contextView.ContextView;
+    import robotlegs.bender.extensions.luaExtension.LuaExtension;
+    import robotlegs.bender.framework.api.IContext;
+    import robotlegs.bender.framework.impl.Context;
     
     [SWF(width="960",height="640",frameRate="60",backgroundColor="#000000")]
     public class Client extends VersionSprite
     {
         private var _lastTimeStamp:Number;
-        private var _gameMediator:ITickable;
-        private var _luaEngine:LuaEngine;
+        
+        private var _context:IContext;
         
         public function Client()
         {
@@ -37,18 +37,28 @@ package
             tabChildren = false;
             tabEnabled = false;
             
-//            Global.IS_MOBILE = true;
+            //            Global.IS_MOBILE = true;
             Global.ENABLE_LUA = true;
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;
             
-            var facade:IFacade = Facade.getInstance();
+            _context = new Context()
+                .install( MVCSBundle )
+                .install( LuaExtension )
+                .configure( CoreConfig )
+                .configure( LuaConfig )
+                .configure( RoConfig )
+                .configure( new ContextView( this ) );
+            _context.initialize( onInitialize );
+        }
+        
+        private function onInitialize():void
+        {
+            var roGameMediator:RoGameMediator = _context.injector.getInstance(RoGameMediator) as RoGameMediator;
+            roGameMediator.init( stage );
             
-            _luaEngine = new LuaEngine( new LuaMain() );
-            facade.registerMediator( _luaEngine );
-
-            _gameMediator = new RoGameMediator( stage , this );
-            facade.registerMediator( _gameMediator as IMediator );
+            //            (_context.injector.getInstance(IEventDispatcher) as IEventDispatcher).dispatchEvent(new UserEvent( UserEvent.SIGN_IN ));
+            //            (_context.injector.getInstance(UserModel) as UserModel).signedIn;
             
             _lastTimeStamp = new Date().time;
             stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );
@@ -59,11 +69,6 @@ package
             var currentTimeStamp:Number = new Date().time;
             var delta:Number = (currentTimeStamp - _lastTimeStamp)/1000;
             _lastTimeStamp = currentTimeStamp;
-            
-            if( _gameMediator )
-            {
-                _gameMediator.tick( delta );
-            }
         }
     }
 }
