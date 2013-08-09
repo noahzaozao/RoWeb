@@ -1,18 +1,20 @@
-package inoah.game.ro.ui
+package inoah.game.ro.modules.main.view
 {
     import flash.events.MouseEvent;
     
     import game.ui.mainViewUI;
     
     import inoah.core.Global;
-    import inoah.core.consts.commands.GameCommands;
     import inoah.core.infos.UserInfo;
     import inoah.game.ro.ui.mainViewChildren.MapView;
     
-    import pureMVC.patterns.facade.Facade;
+    import robotlegs.bender.extensions.viewManager.api.IViewManager;
     
     public class MainView extends mainViewUI
     {
+        [Inject]
+        public var viewManager:IViewManager;
+        
         private var _mapView:MapView;
         
         public function MainView()
@@ -87,32 +89,32 @@ package inoah.game.ro.ui
             {
                 case btnStatus:
                 {
-                    Facade.getInstance().sendNotification( GameCommands.OPEN_STATUS );
+                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_STATUS );
                     break;
                 }
                 case btnSkill:
                 {
-                    Facade.getInstance().sendNotification( GameCommands.OPEN_SKILL );
+                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_SKILL );
                     break;
                 }
                 case btnItem:
                 {
-                    Facade.getInstance().sendNotification( GameCommands.OPEN_ITEM);
+                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_ITEM);
                     break;
                 }
                 case btnMap:
                 {
-                    Facade.getInstance().sendNotification( GameCommands.OPEN_MAP );
+                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_MAP );
                     break;
                 }
                 case btnTask:
                 {
-                    Facade.getInstance().sendNotification( GameCommands.OPEN_TASK );
+                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_TASK );
                     break;
                 }
                 case btnOption:
                 {
-                    Facade.getInstance().sendNotification( GameCommands.OPEN_OPTION );
+                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_OPTION );
                     break;
                 }
                 default:
@@ -123,3 +125,7 @@ package inoah.game.ro.ui
         }
     }
 }
+
+        
+        
+

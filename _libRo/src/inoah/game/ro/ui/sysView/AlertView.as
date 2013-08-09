@@ -4,10 +4,6 @@ package inoah.game.ro.ui.sysView
     
     import game.ui.sysViews.alertViewUI;
     
-    import inoah.core.consts.commands.GameCommands;
-    
-    import pureMVC.patterns.facade.Facade;
-    
     public class AlertView extends alertViewUI
     {
         public function AlertView()
@@ -20,7 +16,7 @@ package inoah.game.ro.ui.sysView
         
         protected function onOkHandler( e:MouseEvent):void
         {
-            Facade.getInstance().sendNotification( GameCommands.HIDE_ALERT );
+            //            Facade.getInstance().sendNotification( GameCommands.HIDE_ALERT );
         }
     }
 }

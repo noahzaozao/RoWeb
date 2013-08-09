@@ -5,16 +5,16 @@ package inoah.game.ro.mediators.maps
     import flash.net.URLLoader;
     import flash.net.URLRequest;
     
+    import inoah.core.GameCamera;
     import inoah.core.Global;
+    import inoah.core.QTree;
     import inoah.core.interfaces.IMapMediator;
     import inoah.core.objects.BaseObject;
     import inoah.core.utils.Counter;
     import inoah.data.map.MapInfo;
-    import inoah.core.GameCamera;
-    import inoah.core.QTree;
     import inoah.game.ro.mapModels.BaseMapModel;
     
-    import pureMVC.patterns.mediator.Mediator;
+    import robotlegs.bender.bundles.mvcs.Mediator;
     
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;

@@ -1,45 +1,99 @@
 package inoah.game.ro.mediators.views
 {
+    import flash.display.Sprite;
     import flash.display.Stage;
+    import flash.text.TextField;
+    import flash.text.TextFormat;
     
     import inoah.core.Global;
-    import inoah.core.consts.ConstsGame;
     import inoah.core.consts.MgrTypeConsts;
-    import inoah.core.consts.commands.GameCommands;
     import inoah.core.infos.UserInfo;
     import inoah.core.interfaces.ILoader;
-    import inoah.core.interfaces.IMgr;
     import inoah.core.interfaces.ITickable;
+    import inoah.core.loaders.LuaLoader;
     import inoah.core.managers.AssetMgr;
     import inoah.core.managers.DisplayMgr;
+    import inoah.core.managers.KeyMgr;
     import inoah.core.managers.MainMgr;
-    import inoah.core.mediators.GameMediator;
+    import inoah.core.managers.SprMgr;
+    import inoah.core.managers.TextureMgr;
     import inoah.game.ro.RoMain;
     import inoah.game.ro.StatusBar;
-    import inoah.game.ro.managers.BattleMgr;
-    import inoah.game.ro.managers.MapMgr;
-    import inoah.game.ro.mediators.maps.BattleMapMediator;
-    import inoah.game.ro.ui.MainView;
+    import inoah.game.ro.modules.login.view.LoginView;
+    import inoah.game.ro.modules.main.view.MainView;
+    import inoah.game.ro.modules.login.view.events.LoginEvent;
+    import com.inoah.lua.LuaMainMediator;
     
-    import pureMVC.interfaces.IMediator;
+    import morn.App;
+    import morn.core.handlers.Handler;
+    
+    import robotlegs.bender.bundles.mvcs.Mediator;
+    import robotlegs.bender.extensions.contextView.ContextView;
+    import robotlegs.bender.framework.api.IContext;
+    import robotlegs.bender.framework.api.IInjector;
     
     import starling.core.Starling;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
     
-    public class RoGameMediator extends GameMediator
+    public class RoGameMediator extends Mediator implements ITickable
     {
-        protected var _mainViewMediator:ITickable;
+        [Inject]
+        public var injector:IInjector;
+        
+        [Inject]
+        public var context:IContext;
+        
+        [Inject]
+        public var contextView:ContextView;
+        
+        [Inject]
+        public var luaEngine:LuaMainMediator;
+        
+        protected var _stage:Stage;
+        protected var _starling:Starling;
+        protected var _noteTxt:TextField;
+        
+        protected var _couldTick:Boolean;
+        protected var _starlingMain:ITickable;
+        
         protected var _mapMgr:ITickable;
         protected var _battleMgr:ITickable;
         
-        public function RoGameMediator(stage:Stage, viewComponent:Object=null)
+        protected var _loginView:LoginView;
+        protected var _mainView:MainView;
+        
+        public function RoGameMediator()
         {
-            super(stage, viewComponent);
+            
         }
         
-        override protected function initStarling():void
+        public function init( stage:Stage ):void
         {
+            _stage = stage;
+            
+            MainMgr.instance;
+            var assetMgr:AssetMgr = new AssetMgr();
+            MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, assetMgr );
+            MainMgr.instance.addMgr( MgrTypeConsts.TEXTURE_MGR, new TextureMgr() );
+            MainMgr.instance.addMgr( MgrTypeConsts.SPR_MGR , new SprMgr() );
+            
+            var displayMgr:DisplayMgr = new DisplayMgr( stage );
+            MainMgr.instance.addMgr( MgrTypeConsts.DISPLAY_MGR , displayMgr );
+            MainMgr.instance.addMgr( MgrTypeConsts.KEY_MGR, new KeyMgr( stage ) );
+            
+            App.init( displayMgr.uiLevel );
+            App.loader.loadAssets( ["assets/comp.swf","assets/login_interface.swf", "assets/basic_interface.swf"] , new Handler( loadComplete ) );
+            
+            if( Global.ENABLE_LUA )
+            {
+                var resList:Vector.<String> = new Vector.<String>();
+                resList.push( "libCore.lua" );
+                resList.push( "main.lua" );
+                assetMgr.getResList( resList , onLuaLoaded );
+            }
+            
+            //init Starling
             Starling.handleLostContext = true;
             Starling.multitouchEnabled = true;
             _starling = new Starling( RoMain, _stage );
@@ -47,11 +101,50 @@ package inoah.game.ro.mediators.views
             _starling.showStats = true;
             _starling.showStatsAt(HAlign.RIGHT, VAlign.CENTER);
             _starling.start();
+            
+            //            stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
         }
         
-        override protected function onLoginHandler( username:String ):void
+        protected function loadComplete():void
         {
-            super.onLoginHandler( username );
+            _loginView = new LoginView();
+            _loginView.x = Global.SCREEN_W / 2 - _loginView.width / 2;
+            _loginView.y = Global.SCREEN_H / 2 - _loginView.height / 2;
+            contextView.view.addChild( _loginView );
+            
+            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
+            onInitRes( assetMgr );
+            
+            addContextListener( LoginEvent.LOGIN , onLoginHandler , null ); 
+        }
+        
+        protected function onInitRes( assetMgr:AssetMgr ):void
+        {
+            //            var resPathList:Vector.<String> = new Vector.<String>();
+            //            assetMgr.getResList( resPathList , function():void{} );
+        }
+        
+        protected function onLuaLoaded( loader:ILoader ):void
+        {
+            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
+            
+            luaEngine.luaStrList.push( (assetMgr.getRes( "libCore.lua" , null ) as LuaLoader).content );
+            luaEngine.luaStrList.push( (assetMgr.getRes( "main.lua" , null ) as LuaLoader).content );
+            luaEngine.initialize();
+        }
+        
+        protected function onLoginHandler( username:String ):void
+        {
+            initUserinfo( username );
+            
+            var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
+            
+            _noteTxt = new TextField();
+            _noteTxt.defaultTextFormat = new TextFormat( "Arial", 32 , 0xffffff, true );
+            _noteTxt.width = 960;
+            _noteTxt.mouseEnabled = false;
+            _noteTxt.text = "Waiting for resource...";
+            displayMgr.uiLevel.addChild( _noteTxt );
             
             var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
             
@@ -67,10 +160,8 @@ package inoah.game.ro.mediators.views
             assetMgr.getResList( resPathList , onInitLoadComplete );
         }
         
-        override protected function initUserinfo( username:String ):void
+        protected function initUserinfo( username:String ):void
         {
-            super.initUserinfo( username );
-            
             Global.userInfo = new UserInfo();
             var userInfo:UserInfo = Global.userInfo;
             userInfo.init( "data/sprite/characters/head/man/2_man.tpc", "data/sprite/characters/body/man/novice_man.tpc", true );
@@ -95,47 +186,52 @@ package inoah.game.ro.mediators.views
             userInfo.spCurrent = userInfo.spMax;
         }
         
-        override protected function onInitLoadComplete( loader:ILoader = null ):void
+        protected function onInitLoadComplete( loader:ILoader = null ):void
         {
-            super.onInitLoadComplete( loader );
+            _noteTxt.parent.removeChild( _noteTxt );
             
             var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
-            
             //初始化状态栏
             var statusBar:StatusBar = new StatusBar();
-            facade.registerMediator( statusBar as IMediator );
+            //            facade.registerMediator( statusBar as IMediator );
             displayMgr.topLevel.addChild( statusBar );
             
             //初始化主界面
-            var mainView:MainView = new MainView();
-            _mainViewMediator = new MainViewMediator( mainView );
-            facade.registerMediator( _mainViewMediator as IMediator );
-            displayMgr.uiLevel.addChild( mainView );
+            _mainView = new MainView();
+            contextView.view.addChild( _mainView );
             
             //初始化地图管理器
-            _mapMgr = new MapMgr( displayMgr.unitLevel , displayMgr.mapLevel );
-            MainMgr.instance.addMgr( MgrTypeConsts.MAP_MGR, _mapMgr as IMgr );
-            facade.registerMediator( _mapMgr as IMediator );
+//            _mapMgr = new MapMgr( displayMgr.unitLevel , displayMgr.mapLevel );
+//            MainMgr.instance.addMgr( MgrTypeConsts.MAP_MGR, _mapMgr as IMgr );
+            //            facade.registerMediator( _mapMgr as IMediator );
             
-            facade.sendNotification( GameCommands.CHANGE_MAP , [ 1 ] );
+            //            facade.sendNotification( GameCommands.CHANGE_MAP , [ 1 ] );
             
             //初始化战斗管理器
-            _battleMgr = new BattleMgr( (_mapMgr as MapMgr).scene as BattleMapMediator );
-            MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, _battleMgr as IMgr );
-            facade.registerMediator( _battleMgr as IMediator );
+            //            _battleMgr = new BattleMgr( (_mapMgr as MapMgr).scene as BattleMapMediator );
+            //            MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, _battleMgr as IMgr );
+            //            facade.registerMediator( _battleMgr as IMediator );
             
-            facade.sendNotification( GameCommands.RECV_CHAT , [ "\n\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>" ] );
-            facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#00ff00'>WASD to move and J to attack!</font>" ] );
+            //            facade.sendNotification( GameCommands.RECV_CHAT , [ "\n\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>" ] );
+            //            facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#00ff00'>WASD to move and J to attack!</font>" ] );
         }
         
-        override public function tick( delta:Number ):void
+        public function tick( delta:Number ):void
         {
-            super.tick( delta );
-            
-            if( _mainViewMediator )
+            if( _starlingMain )
             {
-                _mainViewMediator.tick( delta )
+                _starlingMain.tick( delta );
             }
+            else if( Starling.current && Starling.current.root )
+            {
+                _starlingMain = Starling.current.root as ITickable;
+            }
+            
+//            if( _mainView )
+//            {
+//                _mainView.tick( delta )
+//            }
+            
             if( _mapMgr )
             {
                 _mapMgr.tick( delta );
@@ -144,6 +240,11 @@ package inoah.game.ro.mediators.views
             {
                 _battleMgr.tick( delta );
             }
+        }
+        
+        public function get couldTick():Boolean
+        {
+            return true;
         }
     }
 }

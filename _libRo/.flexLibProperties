@@ -18,13 +18,10 @@
     <classEntry path="inoah.game.ro.ui.sysView.AlertView"/>
     <classEntry path="inoah.game.ro.ui.mainViewChildren.SkillBarView"/>
     <classEntry path="inoah.game.ro.ui.mainViewChildren.MapView"/>
-    <classEntry path="inoah.game.ro.ui.MainView"/>
     <classEntry path="inoah.game.ro.ui.mainViewChildren.JoyStickView"/>
-    <classEntry path="inoah.game.ro.ui.LoginView"/>
     <classEntry path="inoah.game.ro.ui.sysView.ItemView"/>
     <classEntry path="inoah.game.ro.ui.mainViewChildren.ChatView"/>
     <classEntry path="inoah.game.ro.mediators.views.AlertViewMediator"/>
-    <classEntry path="inoah.game.ro.mediators.views.MainViewMediator"/>
     <classEntry path="inoah.game.ro.mediators.views.ChatViewMediator"/>
     <classEntry path="inoah.game.ro.mediators.views.JoyStickViewMediator"/>
     <classEntry path="inoah.game.ro.mediators.views.StatusViewMediator"/>
@@ -45,6 +42,18 @@
     <classEntry path="inoah.game.ro.objects.MonsterObject"/>
     <classEntry path="inoah.game.ro.mapModels.DrawTileObj"/>
     <classEntry path="inoah.game.ro.StatusBar"/>
+    <classEntry path="inoah.game.ro.controllers.TiledPlayerController"/>
+    <classEntry path="inoah.game.ro.RoConfig"/>
+    <classEntry path="inoah.game.ro.modules.main.model.UserModel"/>
+    <classEntry path="inoah.game.ro.modules.main.view.UserProfileView"/>
+    <classEntry path="inoah.game.ro.modules.login.view.mediator.LoginViewMediator"/>
+    <classEntry path="inoah.game.ro.modules.login.view.events.LoginEvent"/>
+    <classEntry path="inoah.game.ro.modules.login.controller.LoginCommand"/>
+    <classEntry path="inoah.game.ro.modules.main.view.MainView"/>
+    <classEntry path="inoah.game.ro.modules.main.view.mediator.MainViewMediator"/>
+    <classEntry path="inoah.game.ro.modules.login.view.LoginView"/>
+    <classEntry path="inoah.game.ro.modules.main.view.events.GameEvent"/>
+    <classEntry path="inoah.game.ro.modules.main.controller.GameCommand"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

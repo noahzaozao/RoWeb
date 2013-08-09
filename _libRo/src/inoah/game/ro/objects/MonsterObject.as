@@ -47,7 +47,7 @@ package inoah.game.ro.objects
                 if( posY - _endTarget.y > 0 )
                 {
                     direction = directions.Up;
-                    posY -= speed * delta;
+                    posY -= speed * delta * 0.5;
                     if(posY - _endTarget.y <= 0 )
                     {
                         posY = _endTarget.y;
@@ -57,7 +57,7 @@ package inoah.game.ro.objects
                 else if( posY - _endTarget.y < 0 )
                 {
                     direction = directions.Down;
-                    posY += speed * delta;
+                    posY += speed * delta * 0.5;
                     if(posY - _endTarget.y >= 0 )
                     {
                         posY = _endTarget.y;

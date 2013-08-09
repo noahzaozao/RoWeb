@@ -1,48 +1,40 @@
 package inoah.game.ro.mediators.views
 {
-    import inoah.core.consts.ConstsGame;
-    import inoah.core.consts.commands.GameCommands;
+    import flash.events.Event;
+    
     import inoah.game.ro.ui.sysView.StatusView;
     
-    import pureMVC.interfaces.INotification;
-    import pureMVC.patterns.mediator.Mediator;
+    import robotlegs.bender.bundles.mvcs.Mediator;
     
     public class StatusViewMediator extends Mediator
     {
         public function StatusViewMediator( viewComponent:Object=null)
         {
-            super(ConstsGame.STATUS_VIEW, viewComponent);
+//            addContextListener( GameCommands.CLOSE_STATUS , handleNotification , null );
+//            addContextListener( GameCommands.UPDATE_LV , handleNotification , null );
+//            addContextListener( GameCommands.UPDATE_STATUS_POINT , handleNotification , null );
         }
         
-        override public function listNotificationInterests():Array
+        public function handleNotification( e:Event ):void
         {
-            var arr:Array = super.listNotificationInterests();
-            arr.push( GameCommands.CLOSE_STATUS  );
-            arr.push( GameCommands.UPDATE_LV  );
-            arr.push( GameCommands.UPDATE_STATUS_POINT  );
-            return arr;
-        }
-        
-        override public function handleNotification(notification:INotification):void
-        {
-            switch( notification.getName() )
-            {
-                case GameCommands.CLOSE_STATUS:
-                {
-                    closeStatus();
-                    break;
-                }
-                case GameCommands.UPDATE_LV:
-                case GameCommands.UPDATE_STATUS_POINT:
-                {
-                    updateStatusPoint();
-                    break;
-                }
-                default:
-                {
-                    break;
-                }
-            }
+            //            switch( notification.getName() )
+            //            {
+            //                case GameCommands.CLOSE_STATUS:
+            //                {
+            //                    closeStatus();
+            //                    break;
+            //                }
+            //                case GameCommands.UPDATE_LV:
+            //                case GameCommands.UPDATE_STATUS_POINT:
+            //                {
+            //                    updateStatusPoint();
+            //                    break;
+            //                }
+            //                default:
+            //                {
+            //                    break;
+            //                }
+            //            }
         }
         
         private function updateStatusPoint():void
@@ -53,7 +45,7 @@ package inoah.game.ro.mediators.views
         private function closeStatus():void
         {
             mainView.parent.removeChild( mainView );
-            facade.removeMediator( ConstsGame.STATUS_VIEW );
+            //            facade.removeMediator( ConstsGame .STATUS_VIEW );
         }
         
         public function get mainView():StatusView

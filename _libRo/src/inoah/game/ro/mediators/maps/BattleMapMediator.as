@@ -1,14 +1,11 @@
 package inoah.game.ro.mediators.maps
 {
-    import inoah.core.consts.ConstsActions;
-    import inoah.core.consts.ConstsGame;
-    import inoah.core.utils.Counter;
     import inoah.core.characters.gpu.MonsterViewGpu;
-    import inoah.game.ro.controllers.MonsterController;
+    import inoah.core.consts.ConstsActions;
     import inoah.core.infos.BattleCharacterInfo;
+    import inoah.core.utils.Counter;
+    import inoah.game.ro.controllers.MonsterController;
     import inoah.game.ro.objects.MonsterObject;
-    
-    import pureMVC.patterns.facade.Facade;
     
     import starling.display.DisplayObjectContainer;
     
@@ -21,14 +18,13 @@ package inoah.game.ro.mediators.maps
         
         public function BattleMapMediator(unitContainer:starling.display.DisplayObjectContainer , mapContainer:starling.display.DisplayObjectContainer)
         {
-            mediatorName = ConstsGame.BATTLE_MAP;
             _newMonsterCounter = new Counter();
             _newMonsterCounter.initialize();
             _newMonsterCounter.reset( 3 );
             _monsterObjList = new Vector.<MonsterObject>();
             _monsterList = new Vector.<MonsterViewGpu>(); 
             _monsterController = new MonsterController( this );
-            Facade.getInstance().registerMediator( _monsterController );
+            //            Facade.getInstance().registerMediator( _monsterController );
             _monsterController.monsterList = _monsterObjList; 
             super(unitContainer , mapContainer);
         }

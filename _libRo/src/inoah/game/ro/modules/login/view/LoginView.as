@@ -1,12 +1,10 @@
-package inoah.game.ro.ui
+package inoah.game.ro.modules.login.view
 {
     import flash.events.MouseEvent;
     
     import game.ui.loginViewUI;
     
-    import inoah.core.consts.commands.GameCommands;
-    
-    import pureMVC.patterns.facade.Facade;
+    import inoah.game.ro.modules.login.view.events.LoginEvent;
     
     public class LoginView extends loginViewUI
     {
@@ -30,8 +28,10 @@ package inoah.game.ro.ui
             {
                 this.txtID.text = "player" + uint( Math.random() * 1000000 );
             }
-            Facade.getInstance().sendNotification( GameCommands.LOGIN , [ this.txtID.text ] );
+            dispatchEvent( new LoginEvent( LoginEvent.LOGIN , this.txtID.text , this.txtPass.text ) );
             this.remove();
         }
     }
 }
+
+

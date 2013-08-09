@@ -4,10 +4,6 @@ package inoah.game.ro.ui.sysView
     
     import game.ui.sysViews.itemViewUI;
     
-    import inoah.core.consts.commands.GameCommands;
-    
-    import pureMVC.patterns.facade.Facade;
-    
     public class ItemView extends itemViewUI
     {
         public function ItemView()
@@ -18,7 +14,7 @@ package inoah.game.ro.ui.sysView
         
         protected function onClickHandler( e:MouseEvent):void
         {
-            Facade.getInstance().sendNotification( GameCommands.CLOSE_ITEM );
+            //            Facade.getInstance().sendNotification( GameCommands.CLOSE_ITEM );
         }
     }
 }

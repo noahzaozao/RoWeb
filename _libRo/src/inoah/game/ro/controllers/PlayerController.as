@@ -1,15 +1,13 @@
 package inoah.game.ro.controllers
 {
+    import flash.events.Event;
     import flash.geom.Point;
     import flash.ui.Keyboard;
     
     import inoah.core.Global;
     import inoah.core.QTree;
     import inoah.core.consts.ConstsActions;
-    import inoah.core.consts.ConstsGame;
     import inoah.core.consts.MgrTypeConsts;
-    import inoah.core.consts.commands.BattleCommands;
-    import inoah.core.consts.commands.GameCommands;
     import inoah.core.controllers.BaseController;
     import inoah.core.managers.KeyMgr;
     import inoah.core.managers.MainMgr;
@@ -18,8 +16,6 @@ package inoah.game.ro.controllers
     import inoah.core.utils.GMath;
     import inoah.game.ro.objects.BattleCharacterObject;
     import inoah.game.ro.objects.PlayerObject;
-    
-    import pureMVC.interfaces.INotification;
     
     import starling.animation.Tween;
     
@@ -35,11 +31,19 @@ package inoah.game.ro.controllers
         protected var _fightMode:uint = 0;
         protected var _atkTarget:BattleCharacterObject;
         protected var _chooseTarget:BattleCharacterObject;
-        private var _recoverCounter:Counter;
+        protected var _recoverCounter:Counter;
         
         public function PlayerController()
         {
-            super( ConstsGame.PLAYER_CONTROLLER );
+            //            addContextListener( GameCommands.JOY_STICK_UP , handleNotification );
+            //            addContextListener( GameCommands.JOY_STICK_DOWN , handleNotification );
+            //            addContextListener( GameCommands.JOY_STICK_LEFT , handleNotification );
+            //            addContextListener( GameCommands.JOY_STICK_RIGHT , handleNotification );
+            //            addContextListener( GameCommands.JOY_STICK_UP_LEFT , handleNotification );
+            //            addContextListener( GameCommands.JOY_STICK_UP_RIGHT , handleNotification );
+            //            addContextListener( GameCommands.JOY_STICK_DOWN_LEFT , handleNotification );
+            //            addContextListener( GameCommands.JOY_STICK_DOWN_RIGHT , handleNotification );
+            //            addContextListener( GameCommands.JOY_STICK_ATTACK , handleNotification );
         }
         
         override public function set me(value:BaseObject):void
@@ -50,81 +54,66 @@ package inoah.game.ro.controllers
             _recoverCounter.reset( (_me as PlayerObject).recoverCd );
         }
         
-        override public function listNotificationInterests():Array
+        public function handleNotification( e:Event ):void
         {
-            var arr:Array = super.listNotificationInterests();
-            arr.push( GameCommands.JOY_STICK_UP );
-            arr.push( GameCommands.JOY_STICK_DOWN );
-            arr.push( GameCommands.JOY_STICK_LEFT );
-            arr.push( GameCommands.JOY_STICK_RIGHT );
-            arr.push( GameCommands.JOY_STICK_UP_LEFT );
-            arr.push( GameCommands.JOY_STICK_UP_RIGHT );
-            arr.push( GameCommands.JOY_STICK_DOWN_LEFT );
-            arr.push( GameCommands.JOY_STICK_DOWN_RIGHT );
-            arr.push( GameCommands.JOY_STICK_ATTACK );
-            return arr;
-        }
-        
-        override public function handleNotification(notification:INotification):void
-        {
-            var arr:Array = notification.getBody() as Array;
-            _joyStickUp = false;
-            _joyStickDown = false;
-            _joyStickLeft = false;
-            _joyStickRight = false;
-            _joyStickAttack = false;
-            switch( notification.getName() )
-            {
-                case GameCommands.JOY_STICK_ATTACK:
-                {
-                    _joyStickAttack = arr[0];
-                    break;
-                }
-                case GameCommands.JOY_STICK_UP:
-                {
-                    _joyStickUp = arr[0];
-                    break;
-                }
-                case GameCommands.JOY_STICK_DOWN:
-                {
-                    _joyStickDown = arr[0];
-                    break;
-                }
-                case GameCommands.JOY_STICK_LEFT:
-                {
-                    _joyStickLeft = arr[0];
-                    break;
-                }
-                case GameCommands.JOY_STICK_RIGHT:
-                {
-                    _joyStickRight = arr[0];
-                    break;
-                }
-                case GameCommands.JOY_STICK_UP_LEFT:
-                {
-                    _joyStickUp = arr[0];
-                    _joyStickLeft = arr[0];
-                    break;
-                }
-                case GameCommands.JOY_STICK_UP_RIGHT:
-                {
-                    _joyStickUp = arr[0];
-                    _joyStickRight = arr[0];
-                    break;
-                }
-                case GameCommands.JOY_STICK_DOWN_LEFT:
-                {
-                    _joyStickDown = arr[0];
-                    _joyStickLeft = arr[0];
-                    break;
-                }
-                case GameCommands.JOY_STICK_DOWN_RIGHT:
-                {
-                    _joyStickDown = arr[0];
-                    _joyStickRight = arr[0];
-                    break;
-                }
-            }
+            //            var arr:Array = notification.getBody() as Array;
+            //            _joyStickUp = false;
+            //            _joyStickDown = false;
+            //            _joyStickLeft = false;
+            //            _joyStickRight = false;
+            //            _joyStickAttack = false;
+            //            switch( notification.getName() )
+            //            {
+            //                case GameCommands.JOY_STICK_ATTACK:
+            //                {
+            //                    _joyStickAttack = arr[0];
+            //                    break;
+            //                }
+            //                case GameCommands.JOY_STICK_UP:
+            //                {
+            //                    _joyStickUp = arr[0];
+            //                    break;
+            //                }
+            //                case GameCommands.JOY_STICK_DOWN:
+            //                {
+            //                    _joyStickDown = arr[0];
+            //                    break;
+            //                }
+            //                case GameCommands.JOY_STICK_LEFT:
+            //                {
+            //                    _joyStickLeft = arr[0];
+            //                    break;
+            //                }
+            //                case GameCommands.JOY_STICK_RIGHT:
+            //                {
+            //                    _joyStickRight = arr[0];
+            //                    break;
+            //                }
+            //                case GameCommands.JOY_STICK_UP_LEFT:
+            //                {
+            //                    _joyStickUp = arr[0];
+            //                    _joyStickLeft = arr[0];
+            //                    break;
+            //                }
+            //                case GameCommands.JOY_STICK_UP_RIGHT:
+            //                {
+            //                    _joyStickUp = arr[0];
+            //                    _joyStickRight = arr[0];
+            //                    break;
+            //                }
+            //                case GameCommands.JOY_STICK_DOWN_LEFT:
+            //                {
+            //                    _joyStickDown = arr[0];
+            //                    _joyStickLeft = arr[0];
+            //                    break;
+            //                }
+            //                case GameCommands.JOY_STICK_DOWN_RIGHT:
+            //                {
+            //                    _joyStickDown = arr[0];
+            //                    _joyStickRight = arr[0];
+            //                    break;
+            //                }
+            //            }
         }
         
         override public function tick( delta:Number ):void
@@ -132,8 +121,20 @@ package inoah.game.ro.controllers
             super.tick( delta );
             
             calRecover( delta );
-            
-            var speed:Number = 200;
+            attackCheck( delta )
+            if( _isAttacking )
+            {
+                
+            }
+            else
+            {
+                moveCheck( delta );
+            }
+        }
+        
+        
+        protected function attackCheck( delta:Number ):void
+        {
             var keyMgr:KeyMgr = MainMgr.instance.getMgr( MgrTypeConsts.KEY_MGR ) as KeyMgr;
             //攻击控制逻辑
             if( !_isAttacking )
@@ -163,10 +164,14 @@ package inoah.game.ro.controllers
                     calAttack( delta );
                 }
             }
-                //攻击控制逻辑结束
-                
-                //八方向移动控制逻辑
-            else if( keyMgr.isDown( Keyboard.D ) && !keyMgr.isDown( Keyboard.A ) || _joyStickRight && !_joyStickLeft )
+        }
+        
+        protected function moveCheck(delta:Number):void
+        {
+            var keyMgr:KeyMgr = MainMgr.instance.getMgr( MgrTypeConsts.KEY_MGR ) as KeyMgr;
+            var speed:Number = 200;
+            
+            if( keyMgr.isDown( Keyboard.D ) && !keyMgr.isDown( Keyboard.A ) || _joyStickRight && !_joyStickLeft )
             {
                 _me.posX +=speed * delta;
                 if( _me.posX > Global.MAP_W ) _me.posX = Global.MAP_W;
@@ -227,11 +232,10 @@ package inoah.game.ro.controllers
             else
             {
                 _me.action = ConstsActions.Wait;
-            }
-            //八方向移动控制逻辑结束
+            }    
         }
         
-        private function calFindTarget():void
+        protected function calFindTarget():void
         {
             var objList:Vector.<BattleCharacterObject> = new Vector.<BattleCharacterObject>();
             var i:int;
@@ -259,7 +263,7 @@ package inoah.game.ro.controllers
             }
         }
         
-        private function getAllDataFromTree( top:QTree ):Vector.<BattleCharacterObject>
+        protected function getAllDataFromTree( top:QTree ):Vector.<BattleCharacterObject>
         {
             var objList:Vector.<BattleCharacterObject> = new Vector.<BattleCharacterObject>();
             var i:int;
@@ -308,7 +312,7 @@ package inoah.game.ro.controllers
             return objList;
         }
         
-        private function calAttack( delta:Number ):void
+        protected function calAttack( delta:Number ):void
         {
             if( _atkTarget.action == ConstsActions.Die )
             {
@@ -332,7 +336,7 @@ package inoah.game.ro.controllers
             appendAnimateUnit( tween );
         }
         
-        private function onAttacked( atkTarget:BattleCharacterObject ):void
+        protected function onAttacked( atkTarget:BattleCharacterObject ):void
         {
             _isAttacking = false;
             _me.action = ConstsActions.Wait;
@@ -343,7 +347,7 @@ package inoah.game.ro.controllers
             }
             _me.action = ConstsActions.Wait;
             
-            facade.sendNotification( BattleCommands.PLAYER_ATTACK , [_me , _atkTarget]); 
+            //            facade.sendNotification( BattleCommands.PLAYER_ATTACK , [_me , _atkTarget]); 
             
             if(atkTarget.hp==0)
             {
@@ -356,7 +360,7 @@ package inoah.game.ro.controllers
             }
         }
         
-        private function calRecover( delta:Number ):void
+        protected function calRecover( delta:Number ):void
         {
             _recoverCounter.tick( delta );
             if(_recoverCounter.expired)

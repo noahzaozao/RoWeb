@@ -6,10 +6,7 @@ package inoah.game.ro.ui.mainViewChildren
     import game.ui.mainViewChildren.chatViewUI;
     
     import inoah.core.Global;
-    import inoah.core.consts.commands.GameCommands;
     import inoah.core.infos.UserInfo;
-    
-    import pureMVC.patterns.facade.Facade;
     
     public class ChatView
     {
@@ -32,7 +29,7 @@ package inoah.game.ro.ui.mainViewChildren
                 {
                     var userInfo:UserInfo = Global.userInfo;
                     var msg:String = userInfo.name + ": " + this._chatView.txtChat.text;
-                    Facade.getInstance().sendNotification( GameCommands.SEND_CHAT, [msg] );
+                    //                    Facade.getInstance().sendNotification( GameCommands.SEND_CHAT, [msg] );
                     this._chatView.txtChat.text = "";
                 }
             }

@@ -4,7 +4,6 @@ package inoah.game.ro.mapModels
     import flash.geom.Point;
     
     import inoah.core.Global;
-    import inoah.core.consts.ConstsGame;
     import inoah.core.consts.MgrTypeConsts;
     import inoah.core.interfaces.ILoader;
     import inoah.core.interfaces.IMapLevel;
@@ -14,8 +13,6 @@ package inoah.game.ro.mapModels
     import inoah.core.utils.Counter;
     import inoah.data.map.MapInfo;
     import inoah.data.map.MapTileSetInfo;
-    
-    import pureMVC.patterns.facade.Facade;
     
     import starling.display.DisplayObjectContainer;
     import starling.display.Image;
@@ -283,7 +280,7 @@ package inoah.game.ro.mapModels
                     _drawTileObj.j++;
                 }
             }
-            Facade.getInstance().sendNotification( ConstsGame.UPDATE_STATUS , ["mapLoading..." + (_drawTileObj.i * _drawTileObj.bw + _drawTileObj.j ) + "/" + (_drawTileObj.bw * _drawTileObj.bh) ]  );
+            //            Facade.getInstance().sendNotification( ConstsGame.UPDATE_STATUS , ["mapLoading..." + (_drawTileObj.i * _drawTileObj.bw + _drawTileObj.j ) + "/" + (_drawTileObj.bw * _drawTileObj.bh) ]  );
             
             if( _drawTileObj.i == 25 )
             {

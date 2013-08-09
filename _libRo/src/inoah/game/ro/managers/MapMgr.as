@@ -1,22 +1,19 @@
 package inoah.game.ro.managers
 {
     import flash.display.DisplayObjectContainer;
+    import flash.events.Event;
     
+    import inoah.core.GameCamera;
     import inoah.core.Global;
-    import inoah.core.consts.ConstsGame;
-    import inoah.core.consts.commands.GameCommands;
+    import inoah.core.characters.gpu.PlayerViewGpu;
     import inoah.core.interfaces.IMapMediator;
     import inoah.core.interfaces.IMgr;
     import inoah.core.interfaces.ITickable;
-    import inoah.core.GameCamera;
-    import inoah.core.characters.gpu.PlayerViewGpu;
-    import inoah.game.ro.controllers.PlayerController;
+    import inoah.game.ro.controllers.TiledPlayerController;
     import inoah.game.ro.mediators.maps.BattleMapMediator;
     import inoah.game.ro.objects.PlayerObject;
     
-    import pureMVC.interfaces.IMediator;
-    import pureMVC.interfaces.INotification;
-    import pureMVC.patterns.mediator.Mediator;
+    import robotlegs.bender.bundles.mvcs.Mediator;
     
     import starling.display.DisplayObjectContainer;
     import starling.display.Sprite;
@@ -31,7 +28,7 @@ package inoah.game.ro.managers
         protected var _map:IMapMediator;
         protected var _camera:GameCamera;
         
-        protected var _playerController:PlayerController;
+        protected var _playerController:TiledPlayerController;
         protected var _player:PlayerObject;
         
         protected var _unitLevel:starling.display.Sprite;
@@ -39,34 +36,27 @@ package inoah.game.ro.managers
         
         public function MapMgr( unitLevel:starling.display.Sprite , mapLevel:starling.display.Sprite )
         {
-            super(ConstsGame.MAP_MEDIATOR);
             _unitLevel = unitLevel;
             _mapLevel = mapLevel;
+            //            addContextListener( GameCommands.CHANGE_MAP , handleNotification , null );
         }
         
-        override public function listNotificationInterests():Array
+        public function handleNotification( e:Event ):void
         {
-            var arr:Array = super.listNotificationInterests();
-            arr.push( GameCommands.CHANGE_MAP );
-            return arr;
-        }
-        
-        override public function handleNotification(notification:INotification):void
-        {
-            var arr:Array;
-            switch( notification.getName() )
-            {
-                case GameCommands.CHANGE_MAP:
-                {
-                    arr = notification.getBody() as Array;
-                    onChangeMap( arr[0] );
-                    break;
-                }
-                default:
-                {
-                    break;
-                }
-            }
+            //            var arr:Array;
+            //            switch( notification.getName() )
+            //            {
+            //                case GameCommands.CHANGE_MAP:
+            //                {
+            //                    arr = notification.getBody() as Array;
+            //                    onChangeMap( arr[0] );
+            //                    break;
+            //                }
+            //                default:
+            //                {
+            //                    break;
+            //                }
+            //            }
         }
         
         protected function onChangeMap( mapId:uint ):void
@@ -75,14 +65,14 @@ package inoah.game.ro.managers
             if( !_map )
             {
                 _map = new BattleMapMediator( _unitLevel as starling.display.DisplayObjectContainer , _mapLevel as starling.display.DisplayObjectContainer );
-                facade.registerMediator( _map as IMediator );
+                //                facade.registerMediator( _map as IMediator );
                 _camera = new GameCamera( _map );
             }
             _map.init( _mapId );
             
             //创建用户
-            _playerController = new PlayerController();
-            facade.registerMediator( _playerController );
+            _playerController = new TiledPlayerController();
+            //            facade.registerMediator( _playerController );
             var playerView:PlayerViewGpu = new PlayerViewGpu( Global.userInfo );
             _player = new PlayerObject();
             _player.controller = _playerController;

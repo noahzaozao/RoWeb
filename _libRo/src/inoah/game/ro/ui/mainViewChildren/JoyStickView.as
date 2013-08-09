@@ -6,20 +6,14 @@ package inoah.game.ro.ui.mainViewChildren
     
     import inoah.core.Global;
     import inoah.core.consts.MgrTypeConsts;
-    import inoah.core.consts.commands.GameCommands;
     import inoah.core.interfaces.ILoader;
     import inoah.core.loaders.JpgLoader;
     import inoah.core.managers.AssetMgr;
     import inoah.core.managers.MainMgr;
     
-    import pureMVC.interfaces.IFacade;
-    import pureMVC.patterns.facade.Facade;
-    
     import starling.display.Image;
     import starling.display.Sprite;
-    import starling.events.Touch;
     import starling.events.TouchEvent;
-    import starling.events.TouchPhase;
     import starling.textures.Texture;
     
     public class JoyStickView extends Sprite
@@ -79,109 +73,109 @@ package inoah.game.ro.ui.mainViewChildren
         
         private function onDirTouch( e:starling.events.TouchEvent ):void
         {
-            var isDown:Boolean;
-            var touch:Touch;
-            var touchX:int;
-            var touchY:int;
-            var facade:IFacade;
-            for( var i:int = 0;i<e.touches.length;i++)
-            {
-                touch = e.touches[i];
-                if( touch )
-                {
-                    if( touch.phase == TouchPhase.ENDED || touch.phase == TouchPhase.BEGAN || touch.phase == TouchPhase.MOVED )
-                    {
-                        facade = Facade.getInstance();
-                        switch( touch.phase )
-                        {
-                            case TouchPhase.ENDED:
-                            {
-                                isDown = false;
-                                break;
-                            }
-                            case TouchPhase.BEGAN:
-                            case TouchPhase.MOVED:
-                            {
-                                isDown = true;
-                                break;
-                            }
-                        }
-                        touchX = touch.previousGlobalX;
-                        touchY = touch.previousGlobalY;
-                        if( touchX > 0 + DIR_X && touchX < DIR_W / 3 + DIR_X )
-                        {
-                            if( touchY > 0 + DIR_Y && touchY < DIR_H / 3 + DIR_Y )
-                            {
-                                facade.sendNotification( GameCommands.JOY_STICK_UP_LEFT , [isDown] );
-                            }
-                            else if( touchY > DIR_H / 3 + DIR_Y && touchY < 2 * DIR_H / 3 + DIR_Y )
-                            {
-                                facade.sendNotification( GameCommands.JOY_STICK_LEFT , [isDown] );
-                            }
-                            else if( touchY > 2 * DIR_H / 3 + DIR_Y && touchY < DIR_H + DIR_Y )
-                            {
-                                facade.sendNotification( GameCommands.JOY_STICK_DOWN_LEFT , [isDown] );
-                            }
-                        }
-                        else if( touchX > DIR_W / 3 + DIR_X && touchX < 2 * DIR_W / 3 + DIR_X )
-                        {
-                            if( touchY > 0 + DIR_Y && touchY < DIR_H / 3 + DIR_Y )
-                            {
-                                facade.sendNotification( GameCommands.JOY_STICK_UP , [isDown] );
-                            }
-                            else if( touchY > DIR_H / 3 + DIR_Y && touchY < 2 * DIR_H / 3 + DIR_Y )
-                            {
-                            }
-                            else if( touchY > 2 * DIR_H / 3 + DIR_Y && touchY < DIR_H + DIR_Y )
-                            {
-                                facade.sendNotification( GameCommands.JOY_STICK_DOWN , [isDown] );   
-                            }
-                        }
-                        else if( touchX > 2 * DIR_W / 3 + DIR_X && touchX < DIR_W + DIR_X )
-                        {
-                            if( touchY > 0 + DIR_Y && touchY < DIR_H / 3 + DIR_Y )
-                            {
-                                facade.sendNotification( GameCommands.JOY_STICK_UP_RIGHT , [isDown] );   
-                            }
-                            else if( touchY > DIR_H / 3 + DIR_Y && touchY < 2 * DIR_H / 3 + DIR_Y )
-                            {
-                                facade.sendNotification( GameCommands.JOY_STICK_RIGHT , [isDown] );   
-                            }
-                            else if( touchY > 2 * DIR_H / 3 + DIR_Y && touchY < DIR_H + DIR_Y )
-                            {
-                                facade.sendNotification( GameCommands.JOY_STICK_DOWN_RIGHT , [isDown] );   
-                            }
-                        }
-                    }
-                }
-            }
+            //            var isDown:Boolean;
+            //            var touch:Touch;
+            //            var touchX:int;
+            //            var touchY:int;
+            //            var facade:IFacade;
+            //            for( var i:int = 0;i<e.touches.length;i++)
+            //            {
+            //                touch = e.touches[i];
+            //                if( touch )
+            //                {
+            //                    if( touch.phase == TouchPhase.ENDED || touch.phase == TouchPhase.BEGAN || touch.phase == TouchPhase.MOVED )
+            //                    {
+            //                        facade = Facade.getInstance();
+            //                        switch( touch.phase )
+            //                        {
+            //                            case TouchPhase.ENDED:
+            //                            {
+            //                                isDown = false;
+            //                                break;
+            //                            }
+            //                            case TouchPhase.BEGAN:
+            //                            case TouchPhase.MOVED:
+            //                            {
+            //                                isDown = true;
+            //                                break;
+            //                            }
+            //                        }
+            //                        touchX = touch.previousGlobalX;
+            //                        touchY = touch.previousGlobalY;
+            //                        if( touchX > 0 + DIR_X && touchX < DIR_W / 3 + DIR_X )
+            //                        {
+            //                            if( touchY > 0 + DIR_Y && touchY < DIR_H / 3 + DIR_Y )
+            //                            {
+            //                                facade.sendNotification( GameCommands.JOY_STICK_UP_LEFT , [isDown] );
+            //                            }
+            //                            else if( touchY > DIR_H / 3 + DIR_Y && touchY < 2 * DIR_H / 3 + DIR_Y )
+            //                            {
+            //                                facade.sendNotification( GameCommands.JOY_STICK_LEFT , [isDown] );
+            //                            }
+            //                            else if( touchY > 2 * DIR_H / 3 + DIR_Y && touchY < DIR_H + DIR_Y )
+            //                            {
+            //                                facade.sendNotification( GameCommands.JOY_STICK_DOWN_LEFT , [isDown] );
+            //                            }
+            //                        }
+            //                        else if( touchX > DIR_W / 3 + DIR_X && touchX < 2 * DIR_W / 3 + DIR_X )
+            //                        {
+            //                            if( touchY > 0 + DIR_Y && touchY < DIR_H / 3 + DIR_Y )
+            //                            {
+            //                                facade.sendNotification( GameCommands.JOY_STICK_UP , [isDown] );
+            //                            }
+            //                            else if( touchY > DIR_H / 3 + DIR_Y && touchY < 2 * DIR_H / 3 + DIR_Y )
+            //                            {
+            //                            }
+            //                            else if( touchY > 2 * DIR_H / 3 + DIR_Y && touchY < DIR_H + DIR_Y )
+            //                            {
+            //                                facade.sendNotification( GameCommands.JOY_STICK_DOWN , [isDown] );   
+            //                            }
+            //                        }
+            //                        else if( touchX > 2 * DIR_W / 3 + DIR_X && touchX < DIR_W + DIR_X )
+            //                        {
+            //                            if( touchY > 0 + DIR_Y && touchY < DIR_H / 3 + DIR_Y )
+            //                            {
+            //                                facade.sendNotification( GameCommands.JOY_STICK_UP_RIGHT , [isDown] );   
+            //                            }
+            //                            else if( touchY > DIR_H / 3 + DIR_Y && touchY < 2 * DIR_H / 3 + DIR_Y )
+            //                            {
+            //                                facade.sendNotification( GameCommands.JOY_STICK_RIGHT , [isDown] );   
+            //                            }
+            //                            else if( touchY > 2 * DIR_H / 3 + DIR_Y && touchY < DIR_H + DIR_Y )
+            //                            {
+            //                                facade.sendNotification( GameCommands.JOY_STICK_DOWN_RIGHT , [isDown] );   
+            //                            }
+            //                        }
+            //                    }
+            //                }
+            //            }
         }
         
         private function onAtkTouch( e:starling.events.TouchEvent ):void
         {
-            var touch:Touch;
-            var isDown:Boolean;
-            var facade:IFacade;
-            for( var i:int = 0;i<e.touches.length;i++)
-            {
-                touch = e.touches[i];
-                if( touch )
-                {
-                    if( touch.phase == TouchPhase.ENDED || touch.phase == TouchPhase.BEGAN || touch.phase == TouchPhase.MOVED )
-                    {
-                        facade = Facade.getInstance();
-                        if( touch.phase == TouchPhase.ENDED )
-                        {
-                            isDown = false;
-                        }
-                        else if( touch.phase == TouchPhase.BEGAN || touch.phase == TouchPhase.MOVED )
-                        {
-                            isDown = true;
-                        }
-                        facade.sendNotification( GameCommands.JOY_STICK_ATTACK , [isDown] );
-                    }
-                }
-            }
+            //            var touch:Touch;
+            //            var isDown:Boolean;
+            //            var facade:IFacade;
+            //            for( var i:int = 0;i<e.touches.length;i++)
+            //            {
+            //                touch = e.touches[i];
+            //                if( touch )
+            //                {
+            //                    if( touch.phase == TouchPhase.ENDED || touch.phase == TouchPhase.BEGAN || touch.phase == TouchPhase.MOVED )
+            //                    {
+            //                        facade = Facade.getInstance();
+            //                        if( touch.phase == TouchPhase.ENDED )
+            //                        {
+            //                            isDown = false;
+            //                        }
+            //                        else if( touch.phase == TouchPhase.BEGAN || touch.phase == TouchPhase.MOVED )
+            //                        {
+            //                            isDown = true;
+            //                        }
+            //                        facade.sendNotification( GameCommands.JOY_STICK_ATTACK , [isDown] );
+            //                    }
+            //                }
+            //            }
         }
     }
 }

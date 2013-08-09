@@ -5,7 +5,6 @@ package inoah.game.ro.controllers
     import inoah.core.Global;
     import inoah.core.consts.ConstsActions;
     import inoah.core.consts.ConstsGame;
-    import inoah.core.consts.commands.BattleCommands;
     import inoah.core.controllers.BaseController;
     import inoah.core.infos.BattleCharacterInfo;
     import inoah.core.interfaces.IMapMediator;
@@ -83,7 +82,7 @@ package inoah.game.ro.controllers
         /**
          * 自动移动 
          */        
-        private function calMove( currentMonsterObj:MonsterObject , index:int , delta:Number ):void
+        protected function calMove( currentMonsterObj:MonsterObject , index:int , delta:Number ):void
         {
             var atkTarget:BattleCharacterObject = _atkTargetList[index];
             var isMove:Boolean = Math.random() * 10 < 3;
@@ -118,7 +117,7 @@ package inoah.game.ro.controllers
         /**
          * 攻击移动判定
          */        
-        private function calAttackMove( currentMonsterObj:MonsterObject , index:int , delta:Number ):void
+        protected function calAttackMove( currentMonsterObj:MonsterObject , index:int , delta:Number ):void
         {
             var atkTarget:BattleCharacterObject = _atkTargetList[index];
             var fightMode:int = _fightModeList[index];
@@ -147,7 +146,7 @@ package inoah.game.ro.controllers
             return int(Point.distance(atkTarget.POS,currentMonsterObj.POS))<=value;
         }
         
-        private function calAttack( currentMonsterObj:MonsterObject , index:int , delta:Number ):void
+        protected function calAttack( currentMonsterObj:MonsterObject , index:int , delta:Number ):void
         {
             var atkTarget:BattleCharacterObject = _atkTargetList[index];
             var fightMode:int = _fightModeList[index];
@@ -211,7 +210,7 @@ package inoah.game.ro.controllers
             }
         }
         
-        private function onAttacked( currentMonsterObj:BattleCharacterObject , index:int ):void
+        protected function onAttacked( currentMonsterObj:BattleCharacterObject , index:int ):void
         {
             var atkTarget:BattleCharacterObject = _atkTargetList[index];
             var atkTargetInfo:BattleCharacterInfo = atkTarget.info as BattleCharacterInfo;
@@ -221,7 +220,7 @@ package inoah.game.ro.controllers
             }
             currentMonsterObj.action = ConstsActions.Wait;
             
-            facade.sendNotification( BattleCommands.MONSTER_ATTACK , [currentMonsterObj, atkTarget] );
+//            facade.sendNotification( BattleCommands.MONSTER_ATTACK , [currentMonsterObj, atkTarget] );
             
             if( atkTargetInfo.hpCurrent==0)
             {

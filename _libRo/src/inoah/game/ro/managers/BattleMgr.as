@@ -1,25 +1,22 @@
 package inoah.game.ro.managers
 {
+    import flash.events.Event;
     import flash.filters.GlowFilter;
     import flash.text.TextField;
     import flash.text.TextFormat;
     
     import inoah.core.consts.ConstsActions;
-    import inoah.core.consts.ConstsGame;
     import inoah.core.consts.commands.BattleCommands;
-    import inoah.core.consts.commands.GameCommands;
     import inoah.core.infos.BattleCharacterInfo;
     import inoah.core.interfaces.IMapMediator;
     import inoah.core.interfaces.IMgr;
     import inoah.core.interfaces.ITickable;
-    import inoah.game.ro.controllers.MonsterController;
     import inoah.game.ro.objects.BattleCharacterObject;
     import inoah.game.ro.objects.CharacterObject;
     import inoah.game.ro.objects.MonsterObject;
     import inoah.game.ro.objects.PlayerObject;
     
-    import pureMVC.interfaces.INotification;
-    import pureMVC.patterns.mediator.Mediator;
+    import robotlegs.bender.bundles.mvcs.Mediator;
     
     import starling.animation.IAnimatable;
     import starling.animation.Tween;
@@ -35,93 +32,87 @@ package inoah.game.ro.managers
         
         public function BattleMgr( scene:IMapMediator )
         {
-            super(ConstsGame.BATTLE_MEDIATOR);
             _animationUnitList = new Vector.<IAnimatable>();
-            _scene = scene
+            _scene = scene;
+            addContextListener( BattleCommands.PLAYER_ATTACK , handleNotification , null );
+            addContextListener( BattleCommands.MONSTER_ATTACK , handleNotification , null );
+            
         }
         
-        override public function listNotificationInterests():Array
+        public function handleNotification( e:Event ):void
         {
-            var arr:Array = super.listNotificationInterests();
-            arr.push( BattleCommands.PLAYER_ATTACK );
-            arr.push( BattleCommands.MONSTER_ATTACK );
-            return arr;
-        }
-        
-        override public function handleNotification(notification:INotification):void
-        {
-            var arr:Array;
-            switch( notification.getName() )
-            {
-                case BattleCommands.PLAYER_ATTACK:
-                {
-                    arr = notification.getBody() as Array;
-                    onPlayerAttack( arr[0] , arr[1] );
-                    break;
-                }
-                case BattleCommands.MONSTER_ATTACK:
-                {
-                    arr = notification.getBody() as Array;
-                    onMonsterAttatk( arr[0] , arr[1] );
-                    break;
-                }
-                default:
-                {
-                    break;
-                }
-            }
+            //            var arr:Array;
+            //            switch( notification.getName() )
+            //            {
+            //                case BattleCommands.PLAYER_ATTACK:
+            //                {
+            //                    arr = notification.getBody() as Array;
+            //                    onPlayerAttack( arr[0] , arr[1] );
+            //                    break;
+            //                }
+            //                case BattleCommands.MONSTER_ATTACK:
+            //                {
+            //                    arr = notification.getBody() as Array;
+            //                    onMonsterAttatk( arr[0] , arr[1] );
+            //                    break;
+            //                }
+            //                default:
+            //                {
+            //                    break;
+            //                }
+            //            }
         }
         
         private function onPlayerAttack( meTarget:PlayerObject , atkTarget:BattleCharacterObject ):void
         {
-            var atkTargetInfo:BattleCharacterInfo = atkTarget.info as BattleCharacterInfo;
-            var meTargetInfo:BattleCharacterInfo = meTarget.info as BattleCharacterInfo;
-            var isCritical:Boolean = (Math.random() * 100 + meTargetInfo.critical ) >= 100;
-            var atkPoint:uint = isCritical?meTargetInfo.atk * 2:meTargetInfo.atk;
-            var textField:TextField = new TextField();
-            var tf:TextFormat = new TextFormat( "宋体" , 28 , 0xffffff );
-            textField.defaultTextFormat = tf;
-            textField.text =atkPoint.toString();
-            textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
-            textField.y = -50;
-            textField.x = - textField.textWidth >> 1;
-            //            (atkTarget.viewObject as DisplayObjectContainer).addChild( textField );
-            var tween:Tween = new Tween( textField , 0.6 );
-            tween.moveTo( - textField.textWidth >> 1, - 150 );
-            tween.onComplete = onBlooded;
-            tween.onCompleteArgs = [textField];
-            appendAnimateUnit( tween );
+            //            var atkTargetInfo:BattleCharacterInfo = atkTarget.info as BattleCharacterInfo;
+            //            var meTargetInfo:BattleCharacterInfo = meTarget.info as BattleCharacterInfo;
+            //            var isCritical:Boolean = (Math.random() * 100 + meTargetInfo.critical ) >= 100;
+            //            var atkPoint:uint = isCritical?meTargetInfo.atk * 2:meTargetInfo.atk;
+            //            var textField:TextField = new TextField();
+            //            var tf:TextFormat = new TextFormat( "宋体" , 28 , 0xffffff );
+            //            textField.defaultTextFormat = tf;
+            //            textField.text =atkPoint.toString();
+            //            textField.filters = [new GlowFilter( 0, 1, 2, 2, 5, 1)];
+            //            textField.y = -50;
+            //            textField.x = - textField.textWidth >> 1;
+            //            //            (atkTarget.viewObject as DisplayObjectContainer).addChild( textField );
+            //            var tween:Tween = new Tween( textField , 0.6 );
+            //            tween.moveTo( - textField.textWidth >> 1, - 150 );
+            //            tween.onComplete = onBlooded;
+            //            tween.onCompleteArgs = [textField];
+            //            appendAnimateUnit( tween );
             
-            var monsterCtrl:MonsterController = facade.retrieveMediator( ConstsGame.MONSTER_CONTROLLER ) as MonsterController
-            monsterCtrl.fightTo( atkTarget as MonsterObject, meTarget ); 
-            
-            atkTarget.hp -= atkPoint; 
-            
-            var msg:String;
-            if( isCritical )
-            {
-                msg =  "<font color='#00ff00'>" + meTargetInfo.name + "对" + atkTargetInfo.name + "造成" + atkPoint + "伤害(爆击)</font>";
-            }
-            else
-            {
-                msg =  "<font color='#00ff00'>" + meTargetInfo.name + "对" + atkTargetInfo.name + "造成" + atkPoint + "伤害</font>";
-            }
-            facade.sendNotification( GameCommands.RECV_CHAT , [ msg ] );
-            
-            if(atkTarget.hp==0)
-            {
-                meTargetInfo.baseExp += 5;
-                msg =  "<font color='#ffff00'>" + meTargetInfo.name + "获得5点经验，升级总经验" + Math.pow( meTargetInfo.baseLv + 1, 3 )+ "</font>";
-                facade.sendNotification( GameCommands.RECV_CHAT , [ msg ] );
-                
-                atkTarget.action = ConstsActions.Die;
-                atkTarget.isDead = true;
-                tween = new Tween( atkTarget.viewObject, 5 );
-                tween.fadeTo( 0 );
-                tween.onComplete = onRemoveAtkTarget;
-                tween.onCompleteArgs = [atkTarget];
-                appendAnimateUnit( tween );
-            }
+            //            var monsterCtrl:MonsterController = facade.retrieveMediator( ConstsGame.MONSTER_CONTROLLER ) as MonsterController
+            //            monsterCtrl.fightTo( atkTarget as MonsterObject, meTarget ); 
+            //            
+            //            atkTarget.hp -= atkPoint; 
+            //            
+            //            var msg:String;
+            //            if( isCritical )
+            //            {
+            //                msg =  "<font color='#00ff00'>" + meTargetInfo.name + "对" + atkTargetInfo.name + "造成" + atkPoint + "伤害(爆击)</font>";
+            //            }
+            //            else
+            //            {
+            //                msg =  "<font color='#00ff00'>" + meTargetInfo.name + "对" + atkTargetInfo.name + "造成" + atkPoint + "伤害</font>";
+            //            }
+            //            facade.sendNotification( GameCommands.RECV_CHAT , [ msg ] );
+            //            
+            //            if(atkTarget.hp==0)
+            //            {
+            //                meTargetInfo.baseExp += 5;
+            //                msg =  "<font color='#ffff00'>" + meTargetInfo.name + "获得5点经验，升级总经验" + Math.pow( meTargetInfo.baseLv + 1, 3 )+ "</font>";
+            //                facade.sendNotification( GameCommands.RECV_CHAT , [ msg ] );
+            //                
+            //                atkTarget.action = ConstsActions.Die;
+            //                atkTarget.isDead = true;
+            //                tween = new Tween( atkTarget.viewObject, 5 );
+            //                tween.fadeTo( 0 );
+            //                tween.onComplete = onRemoveAtkTarget;
+            //                tween.onCompleteArgs = [atkTarget];
+            //                appendAnimateUnit( tween );
+            //            }
         }
         
         private function onMonsterAttatk( meTarget:MonsterObject , atkTarget:BattleCharacterObject ):void 
@@ -155,12 +146,12 @@ package inoah.game.ro.managers
             {
                 msg =  "<font color='#00ff00'>" + meTargetInfo.name + "对" + atkTargetInfo.name + "造成" + atkPoint + "伤害</font>";
             }
-            facade.sendNotification( GameCommands.RECV_CHAT , [ msg ] );
+            //            facade.sendNotification( GameCommands.RECV_CHAT , [ msg ] );
             
             if(atkTarget.hp==0)
             {
                 msg =  "<font color='#ffff00'>" + meTargetInfo.name + "获得5点经验，升级总经验" + Math.pow( meTargetInfo.baseLv + 1, 3 )+ "</font>";
-                facade.sendNotification( GameCommands.RECV_CHAT , [ msg ] );
+                //                facade.sendNotification( GameCommands.RECV_CHAT , [ msg ] );
                 
                 atkTarget.action = ConstsActions.Die;
                 atkTarget.isDead = true;

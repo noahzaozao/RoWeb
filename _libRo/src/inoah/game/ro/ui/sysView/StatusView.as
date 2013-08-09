@@ -5,10 +5,7 @@ package inoah.game.ro.ui.sysView
     import game.ui.sysViews.statusViewUI;
     
     import inoah.core.Global;
-    import inoah.core.consts.commands.GameCommands;
     import inoah.core.infos.UserInfo;
-    
-    import pureMVC.patterns.facade.Facade;
     
     public class StatusView extends statusViewUI
     {
@@ -73,7 +70,7 @@ package inoah.game.ro.ui.sysView
                     break;
                 }
             }
-            Facade.getInstance().sendNotification( GameCommands.UPDATE_STATUS_POINT );
+//            Facade.getInstance().sendNotification( GameCommands.UPDATE_STATUS_POINT );
         }
         
         private function updateInfo():void
@@ -114,7 +111,7 @@ package inoah.game.ro.ui.sysView
         
         protected function onCloseHandler( e:MouseEvent):void
         {
-            Facade.getInstance().sendNotification( GameCommands.CLOSE_STATUS );
+//            Facade.getInstance().sendNotification( GameCommands.CLOSE_STATUS );
         }
         
         public function refresh():void
