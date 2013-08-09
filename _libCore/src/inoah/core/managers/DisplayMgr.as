@@ -20,18 +20,22 @@ package inoah.core.managers
         private var _displayStarlingList:Vector.<starling.display.Sprite>;
         private var _starlingRoot:DisplayObjectContainer;
         
-        public function DisplayMgr( stage:Stage , starlingRoot:DisplayObject )
+        public function DisplayMgr( stage:Stage )
         {
             _stage = stage;
-            _starlingRoot = starlingRoot as DisplayObjectContainer;
             _displayList = new Vector.<flash.display.Sprite>();
             for( var i:int = 0;i< 2; i++)
             {
                 _displayList[i] = new flash.display.Sprite();
                 _stage.addChild( _displayList[i] );
             }
+        }
+        
+        public function initStarling( starlingRoot:DisplayObject ):void
+        {
+            _starlingRoot = starlingRoot as DisplayObjectContainer;
             _displayStarlingList = new Vector.<starling.display.Sprite>();
-            for( i = 0;i< 4; i++)
+            for( var i:int = 0;i< 4; i++)
             {
                 _displayStarlingList[i] = new starling.display.Sprite();
                 if( i < 3 )

@@ -20,7 +20,6 @@
     <classEntry path="inoah.core.consts.ConstsGame"/>
     <classEntry path="inoah.core.consts.commands.BattleCommands"/>
     <classEntry path="inoah.core.consts.ConstsDirIndex"/>
-    <classEntry path="inoah.core.consts.commands.GameCommands"/>
     <classEntry path="inoah.core.consts.MgrTypeConsts"/>
     <classEntry path="inoah.core.infos.CharacterInfo"/>
     <classEntry path="inoah.core.infos.BattleCharacterInfo"/>
@@ -77,11 +76,19 @@
     <classEntry path="inoah.core.characters.gpu.CharacterViewGpu"/>
     <classEntry path="inoah.core.characters.gpu.MonsterViewGpu"/>
     <classEntry path="inoah.core.managers.DisplayMgr"/>
-    <classEntry path="inoah.core.mediators.GameMediator"/>
     <classEntry path="inoah.core.starlingMain"/>
-    <classEntry path="inoah.lua.LuaEngine"/>
     <classEntry path="inoah.core.interfaces.IMapMediator"/>
     <classEntry path="inoah.core.Global"/>
+    <classEntry path="inoah.modules.core.controller.GetSomeTextCommand"/>
+    <classEntry path="inoah.modules.core.view.events.GetSomeTextEvent"/>
+    <classEntry path="inoah.modules.core.service.IExampleService"/>
+    <classEntry path="inoah.modules.core.model.BaseModel"/>
+    <classEntry path="inoah.modules.core.model.ExampleModel"/>
+    <classEntry path="inoah.modules.core.model.vo.AnswerVO"/>
+    <classEntry path="inoah.modules.core.model.event.ExampleModelUpdate"/>
+    <classEntry path="inoah.modules.core.service.ExampleService"/>
+    <classEntry path="inoah.modules.core.view.events.OpenPopupEvent"/>
+    <classEntry path="inoah.core.CoreConfig"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

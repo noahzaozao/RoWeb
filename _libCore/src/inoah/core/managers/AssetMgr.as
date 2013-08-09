@@ -2,11 +2,11 @@ package inoah.core.managers
 {
     import flash.events.Event;
     
+    import inoah.core.interfaces.ILoader;
     import inoah.core.interfaces.IMgr;
     import inoah.core.loaders.ActSprLoader;
     import inoah.core.loaders.ActTpcLoader;
     import inoah.core.loaders.AtfLoader;
-    import inoah.core.interfaces.ILoader;
     import inoah.core.loaders.JpgLoader;
     import inoah.core.loaders.LuaLoader;
     
@@ -55,7 +55,7 @@ package inoah.core.managers
                 }
             }
         }
-        public function getRes( resPath:String, callBack:Function ):ILoader
+        public function getRes( resPath:String, callBack:Function = null ):ILoader
         {
             if( _cacheListIndex.indexOf( resPath ) != -1  )
             {

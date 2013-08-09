@@ -4,6 +4,7 @@ package inoah.core.loaders
     import flash.events.EventDispatcher;
     import flash.net.URLLoader;
     import flash.net.URLRequest;
+    
     import inoah.core.interfaces.ILoader;
     
     public class LuaLoader extends EventDispatcher implements ILoader

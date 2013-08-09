@@ -1,8 +1,6 @@
 package inoah.core.infos
 {
-    import inoah.core.consts.commands.GameCommands;
     
-    import pureMVC.patterns.facade.Facade;
     
     
     /**
@@ -84,7 +82,7 @@ package inoah.core.infos
                     {
                         statusPoint = _totalStatusPoint - statusPoint;
                     }
-                    Facade.getInstance().sendNotification( GameCommands.UPDATE_LV );
+                    //                    Facade.getInstance().sendNotification( GameCommands.UPDATE_LV );
                 }
             }
         }
@@ -106,7 +104,7 @@ package inoah.core.infos
                     baseLv += 1;
                     _baseExp = 0;
                 }
-                Facade.getInstance().sendNotification( GameCommands.UPDATE_EXP );
+                //                Facade.getInstance().sendNotification( GameCommands.UPDATE_EXP );
             }
         }
         override public function set jobExp( value:uint ):void
@@ -126,7 +124,7 @@ package inoah.core.infos
                 {
                     _hpCurrent = _hpMax;
                 }
-                Facade.getInstance().sendNotification( GameCommands.UPDATE_HP );
+                //                Facade.getInstance().sendNotification( GameCommands.UPDATE_HP );
             }
         }
         override public function set hpMax( value:uint ):void
@@ -134,7 +132,7 @@ package inoah.core.infos
             if( _hpMax != value )
             {
                 _hpMax = value;
-                Facade.getInstance().sendNotification( GameCommands.UPDATE_HP );
+                //                Facade.getInstance().sendNotification( GameCommands.UPDATE_HP );
             }
         }
         override public function set spCurrent( value:uint ):void
@@ -149,7 +147,7 @@ package inoah.core.infos
                 {
                     _spCurrent = _spMax;
                 }
-                Facade.getInstance().sendNotification( GameCommands.UPDATE_SP );
+                //                Facade.getInstance().sendNotification( GameCommands.UPDATE_SP );
             }
         }
         override public function set spMax( value:uint ):void
@@ -157,7 +155,7 @@ package inoah.core.infos
             if( _spMax != value )
             {
                 _spMax = value;
-                Facade.getInstance().sendNotification( GameCommands.UPDATE_SP );
+                //                Facade.getInstance().sendNotification( GameCommands.UPDATE_SP );
             }
         }
         

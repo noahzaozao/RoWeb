@@ -2,7 +2,7 @@ package inoah.core.controllers
 {
     import inoah.core.objects.BaseObject;
     
-    import pureMVC.patterns.mediator.Mediator;
+    import robotlegs.bender.bundles.mvcs.Mediator;
     
     import starling.animation.IAnimatable;
 
@@ -13,7 +13,6 @@ package inoah.core.controllers
         
         public function BaseController( mediatorName:String = null , viewComponent:Object = null)
         {
-            super( mediatorName, viewComponent );
             _animationUnitList = new Vector.<IAnimatable>();
         }
         
