@@ -10,18 +10,13 @@ package com.inoah.lua
     
     public class LuaMain implements ISpecialFile, ILuaMain
     {
-        private static var _luaMain:LuaMain;
-        private static var _luastate:int;
-        
         public function LuaMain()
         {
-            _luaMain = this;
-            
             CModule.rootSprite = this;
             CModule.vfs.console = this;
             CModule.startAsync(this);
         }
-        
+
         private function lua_tonumberx( L:int , idx:int ,isnum:int ):Number
         {
             return Lua.lua_tonumberx( L , idx , isnum );
