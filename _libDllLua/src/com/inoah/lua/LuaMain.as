@@ -2,7 +2,7 @@ package com.inoah.lua
 {
     import flash.utils.Dictionary;
     
-    import interfaces.ILuaMain;
+    import inoah.interfaces.ILuaMain;
     
     import sample.lua.CModule;
     import sample.lua.__lua_objrefs;

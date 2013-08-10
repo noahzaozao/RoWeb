@@ -2,10 +2,10 @@ package com.inoah.lua
 {
     import flash.utils.Dictionary;
     
-    import interfaces.IAssetMgr;
-    import interfaces.ILoader;
-    import interfaces.ILuaMain;
-    import interfaces.ILuaMainMediator;
+    import inoah.interfaces.IAssetMgr;
+    import inoah.interfaces.ILoader;
+    import inoah.interfaces.ILuaMain;
+    import inoah.interfaces.ILuaMainMediator;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     

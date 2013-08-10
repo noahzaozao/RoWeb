@@ -3,8 +3,8 @@ package robotlegs.bender.extensions.luaExtension
     import com.inoah.lua.LuaMain;
     import com.inoah.lua.LuaMainMediator;
     
-    import interfaces.ILuaMain;
-    import interfaces.ILuaMainMediator;
+    import inoah.interfaces.ILuaMain;
+    import inoah.interfaces.ILuaMainMediator;
     
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IExtension;
