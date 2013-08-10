@@ -4,7 +4,6 @@ package inoah.game.ro.modules.main.view
     
     import game.ui.sysViews.statusViewUI;
     
-    import inoah.core.Global;
     import inoah.core.infos.UserInfo;
     import inoah.game.ro.modules.main.model.UserModel;
     import inoah.game.ro.modules.main.view.events.GameEvent;
@@ -75,7 +74,7 @@ package inoah.game.ro.modules.main.view
         
         public function updateInfo( userModel:UserModel ):void
         {
-            var userInfo:UserInfo = userModel.info;
+            var userInfo:UserInfo = userModel.info as UserInfo;
             
             this.labStr.text = userInfo.strength + "";
             this.labAgi.text = userInfo.agile + "";

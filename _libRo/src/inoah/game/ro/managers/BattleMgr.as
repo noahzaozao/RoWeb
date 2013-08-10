@@ -8,12 +8,12 @@ package inoah.game.ro.managers
     import inoah.core.consts.ConstsActions;
     import inoah.core.consts.commands.BattleCommands;
     import inoah.core.infos.BattleCharacterInfo;
-    import inoah.core.interfaces.IMapMediator;
-    import inoah.core.interfaces.ITickable;
     import inoah.game.ro.objects.BattleCharacterObject;
     import inoah.game.ro.objects.CharacterObject;
     import inoah.game.ro.objects.MonsterObject;
     import inoah.game.ro.objects.PlayerObject;
+    import inoah.interfaces.ISceneMediator;
+    import inoah.interfaces.ITickable;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     
@@ -26,10 +26,10 @@ package inoah.game.ro.managers
      */    
     public class BattleMgr extends Mediator implements ITickable
     {
-        protected var _scene:IMapMediator;
+        protected var _scene:ISceneMediator;
         protected var _animationUnitList:Vector.<IAnimatable>;
         
-        public function BattleMgr( scene:IMapMediator )
+        public function BattleMgr( scene:ISceneMediator )
         {
             _animationUnitList = new Vector.<IAnimatable>();
             _scene = scene;

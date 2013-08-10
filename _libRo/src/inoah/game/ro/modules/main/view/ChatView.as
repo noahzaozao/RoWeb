@@ -6,9 +6,9 @@ package inoah.game.ro.modules.main.view
     
     import game.ui.mainViewChildren.chatViewUI;
     
-    import inoah.core.infos.UserInfo;
     import inoah.game.ro.modules.main.model.UserModel;
     import inoah.game.ro.modules.main.view.events.GameEvent;
+    import inoah.interfaces.IUserInfo;
     
     public class ChatView extends EventDispatcher
     {
@@ -32,7 +32,7 @@ package inoah.game.ro.modules.main.view
             {
                 if( this._chatView.txtChat.text != "" )
                 {
-                    var userInfo:UserInfo = _userModel.info;
+                    var userInfo:IUserInfo = _userModel.info;
                     var msg:String = userInfo.name + ": " + this._chatView.txtChat.text;
                     dispatchEvent( new GameEvent( GameEvent.SEND_CHAT , msg ) );
                     this._chatView.txtChat.text = "";

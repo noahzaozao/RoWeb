@@ -3,17 +3,17 @@ package inoah.game.ro.controllers
     import flash.geom.Point;
     
     import inoah.core.Global;
+    import inoah.core.base.BaseController;
     import inoah.core.consts.ConstsActions;
-    import inoah.core.consts.ConstsGame;
-    import inoah.core.controllers.BaseController;
     import inoah.core.infos.BattleCharacterInfo;
-    import inoah.core.interfaces.IMapMediator;
-    import inoah.core.utils.Counter;
     import inoah.core.utils.GMath;
     import inoah.game.ro.objects.BattleCharacterObject;
     import inoah.game.ro.objects.MonsterObject;
+    import inoah.interfaces.ISceneMediator;
+    import inoah.utils.Counter;
     
     import starling.animation.Tween;
+    
     
     public class MonsterController extends BaseController
     {
@@ -25,16 +25,16 @@ package inoah.game.ro.controllers
          * 战斗模式，0无，1追击，2攻击 
          */        
         protected var _fightModeList:Vector.<int>;
-        protected var _scene:IMapMediator;
+        protected var _scene:ISceneMediator;
         
-        public function MonsterController( scene:IMapMediator )
+        public function MonsterController( scene:ISceneMediator )
         {
-            super( ConstsGame.MONSTER_CONTROLLER );
-            _scene = scene;
-            _atkTargetList = new Vector.<BattleCharacterObject>( Global.MAX_MONSTER_NUM );
-            _moveCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
-            _atkCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
-            _fightModeList = new Vector.<int>( Global.MAX_MONSTER_NUM );
+            //            super( ConstsGame.MONSTER_CONTROLLER );
+            //            _scene = scene;
+            //            _atkTargetList = new Vector.<BattleCharacterObject>( Global.MAX_MONSTER_NUM );
+            //            _moveCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
+            //            _atkCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
+            //            _fightModeList = new Vector.<int>( Global.MAX_MONSTER_NUM );
         }
         
         public function fightTo( monster:MonsterObject ,  obj:BattleCharacterObject ):void
@@ -220,7 +220,7 @@ package inoah.game.ro.controllers
             }
             currentMonsterObj.action = ConstsActions.Wait;
             
-//            facade.sendNotification( BattleCommands.MONSTER_ATTACK , [currentMonsterObj, atkTarget] );
+            //            facade.sendNotification( BattleCommands.MONSTER_ATTACK , [currentMonsterObj, atkTarget] );
             
             if( atkTargetInfo.hpCurrent==0)
             {
@@ -229,7 +229,7 @@ package inoah.game.ro.controllers
             }
         }
         
-        public function get scene():IMapMediator
+        public function get scene():ISceneMediator
         {
             return _scene;
         }

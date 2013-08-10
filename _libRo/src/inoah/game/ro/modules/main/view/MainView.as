@@ -8,14 +8,13 @@ package inoah.game.ro.modules.main.view
     import inoah.core.infos.UserInfo;
     import inoah.game.ro.modules.main.model.UserModel;
     import inoah.game.ro.modules.main.view.events.GameEvent;
-    import inoah.game.ro.ui.mainViewChildren.MapView;
-    
-    import interfaces.ILoader;
+    import inoah.interfaces.ILoader;
     
     public class MainView extends mainViewUI
     {
-        
         public var mainMapView:MapView;
+        
+        private var mainJoyStickview:JoyStickView;
         
         public function MainView()
         {
@@ -35,23 +34,29 @@ package inoah.game.ro.modules.main.view
             mapView.setPosition( Global.SCREEN_W - mapView.width , 0 );
         }
         
+        public function initializeJoystick(loader:ILoader):JoyStickView
+        {
+            mainJoyStickview = new JoyStickView( loader );
+            return mainJoyStickview;
+        }
+        
         public function updateHp( userModel:UserModel ):void
         {
-            var userInfo:UserInfo = userModel.info;
+            var userInfo:UserInfo = userModel.info as UserInfo;
             hpBar.value = userInfo.hpPer;
             hpBar.barLabel.text = userInfo.hpCurrent + " / " + userInfo.hpMax;
             labHpPer.text = uint(userInfo.hpPer * 100) + "%";
         }
         public function updateSp( userModel:UserModel ):void
         {
-            var userInfo:UserInfo = userModel.info;
+            var userInfo:UserInfo = userModel.info as UserInfo;
             spBar.value = userInfo.spPer;
             spBar.barLabel.text = userInfo.spCurrent + " / " + userInfo.spMax;
             labSpPer.text = uint(userInfo.spPer * 100) + "%";
         }
         public function updateExp( userModel:UserModel ):void
         {
-            var userInfo:UserInfo = userModel.info;
+            var userInfo:UserInfo = userModel.info as UserInfo;
             baseExpBar.value = userInfo.baseExp / Math.pow( userInfo.baseLv + 1 , 3 );
             jobExpBar.value = userInfo.jobExp / Math.pow( userInfo.jobLv + 1 , 3 );
         }
@@ -66,7 +71,7 @@ package inoah.game.ro.modules.main.view
         
         public function updateInfo( userModel:UserModel ):void
         {
-            var userInfo:UserInfo = userModel.info;
+            var userInfo:UserInfo = userModel.info as UserInfo;
             labName.text = userInfo.name;
             labJob.text = userInfo.job;
             hpBar.value = userInfo.hpPer;

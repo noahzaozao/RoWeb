@@ -1,8 +1,8 @@
 package inoah.game.ro.modules.main.view.mediator
 {
     import inoah.core.Global;
-    import inoah.core.interfaces.ITickable;
     import inoah.game.ro.modules.main.model.UserModel;
+    import inoah.game.ro.modules.main.view.AlertView;
     import inoah.game.ro.modules.main.view.ChatView;
     import inoah.game.ro.modules.main.view.ItemView;
     import inoah.game.ro.modules.main.view.JoyStickView;
@@ -10,11 +10,12 @@ package inoah.game.ro.modules.main.view.mediator
     import inoah.game.ro.modules.main.view.SkillBarView;
     import inoah.game.ro.modules.main.view.StatusView;
     import inoah.game.ro.modules.main.view.events.GameEvent;
-    import inoah.game.ro.ui.sysView.AlertView;
-    
-    import interfaces.IAssetMgr;
-    import interfaces.IDisplayMgr;
-    import interfaces.ILoader;
+    import inoah.game.ro.modules.main.view.events.JoyStickEvent;
+    import inoah.interfaces.IAssetMgr;
+    import inoah.interfaces.IDisplayMgr;
+    import inoah.interfaces.ILoader;
+    import inoah.interfaces.ITickable;
+    import inoah.interfaces.IUserModel;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     import robotlegs.bender.extensions.contextView.ContextView;
@@ -25,7 +26,7 @@ package inoah.game.ro.modules.main.view.mediator
     public class MainViewMediator extends Mediator implements ITickable
     {
         [Inject]
-        public var userModel:UserModel;
+        public var userModel:IUserModel;
         
         [Inject]
         public var displayMgr:IDisplayMgr;
@@ -68,19 +69,20 @@ package inoah.game.ro.modules.main.view.mediator
             //
             if( !Global.IS_MOBILE )
             {
-                view.joyStick.remove();
-                _chatView = new ChatView( view.chatView , userModel );
+                //chatView
+                _chatView = new ChatView( view.chatView , userModel as UserModel );
+                _chatView.addEventListener( GameEvent.SEND_CHAT , onSendChat );
+                addContextListener( GameEvent.RECV_CHAT , onRecvChat , GameEvent );
                 var skillView:SkillBarView = new SkillBarView ( view.skillBarView );
             }
             else
             {
                 view.chatView.remove();
                 view.skillBarView.remove();
-                var joyStickview:JoyStickView = new JoyStickView();
-                displayMgr.joyStickLevel.addChild( joyStickview );
+                assetMgr.getRes( "ui/joyStickDirMain.png", onLoadJoyStick );
             }
             
-            view.updateInfo( userModel );
+            view.updateInfo( userModel as UserModel );
             
             addViewListener( GameEvent.OPEN_STATUS  , onStatus , GameEvent );
             addViewListener( GameEvent.OPEN_SKILL  , onSkill , GameEvent );
@@ -95,9 +97,6 @@ package inoah.game.ro.modules.main.view.mediator
             addViewListener( GameEvent.UPDATE_STATUS_POINT  , handleNotification , GameEvent );
             //alertView
             addContextListener( GameEvent.SHOW_ALERT , onShowAlert , GameEvent );
-            //chatView
-            _chatView.addEventListener( GameEvent.SEND_CHAT , onSendChat );
-            addContextListener( GameEvent.RECV_CHAT , onRecvChat , GameEvent );
             
 //            dispatch( new GameEvent( GameEvent.SHOW_ALERT , "test" ) );
         }
@@ -118,6 +117,23 @@ package inoah.game.ro.modules.main.view.mediator
             view.initializeMap( loader );           
         }
         
+        private function onLoadJoyStick( loader:ILoader ):void
+        {
+            var joyStickView:JoyStickView = view.initializeJoystick( loader );
+            context.injector.injectInto( joyStickView );
+            displayMgr.joyStickLevel.addChild( joyStickView );
+            
+            addViewListener( JoyStickEvent.JOY_STICK_ATTACK , dispatch );
+            addViewListener( JoyStickEvent.JOY_STICK_DOWN , dispatch );
+            addViewListener( JoyStickEvent.JOY_STICK_DOWN_LEFT , dispatch );
+            addViewListener( JoyStickEvent.JOY_STICK_DOWN_RIGHT , dispatch );
+            addViewListener( JoyStickEvent.JOY_STICK_LEFT , dispatch );
+            addViewListener( JoyStickEvent.JOY_STICK_RIGHT , dispatch );
+            addViewListener( JoyStickEvent.JOY_STICK_UP , dispatch );
+            addViewListener( JoyStickEvent.JOY_STICK_UP_LEFT , dispatch );
+            addViewListener( JoyStickEvent.JOY_STICK_UP_RIGHT , dispatch );
+        }
+        
         public function tick(delta:Number):void
         {
             
@@ -130,27 +146,27 @@ package inoah.game.ro.modules.main.view.mediator
                 
                 case GameEvent.UPDATE_HP:
                 {
-                    view.updateHp( userModel );
+                    view.updateHp( userModel as UserModel );
                     break;
                 }
                 case GameEvent.UPDATE_SP:
                 {
-                    view.updateSp( userModel );
+                    view.updateSp( userModel as UserModel );
                     break;
                 }
                 case GameEvent.UPDATE_EXP:
                 {
-                    view.updateExp( userModel );
+                    view.updateExp( userModel as UserModel );
                     break;
                 }
                 case GameEvent.UPDATE_LV:
                 {
-                    view.updateLv( userModel );
+                    view.updateLv( userModel as UserModel );
                     break;
                 }
                 case GameEvent.UPDATE_STATUS_POINT:
                 {
-                    view.updateStatusPoint( userModel );
+                    view.updateStatusPoint( userModel as UserModel );
                     break;
                 }
                 default:

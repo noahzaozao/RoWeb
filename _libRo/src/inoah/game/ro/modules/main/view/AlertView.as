@@ -1,4 +1,4 @@
-package inoah.game.ro.ui.sysView
+package inoah.game.ro.modules.main.view
 {
     import flash.events.MouseEvent;
     

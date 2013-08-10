@@ -1,8 +1,7 @@
 package inoah.game.ro.modules.main.view.mediator
 {
     import inoah.game.ro.modules.main.view.StatusBarView;
-    
-    import interfaces.IDisplayMgr;
+    import inoah.interfaces.IDisplayMgr;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     import robotlegs.bender.extensions.viewManager.api.IViewManager;

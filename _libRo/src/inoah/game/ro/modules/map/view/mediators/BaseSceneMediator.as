@@ -1,4 +1,4 @@
-package inoah.game.ro.mediators.maps
+package inoah.game.ro.modules.map.view.mediators
 {
     import flash.events.Event;
     import flash.geom.Rectangle;
@@ -8,22 +8,36 @@ package inoah.game.ro.mediators.maps
     import inoah.core.GameCamera;
     import inoah.core.Global;
     import inoah.core.QTree;
-    import inoah.core.interfaces.IMapMediator;
-    import inoah.core.objects.BaseObject;
-    import inoah.core.utils.Counter;
+    import inoah.core.base.BaseObject;
     import inoah.data.map.MapInfo;
-    import inoah.game.ro.mapModels.BaseMapModel;
+    import inoah.interfaces.IDisplayMgr;
+    import inoah.interfaces.IMapMgr;
+    import inoah.interfaces.IScene;
+    import inoah.interfaces.ISceneMediator;
+    import inoah.interfaces.IUserModel;
+    import inoah.utils.Counter;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
-    
-    public class BaseMapMediator extends Mediator implements IMapMediator
+
+    public class BaseSceneMediator extends Mediator implements ISceneMediator
     {
+        [Inject]
+        public var scene:IScene;
+        
+        [Inject]
+        public var displayMgr:IDisplayMgr;
+        
+        [Inject]
+        public var userModel:IUserModel;
+        
+        [Inject]
+        public var mapMgr:IMapMgr;
+        
         protected var _qTree:QTree;
         
-        protected var _baseMapModel:BaseMapModel;
         /**
          * 屏幕对象列表 
          */        
@@ -49,21 +63,22 @@ package inoah.game.ro.mediators.maps
          */        
         protected var _orderCounter:Counter;
         
-        public function BaseMapMediator( unitContainer:starling.display.DisplayObjectContainer, mapContainer:starling.display.DisplayObjectContainer )
+        public function BaseSceneMediator()
         {
-            super();
+            
+        }
+        
+        override public function initialize():void
+        {
             _orderCounter = new Counter();
             _orderCounter.initialize();
             _orderCounter.reset( Global.ORDER_TIME );
-            _unitContainer = unitContainer;
-            _mapContainer = mapContainer;
+            _unitContainer = displayMgr.unitLevel;
+            _mapContainer = displayMgr.mapLevel;
             _unitList = new Vector.<BaseObject>();
             _screenObj = new Vector.<BaseObject>();
             _qTree = new QTree(new Rectangle(0,0,Global.MAP_W,Global.MAP_H), 3 );
-        }
-        
-        public function init( mapId:uint ):void
-        {
+            
             var loader:URLLoader = new URLLoader();
             loader.addEventListener( flash.events.Event.COMPLETE , onMapLoadComplete );
             loader.load( new URLRequest( "map/map002.json" ));
@@ -76,8 +91,7 @@ package inoah.game.ro.mediators.maps
             var jsonStr:String = loader.data as String;
             var jsonObj:Object = JSON.parse( jsonStr );
             var mapInfo:MapInfo = new MapInfo( jsonObj );
-            _baseMapModel = new BaseMapModel( _mapContainer );
-            _baseMapModel.init( mapInfo ); 
+            scene.initScene( _mapContainer , mapInfo ); 
         }
         
         public function addObject( o:BaseObject ):void
@@ -194,9 +208,9 @@ package inoah.game.ro.mediators.maps
         
         public function tick(delta:Number):void
         {
-            if( _baseMapModel )
+            if( scene )
             {
-                _baseMapModel.tick( delta );
+                scene.tick( delta );
             }
             if( _mapContainer )
             {

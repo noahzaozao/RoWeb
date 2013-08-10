@@ -1,4 +1,4 @@
-package inoah.game.ro.mediators.views
+package inoah.game.ro
 {
     import flash.events.MouseEvent;
     import flash.text.TextField;
@@ -7,28 +7,30 @@ package inoah.game.ro.mediators.views
     import inoah.core.Global;
     import inoah.core.starlingMain;
     import inoah.core.infos.UserInfo;
-    import inoah.core.interfaces.ITickable;
     import inoah.core.loaders.AtfLoader;
     import inoah.core.loaders.LuaLoader;
     import inoah.game.ro.modules.login.view.LoginView;
     import inoah.game.ro.modules.login.view.events.LoginEvent;
-    import inoah.game.ro.modules.main.model.UserModel;
     import inoah.game.ro.modules.main.view.MainView;
     import inoah.game.ro.modules.main.view.StatusBarView;
-    
-    import interfaces.IAssetMgr;
-    import interfaces.IDisplayMgr;
-    import interfaces.IKeyMgr;
-    import interfaces.ILoader;
-    import interfaces.ILuaMainMediator;
-    import interfaces.ISprMgr;
-    import interfaces.ITextureMgr;
+    import inoah.game.ro.modules.main.view.events.GameEvent;
+    import inoah.interfaces.IAssetMgr;
+    import inoah.interfaces.IDisplayMgr;
+    import inoah.interfaces.IKeyMgr;
+    import inoah.interfaces.ILoader;
+    import inoah.interfaces.ILuaMainMediator;
+    import inoah.interfaces.IMapMgr;
+    import inoah.interfaces.ISprMgr;
+    import inoah.interfaces.ITextureMgr;
+    import inoah.interfaces.ITickable;
+    import inoah.interfaces.IUserModel;
     
     import morn.App;
     import morn.core.handlers.Handler;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     import robotlegs.bender.extensions.contextView.ContextView;
+    import robotlegs.bender.extensions.mapMgrExtension.MapEvent;
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IInjector;
     
@@ -66,10 +68,13 @@ package inoah.game.ro.mediators.views
         public var keyMgr:IKeyMgr;
         
         [Inject]
+        public var mapMgr:IMapMgr;
+        
+        [Inject]
         public var luaEngine:ILuaMainMediator;
         
         [Inject]
-        public var userModel:UserModel;
+        public var userModel:IUserModel;
         
         protected var _starling:Starling;
         protected var _noteTxt:TextField;
@@ -77,7 +82,6 @@ package inoah.game.ro.mediators.views
         protected var _couldTick:Boolean;
         protected var _starlingMain:ITickable;
         
-        protected var _mapMgr:ITickable;
         protected var _battleMgr:ITickable;
         
         protected var _loginView:LoginView;
@@ -156,7 +160,6 @@ package inoah.game.ro.mediators.views
             addBgImage();
             
             addContextListener( LoginEvent.LOGIN , onLoginHandler , LoginEvent );
-            //            addViewListener( LoginEvent.LOGIN , onLoginHandler , LoginEvent );
         }
         /**
          * 
@@ -203,7 +206,7 @@ package inoah.game.ro.mediators.views
         protected function initUserinfo( username:String ):void
         {
             userModel.info = new UserInfo();
-            var userInfo:UserInfo = userModel.info;
+            var userInfo:UserInfo = userModel.info as UserInfo;
             
             userInfo.name = username;
             
@@ -244,19 +247,17 @@ package inoah.game.ro.mediators.views
             displayMgr.uiLevel.addChild( _mainView );
             
             //初始化地图管理器
-            //            _mapMgr = new MapMgr( displayMgr.unitLevel , displayMgr.mapLevel );
-            //            MainMgr.instance.addMgr( MgrTypeConsts.MAP_MGR, _mapMgr as IMgr );
-            //            facade.registerMediator( _mapMgr as IMediator );
+            mapMgr.initialize();
             
-            //            facade.sendNotification( GameCommands.CHANGE_MAP , [ 1 ] );
+            dispatch( new MapEvent( MapEvent.CHANGE_MAP , 1 ) );
             
             //初始化战斗管理器
             //            _battleMgr = new BattleMgr( (_mapMgr as MapMgr).scene as BattleMapMediator );
             //            MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, _battleMgr as IMgr );
             //            facade.registerMediator( _battleMgr as IMediator );
             
-            //            facade.sendNotification( GameCommands.RECV_CHAT , [ "\n\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>" ] );
-            //            facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#00ff00'>WASD to move and J to attack!</font>" ] );
+            dispatch( new GameEvent( GameEvent.RECV_CHAT , "\n\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>" ) );
+            dispatch( new GameEvent( GameEvent.RECV_CHAT , "<font color='#00ff00'>WASD to move and J to attack!</font>"  ) );
         }
         
         public function tick( delta:Number ):void
@@ -271,13 +272,11 @@ package inoah.game.ro.mediators.views
                 onStarlingInited();
             }
             
+            mapMgr.tick( delta );
+            
             //            if( _mainView )
             //            {
             //                _mainView.tick( delta )
-            //            }
-            //            if( _mapMgr )
-            //            {
-            //                _mapMgr.tick( delta );
             //            }
             //            if( _battleMgr )
             //            {

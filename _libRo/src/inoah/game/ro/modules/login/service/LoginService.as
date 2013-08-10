@@ -1,11 +1,11 @@
 package inoah.game.ro.modules.login.service
 {
-    import inoah.game.ro.modules.main.model.UserModel;
+    import inoah.interfaces.IUserModel;
 
     public class LoginService implements ILoginService
     {
         [Inject]
-        public var userModel:UserModel;
+        public var userModel:IUserModel;
         
         public function LoginService()
         {

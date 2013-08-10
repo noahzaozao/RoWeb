@@ -1,7 +1,7 @@
 package inoah.game.ro.modules.main.view.mediator
 {
     import inoah.game.ro.modules.main.view.events.GameEvent;
-    import inoah.game.ro.ui.sysView.AlertView;
+    import inoah.game.ro.modules.main.view.AlertView;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     

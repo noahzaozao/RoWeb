@@ -1,4 +1,4 @@
-package inoah.game.ro.mapModels
+package inoah.game.ro.modules.map.view
 {
     import flash.geom.Point;
     

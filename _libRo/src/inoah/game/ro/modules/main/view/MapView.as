@@ -1,4 +1,4 @@
-package inoah.game.ro.ui.mainViewChildren
+package inoah.game.ro.modules.main.view
 {
     import flash.display.Bitmap;
     import flash.display.BitmapData;
@@ -7,8 +7,7 @@ package inoah.game.ro.ui.mainViewChildren
     import game.ui.mainViewChildren.mapViewUI;
     
     import inoah.core.loaders.JpgLoader;
-    
-    import interfaces.ILoader;
+    import inoah.interfaces.ILoader;
     
     public class MapView
     {
