@@ -6,7 +6,7 @@ package inoah.core.viewModels.actTpc
     import inoah.core.viewModels.actSpr.structs.acth.AnyActAnyPat;
     import inoah.core.viewModels.actSpr.structs.acth.AnyPatSprV0101;
     import inoah.core.events.ActTpcEvent;
-    import inoah.core.utils.Counter;
+    import inoah.utils.Counter;
     
     import starling.display.Image;
     import starling.display.Sprite;

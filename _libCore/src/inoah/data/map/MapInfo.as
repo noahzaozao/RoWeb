@@ -1,6 +1,8 @@
 package inoah.data.map
 {
-    public class MapInfo
+    import inoah.interfaces.IMapInfo;
+
+    public class MapInfo implements IMapInfo
     {
         private var _w:int;
         private var _h:int;

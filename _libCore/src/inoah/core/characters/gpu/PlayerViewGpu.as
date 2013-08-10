@@ -1,12 +1,10 @@
 package inoah.core.characters.gpu
 {
-    import inoah.core.infos.CharacterInfo;
-    
     public class PlayerViewGpu extends CharacterViewGpu
     {
-        public function PlayerViewGpu(charInfo:CharacterInfo=null)
+        public function PlayerViewGpu()
         {
-            super(charInfo);
+            super();
         }
         
         override public function tick( delta:Number ):void

@@ -1,4 +1,4 @@
-package inoah.core.objects
+package inoah.core.base
 {
     import flash.geom.Point;
     
@@ -6,9 +6,8 @@ package inoah.core.objects
     import inoah.core.QTree;
     import inoah.core.consts.ConstsActions;
     import inoah.core.consts.ConstsDirection;
-    import inoah.core.controllers.BaseController;
     import inoah.core.infos.CharacterInfo;
-    import inoah.core.interfaces.IViewObject;
+    import inoah.interfaces.IViewObject;
     
     /**
      * 地图物体基类

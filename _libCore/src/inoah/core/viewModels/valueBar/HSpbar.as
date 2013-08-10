@@ -2,7 +2,7 @@ package inoah.core.viewModels.valueBar
 {
     import flash.events.TimerEvent;
     
-    import inoah.core.objects.BaseObject;
+    import inoah.core.base.BaseObject;
     
     /**
      * Hp/Sp 条

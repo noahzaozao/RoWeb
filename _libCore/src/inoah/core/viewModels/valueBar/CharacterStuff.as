@@ -3,7 +3,7 @@ package inoah.core.viewModels.valueBar
     import flash.display.BitmapData;
     import flash.display.Shape;
     
-    import inoah.core.objects.BaseObject;
+    import inoah.core.base.BaseObject;
     
     /**
      * 角色血量、称号、图标等物品的基类

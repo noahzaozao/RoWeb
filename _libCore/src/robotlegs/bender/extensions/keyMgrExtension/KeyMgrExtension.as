@@ -1,7 +1,7 @@
 package robotlegs.bender.extensions.keyMgrExtension
 {
     
-    import interfaces.IKeyMgr;
+    import inoah.interfaces.IKeyMgr;
     
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IExtension;

@@ -3,7 +3,7 @@ package robotlegs.bender.extensions.displayMgrExtension
     import flash.display.Sprite;
     import flash.display.Stage;
     
-    import interfaces.IDisplayMgr;
+    import inoah.interfaces.IDisplayMgr;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     import robotlegs.bender.extensions.contextView.ContextView;

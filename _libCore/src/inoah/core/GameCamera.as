@@ -5,14 +5,17 @@ package inoah.core
     import flash.geom.Rectangle;
     import flash.utils.Timer;
     
-    import inoah.core.interfaces.IMapMediator;
-    import inoah.core.objects.BaseObject;
+    import inoah.core.base.BaseObject;
+    import inoah.interfaces.ICamera;
+    import inoah.interfaces.ISceneMediator;
     
     /**
      * 摄像机控制类
      */ 
-    public class GameCamera
+    public class GameCamera implements ICamera
     {
+        [Inject]
+        public var sceneMediator:ISceneMediator;
         /**
          * 当游戏对象进出场景时，是否进行Alpha效果渐变
          */ 
@@ -48,11 +51,7 @@ package inoah.core
          * 视口左上角对应的世界坐标Y
          */ 
         protected var _zeroY:Number;
-        
-        /**
-         * 主场景
-         */ 
-        protected var _map:IMapMediator;
+
         /**
          * 镜头注视
          */ 
@@ -76,9 +75,8 @@ package inoah.core
             return _needReCut;
         }
         
-        public function GameCamera( map:IMapMediator )
+        public function GameCamera()
         {
-            _map = map;
             if(_cameraView==null)
             {
                 _cameraView = new Rectangle();
@@ -140,7 +138,7 @@ package inoah.core
         {
             _focus = o;
             update();
-            _map.ReCut();
+            sceneMediator.ReCut();
         }
         
         public function get focusObject():BaseObject
@@ -197,7 +195,7 @@ package inoah.core
             if(_moveSpeed==0 || _zeroY==0) return;
             this.focus(null);
             setZero(_zeroX,_zeroY-_moveSpeed*k);
-            _map.ReCut();
+            sceneMediator.ReCut();
         }
         /**
          * 镜头向下
@@ -207,7 +205,7 @@ package inoah.core
             if(_moveSpeed==0) return;
             this.focus(null);
             setZero(_zeroX,_zeroY+_moveSpeed*k);
-            _map.ReCut();
+            sceneMediator.ReCut();
         }
         /**
          * 镜头向左
@@ -217,7 +215,7 @@ package inoah.core
             if(_moveSpeed==0 || _zeroX==0) return;
             this.focus(null);
             setZero(_zeroX-_moveSpeed*k,_zeroY);
-            _map.ReCut();
+            sceneMediator.ReCut();
         }
         /**
          * 镜头向右
@@ -227,14 +225,14 @@ package inoah.core
             if(_moveSpeed==0) return;
             this.focus(null);
             setZero(_zeroX+_moveSpeed*k,_zeroY);
-            _map.ReCut();
+            sceneMediator.ReCut();
         }
         
         public function move(xdir:int,ydir:int,k:uint=1):void
         {
             this.focus(null);
             setZero(_zeroX+_moveSpeed*xdir*k,_zeroY+_moveSpeed*ydir*k);
-            _map.ReCut();
+            sceneMediator.ReCut();
         }
         
         /**
@@ -244,7 +242,7 @@ package inoah.core
         {
             this.focus(null);
             setZero(x-(Global.SCREEN_W>>1),y-(Global.SCREEN_H>>1));
-            _map.ReCut();
+            sceneMediator.ReCut();
         }
         
         public function flyTo(x:uint,y:uint,callback:Function=null):void
@@ -280,7 +278,7 @@ package inoah.core
                 _timer.stop();
                 _timer.removeEventListener(TimerEvent.TIMER,moveCamera);
                 _timer = null;
-                _map.ReCut();
+                sceneMediator.ReCut();
                 if(_moveCallBack!=null) _moveCallBack();
             }
         }

@@ -1,6 +1,5 @@
-package inoah.core.controllers
+package inoah.core.base
 {
-    import inoah.core.objects.BaseObject;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     
@@ -14,6 +13,11 @@ package inoah.core.controllers
         public function BaseController( mediatorName:String = null , viewComponent:Object = null)
         {
             _animationUnitList = new Vector.<IAnimatable>();
+        }
+        
+        override public function initialize():void
+        {
+            
         }
         
         public function unsetupListener():void

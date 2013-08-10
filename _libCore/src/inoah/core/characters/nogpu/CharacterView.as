@@ -9,15 +9,14 @@ package inoah.core.characters.nogpu
     import inoah.core.consts.ConstsActions;
     import inoah.core.events.ActSprEvent;
     import inoah.core.infos.CharacterInfo;
-    import inoah.core.interfaces.IViewObject;
     import inoah.core.loaders.ActSprLoader;
     import inoah.core.viewModels.actSpr.ActSprBodyView;
     import inoah.core.viewModels.actSpr.ActSprOtherView;
     import inoah.core.viewModels.actSpr.ActSprPlayerView;
     import inoah.core.viewModels.actSpr.ActSprWeaponView;
     import inoah.core.viewModels.actSpr.structs.CACT;
-    
-    import interfaces.ILoader;
+    import inoah.interfaces.ILoader;
+    import inoah.interfaces.IViewObject;
     
     /**
      * 

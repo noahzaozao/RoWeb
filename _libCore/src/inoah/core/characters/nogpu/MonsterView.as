@@ -1,7 +1,7 @@
 package inoah.core.characters.nogpu
 {
     import inoah.core.infos.CharacterInfo;
-    import inoah.core.utils.Counter;
+    import inoah.utils.Counter;
     
     public class MonsterView extends CharacterView
     {

@@ -15,27 +15,20 @@
     <classEntry path="inoah.core.consts.ConstsActions"/>
     <classEntry path="inoah.core.consts.ConstsDirIndex"/>
     <classEntry path="inoah.core.consts.ConstsDirection"/>
-    <classEntry path="inoah.core.consts.ConstsGame"/>
-    <classEntry path="inoah.core.consts.MgrTypeConsts"/>
     <classEntry path="inoah.core.consts.commands.BattleCommands"/>
-    <classEntry path="inoah.core.controllers.BaseController"/>
+    <classEntry path="inoah.core.base.BaseController"/>
     <classEntry path="inoah.core.events.ActSprEvent"/>
     <classEntry path="inoah.core.events.ActTpcEvent"/>
     <classEntry path="inoah.core.infos.BattleCharacterInfo"/>
     <classEntry path="inoah.core.infos.CharacterInfo"/>
     <classEntry path="inoah.core.infos.UserInfo"/>
-    <classEntry path="inoah.core.interfaces.IMapLevel"/>
-    <classEntry path="inoah.core.interfaces.IMapMediator"/>
-    <classEntry path="inoah.core.interfaces.ITickable"/>
-    <classEntry path="inoah.core.interfaces.IViewObject"/>
     <classEntry path="inoah.core.loaders.ActSprLoader"/>
     <classEntry path="inoah.core.loaders.ActTpcLoader"/>
     <classEntry path="inoah.core.loaders.AtfLoader"/>
     <classEntry path="inoah.core.loaders.JpgLoader"/>
     <classEntry path="inoah.core.loaders.LuaLoader"/>
-    <classEntry path="inoah.core.objects.BaseObject"/>
+    <classEntry path="inoah.core.base.BaseObject"/>
     <classEntry path="inoah.core.starlingMain"/>
-    <classEntry path="inoah.core.utils.Counter"/>
     <classEntry path="inoah.core.utils.GMath"/>
     <classEntry path="inoah.core.utils.GeomUtil"/>
     <classEntry path="inoah.core.utils.Utils"/>
@@ -72,23 +65,20 @@
     <classEntry path="inoah.data.map.MapLayerInfo"/>
     <classEntry path="inoah.data.map.MapObjectInfo"/>
     <classEntry path="inoah.data.map.MapTileSetInfo"/>
-    <classEntry path="inoah.modules.core.controller.GetSomeTextCommand"/>
     <classEntry path="inoah.modules.core.model.BaseModel"/>
-    <classEntry path="inoah.modules.core.model.ExampleModel"/>
-    <classEntry path="inoah.modules.core.model.event.ExampleModelUpdate"/>
-    <classEntry path="inoah.modules.core.model.vo.AnswerVO"/>
     <classEntry path="inoah.modules.core.service.ExampleService"/>
-    <classEntry path="inoah.modules.core.service.IExampleService"/>
     <classEntry path="robotlegs.bender.extensions.assetMgrExtension.AssetMgr"/>
     <classEntry path="robotlegs.bender.extensions.assetMgrExtension.AssetMgrExtension"/>
     <classEntry path="robotlegs.bender.extensions.displayMgrExtension.DisplayMgr"/>
     <classEntry path="robotlegs.bender.extensions.displayMgrExtension.DisplayerMgrExtension"/>
     <classEntry path="robotlegs.bender.extensions.keyMgrExtension.KeyMgr"/>
-    <classEntry path="robotlegs.bender.extensions.keyMgrExtension.KeyMgrExtension"/>
+    <classEntry path="robotlegs.bender.extensions.keyMgrExtension.MapMgrExtension"/>
     <classEntry path="robotlegs.bender.extensions.sprMgrExtension.SprMgr"/>
     <classEntry path="robotlegs.bender.extensions.sprMgrExtension.SprMgrExtension"/>
     <classEntry path="robotlegs.bender.extensions.textureMgrExtension.TextureMgr"/>
     <classEntry path="robotlegs.bender.extensions.textureMgrExtension.TextureMgrExtension"/>
+    <classEntry path="robotlegs.bender.extensions.mapMgrExtension.MapMgr"/>
+    <classEntry path="robotlegs.bender.extensions.mapMgrExtension.MapEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

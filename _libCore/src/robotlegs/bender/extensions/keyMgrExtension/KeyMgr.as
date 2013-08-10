@@ -5,7 +5,7 @@ package robotlegs.bender.extensions.keyMgrExtension
     import flash.events.KeyboardEvent;
     import flash.utils.ByteArray;
     
-    import interfaces.IKeyMgr;
+    import inoah.interfaces.IKeyMgr;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     import robotlegs.bender.extensions.contextView.ContextView;

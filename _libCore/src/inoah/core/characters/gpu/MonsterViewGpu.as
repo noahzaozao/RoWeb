@@ -1,7 +1,7 @@
 package inoah.core.characters.gpu
 {
     import inoah.core.infos.CharacterInfo;
-    import inoah.core.utils.Counter;
+    import inoah.utils.Counter;
     
     public class MonsterViewGpu extends CharacterViewGpu
     {

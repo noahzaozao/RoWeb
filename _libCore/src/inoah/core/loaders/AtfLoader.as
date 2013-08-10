@@ -6,7 +6,8 @@ package inoah.core.loaders
     import flash.net.URLLoaderDataFormat;
     import flash.net.URLRequest;
     import flash.utils.ByteArray;
-    import interfaces.ILoader;
+    
+    import inoah.interfaces.ILoader;
     
     public class AtfLoader extends EventDispatcher implements ILoader
     {

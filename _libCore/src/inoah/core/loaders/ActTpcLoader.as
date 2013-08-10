@@ -8,9 +8,8 @@ package inoah.core.loaders
     import flash.utils.ByteArray;
     
     import inoah.core.viewModels.actSpr.structs.CACT;
-    
-    import interfaces.ILoader;
-    import interfaces.ITextureMgr;
+    import inoah.interfaces.ILoader;
+    import inoah.interfaces.ITextureMgr;
     
     import starling.textures.TextureAtlas;
     

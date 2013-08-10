@@ -7,7 +7,7 @@ package inoah.core.loaders
     import flash.net.URLRequest;
     import flash.utils.ByteArray;
     
-    import interfaces.ILoader;
+    import inoah.interfaces.ILoader;
 
     public class ActSprLoader extends EventDispatcher implements ILoader
     {

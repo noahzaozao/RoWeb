@@ -1,14 +1,13 @@
 package inoah.core.infos
 {
-    
-    
+    import inoah.interfaces.IUserInfo;
     
     /**
      * 玩家基本信息 
      * @author inoah
      * 
      */    
-    public class UserInfo extends BattleCharacterInfo
+    public class UserInfo extends BattleCharacterInfo implements IUserInfo
     {
         protected var _strength:uint;
         protected var _agile:uint;

@@ -6,7 +6,7 @@ package inoah.core.viewModels.actSpr
     import flash.utils.Endian;
     
     import inoah.core.events.ActSprEvent;
-    import inoah.core.utils.Counter;
+    import inoah.utils.Counter;
     import inoah.core.viewModels.actSpr.structs.CACT;
     import inoah.core.viewModels.actSpr.structs.CSPR;
     import inoah.core.viewModels.actSpr.structs.acth.AnyActAnyPat;
