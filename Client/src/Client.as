@@ -4,7 +4,7 @@ package
     import flash.display.StageScaleMode;
     import flash.events.Event;
     
-    import inoah.core.CoreConfig;
+    import inoah.core.CoreBundle;
     import inoah.core.Global;
     import inoah.game.ro.RoConfig;
     import inoah.game.ro.mediators.views.RoGameMediator;
@@ -21,6 +21,8 @@ package
         private var _lastTimeStamp:Number;
         
         private var _context:IContext;
+        
+        private var _roGameMediator:RoGameMediator;
         
         public function Client()
         {
@@ -44,9 +46,8 @@ package
             
             _context = new Context()
                 .install( MVCSBundle )
+                .install( CoreBundle )
                 .install( LuaExtension )
-                .configure( CoreConfig )
-                .configure( LuaConfig )
                 .configure( RoConfig )
                 .configure( new ContextView( this ) );
             _context.initialize( onInitialize );
@@ -54,9 +55,8 @@ package
         
         private function onInitialize():void
         {
-            var roGameMediator:RoGameMediator = _context.injector.getInstance(RoGameMediator) as RoGameMediator;
-            roGameMediator.init( stage );
-            
+            _roGameMediator = _context.injector.getInstance(RoGameMediator) as RoGameMediator;
+            _roGameMediator.initialize();
             //            (_context.injector.getInstance(IEventDispatcher) as IEventDispatcher).dispatchEvent(new UserEvent( UserEvent.SIGN_IN ));
             //            (_context.injector.getInstance(UserModel) as UserModel).signedIn;
             
@@ -69,6 +69,11 @@ package
             var currentTimeStamp:Number = new Date().time;
             var delta:Number = (currentTimeStamp - _lastTimeStamp)/1000;
             _lastTimeStamp = currentTimeStamp;
+            
+            if( _roGameMediator )
+            {
+                _roGameMediator.tick( delta );
+            }
         }
     }
 }
