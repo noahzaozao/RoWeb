@@ -6,20 +6,24 @@ package
     import flash.display.StageScaleMode;
     import flash.events.Event;
     
+    import inoah.core.CoreBundle;
     import inoah.core.Global;
-    import inoah.core.interfaces.ITickable;
-    import inoah.core.mediators.GameMediator;
+    import inoah.game.ro.RoConfig;
     import inoah.game.ro.mediators.views.RoGameMediator;
     
-    import pureMVC.interfaces.IFacade;
-    import pureMVC.interfaces.IMediator;
-    import pureMVC.patterns.facade.Facade;
+    import robotlegs.bender.bundles.mvcs.MVCSBundle;
+    import robotlegs.bender.extensions.contextView.ContextView;
+    import robotlegs.bender.framework.api.IContext;
+    import robotlegs.bender.framework.impl.Context;
     
     [SWF(width="960",height="640",frameRate="60",backgroundColor="#000000")]
     public class ClientRoDemoIOS extends Sprite
     {
         private var _lastTimeStamp:Number;
-        private var _gameMediator:ITickable;
+        
+        private var _context:IContext;
+        
+        private var _roGameMediator:RoGameMediator;
         
         public function ClientRoDemoIOS()
         {
@@ -38,9 +42,18 @@ package
             Global.SCREEN_W = 960;
             Global.SCREEN_H = 640;
             
-            var facade:IFacade = Facade.getInstance();
-            _gameMediator = new RoGameMediator( stage , this );
-            facade.registerMediator( _gameMediator as IMediator );
+            _context = new Context()
+                .install( MVCSBundle )
+                .install( CoreBundle )
+                .configure( RoConfig )
+                .configure( new ContextView( this ) );
+            _context.initialize( onInitialize );
+        }
+        
+        private function onInitialize():void
+        {
+            _roGameMediator = _context.injector.getInstance(RoGameMediator) as RoGameMediator;
+            _roGameMediator.initialize();
             
             _lastTimeStamp = new Date().time;
             stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );
@@ -52,9 +65,9 @@ package
             var delta:Number = (currentTimeStamp - _lastTimeStamp)/1000;
             _lastTimeStamp = currentTimeStamp;
             
-            if( _gameMediator )
+            if( _roGameMediator )
             {
-                _gameMediator.tick( delta );
+                _roGameMediator.tick( delta );
             }
         }
     }
