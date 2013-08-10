@@ -21,6 +21,13 @@ end
 function Map:init( x , y )
 	self.x = x;
 	self.y = y;
+	print( "mapInit" )
+end
+---
+-- @function [parent=#Map] addPlayer
+-- @param #Player player
+function Map:addPlayer( player )
+	print( "addPlayer" )
 end
 ---
 --@field [parent=#Map] #number x

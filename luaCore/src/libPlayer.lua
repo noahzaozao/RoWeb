@@ -21,6 +21,7 @@ end
 function Player:init( x , y )
 	self.x = x;
 	self.y = y;
+	print( "playerInit" )
 end
 ---
 --@field [parent=#Player] #number x
