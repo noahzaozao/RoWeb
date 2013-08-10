@@ -7,7 +7,7 @@ package
     import inoah.core.CoreBundle;
     import inoah.core.Global;
     import inoah.game.ro.RoConfig;
-    import inoah.game.ro.mediators.views.RoGameMediator;
+    import inoah.game.ro.RoGameMediator;
     
     import robotlegs.bender.bundles.mvcs.MVCSBundle;
     import robotlegs.bender.extensions.contextView.ContextView;
@@ -39,7 +39,7 @@ package
             tabChildren = false;
             tabEnabled = false;
             
-            //            Global.IS_MOBILE = true;
+//            Global.IS_MOBILE = true;
             Global.ENABLE_LUA = true;
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;
@@ -57,8 +57,6 @@ package
         {
             _roGameMediator = _context.injector.getInstance(RoGameMediator) as RoGameMediator;
             _roGameMediator.initialize();
-            //            (_context.injector.getInstance(IEventDispatcher) as IEventDispatcher).dispatchEvent(new UserEvent( UserEvent.SIGN_IN ));
-            //            (_context.injector.getInstance(UserModel) as UserModel).signedIn;
             
             _lastTimeStamp = new Date().time;
             stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );

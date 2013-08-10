@@ -9,7 +9,7 @@ package
     import inoah.core.CoreBundle;
     import inoah.core.Global;
     import inoah.game.ro.RoConfig;
-    import inoah.game.ro.mediators.views.RoGameMediator;
+    import inoah.game.ro.RoGameMediator;
     
     import robotlegs.bender.bundles.mvcs.MVCSBundle;
     import robotlegs.bender.extensions.contextView.ContextView;
