@@ -1,8 +1,6 @@
 package inoah.core 
 {
     import flash.text.TextField;
-    
-    import inoah.core.infos.UserInfo;
 
     public class Global
     {
@@ -16,8 +14,6 @@ package inoah.core
 
         public static const TILE_W:int = 64;
         public static const TILE_H:int = 32;
-
-        public static var userInfo:UserInfo;
 
         public static var debugTxt:TextField;
         

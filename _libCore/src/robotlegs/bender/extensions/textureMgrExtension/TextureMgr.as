@@ -1,15 +1,15 @@
-package inoah.core.managers
+package robotlegs.bender.extensions.textureMgrExtension
 {
-    import inoah.core.viewModels.actSpr.structs.CACT;
-    
     import flash.utils.ByteArray;
     
-    import inoah.core.interfaces.IMgr;
+    import interfaces.ITextureMgr;
+    
+    import robotlegs.bender.bundles.mvcs.Mediator;
     
     import starling.textures.Texture;
     import starling.textures.TextureAtlas;
     
-    public class TextureMgr implements IMgr
+    public class TextureMgr extends Mediator implements ITextureMgr
     {
         private var _atfDataListIndex:Vector.<Vector.<ByteArray>>;
         private var _resIdList:Vector.<Vector.<String>>;

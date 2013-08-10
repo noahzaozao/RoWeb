@@ -1,14 +1,13 @@
 package inoah.modules.core.controller
 {
     import inoah.modules.core.service.IExampleService;
-    import inoah.modules.core.view.events.GetSomeTextEvent;
     
     import robotlegs.bender.bundles.mvcs.Command;
     
     public class GetSomeTextCommand extends Command
     {
-        [Inject]
-        public var event:GetSomeTextEvent;
+//        [Inject]
+//        public var event:GetSomeTextEvent;
         
         [Inject]
         public var service:IExampleService;

@@ -1,15 +1,18 @@
-package inoah.core.managers
+package robotlegs.bender.extensions.sprMgrExtension
 {
-    import inoah.core.viewModels.actSpr.structs.CSPR;
-    import inoah.core.interfaces.IMgr;
-    
     import flash.utils.ByteArray;
+    
+    import inoah.core.viewModels.actSpr.structs.CSPR;
+    
+    import interfaces.ISprMgr;
+    
+    import robotlegs.bender.bundles.mvcs.Mediator;
     
     /**
      * roSpr文件位图管理器
      * @author inoah
      */    
-    public class SprMgr implements IMgr
+    public class SprMgr extends Mediator implements ISprMgr
     {
         private var _sprListIndex:Vector.<ByteArray>;
         private var _textureList:Vector.<CSPR>;

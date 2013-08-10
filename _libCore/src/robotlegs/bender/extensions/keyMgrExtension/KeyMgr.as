@@ -1,24 +1,49 @@
-package inoah.core.managers
+package robotlegs.bender.extensions.keyMgrExtension
 {
     import flash.display.DisplayObject;
-    import flash.display.Stage;
     import flash.events.Event;
     import flash.events.KeyboardEvent;
     import flash.utils.ByteArray;
     
-    import inoah.core.interfaces.IMgr;
+    import interfaces.IKeyMgr;
+    
+    import robotlegs.bender.bundles.mvcs.Mediator;
+    import robotlegs.bender.extensions.contextView.ContextView;
+    import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
+    import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
+    import robotlegs.bender.framework.api.IInjector;
+    import robotlegs.bender.framework.api.ILogger;
     
     /**
      * 键盘管理器 
      * @author inoah
      */    
-    public class KeyMgr implements IMgr
+    public class KeyMgr extends Mediator implements IKeyMgr
     {
+        [Inject]
+        public var injector:IInjector;
+        
+        [Inject]
+        public var mediatorMap:IMediatorMap;
+        
+        [Inject]
+        public var commandMap:IEventCommandMap;
+        
+        [Inject]
+        public var logger:ILogger;
+        
+        [Inject]
+        public var contextView:ContextView;
+        
         private var states:ByteArray;
         private var dispObj:DisplayObject;
         private var _isDisposed:Boolean;
         
-        public function KeyMgr( stage:Stage )
+        public function KeyMgr()
+        {
+        }
+        
+        override public function initialize():void
         {
             states = new ByteArray();
             states.writeUnsignedInt( 0 );
@@ -29,7 +54,7 @@ package inoah.core.managers
             states.writeUnsignedInt( 0 );
             states.writeUnsignedInt( 0 );
             states.writeUnsignedInt( 0 );
-            dispObj = stage;
+            dispObj = contextView.view;
             dispObj.addEventListener( KeyboardEvent.KEY_DOWN, keyDownListener, false, 0, true );
             dispObj.addEventListener( KeyboardEvent.KEY_UP, keyUpListener, false, 0, true );
             dispObj.addEventListener( Event.ACTIVATE, activateListener, false, 0, true );

@@ -4,19 +4,17 @@ package inoah.core.characters.gpu
     import flash.geom.Point;
     
     import inoah.core.consts.ConstsActions;
-    import inoah.core.consts.MgrTypeConsts;
     import inoah.core.events.ActTpcEvent;
     import inoah.core.infos.CharacterInfo;
-    import inoah.core.interfaces.ILoader;
     import inoah.core.interfaces.IViewObject;
     import inoah.core.loaders.ActTpcLoader;
-    import inoah.core.managers.AssetMgr;
-    import inoah.core.managers.MainMgr;
     import inoah.core.viewModels.actSpr.structs.CACT;
     import inoah.core.viewModels.actTpc.ActTpcBodyView;
     import inoah.core.viewModels.actTpc.ActTpcOtherView;
     import inoah.core.viewModels.actTpc.ActTpcPlayerView;
     import inoah.core.viewModels.actTpc.ActTpcWeaponView;
+    
+    import interfaces.ILoader;
     
     import starling.display.Sprite;
     import starling.text.TextField;
@@ -137,23 +135,23 @@ package inoah.core.characters.gpu
         
         public function updateCharInfo( charInfo:CharacterInfo ):void
         {
-            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            if( !_bodyLoader || _bodyLoader.url != _charInfo.bodyRes )
-            {
-                assetMgr.getRes( _charInfo.bodyRes, onBodyLoadComplete );
-            }
-            if( _charInfo.headRes )
-            {
-                assetMgr.getRes( _charInfo.headRes, onHeadLoadComplete );
-            }
-            if( _charInfo.weaponRes )
-            {
-                assetMgr.getRes( _charInfo.weaponRes, onWeaponLoadComplete );
-            }
-            if( _charInfo.weaponShadowRes )
-            {
-                assetMgr.getRes( _charInfo.weaponShadowRes, onWeaponShadowLoadComplete );
-            }
+//            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
+//            if( !_bodyLoader || _bodyLoader.url != _charInfo.bodyRes )
+//            {
+//                assetMgr.getRes( _charInfo.bodyRes, onBodyLoadComplete );
+//            }
+//            if( _charInfo.headRes )
+//            {
+//                assetMgr.getRes( _charInfo.headRes, onHeadLoadComplete );
+//            }
+//            if( _charInfo.weaponRes )
+//            {
+//                assetMgr.getRes( _charInfo.weaponRes, onWeaponLoadComplete );
+//            }
+//            if( _charInfo.weaponShadowRes )
+//            {
+//                assetMgr.getRes( _charInfo.weaponShadowRes, onWeaponShadowLoadComplete );
+//            }
         }
         
         protected function onBodyLoadComplete( bodyLoader:ILoader ):void

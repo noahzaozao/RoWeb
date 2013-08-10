@@ -5,7 +5,7 @@ package inoah.core.loaders
     import flash.events.Event;
     import flash.events.EventDispatcher;
     import flash.net.URLRequest;
-    import inoah.core.interfaces.ILoader;
+    import interfaces.ILoader;
     
     public class JpgLoader extends EventDispatcher implements ILoader
     {
@@ -29,7 +29,12 @@ package inoah.core.loaders
             return _url;
         }
         
-        public function get content():DisplayObject
+        public function get content():String
+        {
+            return null;
+        }
+        
+        public function get displayObj():DisplayObject
         {
             return _loader.content;
         }

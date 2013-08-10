@@ -1,9 +1,16 @@
-package inoah.core.managers
+package robotlegs.bender.extensions.displayMgrExtension
 {
     import flash.display.Sprite;
     import flash.display.Stage;
     
-    import inoah.core.interfaces.IMgr;
+    import interfaces.IDisplayMgr;
+    
+    import robotlegs.bender.bundles.mvcs.Mediator;
+    import robotlegs.bender.extensions.contextView.ContextView;
+    import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
+    import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
+    import robotlegs.bender.framework.api.IInjector;
+    import robotlegs.bender.framework.api.ILogger;
     
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
@@ -13,21 +20,40 @@ package inoah.core.managers
      * 显示管理器 （层管理 )
      * @author inoah
      */    
-    public class DisplayMgr implements IMgr
+    public class DisplayMgr extends Mediator implements IDisplayMgr
     {
+        [Inject]
+        public var injector:IInjector;
+        
+        [Inject]
+        public var mediatorMap:IMediatorMap;
+        
+        [Inject]
+        public var commandMap:IEventCommandMap;
+        
+        [Inject]
+        public var logger:ILogger;
+        
+        [Inject]
+        public var contextView:ContextView;
+        
         private var _stage:Stage;
         private var _displayList:Vector.<flash.display.Sprite>;
         private var _displayStarlingList:Vector.<starling.display.Sprite>;
         private var _starlingRoot:DisplayObjectContainer;
         
-        public function DisplayMgr( stage:Stage )
+        public function DisplayMgr()
         {
-            _stage = stage;
+           
+        }
+        
+        override public function initialize():void
+        {
             _displayList = new Vector.<flash.display.Sprite>();
             for( var i:int = 0;i< 2; i++)
             {
                 _displayList[i] = new flash.display.Sprite();
-                _stage.addChild( _displayList[i] );
+                contextView.view.addChild( _displayList[i] );
             }
         }
         

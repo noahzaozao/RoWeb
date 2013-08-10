@@ -1,21 +1,28 @@
-package inoah.core.managers
+package robotlegs.bender.extensions.assetMgrExtension
 {
     import flash.events.Event;
     
-    import inoah.core.interfaces.ILoader;
-    import inoah.core.interfaces.IMgr;
     import inoah.core.loaders.ActSprLoader;
     import inoah.core.loaders.ActTpcLoader;
     import inoah.core.loaders.AtfLoader;
     import inoah.core.loaders.JpgLoader;
     import inoah.core.loaders.LuaLoader;
     
+    import interfaces.IAssetMgr;
+    import interfaces.ILoader;
+    
+    import robotlegs.bender.bundles.mvcs.Mediator;
+    import robotlegs.bender.framework.api.IInjector;
+    
     /**
      * 资源加载管理器 
      * @author inoah
      */    
-    public class AssetMgr implements IMgr
+    public class AssetMgr extends Mediator implements IAssetMgr
     {
+        [Inject]
+        public var injector:IInjector;
+        
         private var _cacheList:Vector.<ILoader>;
         private var _cacheListIndex:Vector.<String>;
         private var _loaderList:Vector.<ILoader>;
@@ -65,39 +72,44 @@ package inoah.core.managers
                 }
                 return _cacheList[ _cacheListIndex.indexOf( resPath ) ];
             }
+            var loader:ILoader;
             switch( resPath.split( "." )[1] )
             {
                 case "lua":
                 {
-                    _loaderList.push( new LuaLoader( resPath ) );
+                    loader = new LuaLoader( resPath );
                     break;
                 }
                 case "tpc":
                 {
-                    _loaderList.push( new ActTpcLoader( resPath ) );
+                    loader = new ActTpcLoader( resPath );
                     break;
                 }
                 case "act":
                 {
-                    _loaderList.push( new ActSprLoader( resPath ) );
+                    loader = new ActSprLoader( resPath );
                     break;
                 }
                 case "atf":
                 {
-                    _loaderList.push( new AtfLoader( resPath ) );
+                    loader = new AtfLoader( resPath );
                     break;
                 }
                 case "jpg":
                 {
-                    _loaderList.push( new JpgLoader( resPath ) );
+                    loader = new JpgLoader( resPath );
                     break;
                 }
                 case "png":
                 {
-                    _loaderList.push( new JpgLoader( resPath ) );
+                    loader = new JpgLoader( resPath );
                     break;
                 }
             }
+            
+            injector.injectInto( loader );
+            _loaderList.push( loader );
+            
             _callBackList.push( callBack );
             
             if( _isLoading == false )

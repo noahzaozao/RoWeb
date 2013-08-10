@@ -7,16 +7,18 @@ package inoah.core.loaders
     import flash.net.URLRequest;
     import flash.utils.ByteArray;
     
-    import inoah.core.consts.MgrTypeConsts;
     import inoah.core.viewModels.actSpr.structs.CACT;
-    import inoah.core.managers.MainMgr;
-    import inoah.core.managers.TextureMgr;
+    
+    import interfaces.ILoader;
+    import interfaces.ITextureMgr;
     
     import starling.textures.TextureAtlas;
-    import inoah.core.interfaces.ILoader;
     
     public class ActTpcLoader extends EventDispatcher implements ILoader
     {
+        [Inject]
+        public var textureMgr:ITextureMgr;
+        
         protected var _cact:CACT;
         protected var _textureAtlas:TextureAtlas;
         protected var _actUrl:String;
@@ -43,6 +45,11 @@ package inoah.core.loaders
         public function get actUrl():String
         {
             return _actUrl;
+        }
+        
+        public function get content():String
+        {
+            return null;
         }
         
         public function get url():String
@@ -74,7 +81,6 @@ package inoah.core.loaders
         {
             _tpcLoader.removeEventListener( Event.COMPLETE, onTpcLoaderComplete );
             
-            var textureMgr:TextureMgr = MainMgr.instance.getMgr( MgrTypeConsts.TEXTURE_MGR ) as TextureMgr;
             var data:ByteArray = _tpcLoader.data;
             data.inflate();
             var len:int = data.readByte();

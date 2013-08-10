@@ -5,7 +5,8 @@ package inoah.core.viewModels.actSpr
     import flash.utils.ByteArray;
     import flash.utils.Endian;
     
-    import inoah.core.consts.MgrTypeConsts;
+    import inoah.core.events.ActSprEvent;
+    import inoah.core.utils.Counter;
     import inoah.core.viewModels.actSpr.structs.CACT;
     import inoah.core.viewModels.actSpr.structs.CSPR;
     import inoah.core.viewModels.actSpr.structs.acth.AnyActAnyPat;
@@ -14,10 +15,6 @@ package inoah.core.viewModels.actSpr
     import inoah.core.viewModels.actSpr.structs.acth.AnyPatSprV0204;
     import inoah.core.viewModels.actSpr.structs.acth.AnyPatSprV0205;
     import inoah.core.viewModels.actSpr.structs.sprh.AnySprite;
-    import inoah.core.events.ActSprEvent;
-    import inoah.core.managers.MainMgr;
-    import inoah.core.managers.SprMgr;
-    import inoah.core.utils.Counter;
     
     /**
      * base actSpr view 
@@ -82,7 +79,7 @@ package inoah.core.viewModels.actSpr
             }
             _counterTarget = _baseCounterTarget * ( 1-  _currentTargetRate );
         }
-            
+        
         public function set actionIndex( value:uint ):void 
         {
             if( _actionIndex != value )
@@ -131,20 +128,20 @@ package inoah.core.viewModels.actSpr
         
         public function initSpr( data:ByteArray , url:String ):void
         {
-            if( _spr )
-            {
-                _spr.destory();
-            }
-            var inData:ByteArray = new ByteArray();
-            inData.endian = Endian.BIG_ENDIAN;
-            data.position = 0;
-            data.readBytes( inData );
-            var sprMgr:SprMgr = MainMgr.instance.getMgr( MgrTypeConsts.SPR_MGR  ) as SprMgr;
-            _spr = sprMgr.getCSPR( url , inData );
-            _counter.initialize();
-            _counter.reset( _counterTarget );
-            updateFrame();
-            _couldTick = true;
+            //            if( _spr )
+            //            {
+            //                _spr.destory();
+            //            }
+            //            var inData:ByteArray = new ByteArray();
+            //            inData.endian = Endian.BIG_ENDIAN;
+            //            data.position = 0;
+            //            data.readBytes( inData );
+            //            var sprMgr:SprMgr = MainMgr.instance.getMgr( MgrTypeConsts.SPR_MGR  ) as SprMgr;
+            //            _spr = sprMgr.getCSPR( url , inData );
+            //            _counter.initialize();
+            //            _counter.reset( _counterTarget );
+            //            updateFrame();
+            //            _couldTick = true;
         }
         
         //下，左下，左，左上，上，右上，右，右下

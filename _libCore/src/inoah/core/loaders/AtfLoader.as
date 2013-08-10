@@ -6,7 +6,7 @@ package inoah.core.loaders
     import flash.net.URLLoaderDataFormat;
     import flash.net.URLRequest;
     import flash.utils.ByteArray;
-    import inoah.core.interfaces.ILoader;
+    import interfaces.ILoader;
     
     public class AtfLoader extends EventDispatcher implements ILoader
     {
@@ -34,6 +34,11 @@ package inoah.core.loaders
         public function get data():ByteArray
         {
             return _loader.data;
+        }
+        
+        public function get content():String
+        {
+            return null;
         }
         
         protected function onLoaderComplete( e:Event):void

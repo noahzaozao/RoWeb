@@ -6,7 +6,8 @@ package inoah.core.loaders
     import flash.net.URLLoaderDataFormat;
     import flash.net.URLRequest;
     import flash.utils.ByteArray;
-    import inoah.core.interfaces.ILoader;
+    
+    import interfaces.ILoader;
 
     public class ActSprLoader extends EventDispatcher implements ILoader
     {
@@ -39,6 +40,10 @@ package inoah.core.loaders
             return _sprUrl;
         }
         
+        public function get content():String
+        {
+            return null;
+        }
         public function get actData():ByteArray
         {
             return _actLoader.data;
