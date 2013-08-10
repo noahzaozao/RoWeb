@@ -45,9 +45,12 @@ package inoah.game.ro.modules.main.view.events
         //map
         public static const CHANGE_MAP:String = "GameCommands.CHANGE_MAP";
         
-        public function GameEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+        public var msg:String;
+        
+        public function GameEvent( type:String, msg:String = "" )
         {
-            super(type, bubbles, cancelable);
+            super(type);
+            this.msg = msg;
         }
     }
 }

@@ -4,13 +4,9 @@ package inoah.game.ro.managers
     import flash.events.Event;
     
     import inoah.core.GameCamera;
-    import inoah.core.Global;
-    import inoah.core.characters.gpu.PlayerViewGpu;
     import inoah.core.interfaces.IMapMediator;
-    import inoah.core.interfaces.IMgr;
     import inoah.core.interfaces.ITickable;
     import inoah.game.ro.controllers.TiledPlayerController;
-    import inoah.game.ro.mediators.maps.BattleMapMediator;
     import inoah.game.ro.objects.PlayerObject;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
@@ -22,7 +18,7 @@ package inoah.game.ro.managers
      *  地图管理器
      * @author inoah
      */    
-    public class MapMgr extends Mediator implements ITickable, IMgr
+    public class MapMgr extends Mediator implements ITickable
     {
         protected var _mapId:uint;
         protected var _map:IMapMediator;
@@ -61,34 +57,34 @@ package inoah.game.ro.managers
         
         protected function onChangeMap( mapId:uint ):void
         {
-            _mapId = mapId;
-            if( !_map )
-            {
-                _map = new BattleMapMediator( _unitLevel as starling.display.DisplayObjectContainer , _mapLevel as starling.display.DisplayObjectContainer );
-                //                facade.registerMediator( _map as IMediator );
-                _camera = new GameCamera( _map );
-            }
-            _map.init( _mapId );
-            
-            //创建用户
-            _playerController = new TiledPlayerController();
-            //            facade.registerMediator( _playerController );
-            var playerView:PlayerViewGpu = new PlayerViewGpu( Global.userInfo );
-            _player = new PlayerObject();
-            _player.controller = _playerController;
-            _player.viewObject = playerView;
-            _player.posX = 400;
-            _player.posY = 400;
-            _player.info = Global.userInfo;
-            _map.addObject( _player );
-            _camera.focus( _player );
-            
-            var count:int = 0;
-            while( count < 50 )
-            {
-                (_map as BattleMapMediator).createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200  );
-                count++;
-            }
+            //            _mapId = mapId;
+            //            if( !_map )
+            //            {
+            //                _map = new BattleMapMediator( _unitLevel as starling.display.DisplayObjectContainer , _mapLevel as starling.display.DisplayObjectContainer );
+            //                //                facade.registerMediator( _map as IMediator );
+            //                _camera = new GameCamera( _map );
+            //            }
+            //            _map.init( _mapId );
+            //            
+            //            //创建用户
+            //            _playerController = new TiledPlayerController();
+            //            //            facade.registerMediator( _playerController );
+            //            var playerView:PlayerViewGpu = new PlayerViewGpu( Global.userInfo );
+            //            _player = new PlayerObject();
+            //            _player.controller = _playerController;
+            //            _player.viewObject = playerView;
+            //            _player.posX = 400;
+            //            _player.posY = 400;
+            //            _player.info = Global.userInfo;
+            //            _map.addObject( _player );
+            //            _camera.focus( _player );
+            //            
+            //            var count:int = 0;
+            //            while( count < 50 )
+            //            {
+            //                (_map as BattleMapMediator).createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200  );
+            //                count++;
+            //            }
         }
         
         public function tick( delta:Number ):void

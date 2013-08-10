@@ -1,4 +1,4 @@
-package inoah.game.ro.ui.mainViewChildren
+package inoah.game.ro.modules.main.view
 {
     import game.ui.mainViewChildren.skillBarViewUI;
     

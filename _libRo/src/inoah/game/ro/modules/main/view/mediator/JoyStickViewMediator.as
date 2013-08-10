@@ -1,4 +1,4 @@
-package inoah.game.ro.mediators.views
+package inoah.game.ro.modules.main.view.mediator
 {
     import robotlegs.bender.bundles.mvcs.Mediator;
     

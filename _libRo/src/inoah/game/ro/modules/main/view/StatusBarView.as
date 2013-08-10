@@ -1,4 +1,4 @@
-package inoah.game.ro
+package inoah.game.ro.modules.main.view
 {
     import flash.display.Sprite;
     import flash.filters.GlowFilter;
@@ -10,11 +10,11 @@ package inoah.game.ro
     
     import robotlegs.bender.framework.api.ILogTarget;
     
-    public class StatusBar extends Sprite implements ILogTarget
+    public class StatusBarView extends Sprite implements ILogTarget
     {
         protected var _statusTxt:TextField;
         
-        public function StatusBar()
+        public function StatusBarView()
         {
             _statusTxt = new TextField();
             _statusTxt.width = Global.SCREEN_W;
@@ -24,7 +24,10 @@ package inoah.game.ro
             tf.align = TextFormatAlign.RIGHT;
             _statusTxt.defaultTextFormat = tf;
             _statusTxt.filters = [ new GlowFilter( 0x0 , 1 , 2, 2, 5 )];
-            addChild( _statusTxt );
+//            addChild( _statusTxt );
+            _statusTxt.mouseEnabled = false;
+            this.mouseChildren = false;
+            this.mouseEnabled = false;
         }
         
         public function log(source:Object, level:uint, timestamp:int, message:String, params:Array = null):void

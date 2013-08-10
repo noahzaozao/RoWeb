@@ -1,10 +1,10 @@
-package inoah.game.ro.mediators.views
+package inoah.game.ro.modules.main.view.mediator
 {
     import robotlegs.bender.bundles.mvcs.Mediator;
     
     public class SkillBarViewMediator extends Mediator
     {
-        public function SkillBarViewMediator( viewComponent:Object=null)
+        public function SkillBarViewMediator()
         {
         }
     }

@@ -6,24 +6,20 @@ package inoah.game.ro.modules.main.view
     
     import inoah.core.Global;
     import inoah.core.infos.UserInfo;
+    import inoah.game.ro.modules.main.model.UserModel;
+    import inoah.game.ro.modules.main.view.events.GameEvent;
     import inoah.game.ro.ui.mainViewChildren.MapView;
     
-    import robotlegs.bender.extensions.viewManager.api.IViewManager;
+    import interfaces.ILoader;
     
     public class MainView extends mainViewUI
     {
-        [Inject]
-        public var viewManager:IViewManager;
         
-        private var _mapView:MapView;
+        public var mainMapView:MapView;
         
         public function MainView()
         {
             super();
-            
-            _mapView = new MapView( mapView );
-            
-            updateInfo();
             
             this.btnStatus.addEventListener( MouseEvent.CLICK , onOpenHandler );
             this.btnSkill.addEventListener( MouseEvent.CLICK , onOpenHandler );
@@ -33,37 +29,44 @@ package inoah.game.ro.modules.main.view
             this.btnOption.addEventListener( MouseEvent.CLICK , onOpenHandler );
         }
         
-        public function updateHp():void
+        public function initializeMap( loader:ILoader ):void
         {
-            var userInfo:UserInfo = Global.userInfo;
+            mainMapView = new MapView( mapView , loader );
+            mapView.setPosition( Global.SCREEN_W - mapView.width , 0 );
+        }
+        
+        public function updateHp( userModel:UserModel ):void
+        {
+            var userInfo:UserInfo = userModel.info;
             hpBar.value = userInfo.hpPer;
             hpBar.barLabel.text = userInfo.hpCurrent + " / " + userInfo.hpMax;
             labHpPer.text = uint(userInfo.hpPer * 100) + "%";
         }
-        public function updateSp():void
+        public function updateSp( userModel:UserModel ):void
         {
-            var userInfo:UserInfo = Global.userInfo;
+            var userInfo:UserInfo = userModel.info;
             spBar.value = userInfo.spPer;
             spBar.barLabel.text = userInfo.spCurrent + " / " + userInfo.spMax;
             labSpPer.text = uint(userInfo.spPer * 100) + "%";
         }
-        public function updateExp():void
+        public function updateExp( userModel:UserModel ):void
         {
-            var userInfo:UserInfo = Global.userInfo;
+            var userInfo:UserInfo = userModel.info;
             baseExpBar.value = userInfo.baseExp / Math.pow( userInfo.baseLv + 1 , 3 );
             jobExpBar.value = userInfo.jobExp / Math.pow( userInfo.jobLv + 1 , 3 );
         }
-        public function updateLv():void
+        public function updateLv( userModel:UserModel ):void
         {
-            updateInfo();
+            updateInfo( userModel );
         }
-        public function updateStatusPoint():void
+        public function updateStatusPoint( userModel:UserModel ):void
         {
-            updateInfo();
+            updateInfo( userModel );
         }
-        private function updateInfo():void
+        
+        public function updateInfo( userModel:UserModel ):void
         {
-            var userInfo:UserInfo = Global.userInfo;
+            var userInfo:UserInfo = userModel.info;
             labName.text = userInfo.name;
             labJob.text = userInfo.job;
             hpBar.value = userInfo.hpPer;
@@ -78,9 +81,10 @@ package inoah.game.ro.modules.main.view
             jobExpBar.value = userInfo.jobExp / Math.pow( userInfo.jobLv + 1 , 3 );
             labWeightZeny.text = "Weight: " + userInfo.weightCurrent + " / " + userInfo.weightMax + " Zeny: " + userInfo.zeny;
         }
+        
         public function updateMapView():void
         {
-            _mapView.update();   
+            mainMapView.update();   
         }
         
         protected function onOpenHandler( e:MouseEvent):void
@@ -89,32 +93,32 @@ package inoah.game.ro.modules.main.view
             {
                 case btnStatus:
                 {
-                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_STATUS );
+                    dispatchEvent( new GameEvent( GameEvent.OPEN_STATUS ) );
                     break;
                 }
                 case btnSkill:
                 {
-                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_SKILL );
+                    dispatchEvent( new GameEvent( GameEvent.OPEN_SKILL ) );
                     break;
                 }
                 case btnItem:
                 {
-                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_ITEM);
+                    dispatchEvent( new GameEvent( GameEvent.OPEN_ITEM ) );
                     break;
                 }
                 case btnMap:
                 {
-                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_MAP );
+                    dispatchEvent( new GameEvent( GameEvent.OPEN_MAP ) );
                     break;
                 }
                 case btnTask:
                 {
-                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_TASK );
+                    dispatchEvent( new GameEvent( GameEvent.OPEN_TASK ) );
                     break;
                 }
                 case btnOption:
                 {
-                    //                    Facade.getInstance().sendNotification( GameCommands.OPEN_OPTION );
+                    dispatchEvent( new GameEvent( GameEvent.OPEN_OPTION ) );
                     break;
                 }
                 default:
@@ -126,6 +130,6 @@ package inoah.game.ro.modules.main.view
     }
 }
 
-        
-        
+
+
 

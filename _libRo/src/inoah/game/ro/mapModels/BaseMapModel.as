@@ -4,20 +4,15 @@ package inoah.game.ro.mapModels
     import flash.geom.Point;
     
     import inoah.core.Global;
-    import inoah.core.consts.MgrTypeConsts;
-    import inoah.core.interfaces.ILoader;
     import inoah.core.interfaces.IMapLevel;
-    import inoah.core.loaders.JpgLoader;
-    import inoah.core.managers.AssetMgr;
-    import inoah.core.managers.MainMgr;
     import inoah.core.utils.Counter;
     import inoah.data.map.MapInfo;
-    import inoah.data.map.MapTileSetInfo;
+    
+    import interfaces.ILoader;
     
     import starling.display.DisplayObjectContainer;
     import starling.display.Image;
     import starling.textures.RenderTexture;
-    import starling.textures.Texture;
     import starling.textures.TextureAtlas;
     
     /**
@@ -59,78 +54,78 @@ package inoah.game.ro.mapModels
         {
             _mapInfo = mapInfo;
             
-            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            var resList:Vector.<String> = new Vector.<String>();
-            var len:int = _mapInfo.tilesets.length;
-            for( var i:int =0;i<len;i++)
-            {
-                resList.push( "map/" + _mapInfo.tilesets[i].image );
-                _currentResIndexList.push( "map/" + _mapInfo.tilesets[i].image );
-            }
-            assetMgr.getResList( resList , onLoadMapRes );
+            //            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
+            //            var resList:Vector.<String> = new Vector.<String>();
+            //            var len:int = _mapInfo.tilesets.length;
+            //            for( var i:int =0;i<len;i++)
+            //            {
+            //                resList.push( "map/" + _mapInfo.tilesets[i].image );
+            //                _currentResIndexList.push( "map/" + _mapInfo.tilesets[i].image );
+            //            }
+            //            assetMgr.getResList( resList , onLoadMapRes );
         }
         
         private function onLoadMapRes( loader:ILoader ):void
         {
-            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            var tileSetList:Vector.<MapTileSetInfo> = _mapInfo.tilesets;
-            var tileSet:MapTileSetInfo;
-            var len:int = tileSetList.length;
-            var iCount:int = 1;
-            _currentTextureAtlasIndexList.push( int.MAX_VALUE );
-            for( var i:int =0;i<len;i++)
-            {
-                tileSet = tileSetList[i];
-                //get bitmap
-                _currentResList.push( (assetMgr.getRes( "map/" + tileSet.image ,null ) as JpgLoader).content as Bitmap );
-                //get textureAtlas
-                var texture:Texture = Texture.fromBitmap( _currentResList[i], false );
-                var atlasXml:XML = XML('<texture id="'+tileSet.name+'" width="'+2048+'" height="'+2048+'"></texture>');
-                var sequenceCount:int = tileSet.imagewidth / tileSet.tilewidth * tileSet.imageheight / tileSet.tileheight;
-                var subTexture:XML;
-                var sx:int = 0;
-                var sy:int = 0;
-                var soffx:int = 0;
-                var soffy:int = 0;
-                for(var j:int = 0; j<sequenceCount; j++)
-                {
-                    subTexture = XML(<SubTexture />);
-                    _currentTextureAtlasIndexList[iCount] = i;
-                    subTexture.@name =  iCount.toString();
-                    iCount ++;
-                    subTexture.@width = tileSet.tilewidth;
-                    subTexture.@height = tileSet.tileheight;
-                    subTexture.@x = sx;
-                    subTexture.@y = sy;
-                    subTexture.@frameX = 0;
-                    subTexture.@frameY = 0;
-                    subTexture.@frameWidth = tileSet.tilewidth;
-                    subTexture.@frameHeight = tileSet.tileheight;
-                    atlasXml.appendChild(subTexture);
-                    sx += tileSet.tilewidth;
-                    if( sx >= tileSet.imagewidth )
-                    {
-                        sx = 0
-                        sy += tileSet.tileheight;
-                    }
-                }
-                _currentTextureAtlasList.push( new TextureAtlas( texture, atlasXml ) );
-            }
-            
-            len = _mapInfo.layers.length;
-            for( i=0;i<len;i++)
-            {
-                if( _mapInfo.layers[i].type == "tilelayer" )
-                {
-                    drawTile( i );
-                    _couldTick = true;
-                    return;
-                }
-                else if( _mapInfo.layers[i].type == "objectgroup" )
-                {
-                    //                    drawObject( i );
-                }
-            }
+            //            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
+            //            var tileSetList:Vector.<MapTileSetInfo> = _mapInfo.tilesets;
+            //            var tileSet:MapTileSetInfo;
+            //            var len:int = tileSetList.length;
+            //            var iCount:int = 1;
+            //            _currentTextureAtlasIndexList.push( int.MAX_VALUE );
+            //            for( var i:int =0;i<len;i++)
+            //            {
+            //                tileSet = tileSetList[i];
+            //                //get bitmap
+            //                _currentResList.push( (assetMgr.getRes( "map/" + tileSet.image ,null ) as JpgLoader).content as Bitmap );
+            //                //get textureAtlas
+            //                var texture:Texture = Texture.fromBitmap( _currentResList[i], false );
+            //                var atlasXml:XML = XML('<texture id="'+tileSet.name+'" width="'+2048+'" height="'+2048+'"></texture>');
+            //                var sequenceCount:int = tileSet.imagewidth / tileSet.tilewidth * tileSet.imageheight / tileSet.tileheight;
+            //                var subTexture:XML;
+            //                var sx:int = 0;
+            //                var sy:int = 0;
+            //                var soffx:int = 0;
+            //                var soffy:int = 0;
+            //                for(var j:int = 0; j<sequenceCount; j++)
+            //                {
+            //                    subTexture = XML(<SubTexture />);
+            //                    _currentTextureAtlasIndexList[iCount] = i;
+            //                    subTexture.@name =  iCount.toString();
+            //                    iCount ++;
+            //                    subTexture.@width = tileSet.tilewidth;
+            //                    subTexture.@height = tileSet.tileheight;
+            //                    subTexture.@x = sx;
+            //                    subTexture.@y = sy;
+            //                    subTexture.@frameX = 0;
+            //                    subTexture.@frameY = 0;
+            //                    subTexture.@frameWidth = tileSet.tilewidth;
+            //                    subTexture.@frameHeight = tileSet.tileheight;
+            //                    atlasXml.appendChild(subTexture);
+            //                    sx += tileSet.tilewidth;
+            //                    if( sx >= tileSet.imagewidth )
+            //                    {
+            //                        sx = 0
+            //                        sy += tileSet.tileheight;
+            //                    }
+            //                }
+            //                _currentTextureAtlasList.push( new TextureAtlas( texture, atlasXml ) );
+            //            }
+            //            
+            //            len = _mapInfo.layers.length;
+            //            for( i=0;i<len;i++)
+            //            {
+            //                if( _mapInfo.layers[i].type == "tilelayer" )
+            //                {
+            //                    drawTile( i );
+            //                    _couldTick = true;
+            //                    return;
+            //                }
+            //                else if( _mapInfo.layers[i].type == "objectgroup" )
+            //                {
+            //                    //                    drawObject( i );
+            //                }
+            //            }
         }
         
         private function drawObject( index:int ):void

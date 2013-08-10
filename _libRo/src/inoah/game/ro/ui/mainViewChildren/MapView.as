@@ -6,30 +6,22 @@ package inoah.game.ro.ui.mainViewChildren
     
     import game.ui.mainViewChildren.mapViewUI;
     
-    import inoah.core.consts.MgrTypeConsts;
-    import inoah.core.interfaces.ILoader;
     import inoah.core.loaders.JpgLoader;
-    import inoah.core.managers.AssetMgr;
-    import inoah.core.managers.MainMgr;
-
+    
+    import interfaces.ILoader;
+    
     public class MapView
     {
         private var _mapView:mapViewUI;
         private var _mapBg:Shape;
         
-        public function MapView( mapView:mapViewUI )
+        public function MapView( mapView:mapViewUI , loader:ILoader )
         {
             _mapView = mapView;
             _mapBg = new Shape();
             _mapView.addChild( _mapBg );
-            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            assetMgr.getRes( "map/1s.jpg" , onUpdateHandler );
-        }
-        
-        private function onUpdateHandler( loader:ILoader ):void
-        {
             var bitmapData:BitmapData = new BitmapData( 200, 150 , true, 0x0 );
-            bitmapData = ((loader as JpgLoader).content as Bitmap).bitmapData;
+            bitmapData = ((loader as JpgLoader).displayObj as Bitmap).bitmapData;
             _mapBg.graphics.beginBitmapFill( bitmapData );
             _mapBg.graphics.drawRect( 0 , 0 , 190 ,190 );
             _mapBg.graphics.endFill();

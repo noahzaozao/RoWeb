@@ -1,28 +1,55 @@
 package inoah.game.ro.modules.main.view.mediator
 {
-    import flash.events.Event;
-    
     import inoah.core.Global;
-    import inoah.core.consts.MgrTypeConsts;
     import inoah.core.interfaces.ITickable;
-    import inoah.core.managers.DisplayMgr;
-    import inoah.core.managers.MainMgr;
+    import inoah.game.ro.modules.main.model.UserModel;
+    import inoah.game.ro.modules.main.view.ChatView;
+    import inoah.game.ro.modules.main.view.ItemView;
+    import inoah.game.ro.modules.main.view.JoyStickView;
     import inoah.game.ro.modules.main.view.MainView;
-    import inoah.game.ro.ui.mainViewChildren.ChatView;
-    import inoah.game.ro.ui.mainViewChildren.JoyStickView;
-    import inoah.game.ro.ui.mainViewChildren.SkillBarView;
+    import inoah.game.ro.modules.main.view.SkillBarView;
+    import inoah.game.ro.modules.main.view.StatusView;
+    import inoah.game.ro.modules.main.view.events.GameEvent;
     import inoah.game.ro.ui.sysView.AlertView;
     
+    import interfaces.IAssetMgr;
+    import interfaces.IDisplayMgr;
+    import interfaces.ILoader;
+    
     import robotlegs.bender.bundles.mvcs.Mediator;
+    import robotlegs.bender.extensions.contextView.ContextView;
     import robotlegs.bender.extensions.viewManager.api.IViewManager;
+    import robotlegs.bender.framework.api.IContext;
+    import robotlegs.bender.framework.api.ILogger;
     
     public class MainViewMediator extends Mediator implements ITickable
     {
         [Inject]
+        public var userModel:UserModel;
+        
+        [Inject]
+        public var displayMgr:IDisplayMgr;
+        
+        [Inject]
         public var view:MainView;
         
         [Inject]
+        public var context:IContext;
+        
+        [Inject]
+        public var assetMgr:IAssetMgr;
+        
+        [Inject]
         public var viewManager:IViewManager;
+        
+        [Inject]
+        public var contextView:ContextView;
+        
+        [Inject]
+        public var logger:ILogger;
+        
+        private var _alertView:AlertView;
+        private var _chatView:ChatView;
         
         public function MainViewMediator() 
         {
@@ -31,44 +58,64 @@ package inoah.game.ro.modules.main.view.mediator
         
         override public function initialize():void 
         {
-            var alertView:AlertView = new AlertView();
-            alertView.x = 480 - alertView.width / 2;
-            alertView.y = 280 - alertView.height / 2;
-            //            facade.registerMediator( new AlertViewMediator( view ) );
+            assetMgr.getRes( "map/1s.jpg" , onLoadMiniMap );
+            
+            _alertView = new AlertView();
+            _alertView.x = 480 - _alertView.width / 2;
+            _alertView.y = 280 - _alertView.height / 2;
             
             view.joyStick.remove();
             //
             if( !Global.IS_MOBILE )
             {
                 view.joyStick.remove();
-                var chatView:ChatView = new ChatView( view.chatView );
-                //                facade.registerMediator( new ChatViewMediator( chatView ) );
+                _chatView = new ChatView( view.chatView , userModel );
                 var skillView:SkillBarView = new SkillBarView ( view.skillBarView );
-                //                facade.registerMediator( new SkillBarViewMediator( skillView ) );
             }
             else
             {
                 view.chatView.remove();
                 view.skillBarView.remove();
-                var displayMgr:DisplayMgr = MainMgr.instance.getMgr( MgrTypeConsts.DISPLAY_MGR ) as DisplayMgr;
                 var joyStickview:JoyStickView = new JoyStickView();
                 displayMgr.joyStickLevel.addChild( joyStickview );
-                //                facade.registerMediator( new JoyStickViewMediator( joyStickview ) );
             }
             
-            //            addContextListener( GameCommands.SHOW_ALERT , handleNotification , null );
-            //            addContextListener( GameCommands.OPEN_STATUS  , handleNotification , null );
-            //            addContextListener( GameCommands.OPEN_SKILL  , handleNotification , null );
-            //            addContextListener( GameCommands.OPEN_ITEM  , handleNotification , null );
-            //            addContextListener( GameCommands.OPEN_MAP  , handleNotification , null );
-            //            addContextListener( GameCommands.OPEN_TASK  , handleNotification , null );
-            //            addContextListener( GameCommands.OPEN_OPTION  , handleNotification , null );
-            //            addContextListener( GameCommands.UPDATE_HP  , handleNotification , null );
-            //            addContextListener( GameCommands.UPDATE_SP  , handleNotification , null );
-            //            addContextListener( GameCommands.UPDATE_EXP  , handleNotification , null );
-            //            addContextListener( GameCommands.UPDATE_LV  , handleNotification , null );
-            //            addContextListener( GameCommands.UPDATE_STATUS_POINT  , handleNotification , null );
+            view.updateInfo( userModel );
             
+            addViewListener( GameEvent.OPEN_STATUS  , onStatus , GameEvent );
+            addViewListener( GameEvent.OPEN_SKILL  , onSkill , GameEvent );
+            addViewListener( GameEvent.OPEN_ITEM  , onItem , GameEvent );
+            addViewListener( GameEvent.OPEN_MAP  , onMap , GameEvent );
+            addViewListener( GameEvent.OPEN_TASK  , onTask , GameEvent );
+            addViewListener( GameEvent.OPEN_OPTION  , onOption , GameEvent );
+            addViewListener( GameEvent.UPDATE_HP  , handleNotification , GameEvent );
+            addViewListener( GameEvent.UPDATE_SP  , handleNotification , GameEvent );
+            addViewListener( GameEvent.UPDATE_EXP  , handleNotification , GameEvent );
+            addViewListener( GameEvent.UPDATE_LV  , handleNotification , GameEvent );
+            addViewListener( GameEvent.UPDATE_STATUS_POINT  , handleNotification , GameEvent );
+            //alertView
+            addContextListener( GameEvent.SHOW_ALERT , onShowAlert , GameEvent );
+            //chatView
+            _chatView.addEventListener( GameEvent.SEND_CHAT , onSendChat );
+            addContextListener( GameEvent.RECV_CHAT , onRecvChat , GameEvent );
+            
+//            dispatch( new GameEvent( GameEvent.SHOW_ALERT , "test" ) );
+        }
+        
+        private function onRecvChat( e:GameEvent ):void
+        {
+            _chatView.addChat( e.msg );
+        }
+        
+        private function onSendChat( e:GameEvent ):void
+        {
+            dispatch( e );
+            onRecvChat( e );
+        }
+        
+        private function onLoadMiniMap( loader:ILoader ):void
+        {
+            view.initializeMap( loader );           
         }
         
         public function tick(delta:Number):void
@@ -76,139 +123,83 @@ package inoah.game.ro.modules.main.view.mediator
             
         }
         
-        public function handleNotification( e:Event ):void
+        public function handleNotification( e:GameEvent ):void
         {
-            //            var arr:Array;
-            //            switch( notification.getName() )
-            //            {
-            //                case GameCommands.SHOW_ALERT:
-            //                {
-            //                    arr = notification.getBody() as Array;
-            //                    showAlert( arr[0] );
-            //                    break;
-            //                }
-            //                case GameCommands.OPEN_STATUS:
-            //                {
-            //                    openStatus();
-            //                    break;
-            //                }
-            //                case GameCommands.OPEN_SKILL:
-            //                {
-            //                    openSkill();
-            //                    break;
-            //                }
-            //                case GameCommands.OPEN_ITEM:
-            //                {
-            //                    openItem();
-            //                    break;
-            //                }
-            //                case GameCommands.OPEN_MAP:
-            //                {
-            //                    openMap();
-            //                    break;
-            //                }
-            //                case GameCommands.OPEN_TASK:
-            //                {
-            //                    openTask();
-            //                    break;
-            //                }
-            //                case GameCommands.OPEN_OPTION:
-            //                {
-            //                    openOption();
-            //                    break;
-            //                }
-            //                case GameCommands.UPDATE_HP:
-            //                {
-            //                    mainView.updateHp();
-            //                    break;
-            //                }
-            //                case GameCommands.UPDATE_SP:
-            //                {
-            //                    mainView.updateSp();
-            //                    break;
-            //                }
-            //                case GameCommands.UPDATE_EXP:
-            //                {
-            //                    mainView.updateExp();
-            //                    break;
-            //                }
-            //                case GameCommands.UPDATE_LV:
-            //                {
-            //                    mainView.updateLv();
-            //                    break;
-            //                }
-            //                case GameCommands.UPDATE_STATUS_POINT:
-            //                {
-            //                    mainView.updateStatusPoint();
-            //                    break;
-            //                }
-            //                default:
-            //                {
-            //                    break;
-            //                }
-            //            }
+            switch( e.type )
+            {
+                
+                case GameEvent.UPDATE_HP:
+                {
+                    view.updateHp( userModel );
+                    break;
+                }
+                case GameEvent.UPDATE_SP:
+                {
+                    view.updateSp( userModel );
+                    break;
+                }
+                case GameEvent.UPDATE_EXP:
+                {
+                    view.updateExp( userModel );
+                    break;
+                }
+                case GameEvent.UPDATE_LV:
+                {
+                    view.updateLv( userModel );
+                    break;
+                }
+                case GameEvent.UPDATE_STATUS_POINT:
+                {
+                    view.updateStatusPoint( userModel );
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
         }
         
-        private function showAlert( msg:String ):void
+        private function onShowAlert( e:GameEvent ):void
         {
-            //            var view:AlertView = (facade.retrieveMediator( ConstsGame.ALERT_VIEW ) as AlertViewMediator).mainView;
-            //            mainView.addChild( view );
+            _alertView.onShowAlert( e );
+            view.addChild( _alertView );
         }
         
-        private function openOption():void
+        private function onOption( e:GameEvent ):void
         {
-            //            if( !facade.hasMediator( ConstsGame.OPTION_VIEW ) )
-            //            {
-            //                facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#ffff00'>The module is not available!</font>" ] );
-            //            }
+            dispatch( new GameEvent( GameEvent.RECV_CHAT , "<font color='#ffff00'>The module is not available!</font>" ) );
         }
         
-        private function openTask():void
+        private function onTask( e:GameEvent ):void
         {
-            //            if( !facade.hasMediator( ConstsGame.TASK_VIEW ) )
-            //            {
-            //                facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#ffff00'>The module is not available!</font>" ] );
-            //            }
+            dispatch( new GameEvent( GameEvent.RECV_CHAT , "<font color='#ffff00'>The module is not available!</font>" ) );
         }
         
-        private function openMap():void
+        private function onMap( e:GameEvent ):void
         {
-            //            if( !facade.hasMediator( ConstsGame.MAP_VIEW ) )
-            //            {
-            //                facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#ffff00'>The module is not available!</font>" ] );
-            //            }
+            dispatch( new GameEvent( GameEvent.RECV_CHAT , "<font color='#ffff00'>The module is not available!</font>" ) );
         }
         
-        private function openItem():void
+        private function onItem( e:GameEvent ):void
         {
-            //            if( !facade.hasMediator( ConstsGame.ITEM_VIEW ) )
-            //            {
-            //                var view:ItemView = new ItemView();
-            //                view.x = 480 - view.width / 2;
-            //                view.y = 280 - view.height / 2;
-            //                mainView.addChild( view );
-            //                facade.registerMediator( new ItemViewMediator( view ) );
-            //            }
+            var itemView:ItemView = context.injector.getOrCreateNewInstance(ItemView) as ItemView;
+            itemView.x = 480 - itemView.width / 2;
+            itemView.y = 280 - itemView.height / 2;
+            displayMgr.uiLevel.addChild( itemView );
         }
         
-        private function openSkill():void
+        private function onSkill( e:GameEvent ):void
         {
-            //            if( !facade.hasMediator( ConstsGame.SKILL_VIEW ) )
-            //            {
-            //                facade.sendNotification( GameCommands.RECV_CHAT , [ "<font color='#ffff00'>The module is not available!</font>" ] );
-            //            }
+            dispatch( new GameEvent( GameEvent.RECV_CHAT , "<font color='#ffff00'>The module is not available!</font>" ) );
         }
         
-        private function openStatus():void
+        private function onStatus( e:GameEvent ):void
         {
-            //            if( !facade.hasMediator( ConstsGame.STATUS_VIEW ) )
-            //            {
-            //                var view:StatusView = new StatusView();
-            //                view.x = 480 - view.width / 2;
-            //                view.y = 280 - view.height / 2;
-            //                mainView.addChild( view );
-            //                facade.registerMediator( new StatusViewMediator( view ) );
-            //            }
+            var statusView:StatusView = context.injector.getOrCreateNewInstance(StatusView) as StatusView;
+            statusView.x = 480 - statusView.width / 2;
+            statusView.y = 280 - statusView.height / 2;
+            displayMgr.uiLevel.addChild( statusView );
         }
         
         public function get couldTick():Boolean

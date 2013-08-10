@@ -1,15 +1,13 @@
-package inoah.game.ro.ui.mainViewChildren
+package inoah.game.ro.modules.main.view
 {
     import flash.display.Bitmap;
     
     import feathers.controls.Button;
     
     import inoah.core.Global;
-    import inoah.core.consts.MgrTypeConsts;
-    import inoah.core.interfaces.ILoader;
     import inoah.core.loaders.JpgLoader;
-    import inoah.core.managers.AssetMgr;
-    import inoah.core.managers.MainMgr;
+    
+    import interfaces.ILoader;
     
     import starling.display.Image;
     import starling.display.Sprite;
@@ -33,8 +31,8 @@ package inoah.game.ro.ui.mainViewChildren
         
         public function JoyStickView()
         {
-            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            assetMgr.getRes( "ui/joyStickDirMain.png" , onLoadHandler );
+            //            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
+            //            assetMgr.getRes( "ui/joyStickDirMain.png" , onLoadHandler );
         }
         
         private function onLoadHandler( loader:ILoader ):void

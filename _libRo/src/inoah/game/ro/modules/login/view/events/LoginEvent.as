@@ -15,5 +15,10 @@ package inoah.game.ro.modules.login.view.events
             username = id;
             password = pass;
         }
+        
+        override public function clone():Event
+        {
+            return new LoginEvent( LOGIN , username , password );
+        }
     }
 }

@@ -9,7 +9,6 @@ package inoah.game.ro.managers
     import inoah.core.consts.commands.BattleCommands;
     import inoah.core.infos.BattleCharacterInfo;
     import inoah.core.interfaces.IMapMediator;
-    import inoah.core.interfaces.IMgr;
     import inoah.core.interfaces.ITickable;
     import inoah.game.ro.objects.BattleCharacterObject;
     import inoah.game.ro.objects.CharacterObject;
@@ -25,7 +24,7 @@ package inoah.game.ro.managers
      * 战斗管理器 （ 主要的战斗逻辑 ）
      * @author inoah
      */    
-    public class BattleMgr extends Mediator implements ITickable, IMgr
+    public class BattleMgr extends Mediator implements ITickable
     {
         protected var _scene:IMapMediator;
         protected var _animationUnitList:Vector.<IAnimatable>;

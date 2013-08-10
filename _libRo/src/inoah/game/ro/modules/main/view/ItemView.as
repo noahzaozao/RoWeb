@@ -1,8 +1,10 @@
-package inoah.game.ro.ui.sysView
+package inoah.game.ro.modules.main.view
 {
     import flash.events.MouseEvent;
     
     import game.ui.sysViews.itemViewUI;
+    
+    import inoah.game.ro.modules.main.view.events.GameEvent;
     
     public class ItemView extends itemViewUI
     {
@@ -14,7 +16,7 @@ package inoah.game.ro.ui.sysView
         
         protected function onClickHandler( e:MouseEvent):void
         {
-            //            Facade.getInstance().sendNotification( GameCommands.CLOSE_ITEM );
+            dispatchEvent( new GameEvent( GameEvent.CLOSE_ITEM ) );
         }
     }
 }

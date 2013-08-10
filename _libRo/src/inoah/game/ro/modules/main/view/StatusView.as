@@ -1,4 +1,4 @@
-package inoah.game.ro.ui.sysView
+package inoah.game.ro.modules.main.view
 {
     import flash.events.MouseEvent;
     
@@ -6,14 +6,14 @@ package inoah.game.ro.ui.sysView
     
     import inoah.core.Global;
     import inoah.core.infos.UserInfo;
+    import inoah.game.ro.modules.main.model.UserModel;
+    import inoah.game.ro.modules.main.view.events.GameEvent;
     
     public class StatusView extends statusViewUI
     {
         public function StatusView()
         {
             super();
-            
-            updateInfo();
             
             this.btnClose.addEventListener( MouseEvent.CLICK, onCloseHandler );
             this.btnStr.addEventListener( MouseEvent.CLICK, onAddPointHandler );
@@ -24,58 +24,58 @@ package inoah.game.ro.ui.sysView
             this.btnLuk.addEventListener( MouseEvent.CLICK, onAddPointHandler );
         }
         
-        protected function onAddPointHandler( e:MouseEvent):void
+        protected function onAddPointHandler( e:MouseEvent ):void
         {
-            var userInfo:UserInfo = Global.userInfo;
-            switch( e.currentTarget )
-            {
-                case btnStr:
-                {
-                    userInfo.statusPoint -= 1;
-                    userInfo.strength += 1;
-                    break;
-                }
-                case btnAgi:
-                {
-                    userInfo.statusPoint -= 1;
-                    userInfo.agile += 1;
-                    break;
-                }
-                case btnVit:
-                {
-                    userInfo.statusPoint -= 1;
-                    userInfo.vit += 1;
-                    break;
-                }
-                case btnInt:
-                {
-                    userInfo.statusPoint -= 1;
-                    userInfo.intelligence += 1;
-                    break;
-                }
-                case btnDex:
-                {
-                    userInfo.statusPoint -= 1;
-                    userInfo.dexterous += 1;
-                    break;
-                }
-                case btnLuk:
-                {
-                    userInfo.statusPoint -= 1;
-                    userInfo.lucky += 1;
-                    break;
-                }
-                default:
-                {
-                    break;
-                }
-            }
-//            Facade.getInstance().sendNotification( GameCommands.UPDATE_STATUS_POINT );
+            //            var userInfo:UserInfo = Global.userInfo;
+            //            switch( e.currentTarget )
+            //            {
+            //                case btnStr:
+            //                {
+            //                    userInfo.statusPoint -= 1;
+            //                    userInfo.strength += 1;
+            //                    break;
+            //                }
+            //                case btnAgi:
+            //                {
+            //                    userInfo.statusPoint -= 1;
+            //                    userInfo.agile += 1;
+            //                    break;
+            //                }
+            //                case btnVit:
+            //                {
+            //                    userInfo.statusPoint -= 1;
+            //                    userInfo.vit += 1;
+            //                    break;
+            //                }
+            //                case btnInt:
+            //                {
+            //                    userInfo.statusPoint -= 1;
+            //                    userInfo.intelligence += 1;
+            //                    break;
+            //                }
+            //                case btnDex:
+            //                {
+            //                    userInfo.statusPoint -= 1;
+            //                    userInfo.dexterous += 1;
+            //                    break;
+            //                }
+            //                case btnLuk:
+            //                {
+            //                    userInfo.statusPoint -= 1;
+            //                    userInfo.lucky += 1;
+            //                    break;
+            //                }
+            //                default:
+            //                {
+            //                    break;
+            //                }
+            //            }
+            //            dispatchEvent( new GameEvent( GameEvent.UPDATE_STATUS_POINT ) );
         }
         
-        private function updateInfo():void
+        public function updateInfo( userModel:UserModel ):void
         {
-            var userInfo:UserInfo = Global.userInfo;
+            var userInfo:UserInfo = userModel.info;
             
             this.labStr.text = userInfo.strength + "";
             this.labAgi.text = userInfo.agile + "";
@@ -111,12 +111,7 @@ package inoah.game.ro.ui.sysView
         
         protected function onCloseHandler( e:MouseEvent):void
         {
-//            Facade.getInstance().sendNotification( GameCommands.CLOSE_STATUS );
-        }
-        
-        public function refresh():void
-        {
-            updateInfo();
+            dispatchEvent( new GameEvent( GameEvent.CLOSE_STATUS ) );
         }
     }
 }
