@@ -2,13 +2,10 @@ package com.inoah.lua
 {
     import flash.utils.Dictionary;
     
-    import inoah.core.consts.MgrTypeConsts;
-    import inoah.core.interfaces.ILoader;
-    import inoah.core.loaders.LuaLoader;
-    import inoah.core.managers.AssetMgr;
-    import inoah.core.managers.MainMgr;
-    
+    import interfaces.IAssetMgr;
+    import interfaces.ILoader;
     import interfaces.ILuaMain;
+    import interfaces.ILuaMainMediator;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     
@@ -16,12 +13,24 @@ package com.inoah.lua
      *  处理AS3和Lua交互的类
      * @author inoah
      */    
-    public class LuaMainMediator extends Mediator
+    public class LuaMainMediator extends Mediator implements ILuaMainMediator
     {
+        [Inject]
+        public var assetMgr:IAssetMgr;
+        
         [Inject]
         public var luaMain:ILuaMain;
         
-        public var luaStrList:Vector.<String>;
+        protected var _luaStrList:Vector.<String>;
+        
+        public function set luaStrList( value:Vector.<String> ):void
+        {
+            _luaStrList = value;
+        }
+        public function get luaStrList():Vector.<String>
+        {
+            return _luaStrList
+        }
         protected var luastate:int
         protected var panicabort:Boolean = false
         protected var _luaPathList:Vector.<String>;
@@ -68,7 +77,6 @@ package com.inoah.lua
         
         public function API_LoadLuaScript():void
         {
-            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
             var resList:Vector.<String> = new Vector.<String>();
             var len:int = _luaPathList.length;
             for( var i:int = 0;i<len;i++)
@@ -81,11 +89,10 @@ package com.inoah.lua
         protected function onLoadLuaScript( loader:ILoader ):void
         {
             var len:int = _luaPathList.length;
-            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            var luaLoader:LuaLoader;
+            var luaLoader:ILoader;
             for( var i:int = 0;i<len;i++)
             {
-                luaLoader = assetMgr.getRes( _luaPathList[i] + ".lua" ) as LuaLoader;
+                luaLoader = assetMgr.getRes( _luaPathList[i] + ".lua" );
                 if( luaL_loadstring( luastate , luaLoader.content ) )
                 {
                     return;

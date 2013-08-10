@@ -1,8 +1,10 @@
 package robotlegs.bender.extensions.luaExtension
 {
     import com.inoah.lua.LuaMain;
+    import com.inoah.lua.LuaMainMediator;
     
     import interfaces.ILuaMain;
+    import interfaces.ILuaMainMediator;
     
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IExtension;
@@ -36,7 +38,10 @@ package robotlegs.bender.extensions.luaExtension
         public function extend(context:IContext):void
         {
             _context = context;
+            
             _context.injector.map(ILuaMain).toValue(_luaMain);
+            _context.injector.map(ILuaMainMediator).toSingleton(LuaMainMediator);
+            
             _context.beforeInitializing(configureLifecycleEventRelay);
             _context.afterDestroying(destroyLifecycleEventRelay);
         }

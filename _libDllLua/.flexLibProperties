@@ -3,7 +3,6 @@
   <includeClasses>
     <classEntry path="com.inoah.lua.LuaMain"/>
     <classEntry path="robotlegs.bender.extensions.luaExtension.LuaExtension"/>
-    <classEntry path="com.inoah.lua.LuaConfig"/>
     <classEntry path="com.inoah.lua.LuaMainMediator"/>
   </includeClasses>
   <includeResources/>
