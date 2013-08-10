@@ -146,14 +146,27 @@
     <classEntry path="feathers.utils.math.roundToNearest"/>
     <classEntry path="feathers.utils.math.roundToPrecision"/>
     <classEntry path="feathers.utils.math.roundUpToNearest"/>
-    <classEntry path="interfaces.IAssetMgr"/>
-    <classEntry path="interfaces.IDisplayMgr"/>
-    <classEntry path="interfaces.IKeyMgr"/>
-    <classEntry path="interfaces.ILoader"/>
-    <classEntry path="interfaces.ILuaMain"/>
-    <classEntry path="interfaces.ILuaMainMediator"/>
-    <classEntry path="interfaces.ISprMgr"/>
-    <classEntry path="interfaces.ITextureMgr"/>
+    <classEntry path="inoah.interfaces.IAssetMgr"/>
+    <classEntry path="inoah.interfaces.ICamera"/>
+    <classEntry path="inoah.interfaces.IDisplayMgr"/>
+    <classEntry path="inoah.interfaces.IKeyMgr"/>
+    <classEntry path="inoah.interfaces.ILoader"/>
+    <classEntry path="inoah.interfaces.ILuaMain"/>
+    <classEntry path="inoah.interfaces.ILuaMainMediator"/>
+    <classEntry path="inoah.interfaces.IMapFactory"/>
+    <classEntry path="inoah.interfaces.IMapInfo"/>
+    <classEntry path="inoah.interfaces.IMapLevel"/>
+    <classEntry path="inoah.interfaces.IMapMgr"/>
+    <classEntry path="inoah.interfaces.IPlayerController"/>
+    <classEntry path="inoah.interfaces.IPlayerFactory"/>
+    <classEntry path="inoah.interfaces.IScene"/>
+    <classEntry path="inoah.interfaces.ISceneMediator"/>
+    <classEntry path="inoah.interfaces.ISprMgr"/>
+    <classEntry path="inoah.interfaces.ITextureMgr"/>
+    <classEntry path="inoah.interfaces.ITickable"/>
+    <classEntry path="inoah.interfaces.IUserModel"/>
+    <classEntry path="inoah.interfaces.IViewObject"/>
+    <classEntry path="inoah.utils.Counter"/>
     <classEntry path="morn.App"/>
     <classEntry path="morn.Config"/>
     <classEntry path="morn.core.components.AutoBitmap"/>
@@ -420,6 +433,7 @@
     <classEntry path="starling.utils.getNextPowerOfTwo"/>
     <classEntry path="starling.utils.rad2deg"/>
     <classEntry path="starling.utils.transformCoords"/>
+    <classEntry path="inoah.interfaces.IUserInfo"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

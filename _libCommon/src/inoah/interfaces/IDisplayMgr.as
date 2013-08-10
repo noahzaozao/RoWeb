@@ -1,4 +1,4 @@
-package interfaces
+package inoah.interfaces
 {
     import flash.display.Sprite;
     
