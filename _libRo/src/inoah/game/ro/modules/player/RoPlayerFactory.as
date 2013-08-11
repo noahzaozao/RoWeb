@@ -1,8 +1,8 @@
 package inoah.game.ro.modules.player
 {
     import inoah.game.ro.objects.PlayerObject;
-    import inoah.interfaces.IPlayerFactory;
-    import inoah.interfaces.IPlayerObject;
+    import inoah.interfaces.character.IPlayerObject;
+    import inoah.interfaces.factory.IPlayerFactory;
     
     import robotlegs.bender.framework.api.IInjector;
     

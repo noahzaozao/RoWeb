@@ -2,19 +2,19 @@ package robotlegs.bender.extensions.mapMgrExtension
 {
     import inoah.core.characters.gpu.PlayerViewGpu;
     import inoah.core.infos.CharacterInfo;
-    import inoah.interfaces.IBattleSceneMediator;
     import inoah.interfaces.ICamera;
-    import inoah.interfaces.ICharacterInfo;
-    import inoah.interfaces.IDisplayMgr;
-    import inoah.interfaces.IMapFactory;
-    import inoah.interfaces.IMapMgr;
-    import inoah.interfaces.IPlayerController;
-    import inoah.interfaces.IPlayerFactory;
-    import inoah.interfaces.IPlayerObject;
-    import inoah.interfaces.IScene;
-    import inoah.interfaces.ISceneMediator;
-    import inoah.interfaces.ITickable;
     import inoah.interfaces.IUserModel;
+    import inoah.interfaces.base.ITickable;
+    import inoah.interfaces.character.IPlayerObject;
+    import inoah.interfaces.controller.IPlayerController;
+    import inoah.interfaces.factory.IPlayerFactory;
+    import inoah.interfaces.info.ICharacterInfo;
+    import inoah.interfaces.managers.IDisplayMgr;
+    import inoah.interfaces.managers.IMapMgr;
+    import inoah.interfaces.map.IBattleSceneMediator;
+    import inoah.interfaces.map.IMapFactory;
+    import inoah.interfaces.map.IScene;
+    import inoah.interfaces.map.ISceneMediator;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     import robotlegs.bender.framework.api.IInjector;
@@ -57,7 +57,6 @@ package robotlegs.bender.extensions.mapMgrExtension
         
         protected var _mapId:uint;
         
-        
         protected var _player:IPlayerObject;
         
         public function MapMgr()
@@ -77,7 +76,7 @@ package robotlegs.bender.extensions.mapMgrExtension
             _mapId = e.mapId;
             if( !_scene)
             {
-                _scene =  mapFactory.newMap( _mapId );
+                _scene =  mapFactory.newScene( _mapId );
                 _sceneMediator = mapFactory.newBattleSceneMediator( _mapId );
                 _camera = mapFactory.newCamera();
             }

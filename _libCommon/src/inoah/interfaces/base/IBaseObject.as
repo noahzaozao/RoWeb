@@ -3,7 +3,7 @@ package inoah.interfaces.base
     import flash.geom.Point;
     
     import inoah.consts.ConstsDirection;
-    import inoah.interfaces.ICharacterInfo;
+    import inoah.interfaces.info.ICharacterInfo;
     import inoah.interfaces.IViewObject;
     import inoah.utils.QTree;
 

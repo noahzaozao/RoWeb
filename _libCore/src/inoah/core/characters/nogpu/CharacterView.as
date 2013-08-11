@@ -15,8 +15,8 @@ package inoah.core.characters.nogpu
     import inoah.core.viewModels.actSpr.ActSprPlayerView;
     import inoah.core.viewModels.actSpr.ActSprWeaponView;
     import inoah.core.viewModels.actSpr.structs.CACT;
-    import inoah.interfaces.ILoader;
     import inoah.interfaces.IViewObject;
+    import inoah.interfaces.base.ILoader;
     
     /**
      * 

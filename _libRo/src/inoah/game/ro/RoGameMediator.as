@@ -14,16 +14,16 @@ package inoah.game.ro
     import inoah.game.ro.modules.main.view.MainView;
     import inoah.game.ro.modules.main.view.StatusBarView;
     import inoah.game.ro.modules.main.view.events.GameEvent;
-    import inoah.interfaces.IAssetMgr;
-    import inoah.interfaces.IDisplayMgr;
-    import inoah.interfaces.IKeyMgr;
-    import inoah.interfaces.ILoader;
-    import inoah.interfaces.ILuaMainMediator;
-    import inoah.interfaces.IMapMgr;
-    import inoah.interfaces.ISprMgr;
-    import inoah.interfaces.ITextureMgr;
-    import inoah.interfaces.ITickable;
     import inoah.interfaces.IUserModel;
+    import inoah.interfaces.base.ILoader;
+    import inoah.interfaces.base.ITickable;
+    import inoah.interfaces.lua.ILuaMainMediator;
+    import inoah.interfaces.managers.IAssetMgr;
+    import inoah.interfaces.managers.IDisplayMgr;
+    import inoah.interfaces.managers.IKeyMgr;
+    import inoah.interfaces.managers.IMapMgr;
+    import inoah.interfaces.managers.ISprMgr;
+    import inoah.interfaces.managers.ITextureMgr;
     
     import morn.App;
     import morn.core.handlers.Handler;

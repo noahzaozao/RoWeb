@@ -1,6 +1,6 @@
 package inoah.data.map
 {
-    import inoah.interfaces.IMapInfo;
+    import inoah.interfaces.map.IMapInfo;
 
     public class MapInfo implements IMapInfo
     {

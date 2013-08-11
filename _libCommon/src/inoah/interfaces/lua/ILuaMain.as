@@ -1,4 +1,4 @@
-package inoah.interfaces
+package inoah.interfaces.lua
 {
     import flash.utils.Dictionary;
 

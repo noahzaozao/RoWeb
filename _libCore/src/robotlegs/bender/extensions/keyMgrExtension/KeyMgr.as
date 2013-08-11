@@ -5,14 +5,10 @@ package robotlegs.bender.extensions.keyMgrExtension
     import flash.events.KeyboardEvent;
     import flash.utils.ByteArray;
     
-    import inoah.interfaces.IKeyMgr;
+    import inoah.interfaces.managers.IKeyMgr;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     import robotlegs.bender.extensions.contextView.ContextView;
-    import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
-    import robotlegs.bender.extensions.mediatorMap.api.IMediatorMap;
-    import robotlegs.bender.framework.api.IInjector;
-    import robotlegs.bender.framework.api.ILogger;
     
     /**
      * 键盘管理器 

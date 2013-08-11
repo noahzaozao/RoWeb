@@ -1,7 +1,7 @@
 package robotlegs.bender.extensions.sprMgrExtension
 {
     
-    import inoah.interfaces.ISprMgr;
+    import inoah.interfaces.managers.ISprMgr;
     
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IExtension;

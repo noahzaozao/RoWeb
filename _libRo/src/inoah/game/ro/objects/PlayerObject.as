@@ -1,6 +1,6 @@
 package inoah.game.ro.objects
 {
-    import inoah.interfaces.IPlayerObject;
+    import inoah.interfaces.character.IPlayerObject;
 
     public class PlayerObject extends BattleCharacterObject implements IPlayerObject
     {

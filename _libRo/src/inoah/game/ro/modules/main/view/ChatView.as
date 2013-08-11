@@ -8,7 +8,7 @@ package inoah.game.ro.modules.main.view
     
     import inoah.game.ro.modules.main.model.UserModel;
     import inoah.game.ro.modules.main.view.events.GameEvent;
-    import inoah.interfaces.IUserInfo;
+    import inoah.interfaces.info.IUserInfo;
     
     public class ChatView extends EventDispatcher
     {

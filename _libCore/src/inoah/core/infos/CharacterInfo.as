@@ -1,6 +1,6 @@
 package inoah.core.infos
 {
-    import inoah.interfaces.ICharacterInfo;
+    import inoah.interfaces.info.ICharacterInfo;
 
     /**
      * 角色形象数据 

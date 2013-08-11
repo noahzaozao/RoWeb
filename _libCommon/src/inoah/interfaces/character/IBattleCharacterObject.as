@@ -1,4 +1,4 @@
-package inoah.interfaces
+package inoah.interfaces.character
 {
     import flash.geom.Point;
     

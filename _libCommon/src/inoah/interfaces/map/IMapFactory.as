@@ -1,8 +1,10 @@
-package inoah.interfaces
+package inoah.interfaces.map
 {
+    import inoah.interfaces.ICamera;
+
     public interface IMapFactory
     {
-        function newMap( mapId:int ):IScene;
+        function newScene( mapId:int ):IScene;
         function newSceneMediator( mapId:int ):ISceneMediator;
         function newBattleSceneMediator( mapId:int ):IBattleSceneMediator;
         function newCamera():ICamera;

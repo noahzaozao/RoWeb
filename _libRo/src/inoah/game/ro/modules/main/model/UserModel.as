@@ -1,6 +1,6 @@
 package inoah.game.ro.modules.main.model
 {
-    import inoah.interfaces.IUserInfo;
+    import inoah.interfaces.info.IUserInfo;
     import inoah.interfaces.IUserModel;
     import inoah.modules.core.model.BaseModel;
     

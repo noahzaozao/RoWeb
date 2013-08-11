@@ -1,7 +1,7 @@
 package robotlegs.bender.extensions.mapMgrExtension
 {
     
-    import inoah.interfaces.IMapMgr;
+    import inoah.interfaces.managers.IMapMgr;
     
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IExtension;

@@ -1,6 +1,6 @@
 package inoah.core
 {
-    import inoah.interfaces.ITickable;
+    import inoah.interfaces.base.ITickable;
     
     import starling.display.Sprite;
     import starling.events.Event;

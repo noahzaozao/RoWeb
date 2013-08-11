@@ -8,7 +8,7 @@ package inoah.game.ro.modules.main.view
     import inoah.core.infos.UserInfo;
     import inoah.game.ro.modules.main.model.UserModel;
     import inoah.game.ro.modules.main.view.events.GameEvent;
-    import inoah.interfaces.ILoader;
+    import inoah.interfaces.base.ILoader;
     
     public class MainView extends mainViewUI
     {

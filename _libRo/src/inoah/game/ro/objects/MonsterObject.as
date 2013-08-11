@@ -2,7 +2,7 @@ package inoah.game.ro.objects
 {
     import inoah.core.consts.ConstsActions;
     import inoah.core.utils.GMath;
-    import inoah.interfaces.IMonsterObject;
+    import inoah.interfaces.character.IMonsterObject;
 
     public class MonsterObject extends BattleCharacterObject implements IMonsterObject
     {

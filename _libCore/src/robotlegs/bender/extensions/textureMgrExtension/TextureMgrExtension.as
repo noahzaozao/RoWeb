@@ -1,6 +1,6 @@
 package robotlegs.bender.extensions.textureMgrExtension
 {
-    import inoah.interfaces.ITextureMgr;
+    import inoah.interfaces.managers.ITextureMgr;
     
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IExtension;

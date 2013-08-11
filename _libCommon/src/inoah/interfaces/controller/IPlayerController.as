@@ -1,4 +1,4 @@
-package inoah.interfaces
+package inoah.interfaces.controller
 {
     import inoah.interfaces.base.IBaseController;
 

@@ -4,11 +4,11 @@ package inoah.game.ro.modules.map
     import inoah.game.ro.modules.map.view.BaseScene;
     import inoah.game.ro.modules.map.view.mediators.BaseSceneMediator;
     import inoah.game.ro.modules.map.view.mediators.BattleSceneMediator;
-    import inoah.interfaces.IBattleSceneMediator;
     import inoah.interfaces.ICamera;
-    import inoah.interfaces.IMapFactory;
-    import inoah.interfaces.IScene;
-    import inoah.interfaces.ISceneMediator;
+    import inoah.interfaces.map.IBattleSceneMediator;
+    import inoah.interfaces.map.IMapFactory;
+    import inoah.interfaces.map.IScene;
+    import inoah.interfaces.map.ISceneMediator;
     
     import robotlegs.bender.framework.api.IInjector;
     
@@ -21,7 +21,7 @@ package inoah.game.ro.modules.map
         {
         }
         
-        public function newMap( mapId:int ):IScene
+        public function newScene( mapId:int ):IScene
         {
             var scene:BaseScene = new BaseScene();
             injector.injectInto(scene);

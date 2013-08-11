@@ -23,11 +23,11 @@ package inoah.game.ro
     import inoah.game.ro.modules.map.RoMapFactory;
     import inoah.game.ro.modules.player.RoPlayerFactory;
     import inoah.game.ro.modules.player.TiledPlayerController;
-    import inoah.interfaces.IMapFactory;
-    import inoah.interfaces.IMonsterController;
-    import inoah.interfaces.IPlayerController;
-    import inoah.interfaces.IPlayerFactory;
     import inoah.interfaces.IUserModel;
+    import inoah.interfaces.controller.IMonsterController;
+    import inoah.interfaces.controller.IPlayerController;
+    import inoah.interfaces.factory.IPlayerFactory;
+    import inoah.interfaces.map.IMapFactory;
     
     import robotlegs.bender.extensions.contextView.ContextView;
     import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;

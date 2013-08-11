@@ -5,7 +5,7 @@ package inoah.core.base
     import inoah.consts.ConstsDirection;
     import inoah.core.GameCamera;
     import inoah.core.consts.ConstsActions;
-    import inoah.interfaces.ICharacterInfo;
+    import inoah.interfaces.info.ICharacterInfo;
     import inoah.interfaces.IViewObject;
     import inoah.interfaces.base.IBaseController;
     import inoah.interfaces.base.IBaseObject;

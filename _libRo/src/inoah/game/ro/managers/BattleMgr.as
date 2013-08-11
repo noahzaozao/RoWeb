@@ -12,8 +12,8 @@ package inoah.game.ro.managers
     import inoah.game.ro.objects.CharacterObject;
     import inoah.game.ro.objects.MonsterObject;
     import inoah.game.ro.objects.PlayerObject;
-    import inoah.interfaces.ISceneMediator;
-    import inoah.interfaces.ITickable;
+    import inoah.interfaces.base.ITickable;
+    import inoah.interfaces.map.ISceneMediator;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     

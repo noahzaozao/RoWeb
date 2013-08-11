@@ -7,8 +7,8 @@ package robotlegs.bender.extensions.assetMgrExtension
     import inoah.core.loaders.AtfLoader;
     import inoah.core.loaders.JpgLoader;
     import inoah.core.loaders.LuaLoader;
-    import inoah.interfaces.IAssetMgr;
-    import inoah.interfaces.ILoader;
+    import inoah.interfaces.base.ILoader;
+    import inoah.interfaces.managers.IAssetMgr;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     import robotlegs.bender.framework.api.IInjector;

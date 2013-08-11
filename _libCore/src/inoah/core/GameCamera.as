@@ -7,8 +7,8 @@ package inoah.core
     
     import inoah.core.base.BaseObject;
     import inoah.interfaces.ICamera;
-    import inoah.interfaces.ISceneMediator;
     import inoah.interfaces.base.IBaseObject;
+    import inoah.interfaces.map.ISceneMediator;
     
     /**
      * 摄像机控制类

@@ -1,5 +1,6 @@
 package inoah.interfaces
 {
+    import inoah.interfaces.base.ITickable;
 
     public interface IViewObject extends ITickable
     {

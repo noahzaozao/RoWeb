@@ -1,5 +1,6 @@
-package inoah.interfaces
+package inoah.interfaces.map
 {
+    
     import starling.display.DisplayObjectContainer;
 
     public interface IScene

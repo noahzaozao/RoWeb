@@ -9,9 +9,9 @@ package inoah.game.ro.controllers
     import inoah.core.utils.GMath;
     import inoah.game.ro.objects.BattleCharacterObject;
     import inoah.game.ro.objects.MonsterObject;
-    import inoah.interfaces.IBattleSceneMediator;
-    import inoah.interfaces.IMonsterController;
-    import inoah.interfaces.IMonsterObject;
+    import inoah.interfaces.controller.IMonsterController;
+    import inoah.interfaces.character.IMonsterObject;
+    import inoah.interfaces.map.IBattleSceneMediator;
     import inoah.utils.Counter;
     
     import robotlegs.bender.framework.api.IInjector;

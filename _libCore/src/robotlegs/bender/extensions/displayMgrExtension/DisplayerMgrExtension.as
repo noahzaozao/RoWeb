@@ -1,6 +1,6 @@
 package robotlegs.bender.extensions.displayMgrExtension
 {
-    import inoah.interfaces.IDisplayMgr;
+    import inoah.interfaces.managers.IDisplayMgr;
     
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IExtension;

@@ -9,7 +9,7 @@ package inoah.game.ro.modules.main.view
     import inoah.core.Global;
     import inoah.core.loaders.JpgLoader;
     import inoah.game.ro.modules.main.view.events.JoyStickEvent;
-    import inoah.interfaces.ILoader;
+    import inoah.interfaces.base.ILoader;
     
     import robotlegs.bender.extensions.localEventMap.api.IEventMap;
     

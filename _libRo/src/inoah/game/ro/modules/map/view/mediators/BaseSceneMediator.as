@@ -9,12 +9,12 @@ package inoah.game.ro.modules.map.view.mediators
     import inoah.core.Global;
     import inoah.core.base.BaseObject;
     import inoah.data.map.MapInfo;
-    import inoah.interfaces.IDisplayMgr;
-    import inoah.interfaces.IMapMgr;
-    import inoah.interfaces.IScene;
-    import inoah.interfaces.ISceneMediator;
     import inoah.interfaces.IUserModel;
     import inoah.interfaces.base.IBaseObject;
+    import inoah.interfaces.managers.IDisplayMgr;
+    import inoah.interfaces.managers.IMapMgr;
+    import inoah.interfaces.map.IScene;
+    import inoah.interfaces.map.ISceneMediator;
     import inoah.utils.Counter;
     import inoah.utils.QTree;
     

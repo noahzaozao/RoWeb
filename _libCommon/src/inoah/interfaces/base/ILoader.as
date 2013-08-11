@@ -1,4 +1,4 @@
-package inoah.interfaces
+package inoah.interfaces.base
 {
     import flash.events.IEventDispatcher;
 

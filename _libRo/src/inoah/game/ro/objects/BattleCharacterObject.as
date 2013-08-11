@@ -4,8 +4,8 @@ package inoah.game.ro.objects
     
     import inoah.core.infos.BattleCharacterInfo;
     import inoah.core.viewModels.valueBar.HSpbar;
-    import inoah.interfaces.IBattleCharacterObject;
-    import inoah.interfaces.ICharacterInfo;
+    import inoah.interfaces.info.ICharacterInfo;
+    import inoah.interfaces.character.IBattleCharacterObject;
     
     public class BattleCharacterObject extends CharacterObject implements IBattleCharacterObject
     {

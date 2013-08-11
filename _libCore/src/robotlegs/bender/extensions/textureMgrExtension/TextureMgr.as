@@ -2,7 +2,7 @@ package robotlegs.bender.extensions.textureMgrExtension
 {
     import flash.utils.ByteArray;
     
-    import inoah.interfaces.ITextureMgr;
+    import inoah.interfaces.managers.ITextureMgr;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     

@@ -1,4 +1,4 @@
-package inoah.interfaces
+package inoah.interfaces.map
 {
     public interface IMapLevel
     {

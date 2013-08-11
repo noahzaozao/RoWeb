@@ -1,6 +1,7 @@
-package inoah.interfaces
+package inoah.interfaces.managers
 {
     import robotlegs.bender.extensions.mediatorMap.api.IMediator;
+    import inoah.interfaces.base.ILoader;
 
     public interface IAssetMgr extends IMediator
     {

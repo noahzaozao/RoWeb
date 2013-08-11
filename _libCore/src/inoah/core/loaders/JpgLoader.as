@@ -6,7 +6,7 @@ package inoah.core.loaders
     import flash.events.EventDispatcher;
     import flash.net.URLRequest;
     
-    import inoah.interfaces.ILoader;
+    import inoah.interfaces.base.ILoader;
     
     public class JpgLoader extends EventDispatcher implements ILoader
     {

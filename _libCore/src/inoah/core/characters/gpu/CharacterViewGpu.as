@@ -12,9 +12,9 @@ package inoah.core.characters.gpu
     import inoah.core.viewModels.actTpc.ActTpcOtherView;
     import inoah.core.viewModels.actTpc.ActTpcPlayerView;
     import inoah.core.viewModels.actTpc.ActTpcWeaponView;
-    import inoah.interfaces.IAssetMgr;
-    import inoah.interfaces.ILoader;
     import inoah.interfaces.IViewObject;
+    import inoah.interfaces.base.ILoader;
+    import inoah.interfaces.managers.IAssetMgr;
     
     import starling.display.Sprite;
     import starling.text.TextField;

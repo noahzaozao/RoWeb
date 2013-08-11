@@ -1,7 +1,7 @@
 package robotlegs.bender.extensions.assetMgrExtension
 {
     
-    import inoah.interfaces.IAssetMgr;
+    import inoah.interfaces.managers.IAssetMgr;
     
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IExtension;

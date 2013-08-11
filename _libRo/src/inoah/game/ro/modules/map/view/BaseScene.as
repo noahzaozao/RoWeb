@@ -7,11 +7,11 @@ package inoah.game.ro.modules.map.view
     import inoah.core.loaders.JpgLoader;
     import inoah.data.map.MapInfo;
     import inoah.data.map.MapTileSetInfo;
-    import inoah.interfaces.IAssetMgr;
-    import inoah.interfaces.ILoader;
-    import inoah.interfaces.IMapInfo;
-    import inoah.interfaces.IMapLevel;
-    import inoah.interfaces.IScene;
+    import inoah.interfaces.base.ILoader;
+    import inoah.interfaces.managers.IAssetMgr;
+    import inoah.interfaces.map.IMapInfo;
+    import inoah.interfaces.map.IMapLevel;
+    import inoah.interfaces.map.IScene;
     import inoah.utils.Counter;
     
     import starling.display.DisplayObjectContainer;

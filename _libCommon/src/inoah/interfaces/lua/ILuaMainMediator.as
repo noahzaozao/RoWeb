@@ -1,4 +1,4 @@
-package inoah.interfaces
+package inoah.interfaces.lua
 {
     import robotlegs.bender.extensions.mediatorMap.api.IMediator;
 

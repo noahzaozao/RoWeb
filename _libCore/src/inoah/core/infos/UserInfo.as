@@ -1,6 +1,6 @@
 package inoah.core.infos
 {
-    import inoah.interfaces.IUserInfo;
+    import inoah.interfaces.info.IUserInfo;
     
     /**
      * 玩家基本信息 

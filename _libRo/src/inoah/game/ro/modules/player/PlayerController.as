@@ -11,8 +11,8 @@ package inoah.game.ro.modules.player
     import inoah.game.ro.modules.main.view.events.JoyStickEvent;
     import inoah.game.ro.objects.BattleCharacterObject;
     import inoah.game.ro.objects.PlayerObject;
-    import inoah.interfaces.IKeyMgr;
-    import inoah.interfaces.IPlayerController;
+    import inoah.interfaces.controller.IPlayerController;
+    import inoah.interfaces.managers.IKeyMgr;
     import inoah.utils.Counter;
     import inoah.utils.QTree;
     

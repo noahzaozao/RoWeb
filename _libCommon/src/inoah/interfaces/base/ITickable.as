@@ -1,4 +1,4 @@
-package inoah.interfaces
+package inoah.interfaces.base
 {
     /**
      * 可以由时间推动

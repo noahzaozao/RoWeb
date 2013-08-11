@@ -1,5 +1,7 @@
-package inoah.interfaces
+package inoah.interfaces.controller
 {
+    import inoah.interfaces.character.IMonsterObject;
+
     public interface IMonsterController
     {
         function tick( delta:Number ):void;

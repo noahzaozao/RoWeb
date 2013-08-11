@@ -7,7 +7,7 @@ package inoah.game.ro.modules.main.view
     import game.ui.mainViewChildren.mapViewUI;
     
     import inoah.core.loaders.JpgLoader;
-    import inoah.interfaces.ILoader;
+    import inoah.interfaces.base.ILoader;
     
     public class MapView
     {

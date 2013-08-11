@@ -11,11 +11,11 @@ package inoah.game.ro.modules.main.view.mediator
     import inoah.game.ro.modules.main.view.StatusView;
     import inoah.game.ro.modules.main.view.events.GameEvent;
     import inoah.game.ro.modules.main.view.events.JoyStickEvent;
-    import inoah.interfaces.IAssetMgr;
-    import inoah.interfaces.IDisplayMgr;
-    import inoah.interfaces.ILoader;
-    import inoah.interfaces.ITickable;
     import inoah.interfaces.IUserModel;
+    import inoah.interfaces.base.ILoader;
+    import inoah.interfaces.base.ITickable;
+    import inoah.interfaces.managers.IAssetMgr;
+    import inoah.interfaces.managers.IDisplayMgr;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     import robotlegs.bender.extensions.contextView.ContextView;

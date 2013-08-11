@@ -3,11 +3,10 @@ package inoah.game.ro.modules.map.view.mediators
     import inoah.core.characters.gpu.MonsterViewGpu;
     import inoah.core.consts.ConstsActions;
     import inoah.core.infos.BattleCharacterInfo;
-    import inoah.core.infos.CharacterInfo;
     import inoah.game.ro.objects.MonsterObject;
-    import inoah.interfaces.IBattleSceneMediator;
-    import inoah.interfaces.IMonsterController;
-    import inoah.interfaces.IMonsterObject;
+    import inoah.interfaces.controller.IMonsterController;
+    import inoah.interfaces.character.IMonsterObject;
+    import inoah.interfaces.map.IBattleSceneMediator;
     import inoah.utils.Counter;
     
     import robotlegs.bender.framework.api.IInjector;
