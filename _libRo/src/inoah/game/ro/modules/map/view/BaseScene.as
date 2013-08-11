@@ -14,6 +14,8 @@ package inoah.game.ro.modules.map.view
     import inoah.interfaces.map.IScene;
     import inoah.utils.Counter;
     
+    import robotlegs.bender.framework.api.ILogger;
+    
     import starling.display.DisplayObjectContainer;
     import starling.display.Image;
     import starling.display.Sprite;
@@ -25,6 +27,9 @@ package inoah.game.ro.modules.map.view
     {
         [Inject]
         public var assetMgr:IAssetMgr;
+        
+        [Inject]
+        public var logger:ILogger;
         
         protected var _mapInfo:MapInfo;
         
@@ -229,7 +234,7 @@ package inoah.game.ro.modules.map.view
                     _drawTileObj.j++;
                 }
             }
-            //            Facade.getInstance().sendNotification( ConstsGame.UPDATE_STATUS , ["mapLoading..." + (_drawTileObj.i * _drawTileObj.bw + _drawTileObj.j ) + "/" + (_drawTileObj.bw * _drawTileObj.bh) ]  );
+            logger.debug( "mapLoading..." + (_drawTileObj.i * _drawTileObj.bw + _drawTileObj.j ) + "/" + (_drawTileObj.bw * _drawTileObj.bh ) );
             
             if( _drawTileObj.i == 25 )
             {

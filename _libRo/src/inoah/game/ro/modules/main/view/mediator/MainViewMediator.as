@@ -98,7 +98,7 @@ package inoah.game.ro.modules.main.view.mediator
             //alertView
             addContextListener( GameEvent.SHOW_ALERT , onShowAlert , GameEvent );
             
-//            dispatch( new GameEvent( GameEvent.SHOW_ALERT , "test" ) );
+            //            dispatch( new GameEvent( GameEvent.SHOW_ALERT , "test" ) );
         }
         
         private function onRecvChat( e:GameEvent ):void
@@ -123,15 +123,15 @@ package inoah.game.ro.modules.main.view.mediator
             context.injector.injectInto( joyStickView );
             displayMgr.joyStickLevel.addChild( joyStickView );
             
-            addViewListener( JoyStickEvent.JOY_STICK_ATTACK , dispatch );
-            addViewListener( JoyStickEvent.JOY_STICK_DOWN , dispatch );
-            addViewListener( JoyStickEvent.JOY_STICK_DOWN_LEFT , dispatch );
-            addViewListener( JoyStickEvent.JOY_STICK_DOWN_RIGHT , dispatch );
-            addViewListener( JoyStickEvent.JOY_STICK_LEFT , dispatch );
-            addViewListener( JoyStickEvent.JOY_STICK_RIGHT , dispatch );
-            addViewListener( JoyStickEvent.JOY_STICK_UP , dispatch );
-            addViewListener( JoyStickEvent.JOY_STICK_UP_LEFT , dispatch );
-            addViewListener( JoyStickEvent.JOY_STICK_UP_RIGHT , dispatch );
+            addContextListener( JoyStickEvent.JOY_STICK_ATTACK , dispatch , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_DOWN , dispatch , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_DOWN_LEFT , dispatch , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_DOWN_RIGHT , dispatch , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_LEFT , dispatch , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_RIGHT , dispatch , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_UP , dispatch , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_UP_LEFT , dispatch , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_UP_RIGHT , dispatch , JoyStickEvent );
         }
         
         public function tick(delta:Number):void

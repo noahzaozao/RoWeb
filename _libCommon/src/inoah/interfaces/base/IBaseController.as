@@ -1,6 +1,8 @@
 package inoah.interfaces.base
 {
-    public interface IBaseController
+    import robotlegs.bender.extensions.mediatorMap.api.IMediator;
+
+    public interface IBaseController extends IMediator
     {
         
     }

@@ -34,9 +34,9 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="3" linkType="1" path="/_libCommon/bin/_libCommon.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/_libMornUI/bin/_libMornUI.swc" useDefaultLinkType="false"/>
-      <libraryPathEntry kind="3" linkType="1" path="/_libRoWeb/bin/_libRoWeb.swc" useDefaultLinkType="false"/>
       <libraryPathEntry kind="3" linkType="1" path="/_libCore/bin/_libCore.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/_libRo/bin/_libRo.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/_libDllLua/bin/_libDllLua.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>

@@ -46,15 +46,15 @@ package inoah.game.ro.modules.player
         
         override public function initialize():void
         {
-            addContextListener( JoyStickEvent.JOY_STICK_UP , onJoyStick, JoyStickEvent );
-            addContextListener( JoyStickEvent.JOY_STICK_DOWN , onJoyStick, JoyStickEvent );
-            addContextListener( JoyStickEvent.JOY_STICK_LEFT , onJoyStick, JoyStickEvent );
-            addContextListener( JoyStickEvent.JOY_STICK_RIGHT , onJoyStick, JoyStickEvent );
-            addContextListener( JoyStickEvent.JOY_STICK_UP_LEFT , onJoyStick, JoyStickEvent );
-            addContextListener( JoyStickEvent.JOY_STICK_UP_RIGHT , onJoyStick, JoyStickEvent );
-            addContextListener( JoyStickEvent.JOY_STICK_DOWN_LEFT , onJoyStick, JoyStickEvent );
-            addContextListener( JoyStickEvent.JOY_STICK_DOWN_RIGHT , onJoyStick, JoyStickEvent );
-            addContextListener( JoyStickEvent.JOY_STICK_ATTACK , onJoyStick, JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_ATTACK , onJoyStick , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_DOWN , onJoyStick , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_DOWN_LEFT , onJoyStick , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_DOWN_RIGHT , onJoyStick , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_LEFT , onJoyStick , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_RIGHT , onJoyStick , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_UP , onJoyStick , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_UP_LEFT , onJoyStick , JoyStickEvent );
+            addContextListener( JoyStickEvent.JOY_STICK_UP_RIGHT , onJoyStick , JoyStickEvent );
         }
         
         override public function set me(value:BaseObject):void

@@ -85,6 +85,7 @@ package robotlegs.bender.extensions.mapMgrExtension
             injector.injectInto(playerView);
             playerView.initInfo( userModel.info as CharacterInfo );
             
+            playerController.initialize();
             _player = playerFactory.newPlayerObject();
             _player.controller = playerController;
             _player.viewObject = playerView;
