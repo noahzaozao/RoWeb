@@ -2,18 +2,20 @@ package inoah.core.base
 {
     import flash.geom.Point;
     
+    import inoah.consts.ConstsDirection;
     import inoah.core.GameCamera;
-    import inoah.core.QTree;
     import inoah.core.consts.ConstsActions;
-    import inoah.core.consts.ConstsDirection;
-    import inoah.core.infos.CharacterInfo;
+    import inoah.interfaces.ICharacterInfo;
     import inoah.interfaces.IViewObject;
+    import inoah.interfaces.base.IBaseController;
+    import inoah.interfaces.base.IBaseObject;
+    import inoah.utils.QTree;
     
     /**
      * 地图物体基类
      * @author inoah
      */    
-    public class BaseObject
+    public class BaseObject implements IBaseObject
     {
         public static var GID_COUNT:uint = 0;
         
@@ -40,7 +42,7 @@ package inoah.core.base
         
         protected var _controller:BaseController;
         
-        protected var _info:CharacterInfo;
+        protected var _info:ICharacterInfo;
         
         protected var _isInScene:Boolean;
         protected var _couldTick:Boolean;
@@ -98,7 +100,7 @@ package inoah.core.base
             _viewObj.playRate = value;
         }
         
-        public function set controller( ctrl:BaseController ):void
+        public function set controller( ctrl:IBaseController ):void
         {
             if(_controller!=null)
             {
@@ -107,15 +109,15 @@ package inoah.core.base
             
             if(ctrl!=null)
             {
-                _controller = ctrl;
+                _controller = ctrl as BaseController;
                 _controller.me=this;
                 _controller.setupListener();
             }
         }
         
-        public function get controller():BaseController
+        public function get controller():IBaseController
         {
-            return _controller;
+            return _controller as IBaseController;
         }
         
         public function set action(u:int):void
@@ -214,12 +216,12 @@ package inoah.core.base
             return _isInScene;
         }
         
-        public function set info( value:CharacterInfo ):void
+        public function set info( value:ICharacterInfo ):void
         {
             _info = value;
         }
         
-        public function get info():CharacterInfo
+        public function get info():ICharacterInfo
         {
             return _info;
         }

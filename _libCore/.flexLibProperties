@@ -5,7 +5,6 @@
     <classEntry path="inoah.core.CoreConfig"/>
     <classEntry path="inoah.core.GameCamera"/>
     <classEntry path="inoah.core.Global"/>
-    <classEntry path="inoah.core.QTree"/>
     <classEntry path="inoah.core.characters.gpu.CharacterViewGpu"/>
     <classEntry path="inoah.core.characters.gpu.MonsterViewGpu"/>
     <classEntry path="inoah.core.characters.gpu.PlayerViewGpu"/>
@@ -14,7 +13,6 @@
     <classEntry path="inoah.core.characters.nogpu.PlayerView"/>
     <classEntry path="inoah.core.consts.ConstsActions"/>
     <classEntry path="inoah.core.consts.ConstsDirIndex"/>
-    <classEntry path="inoah.core.consts.ConstsDirection"/>
     <classEntry path="inoah.core.consts.commands.BattleCommands"/>
     <classEntry path="inoah.core.base.BaseController"/>
     <classEntry path="inoah.core.events.ActSprEvent"/>

@@ -9,15 +9,22 @@ package inoah.game.ro.controllers
     import inoah.core.utils.GMath;
     import inoah.game.ro.objects.BattleCharacterObject;
     import inoah.game.ro.objects.MonsterObject;
-    import inoah.interfaces.ISceneMediator;
+    import inoah.interfaces.IBattleSceneMediator;
+    import inoah.interfaces.IMonsterController;
+    import inoah.interfaces.IMonsterObject;
     import inoah.utils.Counter;
+    
+    import robotlegs.bender.framework.api.IInjector;
     
     import starling.animation.Tween;
     
     
-    public class MonsterController extends BaseController
+    public class MonsterController extends BaseController implements IMonsterController
     {
-        protected var _monsterList:Vector.<MonsterObject>;
+        [Inject]
+        public var injector:IInjector;
+        
+        protected var _monsterList:Vector.<IMonsterObject>;
         protected var _atkTargetList:Vector.<BattleCharacterObject>;
         protected var _moveCounterList:Vector.<Counter>;
         protected var _atkCounterList:Vector.<Counter>;
@@ -25,16 +32,19 @@ package inoah.game.ro.controllers
          * 战斗模式，0无，1追击，2攻击 
          */        
         protected var _fightModeList:Vector.<int>;
-        protected var _scene:ISceneMediator;
+        protected var _scene:IBattleSceneMediator;
         
-        public function MonsterController( scene:ISceneMediator )
+        public function MonsterController()
         {
-            //            super( ConstsGame.MONSTER_CONTROLLER );
-            //            _scene = scene;
-            //            _atkTargetList = new Vector.<BattleCharacterObject>( Global.MAX_MONSTER_NUM );
-            //            _moveCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
-            //            _atkCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
-            //            _fightModeList = new Vector.<int>( Global.MAX_MONSTER_NUM );
+            _atkTargetList = new Vector.<BattleCharacterObject>( Global.MAX_MONSTER_NUM );
+            _moveCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
+            _atkCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
+            _fightModeList = new Vector.<int>( Global.MAX_MONSTER_NUM );
+        }
+        
+        override public function initialize():void
+        {
+            _scene = injector.getInstance(IBattleSceneMediator) as IBattleSceneMediator;
         }
         
         public function fightTo( monster:MonsterObject ,  obj:BattleCharacterObject ):void
@@ -62,7 +72,7 @@ package inoah.game.ro.controllers
             super.tick( delta );
             
             var len:int = _monsterList.length;
-            var currentMonsterObj:MonsterObject;
+            var currentMonsterObj:IMonsterObject;
             for ( var i:int = 0;i<len;i++)
             {
                 currentMonsterObj = _monsterList[i];
@@ -72,17 +82,17 @@ package inoah.game.ro.controllers
                 }
                 if( _fightModeList[i] == 0 )
                 {
-                    calMove( currentMonsterObj , i , delta );
+                    //                    calMove( currentMonsterObj , i , delta );
                 }
-                calAttackMove( currentMonsterObj, i, delta );
-                calAttack( currentMonsterObj, i, delta );
+                //                calAttackMove( currentMonsterObj, i, delta );
+                //                calAttack( currentMonsterObj, i, delta );
             }
         }
         
         /**
          * 自动移动 
          */        
-        protected function calMove( currentMonsterObj:MonsterObject , index:int , delta:Number ):void
+        protected function calMove( currentMonsterObj:IMonsterObject , index:int , delta:Number ):void
         {
             var atkTarget:BattleCharacterObject = _atkTargetList[index];
             var isMove:Boolean = Math.random() * 10 < 3;
@@ -117,7 +127,7 @@ package inoah.game.ro.controllers
         /**
          * 攻击移动判定
          */        
-        protected function calAttackMove( currentMonsterObj:MonsterObject , index:int , delta:Number ):void
+        protected function calAttackMove( currentMonsterObj:IMonsterObject , index:int , delta:Number ):void
         {
             var atkTarget:BattleCharacterObject = _atkTargetList[index];
             var fightMode:int = _fightModeList[index];
@@ -140,13 +150,13 @@ package inoah.game.ro.controllers
             }
         }
         
-        protected function posCheck( currentMonsterObj:MonsterObject  , index:int , value:int ):Boolean
+        protected function posCheck( currentMonsterObj:IMonsterObject  , index:int , value:int ):Boolean
         {
             var atkTarget:BattleCharacterObject = _atkTargetList[index];
             return int(Point.distance(atkTarget.POS,currentMonsterObj.POS))<=value;
         }
         
-        protected function calAttack( currentMonsterObj:MonsterObject , index:int , delta:Number ):void
+        protected function calAttack( currentMonsterObj:IMonsterObject , index:int , delta:Number ):void
         {
             var atkTarget:BattleCharacterObject = _atkTargetList[index];
             var fightMode:int = _fightModeList[index];
@@ -224,22 +234,17 @@ package inoah.game.ro.controllers
             
             if( atkTargetInfo.hpCurrent==0)
             {
-                scene.removeObject(atkTarget);
+                _scene.removeObject(atkTarget);
                 _atkTargetList[index] = null;
             }
         }
         
-        public function get scene():ISceneMediator
-        {
-            return _scene;
-        }
-        
-        public function set monsterList( value:Vector.<MonsterObject> ):void
+        public function set monsterList( value:Vector.<IMonsterObject> ):void
         {
             _monsterList = value;
         }
         
-        public function get monsterList():Vector.<MonsterObject>
+        public function get monsterList():Vector.<IMonsterObject>
         {
             return _monsterList;
         }

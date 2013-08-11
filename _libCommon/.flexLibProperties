@@ -434,6 +434,16 @@
     <classEntry path="starling.utils.rad2deg"/>
     <classEntry path="starling.utils.transformCoords"/>
     <classEntry path="inoah.interfaces.IUserInfo"/>
+    <classEntry path="inoah.interfaces.IPlayerObject"/>
+    <classEntry path="inoah.interfaces.base.IBaseObject"/>
+    <classEntry path="inoah.utils.QTree"/>
+    <classEntry path="inoah.interfaces.base.IBaseController"/>
+    <classEntry path="inoah.consts.ConstsDirection"/>
+    <classEntry path="inoah.interfaces.ICharacterInfo"/>
+    <classEntry path="inoah.interfaces.IBattleCharacterObject"/>
+    <classEntry path="inoah.interfaces.IMonsterController"/>
+    <classEntry path="inoah.interfaces.IBattleSceneMediator"/>
+    <classEntry path="inoah.interfaces.IMonsterObject"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

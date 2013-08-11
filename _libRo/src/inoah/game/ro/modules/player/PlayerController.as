@@ -4,7 +4,6 @@ package inoah.game.ro.modules.player
     import flash.ui.Keyboard;
     
     import inoah.core.Global;
-    import inoah.core.QTree;
     import inoah.core.base.BaseController;
     import inoah.core.base.BaseObject;
     import inoah.core.consts.ConstsActions;
@@ -15,6 +14,7 @@ package inoah.game.ro.modules.player
     import inoah.interfaces.IKeyMgr;
     import inoah.interfaces.IPlayerController;
     import inoah.utils.Counter;
+    import inoah.utils.QTree;
     
     import robotlegs.bender.framework.api.IContext;
     
@@ -129,6 +129,11 @@ package inoah.game.ro.modules.player
         override public function tick( delta:Number ):void
         {
             super.tick( delta );
+            
+            if( !super.me )
+            {
+                return;
+            }
             
             calRecover( delta );
             attackCheck( delta )

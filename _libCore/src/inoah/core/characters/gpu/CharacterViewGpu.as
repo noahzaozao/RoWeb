@@ -88,7 +88,7 @@ package inoah.core.characters.gpu
             //            }
         }
         
-        public function CharacterViewGpu( charInfo:CharacterInfo = null )
+        public function CharacterViewGpu()
         {
             _otherViews = new Vector.<ActTpcOtherView>( 4 );
             //            _chooseCircle = new Shape();

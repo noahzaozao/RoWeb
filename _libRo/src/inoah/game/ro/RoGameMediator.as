@@ -246,6 +246,8 @@ package inoah.game.ro
             _mainView = new MainView();
             displayMgr.uiLevel.addChild( _mainView );
             
+            keyMgr.initialize();
+            
             //初始化地图管理器
             mapMgr.initialize();
             
@@ -256,8 +258,7 @@ package inoah.game.ro
             //            MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, _battleMgr as IMgr );
             //            facade.registerMediator( _battleMgr as IMediator );
             
-            dispatch( new GameEvent( GameEvent.RECV_CHAT , "\n\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>" ) );
-            dispatch( new GameEvent( GameEvent.RECV_CHAT , "<font color='#00ff00'>WASD to move and J to attack!</font>"  ) );
+            dispatch( new GameEvent( GameEvent.RECV_CHAT , "\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>\n<font color='#00ff00'>WASD to move and J to attack!</font>" ) );
         }
         
         public function tick( delta:Number ):void

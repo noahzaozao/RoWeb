@@ -3,6 +3,8 @@ package inoah.game.ro.modules.map
     import inoah.core.GameCamera;
     import inoah.game.ro.modules.map.view.BaseScene;
     import inoah.game.ro.modules.map.view.mediators.BaseSceneMediator;
+    import inoah.game.ro.modules.map.view.mediators.BattleSceneMediator;
+    import inoah.interfaces.IBattleSceneMediator;
     import inoah.interfaces.ICamera;
     import inoah.interfaces.IMapFactory;
     import inoah.interfaces.IScene;
@@ -27,11 +29,21 @@ package inoah.game.ro.modules.map
             return scene;
         }
         
-        public function newMapMediator( mapId:int ):ISceneMediator
+        public function newSceneMediator( mapId:int ):ISceneMediator
         {
             var sceneMediator:BaseSceneMediator = new BaseSceneMediator();
             injector.injectInto(sceneMediator);
             injector.map(ISceneMediator).toValue(sceneMediator);
+            sceneMediator.initialize();
+            return sceneMediator;
+        }
+
+        public function newBattleSceneMediator( mapId:int ):IBattleSceneMediator
+        {
+            var sceneMediator:BattleSceneMediator = new BattleSceneMediator();
+            injector.injectInto(sceneMediator);
+            injector.map(ISceneMediator).toValue(sceneMediator);
+            injector.map(IBattleSceneMediator).toValue(sceneMediator);
             sceneMediator.initialize();
             return sceneMediator;
         }

@@ -1,7 +1,10 @@
 package inoah.interfaces
 {
-    public interface IPlayerController
+    import inoah.interfaces.base.IBaseController;
+
+    public interface IPlayerController extends IBaseController
     {
+        function tick( delta:Number ):void;
         
     }
 }

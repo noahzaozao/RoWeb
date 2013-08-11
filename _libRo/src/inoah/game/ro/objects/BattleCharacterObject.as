@@ -3,10 +3,11 @@ package inoah.game.ro.objects
     import flash.geom.Point;
     
     import inoah.core.infos.BattleCharacterInfo;
-    import inoah.core.infos.CharacterInfo;
     import inoah.core.viewModels.valueBar.HSpbar;
+    import inoah.interfaces.IBattleCharacterObject;
+    import inoah.interfaces.ICharacterInfo;
     
-    public class BattleCharacterObject extends CharacterObject
+    public class BattleCharacterObject extends CharacterObject implements IBattleCharacterObject
     {
         protected var _hpBar:HSpbar;
         protected var _spBar:HSpbar;
@@ -134,7 +135,7 @@ package inoah.game.ro.objects
             return battleCharacterInfo.spCurrent;
         }
         
-        override public function set info( value:CharacterInfo ):void
+        override public function set info( value:ICharacterInfo ):void
         {
             super.info
             _info = value;

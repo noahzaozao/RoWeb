@@ -1,5 +1,6 @@
 package inoah.game.ro
 {
+    import inoah.game.ro.controllers.MonsterController;
     import inoah.game.ro.modules.login.controller.LoginCommand;
     import inoah.game.ro.modules.login.service.ILoginService;
     import inoah.game.ro.modules.login.service.LoginService;
@@ -21,7 +22,10 @@ package inoah.game.ro
     import inoah.game.ro.modules.main.view.mediator.StatusViewMediator;
     import inoah.game.ro.modules.map.RoMapFactory;
     import inoah.game.ro.modules.player.RoPlayerFactory;
+    import inoah.game.ro.modules.player.TiledPlayerController;
     import inoah.interfaces.IMapFactory;
+    import inoah.interfaces.IMonsterController;
+    import inoah.interfaces.IPlayerController;
     import inoah.interfaces.IPlayerFactory;
     import inoah.interfaces.IUserModel;
     
@@ -70,6 +74,8 @@ package inoah.game.ro
             injector.map(RoGameMediator).asSingleton();
             injector.map(IMapFactory).toSingleton(RoMapFactory);
             injector.map(IPlayerFactory).toSingleton(RoPlayerFactory);
+            injector.map(IPlayerController).toSingleton(TiledPlayerController);
+            injector.map(IMonsterController).toSingleton(MonsterController);
             //
             logger.info("configure RoConfig");
         }

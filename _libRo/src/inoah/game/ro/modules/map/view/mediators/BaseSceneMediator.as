@@ -7,7 +7,6 @@ package inoah.game.ro.modules.map.view.mediators
     
     import inoah.core.GameCamera;
     import inoah.core.Global;
-    import inoah.core.QTree;
     import inoah.core.base.BaseObject;
     import inoah.data.map.MapInfo;
     import inoah.interfaces.IDisplayMgr;
@@ -15,7 +14,9 @@ package inoah.game.ro.modules.map.view.mediators
     import inoah.interfaces.IScene;
     import inoah.interfaces.ISceneMediator;
     import inoah.interfaces.IUserModel;
+    import inoah.interfaces.base.IBaseObject;
     import inoah.utils.Counter;
+    import inoah.utils.QTree;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     
@@ -94,9 +95,9 @@ package inoah.game.ro.modules.map.view.mediators
             scene.initScene( _mapContainer , mapInfo ); 
         }
         
-        public function addObject( o:BaseObject ):void
+        public function addObject( o:IBaseObject ):void
         {
-            if( _unitList.indexOf( o ) != -1 )
+            if( _unitList.indexOf( o as BaseObject ) != -1 )
             {
                 return;
             }
@@ -112,9 +113,9 @@ package inoah.game.ro.modules.map.view.mediators
             }
         }
         
-        public function removeObject(o:BaseObject):void
+        public function removeObject(o:IBaseObject):void
         {
-            var i:int = _unitList.indexOf(o);
+            var i:int = _unitList.indexOf(o as BaseObject);
             
             if(i!=-1) 
             {
@@ -126,7 +127,7 @@ package inoah.game.ro.modules.map.view.mediators
                 _qTree.remove(o);
             }
             
-            pullRenderList(o);
+            pullRenderList(o as BaseObject);
             
             o.dispose();
             o=null;
@@ -155,9 +156,9 @@ package inoah.game.ro.modules.map.view.mediators
         /**
          * 将游戏对象加入渲染列表
          */ 
-        public function pushRenderList(o:BaseObject):void
+        public function pushRenderList(o:IBaseObject):void
         {
-            if(_screenObj.indexOf(o)!=-1) 
+            if(_screenObj.indexOf(o as BaseObject)!=-1) 
             {
                 return;
             }

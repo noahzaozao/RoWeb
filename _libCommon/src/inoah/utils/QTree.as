@@ -1,4 +1,4 @@
-package inoah.core
+package inoah.utils
 {
     import flash.geom.Rectangle;
     

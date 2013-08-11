@@ -7,17 +7,17 @@ package inoah.core.characters.gpu
     {
         private var _moveCounter:Counter;
         
-        public function MonsterViewGpu(charInfo:CharacterInfo=null)
+        public function MonsterViewGpu()
         {
-            super(charInfo);
+            super();
             _moveCounter = new Counter();
             _moveCounter.initialize();
             _moveCounter.reset( 2 );
         }
         
-        override protected function init():void
+        override public function initInfo(charInfo:CharacterInfo=null):void
         {
-            super.init();
+            super.initInfo( charInfo );
         }
         
         override public function actionStand():void

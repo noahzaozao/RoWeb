@@ -1,4 +1,4 @@
-package inoah.core.consts
+package inoah.consts
 {
     public class ConstsDirection
     {

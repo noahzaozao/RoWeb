@@ -8,6 +8,7 @@ package inoah.core
     import inoah.core.base.BaseObject;
     import inoah.interfaces.ICamera;
     import inoah.interfaces.ISceneMediator;
+    import inoah.interfaces.base.IBaseObject;
     
     /**
      * 摄像机控制类
@@ -134,9 +135,9 @@ package inoah.core
         /**
          * 镜头注视
          */ 
-        public function focus(o:BaseObject=null):void
+        public function focus(o:IBaseObject=null):void
         {
-            _focus = o;
+            _focus = o as BaseObject;
             update();
             sceneMediator.ReCut();
         }

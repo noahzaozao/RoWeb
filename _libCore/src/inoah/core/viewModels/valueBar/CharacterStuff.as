@@ -4,6 +4,7 @@ package inoah.core.viewModels.valueBar
     import flash.display.Shape;
     
     import inoah.core.base.BaseObject;
+    import inoah.core.infos.CharacterInfo;
     
     /**
      * 角色血量、称号、图标等物品的基类
@@ -33,8 +34,8 @@ package inoah.core.viewModels.valueBar
         {
             _target = target;
             
-            if(attName!='' && _target.info.hasOwnProperty(attName)) _attName = attName;
-            if(attMaxName!= '' && _target.info.hasOwnProperty(attMaxName)) _attMaxName = attMaxName;
+            if(attName!='' && (_target.info as CharacterInfo).hasOwnProperty(attName)) _attName = attName;
+            if(attMaxName!= '' && (_target.info as CharacterInfo).hasOwnProperty(attMaxName)) _attMaxName = attMaxName;
         }
         /**
          * 渲染

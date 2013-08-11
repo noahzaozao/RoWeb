@@ -1,8 +1,8 @@
 package inoah.game.ro.modules.player
 {
-    
-    import inoah.interfaces.IPlayerController;
+    import inoah.game.ro.objects.PlayerObject;
     import inoah.interfaces.IPlayerFactory;
+    import inoah.interfaces.IPlayerObject;
     
     import robotlegs.bender.framework.api.IInjector;
     
@@ -15,25 +15,11 @@ package inoah.game.ro.modules.player
         {
         }
         
-//        public function newPlayer():IPlayerController
-//        {
-//            var player:PlayerObject = PlayerObject();
-//            return null;
-//        }
-        
-        public function newPlayerController():IPlayerController
+        public function newPlayerObject():IPlayerObject
         {
-            var playerController:PlayerController = new PlayerController();
-            injector.injectInto(playerController);
-            injector.map(IPlayerController).toValue(playerController);
-            return playerController;
-        }
-        public function newTiledPlayerController():IPlayerController
-        {
-            var playerController:TiledPlayerController = new TiledPlayerController();
-            injector.injectInto(playerController);
-            injector.map(IPlayerController).toValue(playerController);
-            return playerController;
+            var player:PlayerObject = new PlayerObject();
+            
+            return player;
         }
     }
 }

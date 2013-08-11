@@ -21,18 +21,6 @@ package robotlegs.bender.extensions.keyMgrExtension
     public class KeyMgr extends Mediator implements IKeyMgr
     {
         [Inject]
-        public var injector:IInjector;
-        
-        [Inject]
-        public var mediatorMap:IMediatorMap;
-        
-        [Inject]
-        public var commandMap:IEventCommandMap;
-        
-        [Inject]
-        public var logger:ILogger;
-        
-        [Inject]
         public var contextView:ContextView;
         
         private var states:ByteArray;
@@ -40,10 +28,6 @@ package robotlegs.bender.extensions.keyMgrExtension
         private var _isDisposed:Boolean;
         
         public function KeyMgr()
-        {
-        }
-        
-        override public function initialize():void
         {
             states = new ByteArray();
             states.writeUnsignedInt( 0 );
@@ -54,7 +38,11 @@ package robotlegs.bender.extensions.keyMgrExtension
             states.writeUnsignedInt( 0 );
             states.writeUnsignedInt( 0 );
             states.writeUnsignedInt( 0 );
-            dispObj = contextView.view;
+        }
+        
+        override public function initialize():void
+        {
+            dispObj = contextView.view.stage;
             dispObj.addEventListener( KeyboardEvent.KEY_DOWN, keyDownListener, false, 0, true );
             dispObj.addEventListener( KeyboardEvent.KEY_UP, keyUpListener, false, 0, true );
             dispObj.addEventListener( Event.ACTIVATE, activateListener, false, 0, true );
