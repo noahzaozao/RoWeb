@@ -8,21 +8,19 @@ package inoah.game.ro
     import inoah.core.starlingMain;
     import inoah.core.infos.UserInfo;
     import inoah.core.loaders.AtfLoader;
-    import inoah.core.loaders.LuaLoader;
     import inoah.game.ro.modules.login.view.LoginView;
     import inoah.game.ro.modules.login.view.events.LoginEvent;
     import inoah.game.ro.modules.main.view.MainView;
     import inoah.game.ro.modules.main.view.StatusBarView;
     import inoah.game.ro.modules.main.view.events.GameEvent;
+    import inoah.interfaces.ISprMgr;
     import inoah.interfaces.IUserModel;
     import inoah.interfaces.base.ILoader;
     import inoah.interfaces.base.ITickable;
-    import inoah.interfaces.lua.ILuaMainMediator;
     import inoah.interfaces.managers.IAssetMgr;
     import inoah.interfaces.managers.IDisplayMgr;
     import inoah.interfaces.managers.IKeyMgr;
     import inoah.interfaces.managers.IMapMgr;
-    import inoah.interfaces.managers.ISprMgr;
     import inoah.interfaces.managers.ITextureMgr;
     
     import morn.App;
@@ -71,9 +69,6 @@ package inoah.game.ro
         public var mapMgr:IMapMgr;
         
         [Inject]
-        public var luaEngine:ILuaMainMediator;
-        
-        [Inject]
         public var userModel:IUserModel;
         
         protected var _starling:Starling;
@@ -118,31 +113,13 @@ package inoah.game.ro
         {
             displayMgr.initStarling( _starlingMain as DisplayObject );
             
-            if( Global.ENABLE_LUA )
-            {
-                var resList:Vector.<String> = new Vector.<String>();
-                resList.push( "libCore.lua" );
-                resList.push( "main.lua" );
-                assetMgr.getResList( resList , onLuaLoaded );
-            }
-            else
-            {
-                initLogin();
-            }
-        }
-        
-        protected function onLuaLoaded( loader:ILoader ):void
-        {
-            luaEngine.luaStrList.push( (assetMgr.getRes( "libCore.lua" , null ) as LuaLoader).content );
-            luaEngine.luaStrList.push( (assetMgr.getRes( "main.lua" , null ) as LuaLoader).content );
-            luaEngine.initialize();
-            
             initLogin();
         }
+        
         /**
          * 
          */        
-        private function initLogin():void
+        protected function initLogin():void
         {
             App.init( displayMgr.uiLevel );
             App.loader.loadAssets( ["assets/comp.swf","assets/login_interface.swf", "assets/basic_interface.swf"] , new Handler( loadComplete ) );

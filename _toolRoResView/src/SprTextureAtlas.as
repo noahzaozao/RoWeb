@@ -1,12 +1,12 @@
 package 
 {
-    import inoah.game.displays.actspr.structs.CSPR;
-    import inoah.game.displays.actspr.structs.sprh.AnySprite;
-    
     import flash.display.Bitmap;
     import flash.geom.Rectangle;
     
     import format.Sequence;
+    
+    import inoah.core.viewModels.actSpr.structs.CSPR;
+    import inoah.core.viewModels.actSpr.structs.sprh.AnySprite;
 
     public class SprTextureAtlas
     {

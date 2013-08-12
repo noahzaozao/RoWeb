@@ -1,15 +1,14 @@
 package inoah.core.characters.nogpu
 {
-    import inoah.core.infos.CharacterInfo;
     import inoah.utils.Counter;
     
     public class MonsterView extends CharacterView
     {
         private var _moveCounter:Counter;
         
-        public function MonsterView(charInfo:CharacterInfo=null)
+        public function MonsterView()
         {
-            super(charInfo);
+            super();
             _moveCounter = new Counter();
             _moveCounter.initialize();
             _moveCounter.reset( 2 );

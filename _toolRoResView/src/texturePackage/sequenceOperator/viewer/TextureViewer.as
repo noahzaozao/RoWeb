@@ -5,7 +5,6 @@ package texturePackage.sequenceOperator.viewer
     import com.bit101.components.Panel;
     import com.bit101.components.PushButton;
     import com.bit101.components.Slider;
-    import inoah.game.displays.actspr.ActSprView;
     
     import flash.display.DisplayObjectContainer;
     import flash.display.Sprite;
@@ -16,6 +15,8 @@ package texturePackage.sequenceOperator.viewer
     import flash.text.TextFormatAlign;
     
     import format.Sequence;
+    
+    import inoah.core.viewModels.actSpr.ActSprView;
 
     public class TextureViewer extends Panel
     {

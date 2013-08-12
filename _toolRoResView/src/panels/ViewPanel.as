@@ -12,11 +12,16 @@ package panels
     
     import consts.AppConsts;
     
-    import inoah.game.consts.DirIndexConsts;
-    import inoah.game.infos.CharacterInfo;
+    import inoah.core.consts.ConstsDirIndex;
+    import inoah.core.infos.CharacterInfo;
+    
+    import robotlegs.bender.framework.api.IInjector;
     
     public class ViewPanel extends Panel
     {
+        [Inject]
+        public var injector:IInjector;
+        
         private var _txtPath:InputText;
         
         private var _dirUpBtn:PushButton;
@@ -122,42 +127,42 @@ package panels
             {
                 case _dirUpBtn:
                 {
-                    _charView.setDirIndex( DirIndexConsts.UP );
+                    _charView.setDirIndex( ConstsDirIndex.UP );
                     break;
                 }
                 case _dirDownBtn:
                 {
-                    _charView.setDirIndex( DirIndexConsts.DOWN );
+                    _charView.setDirIndex( ConstsDirIndex.DOWN );
                     break;
                 }
                 case _dirLeftBtn:
                 {
-                    _charView.setDirIndex( DirIndexConsts.LEFT );
+                    _charView.setDirIndex( ConstsDirIndex.LEFT );
                     break;
                 }
                 case _dirRightBtn:
                 {
-                    _charView.setDirIndex( DirIndexConsts.RIGHT );
+                    _charView.setDirIndex( ConstsDirIndex.RIGHT );
                     break;
                 }
                 case _dirUpLeftBtn:
                 {
-                    _charView.setDirIndex( DirIndexConsts.UP_LIFT );
+                    _charView.setDirIndex( ConstsDirIndex.UP_LIFT );
                     break;
                 }
                 case _dirUpRightBtn:
                 {
-                    _charView.setDirIndex( DirIndexConsts.UP_RIGHT );
+                    _charView.setDirIndex( ConstsDirIndex.UP_RIGHT );
                     break;
                 }
                 case _dirDownLeftBtn:
                 {
-                    _charView.setDirIndex( DirIndexConsts.DOWN_LEFT );
+                    _charView.setDirIndex( ConstsDirIndex.DOWN_LEFT );
                     break;
                 }
                 case _dirDownRightBtn:
                 {
-                    _charView.setDirIndex( DirIndexConsts.DOWN_RIGHT );
+                    _charView.setDirIndex( ConstsDirIndex.DOWN_RIGHT );
                     break;
                 }
             }
@@ -209,7 +214,9 @@ package panels
                 sh.graphics.drawRect( 200 , 0 , 1 , 500 );
                 addChild( sh );
 
-                _charView = new ECharacterView( _charInfo );
+                _charView = new ECharacterView();
+                injector.injectInto(_charView);
+                _charView.initInfo( _charInfo );
                 _charView.x = 200;
                 _charView.y = 400;
                 addChild( _charView );

@@ -17,6 +17,9 @@ package inoah.core.characters.nogpu
     import inoah.core.viewModels.actSpr.structs.CACT;
     import inoah.interfaces.IViewObject;
     import inoah.interfaces.base.ILoader;
+    import inoah.interfaces.managers.IAssetMgr;
+    
+    import robotlegs.bender.framework.api.IInjector;
     
     /**
      * 
@@ -25,6 +28,12 @@ package inoah.core.characters.nogpu
      */    
     public class CharacterView extends Sprite implements IViewObject
     {
+        [Inject]
+        public var injector:IInjector;
+        
+        [Inject]
+        public var assetMgr:IAssetMgr;
+        
         protected var _charInfo:CharacterInfo;
         protected var _bodyView:ActSprBodyView;
         /**
@@ -83,10 +92,16 @@ package inoah.core.characters.nogpu
             }
         }
         
-        public function CharacterView( charInfo:CharacterInfo = null )
+        public function CharacterView()
         {
             _otherViews = new Vector.<ActSprOtherView>( 4 );
-            
+            _chooseCircle = new Shape();
+            _chooseCircle.graphics.lineStyle( 2, 0x00ff00 );
+            _chooseCircle.graphics.drawEllipse(-25, -15, 50, 30);
+        }
+        
+        public function initInfo( charInfo:CharacterInfo = null ):void
+        {
             _isMoving = false;
             _targetPoint = new Point( 0, 0 );
             if( charInfo )
@@ -94,9 +109,6 @@ package inoah.core.characters.nogpu
                 _charInfo = charInfo;
                 init();
             }
-            _chooseCircle = new Shape();
-            _chooseCircle.graphics.lineStyle( 2, 0x00ff00 );
-            _chooseCircle.graphics.drawEllipse(-25, -15, 50, 30);
         }
         
         public function set gid( value:uint ):void
@@ -136,23 +148,22 @@ package inoah.core.characters.nogpu
         
         public function updateCharInfo( charInfo:CharacterInfo ):void
         {
-            //            var assetMgr:AssetMgr = MainMgr.instance.getMgr( MgrTypeConsts.ASSET_MGR ) as AssetMgr;
-            //            if( !_bodyLoader || _bodyLoader.url != _charInfo.bodyRes )
-            //            {
-            //                assetMgr.getRes( _charInfo.bodyRes, onBodyLoadComplete );
-            //            }
-            //            if( _charInfo.headRes )
-            //            {
-            //                assetMgr.getRes( _charInfo.headRes, onHeadLoadComplete );
-            //            }
-            //            if( _charInfo.weaponRes )
-            //            {
-            //                assetMgr.getRes( _charInfo.weaponRes, onWeaponLoadComplete );
-            //            }
-            //            if( _charInfo.weaponShadowRes )
-            //            {
-            //                assetMgr.getRes( _charInfo.weaponShadowRes, onWeaponShadowLoadComplete );
-            //            }
+            if( !_bodyLoader || _bodyLoader.url != _charInfo.bodyRes )
+            {
+                assetMgr.getRes( _charInfo.bodyRes, onBodyLoadComplete );
+            }
+            if( _charInfo.headRes )
+            {
+                assetMgr.getRes( _charInfo.headRes, onHeadLoadComplete );
+            }
+            if( _charInfo.weaponRes )
+            {
+                assetMgr.getRes( _charInfo.weaponRes, onWeaponLoadComplete );
+            }
+            if( _charInfo.weaponShadowRes )
+            {
+                assetMgr.getRes( _charInfo.weaponShadowRes, onWeaponShadowLoadComplete );
+            }
         }
         
         protected function onBodyLoadComplete( bodyLoader:ILoader ):void
@@ -170,6 +181,7 @@ package inoah.core.characters.nogpu
                     _bodyView = new ActSprBodyView();
                 }
             }
+            injector.injectInto(_bodyView);
             _bodyView.initAct( (_bodyLoader as ActSprLoader).actData );
             _bodyView.initSpr( (_bodyLoader as ActSprLoader).sprData , _bodyLoader.url );
             _bodyView.addEventListener( ActSprEvent.ACTION_END , onActionEndHandler );

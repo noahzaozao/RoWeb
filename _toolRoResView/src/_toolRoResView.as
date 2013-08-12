@@ -1,7 +1,6 @@
 package
 {
     import com.bit101.components.Style;
-    import inoah.game.managers.SprMgr;
     
     import flash.display.Sprite;
     import flash.display.StageAlign;
@@ -10,13 +9,18 @@ package
     import flash.filesystem.File;
     import flash.filesystem.FileMode;
     import flash.filesystem.FileStream;
-    import flash.utils.getTimer;
     
     import consts.AppConsts;
     
-    import inoah.game.consts.MgrTypeConsts;
-    import inoah.game.managers.AssetMgr;
-    import inoah.game.managers.MainMgr;
+    import inoah.core.CoreBundle;
+    import inoah.core.Global;
+    import inoah.game.ro.RoConfig;
+    import inoah.interfaces.base.ITickable;
+    
+    import robotlegs.bender.bundles.mvcs.MVCSBundle;
+    import robotlegs.bender.extensions.contextView.ContextView;
+    import robotlegs.bender.framework.api.IContext;
+    import robotlegs.bender.framework.impl.Context;
     
     import starling.core.Starling;
     import starling.utils.HAlign;
@@ -27,7 +31,11 @@ package
     public class _toolRoResView extends Sprite
     {
         private var _starling:Starling;
-        private var lastTimeStamp:int;
+        
+        private var _context:IContext;
+        
+        private var _lastTimeStamp:Number;
+        private var _starlingMain:StarlingMain;
         
         public function _toolRoResView()
         {
@@ -43,8 +51,11 @@ package
         
         private function init( e:Event = null ):void
         {
+            stage.frameRate = 60;
             stage.align = StageAlign.TOP_LEFT;
             stage.scaleMode = StageScaleMode.NO_SCALE;
+            tabChildren = false;
+            tabEnabled = false;
             
             loaderInfo.addEventListener(Event.COMPLETE, loaderInfo_completeHandler);
         }
@@ -55,15 +66,24 @@ package
             Style.fontSize =  14;
             Style.setStyle( Style.DARK );
             
-            MainMgr.instance;
-            MainMgr.instance.addMgr( MgrTypeConsts.ASSET_MGR, new AssetMgr() );
-            MainMgr.instance.addMgr( MgrTypeConsts.SPR_MGR , new SprMgr() );
+            Global.IS_MOBILE = true;
+            Global.ENABLE_LUA = true;
+            Global.SCREEN_W = stage.stageWidth;
+            Global.SCREEN_H = stage.stageHeight;
             
+            _context = new Context()
+                .install( MVCSBundle )
+                .install( CoreBundle )
+//                .install( LuaExtension )
+                .configure( RoConfig )
+                .configure( new ContextView( this ) );
+            _context.initialize( onInitialize );
+        }
+        
+        private function onInitialize():void
+        {
             initMenu();
             initData();
-            
-            lastTimeStamp = getTimer();
-            stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );
             
             Starling.handleLostContext = true;
             Starling.multitouchEnabled = true;
@@ -72,21 +92,33 @@ package
             _starling.showStats = true;
             _starling.showStatsAt(HAlign.RIGHT, VAlign.TOP);
             _starling.start();
+            
+            _lastTimeStamp = new Date().time;
+            stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );
         }
         
-        protected function onEnterFrameHandler(e:Event):void
+        protected function onEnterFrameHandler( e:Event):void
         {
-            var timeNow:uint = getTimer();
-            var delta:Number = (timeNow - lastTimeStamp) / 1000;
-            lastTimeStamp = timeNow;
+            var currentTimeStamp:Number = new Date().time;
+            var delta:Number = (currentTimeStamp - _lastTimeStamp)/1000;
+            _lastTimeStamp = currentTimeStamp;
             
-            var root:StarlingMain =    Starling.current.root as StarlingMain;
-            if( root )
+            if( _starlingMain )
             {
-                root.tick( delta );
+                _starlingMain.tick( delta );
+            }
+            else if( Starling.current && Starling.current.root )
+            {
+                _starlingMain = Starling.current.root as StarlingMain;
+                onStarlingInited();
             }
         }
         
+        private function onStarlingInited():void
+        {
+            _context.injector.injectInto(_starlingMain);
+            _starlingMain.initialize();
+        }
         private function initMenu():void
         {
             stage.nativeWindow.menu = new EditorMenu();

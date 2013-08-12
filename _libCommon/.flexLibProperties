@@ -161,7 +161,6 @@
     <classEntry path="inoah.interfaces.factory.IPlayerFactory"/>
     <classEntry path="inoah.interfaces.map.IScene"/>
     <classEntry path="inoah.interfaces.map.ISceneMediator"/>
-    <classEntry path="inoah.interfaces.managers.ISprMgr"/>
     <classEntry path="inoah.interfaces.managers.ITextureMgr"/>
     <classEntry path="inoah.interfaces.base.ITickable"/>
     <classEntry path="inoah.interfaces.IUserModel"/>

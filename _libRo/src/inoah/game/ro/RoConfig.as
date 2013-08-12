@@ -1,5 +1,6 @@
 package inoah.game.ro
 {
+    import inoah.core.Global;
     import inoah.game.ro.controllers.MonsterController;
     import inoah.game.ro.modules.login.controller.LoginCommand;
     import inoah.game.ro.modules.login.service.ILoginService;
@@ -68,10 +69,15 @@ package inoah.game.ro
             mediatorMap.map(AlertView).toMediator(AlertViewMediator);
             mediatorMap.map(ItemView).toMediator(ItemViewMediator);
             mediatorMap.map(StatusView).toMediator(StatusViewMediator);
-            //mediator map
-            //            mediatorMap.map(IScene).toMediator(ISceneMediator);
-            //
-            injector.map(RoGameMediator).asSingleton();
+            //singleton
+            if( Global.ENABLE_LUA )
+            {
+                injector.map(RoGameMediator).toSingleton(RoGameLuaMediator);
+            }
+            else
+            {
+                injector.map(RoGameMediator).asSingleton();
+            }
             injector.map(IMapFactory).toSingleton(RoMapFactory);
             injector.map(IPlayerFactory).toSingleton(RoPlayerFactory);
             injector.map(IPlayerController).toSingleton(TiledPlayerController);

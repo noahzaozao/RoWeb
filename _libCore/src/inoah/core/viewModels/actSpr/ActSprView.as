@@ -6,7 +6,6 @@ package inoah.core.viewModels.actSpr
     import flash.utils.Endian;
     
     import inoah.core.events.ActSprEvent;
-    import inoah.utils.Counter;
     import inoah.core.viewModels.actSpr.structs.CACT;
     import inoah.core.viewModels.actSpr.structs.CSPR;
     import inoah.core.viewModels.actSpr.structs.acth.AnyActAnyPat;
@@ -15,6 +14,8 @@ package inoah.core.viewModels.actSpr
     import inoah.core.viewModels.actSpr.structs.acth.AnyPatSprV0204;
     import inoah.core.viewModels.actSpr.structs.acth.AnyPatSprV0205;
     import inoah.core.viewModels.actSpr.structs.sprh.AnySprite;
+    import inoah.interfaces.ISprMgr;
+    import inoah.utils.Counter;
     
     /**
      * base actSpr view 
@@ -23,6 +24,9 @@ package inoah.core.viewModels.actSpr
      */
     public class ActSprView extends Sprite
     {
+        [Inject]
+        public var sprMgr:ISprMgr;
+        
         protected var _act:CACT;
         protected var _spr:CSPR;
         
@@ -128,20 +132,19 @@ package inoah.core.viewModels.actSpr
         
         public function initSpr( data:ByteArray , url:String ):void
         {
-            //            if( _spr )
-            //            {
-            //                _spr.destory();
-            //            }
-            //            var inData:ByteArray = new ByteArray();
-            //            inData.endian = Endian.BIG_ENDIAN;
-            //            data.position = 0;
-            //            data.readBytes( inData );
-            //            var sprMgr:SprMgr = MainMgr.instance.getMgr( MgrTypeConsts.SPR_MGR  ) as SprMgr;
-            //            _spr = sprMgr.getCSPR( url , inData );
-            //            _counter.initialize();
-            //            _counter.reset( _counterTarget );
-            //            updateFrame();
-            //            _couldTick = true;
+            if( _spr )
+            {
+                _spr.destory();
+            }
+            var inData:ByteArray = new ByteArray();
+            inData.endian = Endian.BIG_ENDIAN;
+            data.position = 0;
+            data.readBytes( inData );
+            _spr = sprMgr.getCSPR( url , inData );
+            _counter.initialize();
+            _counter.reset( _counterTarget );
+            updateFrame();
+            _couldTick = true;
         }
         
         //下，左下，左，左上，上，右上，右，右下

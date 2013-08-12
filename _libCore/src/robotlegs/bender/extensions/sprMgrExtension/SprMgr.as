@@ -3,7 +3,7 @@ package robotlegs.bender.extensions.sprMgrExtension
     import flash.utils.ByteArray;
     
     import inoah.core.viewModels.actSpr.structs.CSPR;
-    import inoah.interfaces.managers.ISprMgr;
+    import inoah.interfaces.ISprMgr;
     
     import robotlegs.bender.bundles.mvcs.Mediator;
     

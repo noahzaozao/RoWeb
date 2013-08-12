@@ -57,5 +57,11 @@ package  inoah.utils
         {
             _current += delta;
         }
+        
+        public function toString():String
+        {
+            return _current.toString();
+        }
+            
     }
 }

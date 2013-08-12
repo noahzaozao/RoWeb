@@ -1,13 +1,12 @@
 package
 {
-    import inoah.game.characters.nogpu.CharacterView;
-    import inoah.game.infos.CharacterInfo;
+    import inoah.core.characters.nogpu.CharacterView;
     
     public class ECharacterView extends CharacterView
     {
-        public function ECharacterView(charInfo:CharacterInfo=null)
+        public function ECharacterView()
         {
-            super(charInfo);
+            super();
         }
         
         override public function tick(delta:Number):void
