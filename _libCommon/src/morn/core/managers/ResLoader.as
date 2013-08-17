@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.2.0707 http://code.google.com/p/morn https://github.com/yungzhu/morn
+ * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.managers {
@@ -19,7 +19,6 @@ package morn.core.managers {
 	import flash.utils.ByteArray;
 	import morn.core.handlers.Handler;
 	import morn.core.utils.ObjectUtils;
-	import morn.App;
 	
 	/**资源加载器*/
 	public class ResLoader {
@@ -50,7 +49,6 @@ package morn.core.managers {
 		private var _lastLoaded:Number;
 		
 		public function ResLoader() {
-            _loaderContext.allowCodeImport = true;
 			_loader.contentLoaderInfo.addEventListener(ProgressEvent.PROGRESS, onProgress);
 			_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, onComplete);
 			_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
@@ -61,6 +59,7 @@ package morn.core.managers {
 			_urlLoader.addEventListener(IOErrorEvent.IO_ERROR, onError);
 			_urlLoader.addEventListener(HTTPStatusEvent.HTTP_STATUS, onStatus);
 			_urlLoader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onError);
+			_loaderContext.allowCodeImport = true;
 		}
 		
 		/**中止加载*/

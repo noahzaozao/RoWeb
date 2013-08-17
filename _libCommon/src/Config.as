@@ -2,13 +2,13 @@
  * Morn UI Version 2.1.0623 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
-package morn  {
+package {
 	
 	/**全局配置*/
 	public class Config {
 		//------------------静态配置------------------		
 		/**游戏帧率*/
-		public static var GAME_FPS:int = 60;
+		public static var GAME_FPS:int = 50;
 		/**动画默认播放间隔*/
 		public static var MOVIE_INTERVAL:int = 100;
 		//------------------动态配置------------------

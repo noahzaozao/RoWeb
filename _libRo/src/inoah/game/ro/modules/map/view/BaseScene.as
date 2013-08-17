@@ -285,19 +285,20 @@ package inoah.game.ro.modules.map.view
             if( nowTileDict[_XX  + "," + _YY] )
             {
                 tileImage = nowTileDict[_XX  + "," + _YY];
+                bgLayer.addChild( tileImage );
                 return;
             }
             else
             {
                 //                tileImage = new TileImage( 0 , _currentTextureAtlasList[0].getTexture( _mapInfo.layers[0].data[ _YY * _mapInfo.width + _XX  ].toString() ));  
                 tileImage = new TileImage( 0 , _currentTextureAtlasList[0].getTexture( _mapInfo.layers[0].data[ _mapInfo.layers[0].width * ( _mapInfo.layers[0].height - 1 - _XX ) + _YY  ].toString() ));  
+                bgLayer.addChild( tileImage );
                 
                 var pt : Point = GridToView(_XX , _YY);  
                 tileImage.x = pt.x - 32;
                 tileImage.y = pt.y - 32; 
                 nowTileDict[_XX  + "," + _YY] = tileImage;
             }
-            bgLayer.addChild( tileImage );
         }
         
         private function delTile(k : String) : void

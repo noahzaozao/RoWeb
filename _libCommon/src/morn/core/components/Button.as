@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.1.0623 http://code.google.com/p/morn https://github.com/yungzhu/morn
+ * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -8,7 +8,6 @@ package morn.core.components {
 	import morn.core.handlers.Handler;
 	import morn.core.utils.ObjectUtils;
 	import morn.core.utils.StringUtils;
-	import morn.App;
 	
 	/**选择改变后触发*/
 	[Event(name="select",type="flash.events.Event")]
@@ -145,6 +144,16 @@ package morn.core.components {
 			}
 		}
 		
+		/**按钮标签字体*/
+		public function get labelFont():String {
+			return _btnLabel.font;
+		}
+		
+		public function set labelFont(value:String):void {
+			_btnLabel.font = value
+			callLater(changeLabelSize);
+		}
+		
 		/**按钮标签颜色(格式:upColor,overColor,downColor,disableColor)*/
 		public function get labelColors():String {
 			return _labelColors as String;
@@ -191,6 +200,16 @@ package morn.core.components {
 		
 		public function set labelBold(value:Object):void {
 			_btnLabel.bold = value
+			callLater(changeLabelSize);
+		}
+		
+		/**字间距*/
+		public function get letterSpacing():Object {
+			return _btnLabel.letterSpacing;
+		}
+		
+		public function set letterSpacing(value:Object):void {
+			_btnLabel.letterSpacing = value
 			callLater(changeLabelSize);
 		}
 		

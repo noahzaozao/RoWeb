@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.1.0623 http://code.google.com/p/morn https://github.com/yungzhu/morn
+ * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -11,6 +11,10 @@ package morn.core.components {
 	
 	/**Tab标签*/
 	public class Tab extends Box implements IItem {
+		/**横向的*/
+		public static const HORIZENTAL:String = "horizontal";
+		/**纵向的*/
+		public static const VERTICAL:String = "vertical";
 		protected var _items:Vector.<ISelect>;
 		protected var _selectHandler:Handler;
 		protected var _selectedIndex:int;
@@ -21,6 +25,7 @@ package morn.core.components {
 		protected var _labelSize:Object;
 		protected var _labelBold:Object;
 		protected var _labelMargin:String;
+		protected var _direction:String = HORIZENTAL;
 		
 		public function Tab(labels:String = null, skin:String = null) {
 			this.skin = skin;
@@ -123,12 +128,10 @@ package morn.core.components {
 				callLater(changeLabels);
 				if (Boolean(_labels)) {
 					var a:Array = _labels.split(",");
-					var right:int = 0
 					for (var i:int = 0, n:int = a.length; i < n; i++) {
 						var btn:Button = createButton(_skin, a[i]);
 						btn.name = "item" + i;
-						addElement(btn, right, 0);
-						right += btn.width;
+						addChild(btn);
 					}
 				}
 				initItems();
@@ -215,8 +218,15 @@ package morn.core.components {
 					btn.labelBold = _labelBold;
 				if (_labelMargin)
 					btn.labelMargin = _labelMargin;
-				btn.x = right;
-				right += btn.width;
+				if (_direction == HORIZENTAL) {
+					btn.y = 0;
+					btn.x = right;
+					right += btn.width;
+				} else {
+					btn.x = 0;
+					btn.y = right;
+					right += btn.height;
+				}
 			}
 		}
 		
@@ -251,6 +261,16 @@ package morn.core.components {
 					}
 				}
 			}
+		}
+		
+		/**布局方向*/
+		public function get direction():String {
+			return _direction;
+		}
+		
+		public function set direction(value:String):void {
+			_direction = value;
+			callLater(changeLabels);
 		}
 	}
 }

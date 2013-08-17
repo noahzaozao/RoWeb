@@ -167,7 +167,6 @@
     <classEntry path="inoah.interfaces.IViewObject"/>
     <classEntry path="inoah.utils.Counter"/>
     <classEntry path="morn.App"/>
-    <classEntry path="morn.Config"/>
     <classEntry path="morn.core.components.AutoBitmap"/>
     <classEntry path="morn.core.components.Box"/>
     <classEntry path="morn.core.components.Button"/>

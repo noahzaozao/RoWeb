@@ -4,7 +4,7 @@ package game.ui.mainViewChildren {
 	public class chatViewUI extends Dialog {
 		public var labChat:Label;
 		public var txtChat:TextInput;
-		private var uiXML:XML =
+		protected var uiXML:XML =
 			<Dialog width="600" height="160">
 			  <Image url="png.basic_interface.dialog_bg" x="0" y="129"/>
 			  <Image url="png.comp.blank" x="1" y="27" width="600" height="100"/>

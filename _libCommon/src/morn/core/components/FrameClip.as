@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.1.0623 http://code.google.com/p/morn https://github.com/yungzhu/morn
+ * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.components {
@@ -8,8 +8,6 @@ package morn.core.components {
 	import morn.core.events.UIEvent;
 	import morn.core.handlers.Handler;
 	import morn.editor.core.IClip;
-	import morn.App;
-	import morn.Config;
 	
 	/**当前帧发生变化后触发*/
 	[Event(name="frameChanged",type="morn.core.events.UIEvent")]
@@ -44,7 +42,6 @@ package morn.core.components {
 		protected function onRemovedFromStage(e:Event):void {
 			if (_autoStopAtRemoved) {
 				stop();
-				_frame = 0;
 			}
 		}
 		

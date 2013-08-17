@@ -19,7 +19,7 @@ package game.ui {
 		public var charBg2:Image;
 		public var selectBg:Image;
 		public var charBg0:Image;
-		private var uiXML:XML =
+		protected var uiXML:XML =
 			<View>
 			  <Image url="png.login_interface.win_select2" x="0" y="0"/>
 			  <Label text="label" x="68" y="201" width="80" var="labName" name="labName"/>

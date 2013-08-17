@@ -23,7 +23,6 @@ package inoah.game.ro
     import inoah.interfaces.managers.IMapMgr;
     import inoah.interfaces.managers.ITextureMgr;
     
-    import morn.App;
     import morn.core.handlers.Handler;
     
     import robotlegs.bender.bundles.mvcs.Mediator;

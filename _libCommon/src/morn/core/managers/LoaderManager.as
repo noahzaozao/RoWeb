@@ -6,7 +6,6 @@ package morn.core.managers {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import morn.core.handlers.Handler;
-	import morn.App;
 	
 	/**队列全部加载后触发*/
 	[Event(name="complete",type="flash.events.Event")]

@@ -11,7 +11,7 @@ package game.ui.mainViewChildren {
 		public var btnDown:Button;
 		public var btnRight:Button;
 		public var btnLeft:Button;
-		private var uiXML:XML =
+		protected var uiXML:XML =
 			<Dialog>
 			  <Button skin="png.comp.button" x="695" y="560" width="80" height="80" alpha="0.5"/>
 			  <Button skin="png.comp.button" x="816" y="496" width="144" height="144" var="btnAttack" name="btnAttack" alpha="0.5"/>

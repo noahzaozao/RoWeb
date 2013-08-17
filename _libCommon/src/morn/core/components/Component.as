@@ -11,7 +11,6 @@ package morn.core.components {
 	import morn.core.events.UIEvent;
 	import morn.core.utils.ObjectUtils;
 	import morn.editor.core.IComponent;
-	import morn.App;
 	
 	/**重置大小后触发*/
 	[Event(name="resize",type="flash.events.Event")]

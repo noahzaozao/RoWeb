@@ -1,5 +1,5 @@
 /**
- * Morn UI Version 2.0.0526 http://code.google.com/p/morn https://github.com/yungzhu/morn
+ * Morn UI Version 2.3.0810 http://code.google.com/p/morn https://github.com/yungzhu/morn
  * Feedback yungzhu@gmail.com http://weibo.com/newyung
  */
 package morn.core.managers {
@@ -14,7 +14,6 @@ package morn.core.managers {
 	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
 	import morn.core.utils.ObjectUtils;
-	import morn.App;
 	
 	/**日志管理器*/
 	public class LogManager extends Sprite {
@@ -156,7 +155,7 @@ package morn.core.managers {
 		}
 		
 		/**打开或隐藏面板*/
-		private function toggle():void {
+		public function toggle():void {
 			_box.visible = !_box.visible;
 			if (_box.visible) {
 				refresh(null);

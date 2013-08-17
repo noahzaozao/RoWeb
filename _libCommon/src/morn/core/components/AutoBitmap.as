@@ -6,7 +6,6 @@ package morn.core.components {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import morn.core.utils.BitmapUtils;
-	import morn.App;
 	
 	/**增强的Bitmap，封装了位置，宽高及9宫格的处理，供组件使用*/
 	public final class AutoBitmap extends Bitmap {

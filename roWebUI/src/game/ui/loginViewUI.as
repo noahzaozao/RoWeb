@@ -6,7 +6,7 @@ package game.ui {
 		public var txtPass:TextInput;
 		public var btnLogin:Button;
 		public var btnReg:Button;
-		private var uiXML:XML =
+		protected var uiXML:XML =
 			<View>
 			  <Image url="png.login_interface.win_login" x="0" y="0"/>
 			  <CheckBox label="存档" skin="png.comp.checkbox" x="230" y="32"/>

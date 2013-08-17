@@ -30,7 +30,7 @@ package game.ui.sysViews {
 		public var labMDef:Label;
 		public var labFlee:Label;
 		public var labAspd:Label;
-		private var uiXML:XML =
+		protected var uiXML:XML =
 			<Dialog dragArea="0,0,900,500">
 			  <Image url="png.basic_interface.statwin_bg" x="0" y="146"/>
 			  <Image url="png.basic_interface.titlebar_fix" x="0" y="0"/>

@@ -2,7 +2,7 @@
 package game.ui.mainViewChildren {
 	import morn.core.components.*;
 	public class mapViewUI extends Dialog {
-		private var uiXML:XML =
+		protected var uiXML:XML =
 			<Dialog>
 			  <Image url="png.comp.blank" x="0" y="0" width="190" height="190" alpha="0.2"/>
 			</Dialog>;

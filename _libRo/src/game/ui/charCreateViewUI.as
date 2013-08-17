@@ -9,7 +9,7 @@ package game.ui {
 		public var labInt:Label;
 		public var labDex:Label;
 		public var labLuk:Label;
-		private var uiXML:XML =
+		protected var uiXML:XML =
 			<View>
 			  <Image url="png.login_interface.win_make" x="0" y="0"/>
 			  <Image url="png.login_interface.arw-agi0" x="192" y="107"/>

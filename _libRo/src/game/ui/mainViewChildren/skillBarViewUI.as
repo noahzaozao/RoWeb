@@ -2,7 +2,7 @@
 package game.ui.mainViewChildren {
 	import morn.core.components.*;
 	public class skillBarViewUI extends Dialog {
-		private var uiXML:XML =
+		protected var uiXML:XML =
 			<Dialog>
 			  <Image url="png.basic_interface.shortitem_bg" x="0" y="0"/>
 			</Dialog>;
