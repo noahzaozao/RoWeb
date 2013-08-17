@@ -1,12 +1,15 @@
 package inoah.game.ro.modules.map.view
 {
     import flash.display.Bitmap;
+    import flash.display.Shape;
     import flash.geom.Point;
+    import flash.geom.Rectangle;
     
     import inoah.core.Global;
     import inoah.core.loaders.JpgLoader;
     import inoah.data.map.MapInfo;
     import inoah.data.map.MapTileSetInfo;
+    import inoah.interfaces.ICamera;
     import inoah.interfaces.base.ILoader;
     import inoah.interfaces.managers.IAssetMgr;
     import inoah.interfaces.map.IMapInfo;
@@ -14,16 +17,16 @@ package inoah.game.ro.modules.map.view
     import inoah.interfaces.map.IScene;
     import inoah.utils.Counter;
     
+    import robotlegs.bender.framework.api.IInjector;
     import robotlegs.bender.framework.api.ILogger;
     
     import starling.display.DisplayObjectContainer;
     import starling.display.Image;
     import starling.display.Sprite;
-    import starling.textures.RenderTexture;
     import starling.textures.Texture;
     import starling.textures.TextureAtlas;
     
-    public class BaseScene extends Sprite implements IScene
+    public class BaseScene extends starling.display.Sprite implements IScene
     {
         [Inject]
         public var assetMgr:IAssetMgr;
@@ -31,21 +34,66 @@ package inoah.game.ro.modules.map.view
         [Inject]
         public var logger:ILogger;
         
+        [Inject]
+        public var injector:IInjector;
+        
         protected var _mapInfo:MapInfo;
         
         protected var _container:DisplayObjectContainer;
+        
         protected var _currentResIndexList:Vector.<String>;
         protected var _currentResList:Vector.<Bitmap>;
+        
         protected var _currentTextureAtlasIndexList:Vector.<int>;
         protected var _currentTextureAtlasList:Vector.<TextureAtlas>;
+        
         protected var _levelList:Vector.<IMapLevel>;
         protected var _mapImageList:Vector.<Image>;
         
         protected var _drawTileObjList:Vector.<DrawTileObj>;
-        protected var _drawTileObj:DrawTileObj;
-        private var _isDrawComplete:Boolean;
-        private var _couldTick:Boolean;
-        private var _drawCounter:Counter;
+        protected var _couldTick:Boolean;
+        protected var _drawCounter:Counter;
+        
+        //地图元素
+        public var bgLayer : starling.display.Sprite;  //背景层 
+        public var bgImg : Bitmap; //地表
+        protected var cue : Bitmap; //测试用
+        public var actLayer : starling.display.Sprite; //动作层  
+        private var debugLayer : starling.display.Sprite;
+        private var debugMode : Boolean = false; 
+        //
+        public var logX : int = 0;
+        public var logY : int = 0;
+        public var logDir : int = 0;
+        //摄像机跟踪的最小滚动值的高速缓存
+        protected var minCameraPos : Point = new Point(0, 0); 
+        //集合  
+        public var locked : Boolean = true;   
+        public var mapCache : Object = {};
+        public var sortArr : Array = []; 
+        public var npcDict : Object = {}; 
+        //
+        private var nowTileDict : Object = {}; //当前tile集合
+        private var nowObjectDict : Object = {};
+        private var nowDebugDict : Object = {}; 
+        //
+        private var redrawW : int = 8;  //重绘区域
+        private var redrawH : int = 11; 
+        //        private var mapBg:Bitmap;
+        //        public var mapContainer:flash.display.Sprite;
+        
+        //
+        private var m_mapWid:int = 0;
+        private var m_mapHei:int = 0;
+        
+        private var m_orgX:Number = 0;
+        private var m_orgY:Number = 0;
+        
+        private var m_xincX:Number = 0;
+        private var m_xincY:Number = 0;
+        private var m_yincX:Number = 0;
+        private var m_yincY:Number = 0;
+        private var lightBlockSp:Shape;
         
         public function BaseScene()
         {
@@ -55,7 +103,11 @@ package inoah.game.ro.modules.map.view
         public function initScene( container:DisplayObjectContainer , mapInfo:IMapInfo ):void
         {
             _container = container;
-            _container.x = - Global.TILE_W * 4;
+            
+            bgLayer = new starling.display.Sprite();
+            bgLayer.touchable = false;
+            _container.addChild( bgLayer );
+            
             _levelList = new Vector.<IMapLevel>();
             _currentResIndexList = new Vector.<String>();
             _currentResList = new Vector.<Bitmap>();
@@ -66,6 +118,29 @@ package inoah.game.ro.modules.map.view
             _drawCounter.initialize();
             
             _mapInfo = mapInfo as MapInfo;
+            
+            var count:Number = _mapInfo.width + _mapInfo.height
+            var mapRange:Rectangle = new Rectangle( 0 , 0 , _mapInfo.tilewidth * _mapInfo.width , _mapInfo.tileheight * _mapInfo.height );
+            m_orgX = mapRange.left + mapRange.width / count;
+            m_orgY = mapRange.top + _mapInfo.height * mapRange.height / count;
+            m_xincX = mapRange.width / count;
+            m_xincY = - mapRange.height / count;
+            m_yincX = mapRange.width / count;
+            m_yincY = mapRange.height / count;
+            
+            var mapBgSp:Shape = new Shape();
+            for( var xx:int = 0; xx < 50 ; xx ++ )
+            {
+                for( var yy:int = 0; yy< 50; yy++)
+                {
+                    drawTile( mapBgSp ,  GridToView( xx , yy ).x , GridToView( xx,  yy).y );
+                }
+            }
+            //            mapBg = new Bitmap( new BitmapData( 3200 , 1600 , true , 0x0 ) );
+            //            mapContainer = new flash.display.Sprite();
+            //            Starling.current.nativeOverlay.addChild( mapContainer );
+            //            mapContainer.addChild( mapBg );
+            //            mapBg.bitmapData.draw( mapBgSp );
             
             var resList:Vector.<String> = new Vector.<String>();
             var len:int = _mapInfo.tilesets.length;
@@ -123,50 +198,7 @@ package inoah.game.ro.modules.map.view
                 _currentTextureAtlasList.push( new TextureAtlas( texture, atlasXml ) );
             }
             
-            len = _mapInfo.layers.length;
-            for( i=0;i<len;i++)
-            {
-                if( _mapInfo.layers[i].type == "tilelayer" )
-                {
-                    drawTile( i );
-                    _couldTick = true;
-                    return;
-                }
-                else if( _mapInfo.layers[i].type == "objectgroup" )
-                {
-                    //                    drawObject( i );
-                }
-            }
-        }
-        
-        private function drawTile( index:int ):void
-        {
-            _drawTileObj = new DrawTileObj();
-            _drawTileObj.textureIndex = 0;
-            _drawTileObj.mapDataArr = _mapInfo.layers[index].data;
-            
-            _drawTileObj.bw = _mapInfo.layers[index].width;
-            _drawTileObj.bh = _mapInfo.layers[index].height;
-            _drawTileObj.w = _mapInfo.layers[index].width * Global.TILE_W;
-            _drawTileObj.h = _mapInfo.layers[index].height * Global.TILE_H;
-            
-            _drawTileObj.pointList = new Vector.<Point>();
-            _drawTileObj.pointList.push( new Point() );
-            _drawTileObj.pointList.push( new Point() );
-            _drawTileObj.pointList.push( new Point() );
-            _drawTileObj.pointList.push( new Point() );
-            
-            _drawTileObj.tmpRenderTexture = new Vector.<RenderTexture>();
-            _drawTileObj.tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
-            _drawTileObj.tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
-            _drawTileObj.tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
-            _drawTileObj.tmpRenderTexture.push( new RenderTexture( 1600 , 832 ) );
-            
-            _drawTileObj.i = 0;
-            _drawTileObj.j = 0;
-            
-            _isDrawComplete = false;
-            _drawCounter.reset( 0.1 );
+            updateMap();
         }
         
         public function tick( delta:Number ):void
@@ -175,107 +207,221 @@ package inoah.game.ro.modules.map.view
             {
                 return;
             }
-            if( !_isDrawComplete )
-            {
-                while( true )
-                {
-                    _drawCounter.tick( delta );
-                    if( _drawCounter.expired )
-                    {
-                        _drawCounter.reset( 0.1 )
-                        break;
-                    }
-                    if( _isDrawComplete )
-                    {
-                        break;
-                    }
-                    drawTileStep();
-                }
-            }
         }
         
-        private function drawTileStep():void
+        public function updateMap():void
         {
-            if( _drawTileObj.j >= _drawTileObj.bw )
-            {
-                _drawTileObj.j = 0;
-                _drawTileObj.i++;
-            }
-            if( _drawTileObj.i < _drawTileObj.bh )
-            {
-                if( _drawTileObj.j < _drawTileObj.bw )
-                {
-                    _drawTileObj.textureIndex = _currentTextureAtlasIndexList[ _drawTileObj.mapDataArr[ _drawTileObj.j + _drawTileObj.i * _drawTileObj.bw ]];
-                    _drawTileObj.image = new Image( _currentTextureAtlasList[ _drawTileObj.textureIndex ].getTexture( _drawTileObj.mapDataArr[ _drawTileObj.j + _drawTileObj.i * _drawTileObj.bw ].toString() ) );
-                    if( _drawTileObj.j < 25 && _drawTileObj.i < 25 )
-                    {
-                        _drawTileObj.image.x =_drawTileObj.w / 4 - ( _drawTileObj.i + 1 ) * Global.TILE_W / 2 + _drawTileObj.j * Global.TILE_W / 2;
-                        _drawTileObj.image.y = _drawTileObj.i * Global.TILE_H / 2 + _drawTileObj.j * Global.TILE_H / 2;
-                        _drawTileObj.tmpRenderTexture[0].draw( _drawTileObj.image );
-                    }
-                    else if( _drawTileObj.j >= 25 && _drawTileObj.i < 25 )
-                    {
-                        _drawTileObj.image.x =_drawTileObj.w / 4 - ( _drawTileObj.i + 1 ) * Global.TILE_W / 2 + ( _drawTileObj.j - 25 ) * Global.TILE_W / 2;
-                        _drawTileObj.image.y = _drawTileObj.i * Global.TILE_H / 2 + ( _drawTileObj.j - 25 ) * Global.TILE_H / 2;
-                        _drawTileObj.tmpRenderTexture[1].draw( _drawTileObj.image );
-                    }
-                    else if( _drawTileObj.j < 25 && _drawTileObj.i >= 25 )
-                    {
-                        _drawTileObj.image.x =_drawTileObj.w / 4 - ( _drawTileObj.i + 1 - 25 ) * Global.TILE_W / 2 +  _drawTileObj.j * Global.TILE_W / 2;
-                        _drawTileObj.image.y = ( _drawTileObj.i - 25 ) * Global.TILE_H / 2 + _drawTileObj.j * Global.TILE_H / 2;
-                        _drawTileObj.tmpRenderTexture[2].draw( _drawTileObj.image );
-                    }
-                    else if( _drawTileObj.j>= 25 && _drawTileObj.i >= 25 )
-                    {
-                        _drawTileObj.image.x =_drawTileObj.w / 4 - ( _drawTileObj.i + 1 - 25 ) * Global.TILE_W / 2 + ( _drawTileObj.j - 25 ) * Global.TILE_W / 2;
-                        _drawTileObj.image.y = ( _drawTileObj.i - 25 ) * Global.TILE_H / 2 + ( _drawTileObj.j - 25 ) * Global.TILE_H / 2;
-                        _drawTileObj.tmpRenderTexture[3].draw( _drawTileObj.image );
-                    }
-                    _drawTileObj.j++;
-                }
-            }
-            logger.debug( "mapLoading..." + (_drawTileObj.i * _drawTileObj.bw + _drawTileObj.j ) + "/" + (_drawTileObj.bw * _drawTileObj.bh ) );
+            var camera:ICamera = injector.getInstance(ICamera) as ICamera;
+            //            var cp : Point = relToAbs( camera.zeroX + 480, camera.zeroY + 320 );
+            //屏幕中心点sPos
+            var centerPos:Point = new Point( camera.zeroX + 960 / 2 , camera.zeroY + 640 / 2 );
+            var cp:Point = ViewToGrid( centerPos.x , centerPos.y );
+            //屏幕中心点bPos
+            var lightBlock:Point = ViewToGrid( centerPos.x, centerPos.y );
             
-            if( _drawTileObj.i == 25 )
+            //            if( !lightBlockSp )
+            //            {
+            //                lightBlockSp = new Shape();
+            //                mapContainer.addChild(lightBlockSp);
+            //            }
+            //            else
+            //            {
+            //                lightBlockSp.graphics.clear();
+            //                
+            //                var drawBlockPos:Point = GridToView( lightBlock.x , lightBlock.y );
+            //                drawTile( lightBlockSp , drawBlockPos.x , drawBlockPos.y , 0x00ff00 );
+            //            }
+            var area : int = redrawW + redrawH;
+            var newTileDict : Object = {};
+            //            for(var _XX :int = cp.x - area; _XX  <= cp.x + area ; _XX ++)
+            //            {
+            //                for(var _YY :int = cp.y - area ; _YY  <= cp.y + area ; _YY ++)
+            for(var _XX :int = cp.x + area; _XX  > cp.x - area ; _XX --)
             {
-                if( _drawTileObj.j == 25 )
+                for(var _YY :int = cp.y - area ; _YY  <= cp.y + area ; _YY ++)
                 {
-                    _mapImageList[ 0 ] = new Image( _drawTileObj.tmpRenderTexture[0] );
-                    _mapImageList[ 0 ].touchable = false;
-                    _mapImageList[ 0 ].x = 800;
-                    _mapImageList[ 0 ].y = 0;
-                    _container.addChild( _mapImageList[ 0 ] );
-                }
-                else if( _drawTileObj.j == 50 )
-                {
-                    _mapImageList[ 1 ] = new Image( _drawTileObj.tmpRenderTexture[1] );
-                    _mapImageList[ 1 ].touchable = false;
-                    _mapImageList[ 1 ].x = 1600;
-                    _mapImageList[ 1 ].y = 400;
-                    _container.addChild( _mapImageList[ 1 ] );
+                    if(_XX  >= 0 && _XX  < _mapInfo.layers[0].width && _YY  >= 0 && _YY  < _mapInfo.layers[0].height)
+                    {
+                        if(Math.abs((_YY  - cp.y - _XX  + cp.x) / 2) <= redrawH && Math.abs((_XX  - cp.x + _YY  - cp.y) / 2) <= redrawW)
+                        {
+                            //                            if(lightBlockSp)
+                            //                            {
+                            //                                var pos:Point = GridToView( _XX, _YY);
+                            //                                drawTile( lightBlockSp , pos.x , pos.y , 0x999999 );
+                            //                            }
+                            
+                            if( _mapInfo.layers[0].type == "tilelayer" )
+                            {
+                                addTile( _XX  , _YY  );
+                            }
+                            newTileDict[ _XX  + "," + _YY ] = true;
+                            //                            else if( _mapInfo.layers[0].type == "objectgroup" )
+                            //                            {
+                            //                                addObj
+                            //                            }
+                        }
+                    }
                 }
             }
-            else if( _drawTileObj.i == 49 )
+            for(var k:String in nowTileDict)
             {
-                if( _drawTileObj.j == 25 )
-                {
-                    _mapImageList[ 2 ] = new Image( _drawTileObj.tmpRenderTexture[2] );
-                    _mapImageList[ 2 ].touchable = false;
-                    _mapImageList[ 2 ].x = 0;
-                    _mapImageList[ 2 ].y = 400;
-                    _container.addChild( _mapImageList[ 2 ] );
-                }
-                else if( _drawTileObj.j == 50 )
-                {
-                    _mapImageList[ 3 ] = new Image( _drawTileObj.tmpRenderTexture[3] );
-                    _mapImageList[ 3 ].touchable = false;
-                    _mapImageList[ 3 ].x = 800;
-                    _mapImageList[ 3 ].y = 800;
-                    _container.addChild( _mapImageList[ 3 ] );
-                    _isDrawComplete = true;
-                    _drawTileObj = null;
-                }
+                newTileDict[k] || delTile(k); 
             }
+            _couldTick = true;
+            //            for( k in nowObjectDict)
+            //            {
+            //                newTileDict[k] || delObj(k);
+            //            }
+            
+            //            var len:int = _mapInfo.layers.length;
+        }
+        
+        /**
+         * 
+         */        
+        protected function addTile( _XX  : int, _YY : int ) : void
+        {  
+            var tileImage:TileImage;
+            if( nowTileDict[_XX  + "," + _YY] )
+            {
+                tileImage = nowTileDict[_XX  + "," + _YY];
+                return;
+            }
+            else
+            {
+                //                tileImage = new TileImage( 0 , _currentTextureAtlasList[0].getTexture( _mapInfo.layers[0].data[ _YY * _mapInfo.width + _XX  ].toString() ));  
+                tileImage = new TileImage( 0 , _currentTextureAtlasList[0].getTexture( _mapInfo.layers[0].data[ _mapInfo.layers[0].width * ( _mapInfo.layers[0].height - 1 - _XX ) + _YY  ].toString() ));  
+                
+                var pt : Point = GridToView(_XX , _YY);  
+                tileImage.x = pt.x - 32;
+                tileImage.y = pt.y - 32; 
+                nowTileDict[_XX  + "," + _YY] = tileImage;
+            }
+            bgLayer.addChild( tileImage );
+        }
+        
+        private function delTile(k : String) : void
+        {  
+            bgLayer.removeChild( nowTileDict[k] );
+            (nowTileDict[k] as TileImage).dispose();
+            delete nowTileDict[k];
+        } 
+        
+        //重设地图原点位置的偏移（用于地图滑动）
+        public function SetOrgin( xpos:Number, ypos:Number ):void
+        {
+            m_orgX = xpos;
+            m_orgY = ypos;
+        }
+        
+        //地图网格坐标转换到屏幕显示坐标（用于提供给描画用）
+        public function GridToView( xpos:int, ypos:int ):Point
+        {
+            var pos:Point = new Point();
+            
+            pos.x = m_orgX + m_xincX * xpos + m_yincX * ypos;
+            pos.y = m_orgY + m_xincY * xpos + m_yincY * ypos;
+            
+            return pos;
+        }
+        
+        //屏幕坐标转换到地图网格坐标（比如在即时战略中用于确定鼠标点击的是哪一块）
+        public function ViewToGrid( xpos:Number, ypos:Number ):Point
+        {
+            var pos:Point = new Point();
+            
+            var coordX:Number = xpos - m_orgX;
+            var coordY:Number = ypos - m_orgY;
+            
+            pos.x = ( coordX * m_yincY - coordY * m_yincX ) / ( m_xincX * m_yincY - m_xincY * m_yincX );
+            pos.y = ( coordX - m_xincX * pos.x ) / m_yincX;
+            
+            pos.x = Math.round( pos.x );
+            pos.y = Math.round( pos.y );
+            
+            return pos;
+        }
+        
+        //判断网格坐标是否在地图范围内
+        public function LegalGridCoord( xpos:int, ypos:int ):Boolean
+        {
+            if ( xpos < 0 || ypos < 0 || xpos >= m_mapWid || ypos >= m_mapHei )
+            {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        //判断屏幕坐标是否在地图范围内
+        public function LegalViewCoord( xpos:Number, ypos:Number ):Boolean
+        {
+            var pos:Point = ViewToGrid( xpos, ypos );
+            
+            return LegalGridCoord( pos.x, pos.y );
+        }
+        
+        //格式化屏幕坐标，即返回最接近该坐标的一个格子的标准屏幕坐标（通常用于在地图中拖动建筑物对齐网格用）
+        public function FormatViewPos( xpos:Number, ypos:Number ):Point
+        {
+            var pos:Point = ViewToGrid( xpos, ypos );
+            
+            if ( LegalGridCoord( pos.x, pos.y ) )
+            {
+                pos = GridToView( pos.x, pos.y );
+            }else
+            {
+                pos.x = xpos;
+                pos.y = ypos;
+            }
+            
+            return pos;
+        }
+        
+        //        /**
+        //         * TileToScreen
+        //         */
+        //        protected function absToRel( xx : int, yy : int) : Point
+        //        {
+        //            var rx : int = ( xx - yy ) * ( Global.TILE_W / 2 ) + Global.MAP_W / 2;
+        //            var ry : int = ( xx + yy ) * ( Global.TILE_H / 2 ) + Global.TILE_H / 2;
+        //            
+        //            return new Point(rx, ry);
+        //        }
+        //        
+        //        /**
+        //         * ScreenToTile
+        //         */        
+        //        protected function relToAbs( xx : Number, yy : Number) : Point
+        //        { 
+        //            var ax : int = yy  / Global.TILE_H + ( 2 * xx - Global.MAP_W ) / ( 2 * Global.TILE_W ) - 0.5;
+        //            var ay : int = yy / Global.TILE_H - ( 2 * xx - Global.MAP_W ) / ( 2 * Global.TILE_W ) - 0.5;
+        //            
+        //            return new Point(ax, ay);
+        //        }
+        
+        protected function drawTile( shape:Shape, x:int , y:int , color:int = -1 ):void
+        {
+            if(color!= -1)
+            {
+                shape.graphics.beginFill( color , 0.5 );
+            }
+            else
+            {
+                shape.graphics.beginFill( 0x0 , 0 );
+            }
+            shape.graphics.lineStyle( 1 , 0xffffff , 0.5 );
+            shape.graphics.moveTo( x , y - Global.TILE_H/2 );
+            shape.graphics.lineTo( x + Global.TILE_W/2 , y );
+            shape.graphics.lineTo( x , y + Global.TILE_H/2 );
+            shape.graphics.lineTo( x - Global.TILE_W/2, y );
+            shape.graphics.lineTo( x , y - Global.TILE_H/2 );
+            shape.graphics.endFill();
+        }
+        
+        public function get couldTick():Boolean
+        {
+            return _couldTick;
         }
     }
 }

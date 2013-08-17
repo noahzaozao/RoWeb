@@ -9,6 +9,7 @@ package inoah.game.ro.modules.map.view.mediators
     import inoah.core.Global;
     import inoah.core.base.BaseObject;
     import inoah.data.map.MapInfo;
+    import inoah.game.ro.modules.map.view.BaseScene;
     import inoah.interfaces.IUserModel;
     import inoah.interfaces.base.IBaseObject;
     import inoah.interfaces.managers.IDisplayMgr;
@@ -22,7 +23,7 @@ package inoah.game.ro.modules.map.view.mediators
     
     import starling.display.DisplayObject;
     import starling.display.DisplayObjectContainer;
-
+    
     public class BaseSceneMediator extends Mediator implements ISceneMediator
     {
         [Inject]
@@ -199,12 +200,26 @@ package inoah.game.ro.modules.map.view.mediators
         
         public function set offsetX( value:Number ):void
         {
-            _offsetX = value;
+            if( _offsetX != value )
+            {
+                _offsetX = value;
+                if( scene && (scene as BaseScene).couldTick )
+                {
+                    (scene as BaseScene).updateMap();
+                }
+            }
         }
         
         public function set offsetY( value:Number ):void
         {
-            _offsetY = value;
+            if( _offsetY != value )
+            {
+                _offsetY = value;
+                if( scene && (scene as BaseScene).couldTick )
+                {
+                    (scene as BaseScene).updateMap();
+                }
+            }
         }
         
         public function tick(delta:Number):void
@@ -212,6 +227,11 @@ package inoah.game.ro.modules.map.view.mediators
             if( scene )
             {
                 scene.tick( delta );
+                //                if( (scene as BaseScene).mapContainer )
+                //                {
+                //                    (scene as BaseScene).mapContainer.x = int(_offsetX);
+                //                    (scene as BaseScene).mapContainer.y = int(_offsetY);
+                //                }
             }
             if( _mapContainer )
             {

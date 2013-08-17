@@ -57,6 +57,7 @@
     <classEntry path="inoah.game.ro.modules.map.view.BattleScene"/>
     <classEntry path="inoah.game.ro.modules.map.view.mediators.BattleSceneMediator"/>
     <classEntry path="inoah.game.ro.modules.map.RoPlayerFactory"/>
+    <classEntry path="inoah.game.ro.modules.map.view.TileImage"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

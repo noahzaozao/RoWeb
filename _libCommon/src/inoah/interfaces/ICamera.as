@@ -1,6 +1,8 @@
 package inoah.interfaces
 {
     import inoah.interfaces.base.IBaseObject;
+    
+    import starling.display.Sprite;
 
     public interface ICamera
     {

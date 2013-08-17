@@ -9,8 +9,11 @@ package
     
     import inoah.core.CoreBundle;
     import inoah.core.Global;
+    import inoah.game.ro.RoConfig;
     import inoah.gameEditor.EditorMenu;
     import inoah.gameEditor.editorMain;
+    import inoah.interfaces.managers.IDisplayMgr;
+    import inoah.interfaces.managers.IKeyMgr;
     
     import robotlegs.bender.bundles.mvcs.MVCSBundle;
     import robotlegs.bender.extensions.contextView.ContextView;
@@ -18,6 +21,7 @@ package
     import robotlegs.bender.framework.impl.Context;
     
     import starling.core.Starling;
+    import starling.display.DisplayObject;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
     
@@ -53,7 +57,7 @@ package
             _context = new Context()
                 .install( MVCSBundle )
                 .install( CoreBundle )
-//                .configure( RoConfig )
+                .configure( RoConfig )
                 .configure(EditorConfig)
                 .configure( new ContextView( this ) );
             _context.initialize( onInitialize );
@@ -110,6 +114,12 @@ package
         {
             _context.injector.injectInto(_editorMain);
             _editorMain.initialize();
+            
+            var keyMgr:IKeyMgr = _context.injector.getOrCreateNewInstance(IKeyMgr);
+            keyMgr.initialize();
+            
+            var displayMgr:IDisplayMgr = _context.injector.getOrCreateNewInstance(IDisplayMgr);
+            displayMgr.initStarling( _editorMain as DisplayObject );
         }
     }
 }

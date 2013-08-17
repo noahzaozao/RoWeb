@@ -52,7 +52,7 @@ package inoah.core
          * 视口左上角对应的世界坐标Y
          */ 
         protected var _zeroY:Number;
-
+        
         /**
          * 镜头注视
          */ 
@@ -111,7 +111,7 @@ package inoah.core
         
         public function update():void
         {
-            if(_focus)
+            if(_focus )
             {
                 _zeroX = _focus.posX - (Global.SCREEN_W>>1);
                 _zeroY = _focus.posY - (Global.SCREEN_H>>1);
