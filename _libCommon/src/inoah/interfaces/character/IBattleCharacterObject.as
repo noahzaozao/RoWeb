@@ -20,5 +20,7 @@ package inoah.interfaces.character
         function get endTarget():Point;
         function set endTarget( value:Point ):void;
         //        function get battleCharacterInfo():BattleCharacterInfo;
+        function moveTo(nextX:int, nextY:int):void;
+        function changeDirectionByAngle( angle:int ):void;
     }
 }

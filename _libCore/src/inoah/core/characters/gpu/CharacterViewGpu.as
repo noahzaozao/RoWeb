@@ -16,8 +16,10 @@ package inoah.core.characters.gpu
     import inoah.interfaces.base.ILoader;
     import inoah.interfaces.managers.IAssetMgr;
     
+    import robotlegs.bender.framework.api.ILogger;
+    
+    import starling.display.Quad;
     import starling.display.Sprite;
-    import starling.text.TextField;
     
     /**
      * 
@@ -28,6 +30,9 @@ package inoah.core.characters.gpu
     {
         [Inject]
         public var assetMgr:IAssetMgr;
+        
+        [Inject]
+        public var logger:ILogger;
         
         protected var _charInfo:CharacterInfo;
         protected var _bodyView:ActTpcBodyView;
@@ -55,10 +60,7 @@ package inoah.core.characters.gpu
         
         protected var _weaponLoader:ILoader;
         protected var _weaponShadowLoader:ILoader;
-        /**
-         * 方向转换数组 
-         */        
-        protected var _dirChangeArr:Array = [4, 5, 6, 7, 8, -7, -6, -5];
+
         protected var _isPlayEnd:Boolean;
         protected var _action:int;
         /**
@@ -109,8 +111,11 @@ package inoah.core.characters.gpu
         
         public function set gid( value:uint ):void
         {
-            var txt:TextField = new TextField( 100 , 24 , value.toString() );
-            addChild( txt );
+            //            var txt:TextField = new TextField( 100 , 24 , value.toString() );
+            //            txt.x = - txt.width / 2;
+            //            addChild( txt );
+            var quad:Quad = new Quad( 3, 3, 0xff0000 );
+            addChild( quad );
         }
         
         public function get charInfo():CharacterInfo
@@ -496,9 +501,14 @@ package inoah.core.characters.gpu
             
         }
         
+        /**
+         * 编辑器的接口 
+         * @param value
+         */        
         public function setDirIndex( value:uint ):void
         {
             _dirIndex = value;
+            
             _bodyView.actionIndex = _currentIndex + _dirIndex;
             var len:int = _otherViews.length;
             for( var i:int = 0;i<len;i++)
@@ -594,19 +604,7 @@ package inoah.core.characters.gpu
             }
         }
         
-        /**
-         * 更换方向接口
-         */ 
-        public function set direction(v:int):void
-        {
-            dirIndex = _dirChangeArr.indexOf( v );
-        }
-        public function get direction():int
-        {
-            return _dirChangeArr[dirIndex];
-        }
-        
-        public function set isPlayEnd( value:Boolean ):void
+        public function set isPlayEnd( value:Boolean ):void 
         {
             _isPlayEnd = value;
         }

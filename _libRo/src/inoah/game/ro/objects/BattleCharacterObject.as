@@ -1,11 +1,14 @@
 package inoah.game.ro.objects
 {
     import flash.geom.Point;
+    import flash.utils.getTimer;
     
+    import inoah.core.consts.ConstsActions;
+    import inoah.core.consts.ConstsDirIndex;
     import inoah.core.infos.BattleCharacterInfo;
     import inoah.core.viewModels.valueBar.HSpbar;
-    import inoah.interfaces.info.ICharacterInfo;
     import inoah.interfaces.character.IBattleCharacterObject;
+    import inoah.interfaces.info.ICharacterInfo;
     
     public class BattleCharacterObject extends CharacterObject implements IBattleCharacterObject
     {
@@ -35,39 +38,37 @@ package inoah.game.ro.objects
         {
             if(angle<-22.5) angle+=360;
             
-            //_me.Angle = angle;
-            
             if(angle>=-22.5 && angle<22.5)
             {
-                direction = directions.Up;
+                direction = ConstsDirIndex.UP;
             }
             else if(angle>=22.5 && angle<67.5)
             {
-                direction = directions.RightUp;
+                direction = ConstsDirIndex.UP_RIGHT;
             }
             else if(angle>=67.5 && angle<112.5)
             {
-                direction = directions.Right;
+                direction = ConstsDirIndex.RIGHT;
             }
             else if(angle>=112.5 && angle<157.5)
             {
-                direction = directions.RightDown;
+                direction = ConstsDirIndex.DOWN_RIGHT;
             }
             else if(angle>=157.5 && angle<202.5)
             {
-                direction = directions.Down;
+                direction = ConstsDirIndex.DOWN;
             }
             else if(angle>=202.5 && angle<247.5)
             {
-                direction = directions.LeftDown;
+                direction = ConstsDirIndex.DOWN_LEFT;
             }
             else if(angle>=247.5 && angle<292.5)
             {
-                direction = directions.Left;
+                direction = ConstsDirIndex.LEFT;
             }
             else
             {
-                direction = directions.LeftUp;
+                direction = ConstsDirIndex.UP_LIFT;
             }
         }
         
@@ -79,6 +80,7 @@ package inoah.game.ro.objects
         public function moveTo(nextX:int, nextY:int):void
         {
             _endTarget = new Point( nextX, nextY );
+            action = ConstsActions.Run;
         }
         
         public function get atkCd():Number

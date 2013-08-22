@@ -5,8 +5,7 @@ package inoah.interfaces.map
     public interface IMapFactory
     {
         function newScene( mapId:int ):IScene;
-        function newSceneMediator( mapId:int ):ISceneMediator;
-        function newBattleSceneMediator( mapId:int ):IBattleSceneMediator;
+        function newSceneMediator( mapId:int , mapType:int ):ISceneMediator;
         function newCamera():ICamera;
     }
 }

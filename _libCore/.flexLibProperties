@@ -5,6 +5,8 @@
     <classEntry path="inoah.core.CoreConfig"/>
     <classEntry path="inoah.core.GameCamera"/>
     <classEntry path="inoah.core.Global"/>
+    <classEntry path="inoah.core.base.BaseController"/>
+    <classEntry path="inoah.core.base.BaseObject"/>
     <classEntry path="inoah.core.characters.gpu.CharacterViewGpu"/>
     <classEntry path="inoah.core.characters.gpu.MonsterViewGpu"/>
     <classEntry path="inoah.core.characters.gpu.PlayerViewGpu"/>
@@ -14,7 +16,6 @@
     <classEntry path="inoah.core.consts.ConstsActions"/>
     <classEntry path="inoah.core.consts.ConstsDirIndex"/>
     <classEntry path="inoah.core.consts.commands.BattleCommands"/>
-    <classEntry path="inoah.core.base.BaseController"/>
     <classEntry path="inoah.core.events.ActSprEvent"/>
     <classEntry path="inoah.core.events.ActTpcEvent"/>
     <classEntry path="inoah.core.infos.BattleCharacterInfo"/>
@@ -25,7 +26,6 @@
     <classEntry path="inoah.core.loaders.AtfLoader"/>
     <classEntry path="inoah.core.loaders.JpgLoader"/>
     <classEntry path="inoah.core.loaders.LuaLoader"/>
-    <classEntry path="inoah.core.base.BaseObject"/>
     <classEntry path="inoah.core.starlingMain"/>
     <classEntry path="inoah.core.utils.GMath"/>
     <classEntry path="inoah.core.utils.GeomUtil"/>
@@ -63,21 +63,21 @@
     <classEntry path="inoah.data.map.MapLayerInfo"/>
     <classEntry path="inoah.data.map.MapObjectInfo"/>
     <classEntry path="inoah.data.map.MapTileSetInfo"/>
+    <classEntry path="inoah.interfaces.ISprMgr"/>
     <classEntry path="inoah.modules.core.model.BaseModel"/>
-    <classEntry path="inoah.modules.core.service.ExampleService"/>
     <classEntry path="robotlegs.bender.extensions.assetMgrExtension.AssetMgr"/>
     <classEntry path="robotlegs.bender.extensions.assetMgrExtension.AssetMgrExtension"/>
     <classEntry path="robotlegs.bender.extensions.displayMgrExtension.DisplayMgr"/>
     <classEntry path="robotlegs.bender.extensions.displayMgrExtension.DisplayerMgrExtension"/>
     <classEntry path="robotlegs.bender.extensions.keyMgrExtension.KeyMgr"/>
-    <classEntry path="robotlegs.bender.extensions.keyMgrExtension.MapMgrExtension"/>
+    <classEntry path="robotlegs.bender.extensions.keyMgrExtension.KeyMgrExtension"/>
+    <classEntry path="robotlegs.bender.extensions.mapMgrExtension.MapEvent"/>
+    <classEntry path="robotlegs.bender.extensions.mapMgrExtension.MapMgr"/>
+    <classEntry path="robotlegs.bender.extensions.mapMgrExtension.MapMgrExtension"/>
     <classEntry path="robotlegs.bender.extensions.sprMgrExtension.SprMgr"/>
     <classEntry path="robotlegs.bender.extensions.sprMgrExtension.SprMgrExtension"/>
     <classEntry path="robotlegs.bender.extensions.textureMgrExtension.TextureMgr"/>
     <classEntry path="robotlegs.bender.extensions.textureMgrExtension.TextureMgrExtension"/>
-    <classEntry path="robotlegs.bender.extensions.mapMgrExtension.MapMgr"/>
-    <classEntry path="robotlegs.bender.extensions.mapMgrExtension.MapEvent"/>
-    <classEntry path="inoah.interfaces.ISprMgr"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

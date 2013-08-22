@@ -57,6 +57,8 @@ package robotlegs.bender.extensions.mapMgrExtension
         
         protected var _mapId:uint;
         
+        protected var _mapType:uint;
+        
         protected var _player:IPlayerObject;
         
         public function MapMgr()
@@ -74,10 +76,11 @@ package robotlegs.bender.extensions.mapMgrExtension
         protected function onChangeMap( e:MapEvent ):void
         {
             _mapId = e.mapId;
+            _mapType = e.mapType;
             if( !_scene)
             {
                 _scene =  mapFactory.newScene( _mapId );
-                _sceneMediator = mapFactory.newBattleSceneMediator( _mapId );
+                _sceneMediator = mapFactory.newSceneMediator( _mapId , _mapType );
                 _camera = mapFactory.newCamera();
             }
             
@@ -89,8 +92,8 @@ package robotlegs.bender.extensions.mapMgrExtension
             _player = playerFactory.newPlayerObject();
             _player.controller = playerController;
             _player.viewObject = playerView;
-            _player.posX = 400;
-            _player.posY = 400;
+            _player.posX = 1120;
+            _player.posY = 560;
             _player.info = userModel.info as ICharacterInfo;
             _sceneMediator.addObject( _player );
             _camera.focus( _player );

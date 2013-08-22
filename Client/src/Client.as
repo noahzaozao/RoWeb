@@ -39,7 +39,7 @@ package
             tabChildren = false;
             tabEnabled = false;
             
-            Global.IS_MOBILE = true;
+            Global.IS_MOBILE = false;
             Global.ENABLE_LUA = true;
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;

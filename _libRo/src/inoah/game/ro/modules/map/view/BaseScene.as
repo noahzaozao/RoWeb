@@ -2,16 +2,19 @@ package inoah.game.ro.modules.map.view
 {
     import flash.display.Bitmap;
     import flash.display.Shape;
+    import flash.display.Sprite;
     import flash.geom.Point;
     import flash.geom.Rectangle;
     
-    import inoah.core.Global;
+    import inoah.core.SilzAstar;
     import inoah.core.loaders.JpgLoader;
     import inoah.data.map.MapInfo;
+    import inoah.data.map.MapLayerInfo;
     import inoah.data.map.MapTileSetInfo;
     import inoah.interfaces.ICamera;
     import inoah.interfaces.base.ILoader;
     import inoah.interfaces.managers.IAssetMgr;
+    import inoah.interfaces.managers.IDisplayMgr;
     import inoah.interfaces.map.IMapInfo;
     import inoah.interfaces.map.IMapLevel;
     import inoah.interfaces.map.IScene;
@@ -20,6 +23,7 @@ package inoah.game.ro.modules.map.view
     import robotlegs.bender.framework.api.IInjector;
     import robotlegs.bender.framework.api.ILogger;
     
+    import starling.core.Starling;
     import starling.display.DisplayObjectContainer;
     import starling.display.Image;
     import starling.display.Sprite;
@@ -28,6 +32,9 @@ package inoah.game.ro.modules.map.view
     
     public class BaseScene extends starling.display.Sprite implements IScene
     {
+        [Injdet]
+        public var displayMgr:IDisplayMgr;
+        
         [Inject]
         public var assetMgr:IAssetMgr;
         
@@ -38,6 +45,8 @@ package inoah.game.ro.modules.map.view
         public var injector:IInjector;
         
         protected var _mapInfo:MapInfo;
+        
+        protected var _astar:SilzAstar;
         
         protected var _container:DisplayObjectContainer;
         
@@ -94,6 +103,10 @@ package inoah.game.ro.modules.map.view
         private var m_yincX:Number = 0;
         private var m_yincY:Number = 0;
         private var lightBlockSp:Shape;
+        private var _roadMap:Vector.<Point>;
+        private var _startPos:Point;
+        private var _endPos:Point;
+        
         
         public function BaseScene()
         {
@@ -128,14 +141,19 @@ package inoah.game.ro.modules.map.view
             m_yincX = mapRange.width / count;
             m_yincY = mapRange.height / count;
             
-            var mapBgSp:Shape = new Shape();
-            for( var xx:int = 0; xx < 50 ; xx ++ )
-            {
-                for( var yy:int = 0; yy< 50; yy++)
-                {
-                    drawTile( mapBgSp ,  GridToView( xx , yy ).x , GridToView( xx,  yy).y );
-                }
-            }
+            var mapLayerInfo:MapLayerInfo = _mapInfo.layers[1];
+            //生成寻路层
+            
+            makeRoadMap( mapLayerInfo );
+            
+            //            var mapBgSp:Shape = new Shape();
+            //            for( var xx:int = 0; xx < 50 ; xx ++ )
+            //            {
+            //                for( var yy:int = 0; yy< 50; yy++)
+            //                {
+            //                    drawTile( mapBgSp ,  GridToView( xx , yy ).x , GridToView( xx,  yy).y );
+            //                }
+            //            }
             //            mapBg = new Bitmap( new BitmapData( 3200 , 1600 , true , 0x0 ) );
             //            mapContainer = new flash.display.Sprite();
             //            Starling.current.nativeOverlay.addChild( mapContainer );
@@ -150,6 +168,41 @@ package inoah.game.ro.modules.map.view
                 _currentResIndexList.push( "map/" + _mapInfo.tilesets[i].image );
             }
             assetMgr.getResList( resList , onLoadMapRes );
+        }
+        
+        private function makeRoadMap( mapLayerInfo:MapLayerInfo ):void
+        {
+            var p:Point;
+            p = new Point( _mapInfo.layers[2].objects[0].x / _mapInfo.tileheight , _mapInfo.layers[2].objects[0].y / _mapInfo.tileheight );
+            _startPos = new Point( _mapInfo.height - p.y , p.x );
+            p = new Point( _mapInfo.layers[2].objects[1].x / _mapInfo.tileheight , _mapInfo.layers[2].objects[1].y / _mapInfo.tileheight );
+            _endPos =  new Point( _mapInfo.height - p.y , p.x );
+            
+            var arr:Array = [];
+            for( var _YY:int = 0;_YY < mapLayerInfo.height ; _YY++)
+            {
+                arr[_YY] = [];
+                var str:String = "";
+                for( var _XX:int = 0;_XX < mapLayerInfo.width ; _XX++)
+                {
+                    arr[_YY][_XX] = mapLayerInfo.data[ mapLayerInfo.width * ( mapLayerInfo.height - 1 - _XX ) + _YY  ] != 0 ? 0 : 1;
+                    str += arr[_YY][_XX] 
+                }
+            }
+            
+            var astarCon:flash.display.Sprite = new flash.display.Sprite();
+            astarCon.mouseChildren = false;
+            astarCon.mouseEnabled = false;
+            Starling.current.nativeStage.addChild( astarCon );
+            
+            _astar = new SilzAstar( arr );
+//            _astar = new SilzAstar( arr , astarCon );
+            _roadMap = new Vector.<Point>()
+            var nodeArr:Array = _astar.find( _startPos.x , _startPos.y , _endPos.x, _endPos.y );
+            for(var i:int=0,j:int=nodeArr.length;i<j;i++)
+            {
+                _roadMap.push( new Point( nodeArr[i].x,nodeArr[i].y ) );
+            }
         }
         
         private function onLoadMapRes( loader:ILoader ):void
@@ -284,8 +337,7 @@ package inoah.game.ro.modules.map.view
             var tileImage:TileImage;
             if( nowTileDict[_XX  + "," + _YY] )
             {
-                tileImage = nowTileDict[_XX  + "," + _YY];
-                bgLayer.addChild( tileImage );
+                bgLayer.addChild( nowTileDict[_XX  + "," + _YY] );
                 return;
             }
             else
@@ -303,8 +355,8 @@ package inoah.game.ro.modules.map.view
         
         private function delTile(k : String) : void
         {  
-            bgLayer.removeChild( nowTileDict[k] );
-            (nowTileDict[k] as TileImage).dispose();
+            nowTileDict[k].removeFromParent();
+            //            bgLayer.removeChild( nowTileDict[k] );
             delete nowTileDict[k];
         } 
         
@@ -379,45 +431,28 @@ package inoah.game.ro.modules.map.view
             return pos;
         }
         
-        //        /**
-        //         * TileToScreen
-        //         */
-        //        protected function absToRel( xx : int, yy : int) : Point
+        //        protected function drawTile( shape:Shape, x:int , y:int , color:int = -1 ):void
         //        {
-        //            var rx : int = ( xx - yy ) * ( Global.TILE_W / 2 ) + Global.MAP_W / 2;
-        //            var ry : int = ( xx + yy ) * ( Global.TILE_H / 2 ) + Global.TILE_H / 2;
-        //            
-        //            return new Point(rx, ry);
-        //        }
-        //        
-        //        /**
-        //         * ScreenToTile
-        //         */        
-        //        protected function relToAbs( xx : Number, yy : Number) : Point
-        //        { 
-        //            var ax : int = yy  / Global.TILE_H + ( 2 * xx - Global.MAP_W ) / ( 2 * Global.TILE_W ) - 0.5;
-        //            var ay : int = yy / Global.TILE_H - ( 2 * xx - Global.MAP_W ) / ( 2 * Global.TILE_W ) - 0.5;
-        //            
-        //            return new Point(ax, ay);
+        //            if(color!= -1)
+        //            {
+        //                shape.graphics.beginFill( color , 0.5 );
+        //            }
+        //            else
+        //            {
+        //                shape.graphics.beginFill( 0x0 , 0 );
+        //            }
+        //            shape.graphics.lineStyle( 1 , 0xffffff , 0.5 );
+        //            shape.graphics.moveTo( x , y - Global.TILE_H/2 );
+        //            shape.graphics.lineTo( x + Global.TILE_W/2 , y );
+        //            shape.graphics.lineTo( x , y + Global.TILE_H/2 );
+        //            shape.graphics.lineTo( x - Global.TILE_W/2, y );
+        //            shape.graphics.lineTo( x , y - Global.TILE_H/2 );
+        //            shape.graphics.endFill();
         //        }
         
-        protected function drawTile( shape:Shape, x:int , y:int , color:int = -1 ):void
+        public function get roadMap():Vector.<Point>
         {
-            if(color!= -1)
-            {
-                shape.graphics.beginFill( color , 0.5 );
-            }
-            else
-            {
-                shape.graphics.beginFill( 0x0 , 0 );
-            }
-            shape.graphics.lineStyle( 1 , 0xffffff , 0.5 );
-            shape.graphics.moveTo( x , y - Global.TILE_H/2 );
-            shape.graphics.lineTo( x + Global.TILE_W/2 , y );
-            shape.graphics.lineTo( x , y + Global.TILE_H/2 );
-            shape.graphics.lineTo( x - Global.TILE_W/2, y );
-            shape.graphics.lineTo( x , y - Global.TILE_H/2 );
-            shape.graphics.endFill();
+            return _roadMap;
         }
         
         public function get couldTick():Boolean

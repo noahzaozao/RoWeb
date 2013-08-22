@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
-  <includeClasses/>
+  <includeClasses>
+    <classEntry path="com.bit101.charts.BarChart"/>
+    <classEntry path="com.bit101.charts.Chart"/>
+    <classEntry path="com.bit101.charts.LineChart"/>
+    <classEntry path="com.bit101.charts.PieChart"/>
+    <classEntry path="com.bit101.components.Accordion"/>
+    <classEntry path="com.bit101.components.Calendar"/>
+    <classEntry path="com.bit101.components.CheckBox"/>
+    <classEntry path="com.bit101.components.ColorChooser"/>
+    <classEntry path="com.bit101.components.ComboBox"/>
+    <classEntry path="com.bit101.components.Component"/>
+    <classEntry path="com.bit101.components.FPSMeter"/>
+    <classEntry path="com.bit101.components.HBox"/>
+    <classEntry path="com.bit101.components.HRangeSlider"/>
+    <classEntry path="com.bit101.components.HScrollBar"/>
+    <classEntry path="com.bit101.components.HSlider"/>
+    <classEntry path="com.bit101.components.HUISlider"/>
+    <classEntry path="com.bit101.components.IndicatorLight"/>
+    <classEntry path="com.bit101.components.InputText"/>
+    <classEntry path="com.bit101.components.Knob"/>
+    <classEntry path="com.bit101.components.Label"/>
+    <classEntry path="com.bit101.components.List"/>
+    <classEntry path="com.bit101.components.ListItem"/>
+    <classEntry path="com.bit101.components.Meter"/>
+    <classEntry path="com.bit101.components.NumericStepper"/>
+    <classEntry path="com.bit101.components.Panel"/>
+    <classEntry path="com.bit101.components.ProgressBar"/>
+    <classEntry path="com.bit101.components.PushButton"/>
+    <classEntry path="com.bit101.components.RadioButton"/>
+    <classEntry path="com.bit101.components.RangeSlider"/>
+    <classEntry path="com.bit101.components.RotarySelector"/>
+    <classEntry path="com.bit101.components.ScrollBar"/>
+    <classEntry path="com.bit101.components.ScrollPane"/>
+    <classEntry path="com.bit101.components.Slider"/>
+    <classEntry path="com.bit101.components.Style"/>
+    <classEntry path="com.bit101.components.Text"/>
+    <classEntry path="com.bit101.components.TextArea"/>
+    <classEntry path="com.bit101.components.UISlider"/>
+    <classEntry path="com.bit101.components.VBox"/>
+    <classEntry path="com.bit101.components.VRangeSlider"/>
+    <classEntry path="com.bit101.components.VScrollBar"/>
+    <classEntry path="com.bit101.components.VSlider"/>
+    <classEntry path="com.bit101.components.VUISlider"/>
+    <classEntry path="com.bit101.components.WheelMenu"/>
+    <classEntry path="com.bit101.components.Window"/>
+    <classEntry path="com.bit101.utils.MinimalConfigurator"/>
+  </includeClasses>
   <includeResources/>
   <namespaceManifests/>
 </flexLibProperties>

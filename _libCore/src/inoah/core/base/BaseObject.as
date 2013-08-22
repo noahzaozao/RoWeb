@@ -2,14 +2,16 @@ package inoah.core.base
 {
     import flash.geom.Point;
     
-    import inoah.consts.ConstsDirection;
     import inoah.core.GameCamera;
     import inoah.core.consts.ConstsActions;
-    import inoah.interfaces.info.ICharacterInfo;
     import inoah.interfaces.IViewObject;
     import inoah.interfaces.base.IBaseController;
     import inoah.interfaces.base.IBaseObject;
+    import inoah.interfaces.info.ICharacterInfo;
+    import inoah.interfaces.map.IScene;
     import inoah.utils.QTree;
+    
+    import robotlegs.bender.framework.api.ILogger;
     
     /**
      * 地图物体基类
@@ -17,13 +19,15 @@ package inoah.core.base
      */    
     public class BaseObject implements IBaseObject
     {
+        [Inject]
+        public var scene:IScene;
+        
+        [Inject]
+        public var logger:ILogger;
+        
         public static var GID_COUNT:uint = 0;
         
         protected var _qTree:QTree;
-        /**
-         * 默认方向配置
-         */ 
-        public static var DEFAULT_DIRECTION:ConstsDirection=new ConstsDirection();
         /**
          * 地图绝对位置 
          */        
@@ -72,22 +76,25 @@ package inoah.core.base
         
         public function tick(delta:Number):void
         {
-            if( _viewObj.isPlayEnd && action != ConstsActions.Die )
+            if( _viewObj )
             {
-                _viewObj.action = ConstsActions.Wait;
-                _viewObj.isPlayEnd = false;
+                if( _viewObj.isPlayEnd && action != ConstsActions.Die )
+                {
+                    _viewObj.action = ConstsActions.Wait;
+                    _viewObj.isPlayEnd = false;
+                }
+                var x:int = int(_posX + _offsetX);
+                var y:int = int(_posY + _offsetY);
+                if( _viewObj.x != x )
+                {
+                    _viewObj.x = x;
+                }
+                if( _viewObj.y != y )
+                {
+                    _viewObj.y = y;
+                }
+                _viewObj.tick( delta );
             }
-            var x:int = int(_posX + _offsetX);
-            var y:int = int(_posY + _offsetY);
-            if( _viewObj.x != x )
-            {
-                _viewObj.x = x;
-            }
-            if( _viewObj.y != y )
-            {
-                _viewObj.y = y;
-            }
-            _viewObj.tick( delta );
         }
         
         public function dispose():void
@@ -131,18 +138,18 @@ package inoah.core.base
             return _action;
         }
         
+        public function get direction():int
+        {
+            return _viewObj.dirIndex;
+        }
+        
         public function set direction(u:int):void
         {
             if( _direction != u )
             {
                 _direction = u;
-                _viewObj.direction = u;
+                _viewObj.dirIndex = u;
             }
-        }
-        
-        public function get directions():ConstsDirection
-        {
-            return DEFAULT_DIRECTION;
         }
         
         public function set viewObject( value:IViewObject ):void
@@ -180,6 +187,15 @@ package inoah.core.base
         {
             return _posY;
         }
+        
+        public function setTiledPos( tiledPos:Point ):void
+        {
+            var pos:Point = scene.GridToView( tiledPos.x, tiledPos.y );
+            posX = pos.x;
+            posY = pos.y;
+            logger.debug( pos );
+        }
+        
         public function set posX( value:Number ):void
         {
             _posX = value;

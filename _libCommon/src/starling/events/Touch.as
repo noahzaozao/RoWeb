@@ -52,23 +52,22 @@ package starling.events
         private var mPressure:Number;
         private var mWidth:Number;
         private var mHeight:Number;
+        private var mUpdated:Boolean;
         private var mBubbleChain:Vector.<EventDispatcher>;
         
         /** Helper object. */
         private static var sHelperMatrix:Matrix = new Matrix();
         
         /** Creates a new Touch object. */
-        public function Touch(id:int, globalX:Number, globalY:Number, phase:String, target:DisplayObject)
+        public function Touch(id:int, globalX:Number, globalY:Number, phase:String)
         {
             mID = id;
             mGlobalX = mPreviousGlobalX = globalX;
             mGlobalY = mPreviousGlobalY = globalY;
             mTapCount = 0;
             mPhase = phase;
-            mTarget = target;
             mPressure = mWidth = mHeight = 1.0;
             mBubbleChain = new <EventDispatcher>[];
-            updateBubbleChain();
         }
         
         /** Converts the current location of a touch to the local coordinate system of a display 
@@ -121,7 +120,7 @@ package starling.events
         /** Creates a clone of the Touch object. */
         public function clone():Touch
         {
-            var clone:Touch = new Touch(mID, mGlobalX, mGlobalY, mPhase, mTarget);
+            var clone:Touch = new Touch(mID, mGlobalX, mGlobalY, mPhase);
             clone.mPreviousGlobalX = mPreviousGlobalX;
             clone.mPreviousGlobalY = mPreviousGlobalY;
             clone.mTapCount = mTapCount;
@@ -129,6 +128,7 @@ package starling.events
             clone.mPressure = mPressure;
             clone.mWidth = mWidth;
             clone.mHeight = mHeight;
+            clone.setTarget(mTarget);
             return clone;
         }
         
@@ -194,32 +194,38 @@ package starling.events
         /** Height of the contact area. 
          *  If the device does not support detecting the pressure, the value is 1.0. */
         public function get height():Number { return mHeight; }
+
+        /** True if this is a new Touch or an existing Touch that was just updated. */
+        public function get updated():Boolean { return mUpdated; }
         
         // internal methods
         
         /** @private 
          *  Dispatches a touch event along the current bubble chain (which is updated each time
          *  a target is set). */
-        starling_internal function dispatchEvent(event:TouchEvent):void
+        internal function dispatchEvent(event:TouchEvent):void
         {
             if (mTarget) event.dispatch(mBubbleChain);
         }
         
         /** @private */
-        starling_internal function get bubbleChain():Vector.<EventDispatcher>
+        internal function get bubbleChain():Vector.<EventDispatcher>
         {
             return mBubbleChain.concat();
         }
         
         /** @private */
-        starling_internal function setTarget(value:DisplayObject):void 
-        { 
-            mTarget = value;
-            updateBubbleChain();
+        internal function setTarget(value:DisplayObject):void
+        {
+            if (mTarget != value)
+            {
+                mTarget = value;
+                updateBubbleChain();
+            }
         }
         
         /** @private */
-        starling_internal function setPosition(globalX:Number, globalY:Number):void
+        internal function setPosition(globalX:Number, globalY:Number):void
         {
             mPreviousGlobalX = mGlobalX;
             mPreviousGlobalY = mGlobalY;
@@ -228,22 +234,25 @@ package starling.events
         }
         
         /** @private */
-        starling_internal function setSize(width:Number, height:Number):void 
+        internal function setSize(width:Number, height:Number):void 
         { 
             mWidth = width;
             mHeight = height;
         }
         
         /** @private */
-        starling_internal function setPhase(value:String):void { mPhase = value; }
+        internal function setPhase(value:String):void { mPhase = value; }
         
         /** @private */
-        starling_internal function setTapCount(value:int):void { mTapCount = value; }
+        internal function setTapCount(value:int):void { mTapCount = value; }
         
         /** @private */
-        starling_internal function setTimestamp(value:Number):void { mTimestamp = value; }
+        internal function setTimestamp(value:Number):void { mTimestamp = value; }
         
         /** @private */
-        starling_internal function setPressure(value:Number):void { mPressure = value; }
+        internal function setPressure(value:Number):void { mPressure = value; }
+
+        /** @private */
+        internal function setUpdated(value:Boolean):void { mUpdated = value; }
     }
 }

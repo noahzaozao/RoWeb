@@ -29,21 +29,26 @@ package inoah.game.ro.modules.map
             return scene;
         }
         
-        public function newSceneMediator( mapId:int ):ISceneMediator
+        public function newSceneMediator( mapId:int , mapType:int ):ISceneMediator
         {
-            var sceneMediator:BaseSceneMediator = new BaseSceneMediator();
+            var sceneMediator:BaseSceneMediator;
+            switch( mapType )
+            {
+                case 0:
+                {
+                    sceneMediator = new BaseSceneMediator();
+                    injector.map(ISceneMediator).toValue(sceneMediator);
+                    break;
+                }
+                case 1:
+                {
+                    sceneMediator = new BattleSceneMediator();
+                    injector.map(ISceneMediator).toValue(sceneMediator);
+                    injector.map(IBattleSceneMediator).toValue(sceneMediator);
+                    break;
+                }
+            }
             injector.injectInto(sceneMediator);
-            injector.map(ISceneMediator).toValue(sceneMediator);
-            sceneMediator.initialize();
-            return sceneMediator;
-        }
-
-        public function newBattleSceneMediator( mapId:int ):IBattleSceneMediator
-        {
-            var sceneMediator:BattleSceneMediator = new BattleSceneMediator();
-            injector.injectInto(sceneMediator);
-            injector.map(ISceneMediator).toValue(sceneMediator);
-            injector.map(IBattleSceneMediator).toValue(sceneMediator);
             sceneMediator.initialize();
             return sceneMediator;
         }

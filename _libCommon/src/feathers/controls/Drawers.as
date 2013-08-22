@@ -1662,6 +1662,10 @@ package feathers.controls
 			var result:DisplayObject = super.hitTest(localPoint, forTouch);
 			if(result)
 			{
+				if(!forTouch)
+				{
+					return result;
+				}
 				if(this._isDragging)
 				{
 					return this;
@@ -2006,6 +2010,12 @@ package feathers.controls
 			{
 				this._content.width = contentWidth;
 				this._content.height = contentHeight;
+
+				//final validation to avoid juggler next frame issues
+				if(this._content is IFeathersControl)
+				{
+					IFeathersControl(this._content).validate();
+				}
 			}
 
 			if(this._topDrawer)
@@ -2027,6 +2037,12 @@ package feathers.controls
 				this._topDrawer.y = topDrawerY;
 				this._topDrawer.width = this.actualWidth;
 				this._topDrawer.visible = isTopDrawerOpen || isTopDrawerDocked;
+
+				//final validation to avoid juggler next frame issues
+				if(this._topDrawer is IFeathersControl)
+				{
+					IFeathersControl(this._topDrawer).validate();
+				}
 			}
 
 			if(this._rightDrawer)
@@ -2049,6 +2065,12 @@ package feathers.controls
 				this._rightDrawer.y = rightDrawerY;
 				this._rightDrawer.height = rightDrawerHeight;
 				this._rightDrawer.visible = isRightDrawerOpen || isRightDrawerDocked;
+
+				//final validation to avoid juggler next frame issues
+				if(this._rightDrawer is IFeathersControl)
+				{
+					IFeathersControl(this._rightDrawer).validate();
+				}
 			}
 
 			if(this._bottomDrawer)
@@ -2062,6 +2084,12 @@ package feathers.controls
 				this._bottomDrawer.y = this.actualHeight - bottomDrawerHeight;
 				this._bottomDrawer.width = this.actualWidth;
 				this._bottomDrawer.visible = isBottomDrawerOpen || isBottomDrawerDocked;
+
+				//final validation to avoid juggler next frame issues
+				if(this._bottomDrawer is IFeathersControl)
+				{
+					IFeathersControl(this._bottomDrawer).validate();
+				}
 			}
 
 			if(this._leftDrawer)
@@ -2089,6 +2117,12 @@ package feathers.controls
 				this._leftDrawer.y = leftDrawerY;
 				this._leftDrawer.height = leftDrawerHeight;
 				this._leftDrawer.visible = isLeftDrawerOpen || isLeftDrawerDocked;
+
+				//final validation to avoid juggler next frame issues
+				if(this._leftDrawer is IFeathersControl)
+				{
+					IFeathersControl(this._leftDrawer).validate();
+				}
 			}
 		}
 
@@ -2450,6 +2484,23 @@ package feathers.controls
 					{
 						return;
 					}
+				}
+			}
+			else //a drawer is open, let's only work with touches over the content
+			{
+				//not testing for touch because we just want to know if we're
+				//over the content or one of its children.
+				var hitTarget:DisplayObject = this.hitTest(touch.getLocation(this), false);
+				if(this._content is DisplayObjectContainer)
+				{
+					if(!DisplayObjectContainer(this._content).contains(hitTarget))
+					{
+						return;
+					}
+				}
+				else if(this._content != hitTarget)
+				{
+					return;
 				}
 			}
 

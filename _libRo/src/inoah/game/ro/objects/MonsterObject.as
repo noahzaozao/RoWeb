@@ -1,7 +1,6 @@
 package inoah.game.ro.objects
 {
     import inoah.core.consts.ConstsActions;
-    import inoah.core.utils.GMath;
     import inoah.interfaces.character.IMonsterObject;
 
     public class MonsterObject extends BattleCharacterObject implements IMonsterObject
@@ -19,27 +18,21 @@ package inoah.game.ro.objects
             var speed:Number = 100;
             if( _endTarget )
             {
-                var radian:Number = GMath.getPointAngle( _endTarget.x - posX , _endTarget.y -  posY );
-                var angle:int = GMath.R2A(radian)+90;
                 if( posX - _endTarget.x > 0 )
                 {
-                    direction = directions.Left;
                     posX -= speed * delta;
                     if(posX - _endTarget.x <= 0 )
                     {
                         posX = _endTarget.x;
                     }
-                    changeDirectionByAngle( angle );
                 }
                 else if( posX - _endTarget.x < 0 )
                 {
-                    direction = directions.Right;
                     posX += speed * delta;
                     if(posX - _endTarget.x >= 0 )
                     {
                         posX = _endTarget.x;
                     }
-                    changeDirectionByAngle( angle );
                 }
                 else
                 {
@@ -47,23 +40,19 @@ package inoah.game.ro.objects
                 }
                 if( posY - _endTarget.y > 0 )
                 {
-                    direction = directions.Up;
                     posY -= speed * delta * 0.5;
                     if(posY - _endTarget.y <= 0 )
                     {
                         posY = _endTarget.y;
                     }
-                    changeDirectionByAngle( angle );
                 }
                 else if( posY - _endTarget.y < 0 )
                 {
-                    direction = directions.Down;
                     posY += speed * delta * 0.5;
                     if(posY - _endTarget.y >= 0 )
                     {
                         posY = _endTarget.y;
                     }
-                    changeDirectionByAngle( angle );
                 }
                 else
                 {

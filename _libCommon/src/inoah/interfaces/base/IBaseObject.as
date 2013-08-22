@@ -2,11 +2,10 @@ package inoah.interfaces.base
 {
     import flash.geom.Point;
     
-    import inoah.consts.ConstsDirection;
-    import inoah.interfaces.info.ICharacterInfo;
     import inoah.interfaces.IViewObject;
+    import inoah.interfaces.info.ICharacterInfo;
     import inoah.utils.QTree;
-
+    
     public interface IBaseObject
     {
         function get gid():uint;
@@ -19,7 +18,7 @@ package inoah.interfaces.base
         function set action(u:int):void;
         function get action():int;
         function set direction(u:int):void;
-        function get directions():ConstsDirection;
+        function get direction():int;
         function set viewObject( value:IViewObject ):void;
         function get viewObject():IViewObject;
         function set offsetX( value:Number ):void;
@@ -29,6 +28,7 @@ package inoah.interfaces.base
         function get posY():Number;
         function set posX( value:Number ):void;
         function set posY( value:Number ):void;
+        function setTiledPos( tiledPos:Point ):void;
         function set isInScene( value:Boolean ):void;
         function get isInScene():Boolean;
         function set info( value:ICharacterInfo ):void;

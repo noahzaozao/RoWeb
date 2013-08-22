@@ -227,7 +227,7 @@ package inoah.game.ro
             //初始化地图管理器
             mapMgr.initialize();
             
-            dispatch( new MapEvent( MapEvent.CHANGE_MAP , 1 ) );
+            dispatch( new MapEvent( MapEvent.CHANGE_MAP , 1 , 1 ) );
             
             //初始化战斗管理器
             //            _battleMgr = new BattleMgr( (_mapMgr as MapMgr).scene as BattleMapMediator );

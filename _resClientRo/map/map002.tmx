@@ -14,6 +14,15 @@
    eJzt1MsKgDAMRNGCj43//79uFIpIm9Qkk1EXd1nJAZO1lLIGth15v/kdv+MLjm3gTTZHVsMXHZkNIw7pd5cXOSIt3o66CId1dw5PE8ph7fG6Q1KHlSeL46krq0NrYnBIjOyOszc6LO4GylFbtLuVzXFaervE4JCmdcwJZn5imi+hZx31XB0sLq0js6l2TEeMjtoyNWJx9RxMHomDwaNxSDxMjp6HzZHJY+HI8K9ZOdB3wNKBtFg7UBYPB8Li5Yjef29Hz8Pm8LZEOjwt0Q4vC8LhYUE5rC1Ih6UF7WhZNB60QerpmdCzaxwtzw4srDH4
   </data>
  </layer>
+ <layer name="roadMap" width="50" height="50" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJztw8EJAAAMA6H7Z/99O0dBwVVTVVVVVVVVVVXV5w+ORWtt
+  </data>
+ </layer>
+ <objectgroup name="eventMap" width="50" height="50">
+  <object name="startPos" x="192" y="448" width="32" height="32"/>
+  <object x="320" y="544" width="32" height="32"/>
+ </objectgroup>
  <objectgroup name="downLevel" width="50" height="50">
   <object gid="48" x="889" y="271"/>
   <object gid="62" x="1097" y="130"/>

@@ -7,6 +7,7 @@ package inoah.game.ro.modules.player
     import inoah.core.base.BaseController;
     import inoah.core.base.BaseObject;
     import inoah.core.consts.ConstsActions;
+    import inoah.core.consts.ConstsDirIndex;
     import inoah.core.utils.GMath;
     import inoah.game.ro.modules.main.view.events.JoyStickEvent;
     import inoah.game.ro.objects.BattleCharacterObject;
@@ -182,7 +183,7 @@ package inoah.game.ro.modules.player
         
         protected function moveCheck(delta:Number):void
         {
-            var speed:Number = 200;
+            var speed:Number = 300;
             
             if( keyMgr.isDown( Keyboard.D ) && !keyMgr.isDown( Keyboard.A ) || _joyStickRight && !_joyStickLeft )
             {
@@ -192,17 +193,17 @@ package inoah.game.ro.modules.player
                 {
                     _me.posY -=speed * delta;
                     if( _me.posY < 0 ) _me.posY = 0;
-                    _me.direction = _me.directions.RightUp;
+                    _me.direction = ConstsDirIndex.UP_RIGHT;
                 }
                 else if( keyMgr.isDown( Keyboard.S ) || _joyStickDown )
                 {
                     _me.posY +=speed * delta;
                     if( _me.posY > Global.MAP_H ) _me.posY = Global.MAP_H;
-                    _me.direction = _me.directions.RightDown;
+                    _me.direction = ConstsDirIndex.DOWN_RIGHT;
                 }
                 else
                 {
-                    _me.direction = _me.directions.Right;
+                    _me.direction = ConstsDirIndex.RIGHT;
                 }
                 _me.action = ConstsActions.Run;
             }
@@ -214,17 +215,17 @@ package inoah.game.ro.modules.player
                 {
                     _me.posY -=speed * delta;
                     if( _me.posY < 0 ) _me.posY = 0;
-                    _me.direction = _me.directions.LeftUp;
+                    _me.direction = ConstsDirIndex.UP_LIFT;
                 }
                 else if( keyMgr.isDown( Keyboard.S ) || _joyStickDown )
                 {
                     _me.posY +=speed * delta;
                     if( _me.posY > Global.MAP_H ) _me.posY = Global.MAP_H;
-                    _me.direction = _me.directions.LeftDown;
+                    _me.direction = ConstsDirIndex.DOWN_LEFT;
                 }
                 else
                 {
-                    _me.direction = _me.directions.Left;
+                    _me.direction = ConstsDirIndex.LEFT;
                 }
                 _me.action = ConstsActions.Run;
             }
@@ -232,14 +233,14 @@ package inoah.game.ro.modules.player
             {
                 _me.posY -=speed * delta;
                 if( _me.posY < 0 ) _me.posY = 0;
-                _me.direction = _me.directions.Up;
+                _me.direction = ConstsDirIndex.UP;
                 _me.action = ConstsActions.Run;
             }
             else if( keyMgr.isDown( Keyboard.S ) && !keyMgr.isDown( Keyboard.W ) || _joyStickDown && !_joyStickUp )
             {
                 _me.posY +=speed * delta;
                 if( _me.posY > Global.MAP_H ) _me.posY = Global.MAP_H;
-                _me.direction = _me.directions.Down;
+                _me.direction = ConstsDirIndex.DOWN;
                 _me.action = ConstsActions.Run;
             }
             else

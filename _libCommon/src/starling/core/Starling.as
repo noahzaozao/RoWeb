@@ -44,6 +44,7 @@ package starling.core
     import starling.events.EventDispatcher;
     import starling.events.ResizeEvent;
     import starling.events.TouchPhase;
+    import starling.events.TouchProcessor;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
     
@@ -573,7 +574,7 @@ package starling.core
             mStage.broadcastEvent(keyEvent);
             
             if (keyEvent.isDefaultPrevented())
-            	event.preventDefault();
+                event.preventDefault();
         }
         
         private function onResize(event:Event):void
@@ -616,12 +617,21 @@ package starling.core
             else
             {
                 var touchEvent:TouchEvent = event as TouchEvent;
-                globalX = touchEvent.stageX;
-                globalY = touchEvent.stageY;
-                touchID = touchEvent.touchPointID;
-                pressure = touchEvent.pressure;
-                width = touchEvent.sizeX;
-                height = touchEvent.sizeY;
+            
+                // On a system that supports both mouse and touch input, the primary touch point
+                // is dispatched as mouse event as well. Since we don't want to listen to that
+                // event twice, we ignore the primary touch in that case.
+                
+                if (Mouse.supportsCursor && touchEvent.isPrimaryTouchPoint) return;
+                else
+                {
+                    globalX  = touchEvent.stageX;
+                    globalY  = touchEvent.stageY;
+                    touchID  = touchEvent.touchPointID;
+                    pressure = touchEvent.pressure;
+                    width    = touchEvent.sizeX;
+                    height   = touchEvent.sizeY;
+                }
             }
             
             // figure out touch phase
@@ -642,13 +652,23 @@ package starling.core
             
             // enqueue touch in touch processor
             mTouchProcessor.enqueue(touchID, phase, globalX, globalY, pressure, width, height);
+            
+            // allow objects that depend on mouse-over state to be updated immediately
+            if (event.type == MouseEvent.MOUSE_UP)
+                mTouchProcessor.enqueue(touchID, TouchPhase.HOVER, globalX, globalY);
         }
         
         private function get touchEventTypes():Array
         {
-            return Mouse.supportsCursor || !multitouchEnabled ?
-                [ MouseEvent.MOUSE_DOWN,  MouseEvent.MOUSE_MOVE, MouseEvent.MOUSE_UP ] :
-                [ TouchEvent.TOUCH_BEGIN, TouchEvent.TOUCH_MOVE, TouchEvent.TOUCH_END ];  
+            var types:Array = [];
+            
+            if (multitouchEnabled)
+                types.push(TouchEvent.TOUCH_BEGIN, TouchEvent.TOUCH_MOVE, TouchEvent.TOUCH_END);
+            
+            if (!multitouchEnabled || Mouse.supportsCursor)
+                types.push(MouseEvent.MOUSE_DOWN,  MouseEvent.MOUSE_MOVE, MouseEvent.MOUSE_UP);
+                
+            return types;
         }
         
         // program management
@@ -859,6 +879,19 @@ package starling.core
             }
         }
         
+        /** The TouchProcessor is passed all mouse and touch input and is responsible for
+         *  dispatching TouchEvents to the Starling display tree. If you want to handle these
+         *  types of input manually, pass your own custom subclass to this property. */
+        public function get touchProcessor():TouchProcessor { return mTouchProcessor; }
+        public function set touchProcessor(value:TouchProcessor):void
+        {
+            if (value != mTouchProcessor)
+            {
+                mTouchProcessor.dispose();
+                mTouchProcessor = value;
+            }
+        }
+
         // static properties
         
         /** The currently active Starling instance. */

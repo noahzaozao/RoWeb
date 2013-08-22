@@ -86,7 +86,7 @@ package inoah.game.ro.modules.map.view.mediators
             loader.load( new URLRequest( "map/map002.json" ));
         }
         
-        private function onMapLoadComplete( e:flash.events.Event):void
+        protected function onMapLoadComplete( e:flash.events.Event):void
         {
             var loader:URLLoader = e.currentTarget as URLLoader;
             loader.removeEventListener( flash.events.Event.COMPLETE , onMapLoadComplete );
@@ -165,7 +165,10 @@ package inoah.game.ro.modules.map.view.mediators
             }
             _screenObj.push(o);
             
-            _unitContainer.addChild( o.viewObject as DisplayObject );
+            if( o.viewObject )
+            {
+                _unitContainer.addChild( o.viewObject as DisplayObject );
+            }
             o.isInScene = true;
             if(GameCamera.AlphaEffect) 
             {

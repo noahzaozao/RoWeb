@@ -237,7 +237,7 @@ package inoah.gameEditor
             
             var mapInfo:MapInfo = new MapInfo( jsonObj );
             _scene = mapFactory.newScene( 0 );
-            _sceneMediator = mapFactory.newSceneMediator( 0 );
+            _sceneMediator = mapFactory.newSceneMediator( 0 , 0 );
 
             _camera = mapFactory.newCamera();
             
