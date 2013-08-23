@@ -60,6 +60,7 @@
     <classEntry path="inoah.game.ro.objects.CharacterObject"/>
     <classEntry path="inoah.game.ro.objects.MonsterObject"/>
     <classEntry path="inoah.game.ro.objects.PlayerObject"/>
+    <classEntry path="inoah.game.ro.modules.map.view.TileBuilding"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

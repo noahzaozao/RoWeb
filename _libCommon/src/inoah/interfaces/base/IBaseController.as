@@ -4,6 +4,6 @@ package inoah.interfaces.base
 
     public interface IBaseController extends IMediator
     {
-        
+        function tick( delta:Number ):void;
     }
 }

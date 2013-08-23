@@ -8,6 +8,7 @@ Map.__index = Map
 
 ---
 -- @function [parent=#Map] new
+-- @param self
 -- @return #Map Map
 function Map:new()
 	local self = {}
@@ -16,6 +17,7 @@ function Map:new()
 end  
 ---
 -- @function [parent=#Map] init
+-- @param self
 -- @param #number x
 -- @param #number y
 function Map:init( x , y )
@@ -25,6 +27,7 @@ function Map:init( x , y )
 end
 ---
 -- @function [parent=#Map] addPlayer
+-- @param self
 -- @param #Player player
 function Map:addPlayer( player )
 	print( "addPlayer" )

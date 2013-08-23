@@ -9,11 +9,14 @@ package inoah.core
         public static var SCREEN_W:uint;
         public static var SCREEN_H:uint;
 
-        public static const MAP_W:uint = 3200;
-        public static const MAP_H:uint = 1600;
+        public static var MAP_W:uint = 6400;
+        public static var MAP_H:uint = 3200;
 
-        public static const TILE_W:int = 64;
-        public static const TILE_H:int = 32;
+        public static var TILE_W:int = 128;
+        public static var TILE_H:int = 64;
+        
+        public static var redrawW : int = 5;  //重绘区域
+        public static var redrawH : int = 6;
 
         public static var debugTxt:TextField;
         

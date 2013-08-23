@@ -1,4 +1,4 @@
-package inoah.game.ro.modules.player
+package inoah.game.td.modules.player
 {
     import inoah.core.base.BaseController;
     import inoah.interfaces.controller.IPlayerController;

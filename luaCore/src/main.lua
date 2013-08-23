@@ -24,19 +24,19 @@ function onLoadLuaScript()
 	local mapLib = require( "libMap" )
 	local mapClass = mapLib.Map
 	
-	local mapA = mapClass.new()
+	local mapA = mapClass:new()
 	mapA.init( mapA , 0 , 0 )
 	
 	local playerLib = require( "libPlayer" )
 	local playerClass = playerLib.Player
 
-	local playerA = playerClass.new()
+	local playerA = playerClass:new()
 	playerA.init( playerA , 1 , 2 )
-	mapA.addPlayer( playerA )
+	mapA:addPlayer( playerA )
 
-	local playerB = playerClass.new()
-	playerB.init( playerB , 2 , 4 )
-	mapA.addPlayer( playerB )
+	local playerB = playerClass:new();
+	playerB:init( 2, 4 )
+	mapA:addPlayer( playerB )
 	
 end
 

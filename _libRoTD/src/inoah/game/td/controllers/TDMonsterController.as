@@ -1,8 +1,7 @@
-package inoah.game.ro.controllers
+package inoah.game.td.controllers
 {
     import flash.geom.Point;
     
-    import inoah.core.Global;
     import inoah.core.base.BaseController;
     import inoah.core.consts.ConstsActions;
     import inoah.core.utils.GMath;
@@ -77,7 +76,6 @@ package inoah.game.ro.controllers
                 }
                 var nextPos:Point = scene.roadMap[_roadStep];
                 _nextTarget = scene.GridToView( nextPos.x , nextPos.y );
-                _nextTarget.y += Global.TILE_H / 2;
                 if( !_isMoving )
                 {
                     _isMoving = true;

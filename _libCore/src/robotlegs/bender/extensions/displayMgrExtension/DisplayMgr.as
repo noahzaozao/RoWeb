@@ -64,10 +64,10 @@ package robotlegs.bender.extensions.displayMgrExtension
             for( var i:int = 0;i< 4; i++)
             {
                 _displayStarlingList[i] = new starling.display.Sprite();
-                if( i < 3 )
-                {
-                    _displayStarlingList[i].touchable = false;
-                }
+                //                if( i < 3 )
+                //                {
+                //                    _displayStarlingList[i].touchable = false;
+                //                }
                 _starlingRoot.addChild( _displayStarlingList[i] );
             }
         }

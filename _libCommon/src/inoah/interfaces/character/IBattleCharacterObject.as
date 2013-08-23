@@ -22,5 +22,7 @@ package inoah.interfaces.character
         //        function get battleCharacterInfo():BattleCharacterInfo;
         function moveTo(nextX:int, nextY:int):void;
         function changeDirectionByAngle( angle:int ):void;
+        function get atkRange():int;
+        function set atkRange( value:int ):void;
     }
 }

@@ -6,12 +6,15 @@ package inoah.game.ro.modules.map.view
     import flash.geom.Point;
     import flash.geom.Rectangle;
     
+    import inoah.core.Global;
     import inoah.core.SilzAstar;
     import inoah.core.loaders.JpgLoader;
     import inoah.data.map.MapInfo;
     import inoah.data.map.MapLayerInfo;
     import inoah.data.map.MapTileSetInfo;
+    import inoah.game.ro.modules.map.view.events.SceneEvent;
     import inoah.interfaces.ICamera;
+    import inoah.interfaces.IViewObject;
     import inoah.interfaces.base.ILoader;
     import inoah.interfaces.managers.IAssetMgr;
     import inoah.interfaces.managers.IDisplayMgr;
@@ -27,12 +30,15 @@ package inoah.game.ro.modules.map.view
     import starling.display.DisplayObjectContainer;
     import starling.display.Image;
     import starling.display.Sprite;
+    import starling.events.Touch;
+    import starling.events.TouchEvent;
+    import starling.events.TouchPhase;
     import starling.textures.Texture;
     import starling.textures.TextureAtlas;
     
     public class BaseScene extends starling.display.Sprite implements IScene
     {
-        [Injdet]
+        [Inject]
         public var displayMgr:IDisplayMgr;
         
         [Inject]
@@ -64,7 +70,8 @@ package inoah.game.ro.modules.map.view
         protected var _drawCounter:Counter;
         
         //地图元素
-        public var bgLayer : starling.display.Sprite;  //背景层 
+        public var bgLayer : starling.display.Sprite;  //背景层
+        public var buildingLayer:starling.display.Sprite;
         public var bgImg : Bitmap; //地表
         protected var cue : Bitmap; //测试用
         public var actLayer : starling.display.Sprite; //动作层  
@@ -85,9 +92,7 @@ package inoah.game.ro.modules.map.view
         private var nowTileDict : Object = {}; //当前tile集合
         private var nowObjectDict : Object = {};
         private var nowDebugDict : Object = {}; 
-        //
-        private var redrawW : int = 8;  //重绘区域
-        private var redrawH : int = 11; 
+        
         //        private var mapBg:Bitmap;
         //        public var mapContainer:flash.display.Sprite;
         
@@ -106,6 +111,7 @@ package inoah.game.ro.modules.map.view
         private var _roadMap:Vector.<Point>;
         private var _startPos:Point;
         private var _endPos:Point;
+        private var _eventLayer:starling.display.Sprite;
         
         
         public function BaseScene()
@@ -117,9 +123,15 @@ package inoah.game.ro.modules.map.view
         {
             _container = container;
             
+            _eventLayer = new starling.display.Sprite();
+            _container.addChild( _eventLayer );
+            
             bgLayer = new starling.display.Sprite();
-            bgLayer.touchable = false;
+            //            bgLayer.touchable = false;
             _container.addChild( bgLayer );
+            
+            buildingLayer = new starling.display.Sprite();
+            _container.addChild( buildingLayer );
             
             _levelList = new Vector.<IMapLevel>();
             _currentResIndexList = new Vector.<String>();
@@ -154,7 +166,7 @@ package inoah.game.ro.modules.map.view
             //                    drawTile( mapBgSp ,  GridToView( xx , yy ).x , GridToView( xx,  yy).y );
             //                }
             //            }
-            //            mapBg = new Bitmap( new BitmapData( 3200 , 1600 , true , 0x0 ) );
+            //            mapBg = new Bitmap( new BitmapData( Global.MAP_W , Global.MAP_H , true , 0x0 ) );
             //            mapContainer = new flash.display.Sprite();
             //            Starling.current.nativeOverlay.addChild( mapContainer );
             //            mapContainer.addChild( mapBg );
@@ -168,6 +180,19 @@ package inoah.game.ro.modules.map.view
                 _currentResIndexList.push( "map/" + _mapInfo.tilesets[i].image );
             }
             assetMgr.getResList( resList , onLoadMapRes );
+            
+            _container.addEventListener( TouchEvent.TOUCH , onTouch );
+        }
+        
+        private function onTouch( e:TouchEvent ):void
+        {
+            var touch:Touch = e.getTouch( _container );
+            if( touch && touch.phase == TouchPhase.BEGAN )
+            {
+                var pos:Point = touch.getLocation( _container );
+                var touchGrid:Point = ViewToGrid(pos.x , pos.y );
+                dispatchEvent( new SceneEvent( SceneEvent.MAP_TOUCH , touchGrid ) );
+            }
         }
         
         private function makeRoadMap( mapLayerInfo:MapLayerInfo ):void
@@ -186,7 +211,7 @@ package inoah.game.ro.modules.map.view
                 for( var _XX:int = 0;_XX < mapLayerInfo.width ; _XX++)
                 {
                     arr[_YY][_XX] = mapLayerInfo.data[ mapLayerInfo.width * ( mapLayerInfo.height - 1 - _XX ) + _YY  ] != 0 ? 0 : 1;
-                    str += arr[_YY][_XX] 
+                    str += arr[_YY][_XX];
                 }
             }
             
@@ -196,12 +221,15 @@ package inoah.game.ro.modules.map.view
             Starling.current.nativeStage.addChild( astarCon );
             
             _astar = new SilzAstar( arr );
-//            _astar = new SilzAstar( arr , astarCon );
+            //            _astar = new SilzAstar( arr , astarCon );
             _roadMap = new Vector.<Point>()
             var nodeArr:Array = _astar.find( _startPos.x , _startPos.y , _endPos.x, _endPos.y );
-            for(var i:int=0,j:int=nodeArr.length;i<j;i++)
+            if(nodeArr)
             {
-                _roadMap.push( new Point( nodeArr[i].x,nodeArr[i].y ) );
+                for(var i:int=0,j:int=nodeArr.length;i<j;i++)
+                {
+                    _roadMap.push( new Point( nodeArr[i].x,nodeArr[i].y ) );
+                }
             }
         }
         
@@ -284,7 +312,7 @@ package inoah.game.ro.modules.map.view
             //                var drawBlockPos:Point = GridToView( lightBlock.x , lightBlock.y );
             //                drawTile( lightBlockSp , drawBlockPos.x , drawBlockPos.y , 0x00ff00 );
             //            }
-            var area : int = redrawW + redrawH;
+            var area : int = Global.redrawW + Global.redrawH;
             var newTileDict : Object = {};
             //            for(var _XX :int = cp.x - area; _XX  <= cp.x + area ; _XX ++)
             //            {
@@ -295,7 +323,7 @@ package inoah.game.ro.modules.map.view
                 {
                     if(_XX  >= 0 && _XX  < _mapInfo.layers[0].width && _YY  >= 0 && _YY  < _mapInfo.layers[0].height)
                     {
-                        if(Math.abs((_YY  - cp.y - _XX  + cp.x) / 2) <= redrawH && Math.abs((_XX  - cp.x + _YY  - cp.y) / 2) <= redrawW)
+                        if(Math.abs((_YY  - cp.y - _XX  + cp.x) / 2) <= Global.redrawH && Math.abs((_XX  - cp.x + _YY  - cp.y) / 2) <= Global.redrawW)
                         {
                             //                            if(lightBlockSp)
                             //                            {
@@ -347,10 +375,20 @@ package inoah.game.ro.modules.map.view
                 bgLayer.addChild( tileImage );
                 
                 var pt : Point = GridToView(_XX , _YY);  
-                tileImage.x = pt.x - 32;
-                tileImage.y = pt.y - 32; 
+                tileImage.x = pt.x - Global.TILE_W / 2;
+                tileImage.y = pt.y - Global.TILE_H * 3 / 2; 
                 nowTileDict[_XX  + "," + _YY] = tileImage;
             }
+        }
+        
+        public function addBuilding( _XX:int , _YY:int , id:int , textureStr:String ):IViewObject
+        {
+            var building:TileBuilding = new TileBuilding( id , _currentTextureAtlasList[1].getTexture( textureStr ) );
+//            buildingLayer.addChild( building );
+            var pt : Point = GridToView(_XX , _YY); 
+            building.x = pt.x - Global.TILE_W / 2;
+            building.y = pt.y - Global.TILE_H  * 7 / 2  ; 
+            return building;
         }
         
         private function delTile(k : String) : void

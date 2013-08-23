@@ -1,7 +1,9 @@
 package inoah.game.td
 {
     import inoah.core.Global;
-    import inoah.game.ro.controllers.TDMonsterController;
+    import inoah.game.ro.RoConfig;
+    import inoah.game.ro.RoGameLuaMediator;
+    import inoah.game.ro.RoGameMediator;
     import inoah.game.ro.modules.login.controller.LoginCommand;
     import inoah.game.ro.modules.login.service.ILoginService;
     import inoah.game.ro.modules.login.service.LoginService;
@@ -21,20 +23,19 @@ package inoah.game.td
     import inoah.game.ro.modules.main.view.mediator.MainViewMediator;
     import inoah.game.ro.modules.main.view.mediator.StatusBarViewMediator;
     import inoah.game.ro.modules.main.view.mediator.StatusViewMediator;
-    import inoah.game.ro.modules.map.TDMapFactory;
     import inoah.game.ro.modules.player.RoPlayerFactory;
-    import inoah.game.ro.modules.player.TDPlayerController;
-    import inoah.game.ro.modules.player.TiledPlayerController;
+    import inoah.game.td.controllers.TDMonsterController;
+    import inoah.game.td.modules.map.TDMapFactory;
+    import inoah.game.td.modules.player.TDPlayerController;
+    import inoah.game.td.modules.tower.TowerController;
     import inoah.interfaces.IUserModel;
     import inoah.interfaces.controller.IMonsterController;
     import inoah.interfaces.controller.IPlayerController;
     import inoah.interfaces.factory.IPlayerFactory;
     import inoah.interfaces.map.IMapFactory;
+    import inoah.interfaces.tower.ITowerController;
     
     import robotlegs.bender.framework.api.IConfig;
-    import inoah.game.ro.RoConfig;
-    import inoah.game.ro.RoGameLuaMediator;
-    import inoah.game.ro.RoGameMediator;
     
     public class TDConfig extends RoConfig implements IConfig
     {
@@ -65,6 +66,7 @@ package inoah.game.td
             injector.map(IMapFactory).toSingleton(TDMapFactory);
             injector.map(IPlayerFactory).toSingleton(RoPlayerFactory);
             injector.map(IPlayerController).toSingleton(TDPlayerController);
+            injector.map(ITowerController).toSingleton(TowerController);
             injector.map(IMonsterController).toSingleton(TDMonsterController);
             //
             logger.info("configure RoConfig");

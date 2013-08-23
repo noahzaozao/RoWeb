@@ -446,6 +446,8 @@
     <classEntry path="starling.utils.getNextPowerOfTwo"/>
     <classEntry path="starling.utils.rad2deg"/>
     <classEntry path="starling.utils.transformCoords"/>
+    <classEntry path="inoah.interfaces.tower.ITowerController"/>
+    <classEntry path="inoah.interfaces.tower.ITowerObject"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

@@ -178,7 +178,6 @@ package inoah.core
             zero_x = zero_x<0 ? 0 : zero_x;
             zero_y = zero_y<0 ? 0 : zero_y;
             
-            
             _cameraCutView.x = zero_x;
             _cameraCutView.y = zero_y;
             _cameraCutView.width = Global.SCREEN_W+Global.TILE_W*2;

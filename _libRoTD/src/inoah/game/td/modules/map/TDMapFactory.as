@@ -1,11 +1,12 @@
-package inoah.game.ro.modules.map
+package inoah.game.td.modules.map
 {
     import inoah.game.ro.modules.map.view.mediators.BaseSceneMediator;
     import inoah.game.ro.modules.map.view.mediators.BattleSceneMediator;
-    import inoah.game.ro.modules.map.view.mediators.TDSceneMediator;
+    import inoah.game.td.modules.map.view.mediators.TDSceneMediator;
     import inoah.interfaces.map.IBattleSceneMediator;
     import inoah.interfaces.map.ISceneMediator;
     import inoah.interfaces.map.ITDSceneMediator;
+    import inoah.game.ro.modules.map.RoMapFactory;
     
     public class TDMapFactory extends RoMapFactory
     {

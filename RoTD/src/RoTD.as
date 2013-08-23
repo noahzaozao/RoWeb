@@ -49,6 +49,13 @@ package
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;
             
+            Global.MAP_W = 3200;
+            Global.MAP_H = 1600;
+            Global.TILE_W = 64;
+            Global.TILE_H = 32;
+            Global.redrawW = 8;
+            Global.redrawH = 11;
+            
             _context = new Context()
                 .install( MVCSBundle );
             _context.logLevel = LogLevel.DEBUG;

@@ -15,7 +15,7 @@ package inoah.game.ro.objects
         override public function tick(delta:Number):void
         {
             var isMovingX:Boolean;
-            var speed:Number = 100;
+            var speed:Number = 50;
             if( _endTarget )
             {
                 if( posX - _endTarget.x > 0 )

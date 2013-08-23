@@ -4,7 +4,6 @@ package inoah.interfaces.controller
 
     public interface IPlayerController extends IBaseController
     {
-        function tick( delta:Number ):void;
         
     }
 }

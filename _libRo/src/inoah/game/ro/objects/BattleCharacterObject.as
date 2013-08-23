@@ -1,7 +1,6 @@
 package inoah.game.ro.objects
 {
     import flash.geom.Point;
-    import flash.utils.getTimer;
     
     import inoah.core.consts.ConstsActions;
     import inoah.core.consts.ConstsDirIndex;
@@ -27,7 +26,17 @@ package inoah.game.ro.objects
         /**
          * 攻击范围 
          */        
-        public var atkRange:int = 100;
+        protected var _atkRange:int = 200;
+        
+        public function get atkRange():int
+        {
+            return _atkRange;
+        }
+        
+        public function set atkRange( value:int ):void
+        {
+            _atkRange = value;
+        }
         
         public function BattleCharacterObject()
         {

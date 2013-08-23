@@ -44,6 +44,11 @@ package
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;
             
+            Global.MAP_W = 6400;
+            Global.MAP_H = 3200;
+            Global.TILE_W = 128;
+            Global.TILE_H = 64;
+            
             _context = new Context()
                 .install( MVCSBundle )
                 .install( CoreBundle )

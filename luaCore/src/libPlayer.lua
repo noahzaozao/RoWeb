@@ -8,6 +8,7 @@ Player.__index = Player
 
 ---
 -- @function [parent=#Player] new
+-- @param self
 -- @return #Player Player
 function Player:new()
 	local self = {}
@@ -16,6 +17,7 @@ function Player:new()
 end  
 ---
 -- @function [parent=#Player] init
+-- @param self
 -- @param #number x
 -- @param #number y
 function Player:init( x , y )
