@@ -17,6 +17,10 @@ package inoah.core
         
         public static var redrawW : int = 5;  //重绘区域
         public static var redrawH : int = 6;
+        public static var redrawHOffset : int = 0;
+        
+        public static var PLAYER_POSX:int = 1120;
+        public static var PLAYER_POSY:int = 560;
 
         public static var debugTxt:TextField;
         

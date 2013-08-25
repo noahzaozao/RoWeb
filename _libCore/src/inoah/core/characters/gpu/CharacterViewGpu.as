@@ -18,7 +18,6 @@ package inoah.core.characters.gpu
     
     import robotlegs.bender.framework.api.ILogger;
     
-    import starling.display.Quad;
     import starling.display.Sprite;
     
     /**
@@ -60,7 +59,7 @@ package inoah.core.characters.gpu
         
         protected var _weaponLoader:ILoader;
         protected var _weaponShadowLoader:ILoader;
-
+        
         protected var _isPlayEnd:Boolean;
         protected var _action:int;
         /**
@@ -114,8 +113,8 @@ package inoah.core.characters.gpu
             //            var txt:TextField = new TextField( 100 , 24 , value.toString() );
             //            txt.x = - txt.width / 2;
             //            addChild( txt );
-            var quad:Quad = new Quad( 3, 3, 0xff0000 );
-            addChild( quad );
+            //            var quad:Quad = new Quad( 3, 3, 0xff0000 );
+            //            addChild( quad );
         }
         
         public function get charInfo():CharacterInfo

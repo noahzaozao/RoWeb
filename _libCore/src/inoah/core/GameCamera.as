@@ -114,7 +114,7 @@ package inoah.core
             if(_focus )
             {
                 _zeroX = _focus.posX - (Global.SCREEN_W>>1);
-                _zeroY = _focus.posY - (Global.SCREEN_H>>1);
+                _zeroY = _focus.posY - (Global.SCREEN_H>>1) + Global.redrawHOffset * Global.TILE_H;
                 
                 var value:Number = Global.MAP_W-Global.SCREEN_W;
                 _zeroX = _zeroX<0 ? 0 : _zeroX;

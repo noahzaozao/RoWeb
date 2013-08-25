@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.mapMgrExtension
 {
+    import inoah.core.Global;
     import inoah.core.characters.gpu.PlayerViewGpu;
     import inoah.core.infos.CharacterInfo;
     import inoah.interfaces.ICamera;
@@ -92,8 +93,8 @@ package robotlegs.bender.extensions.mapMgrExtension
             _player = playerFactory.newPlayerObject();
             _player.controller = playerController;
             _player.viewObject = playerView;
-            _player.posX = 1120;
-            _player.posY = 560;
+            _player.posX = Global.PLAYER_POSX;
+            _player.posY = Global.PLAYER_POSY;
             _player.info = userModel.info as ICharacterInfo;
             _sceneMediator.addObject( _player );
             _camera.focus( _player );

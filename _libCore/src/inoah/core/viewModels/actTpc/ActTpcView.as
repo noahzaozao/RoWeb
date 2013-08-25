@@ -2,10 +2,10 @@ package inoah.core.viewModels.actTpc
 {
     import flash.display.BitmapData;
     
+    import inoah.core.events.ActTpcEvent;
     import inoah.core.viewModels.actSpr.structs.CACT;
     import inoah.core.viewModels.actSpr.structs.acth.AnyActAnyPat;
     import inoah.core.viewModels.actSpr.structs.acth.AnyPatSprV0101;
-    import inoah.core.events.ActTpcEvent;
     import inoah.utils.Counter;
     
     import starling.display.Image;
@@ -127,7 +127,7 @@ package inoah.core.viewModels.actTpc
             _counter.reset( _counterTarget );
             
             _animationDisplay = new Image(NULL_TEXTURE);
-            _animationDisplay.smoothing = TextureSmoothing.BILINEAR;
+            _animationDisplay.smoothing = TextureSmoothing.TRILINEAR;
             addChildAt(_animationDisplay, 0);
             _animationDisplay.touchable = true;
             
