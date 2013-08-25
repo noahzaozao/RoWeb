@@ -53,6 +53,7 @@ package inoah.game.td.modules.map.view.mediators
         protected var _monsterObjList:Vector.<IMonsterObject>;
         protected var _towersList:Vector.<ITowerObject>;
         protected var _monsterList:Vector.<MonsterViewGpu>;
+        private var _newMonsterCounter:Counter;
         
         public function TDSceneMediator()
         {
@@ -70,9 +71,10 @@ package inoah.game.td.modules.map.view.mediators
             _screenObj = new Vector.<BaseObject>();
             _qTree = new QTree(new Rectangle(0,0,Global.MAP_W,Global.MAP_H), 3 );
             
-            //            _newMonsterCounter = new Counter();
-            //            _newMonsterCounter.initialize();
-            //            _newMonsterCounter.reset( 3 );
+            _newMonsterCounter = new Counter();
+            _newMonsterCounter.initialize();
+            _newMonsterCounter.reset( 1 );
+            
             _monsterObjList = new Vector.<IMonsterObject>();
             _towersList = new Vector.<ITowerObject>();
             _monsterList = new Vector.<MonsterViewGpu>(); 
@@ -114,7 +116,7 @@ package inoah.game.td.modules.map.view.mediators
             super.onMapLoadComplete( e );
             
             var pos:Point;
-            pos = scene.GridToView( 19, 1 );
+            pos = scene.GridToView( 15, 5 );
             createMonser( pos.x , pos.y  );
         }
         
@@ -127,7 +129,8 @@ package inoah.game.td.modules.map.view.mediators
             monsterInfo.hpCurrent = monsterInfo.hpMax;
             monsterInfo.spCurrent = monsterInfo.spMax;
             monsterInfo.atk = 5;
-            var randMonster:int =  int(Math.random() * 3);
+//            var randMonster:int =  int(Math.random() * 3);
+            var randMonster:int =  0;//int(Math.random() * 3);
             if( randMonster == 0 )
             {
                 monsterInfo.init(  "" , "data/sprite/monsters/poring.tpc" , false );
@@ -186,16 +189,19 @@ package inoah.game.td.modules.map.view.mediators
                 _towersList[i].tick( delta );
             }
             
-            //            _newMonsterCounter.tick( delta );
-            //            if( _newMonsterCounter.expired )
-            //            {
-            //                if( _monsterObjList.length < 250 )
-            //                {
-            //                    createMonser( 1800 * Math.random() + 200, 1800 * Math.random() + 200 );
-            //                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );
-            //                }
-            //                _newMonsterCounter.reset( 3 );
-            //            }
+            _newMonsterCounter.tick( delta );
+            if( _newMonsterCounter.expired )
+            {
+                if( _monsterObjList.length < 100 )
+                {
+                    var pos:Point;
+                    pos = scene.GridToView( 15, 5 );
+                    createMonser( pos.x , pos.y  );
+                    
+//                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );
+                }
+                _newMonsterCounter.reset( 1 );
+            }
         }
     }
 }

@@ -10,9 +10,9 @@ package inoah.game.td
     import inoah.core.loaders.AtfLoader;
     import inoah.game.ro.modules.login.view.LoginView;
     import inoah.game.ro.modules.login.view.events.LoginEvent;
-    import inoah.game.ro.modules.main.view.MainView;
     import inoah.game.ro.modules.main.view.StatusBarView;
     import inoah.game.ro.modules.main.view.events.GameEvent;
+    import inoah.game.td.modules.game.GameView;
     import inoah.interfaces.ISprMgr;
     import inoah.interfaces.IUserModel;
     import inoah.interfaces.base.ILoader;
@@ -79,7 +79,7 @@ package inoah.game.td
         protected var _battleMgr:ITickable;
         
         protected var _loginView:LoginView;
-        protected var _mainView:MainView;
+        protected var _mainView:GameView;
         
         protected var _bgImage:Image;
         
@@ -121,7 +121,7 @@ package inoah.game.td
         protected function initLogin():void
         {
             App.init( displayMgr.uiLevel );
-            App.loader.loadAssets( ["assets/comp.swf","assets/login_interface.swf", "assets/basic_interface.swf"] , new Handler( loadComplete ) );
+            App.loader.loadAssets( ["assets/comp.swf","assets/login_interface.swf", "assets/basic_interface.swf","assets/td_interface.swf"] , new Handler( loadComplete ) );
         }
         /**
          * 
@@ -158,6 +158,8 @@ package inoah.game.td
         
         protected function onLoginHandler( e:LoginEvent ):void
         {
+            _bgImage.removeFromParent(true);
+            
             initUserinfo( e.username );
             
             _noteTxt = new TextField();
@@ -219,8 +221,8 @@ package inoah.game.td
             displayMgr.topLevel.addChild( statusBar );
             
             //初始化主界面
-//            _mainView = new MainView();
-//            displayMgr.uiLevel.addChild( _mainView );
+            _mainView = new GameView();
+            displayMgr.uiLevel.addChild( _mainView );
             
             keyMgr.initialize();
             

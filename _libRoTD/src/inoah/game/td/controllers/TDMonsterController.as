@@ -24,35 +24,41 @@ package inoah.game.td.controllers
         protected var _monsterList:Vector.<IMonsterObject>;
         protected var _scene:IBattleSceneMediator;
         
-        protected var _roadStep:int = 1;
-        protected var _isMoving:Boolean;
-        protected var _nextTarget:Point;
+        protected var _roadStepList:Vector.<int>;
+        protected var _nextTargetList:Vector.<Point>;
+        protected var _isMovingList:Vector.<Boolean>;
+        protected var _couldTick:Boolean;
         
         public function TDMonsterController()
         {
-
+            _roadStepList = new Vector.<int>();
+            _nextTargetList = new Vector.<Point>();
+            _isMovingList = new Vector.<Boolean>();
+            _couldTick = true;
         }
         
         override public function initialize():void
         {
             _scene = injector.getInstance(IBattleSceneMediator) as IBattleSceneMediator;
+            
         }
-        
         
         override public function tick( delta:Number ):void
         {
             super.tick( delta );
-            
-            var len:int = _monsterList.length;
-            var currentMonsterObj:IMonsterObject;
-            for ( var i:int = 0;i<len;i++)
+            if( _couldTick )
             {
-                currentMonsterObj = _monsterList[i];
-                if( currentMonsterObj.isDead )
+                var len:int = _monsterList.length;
+                var currentMonsterObj:IMonsterObject;
+                for ( var i:int = 0;i<len;i++)
                 {
-                    continue;
+                    currentMonsterObj = _monsterList[i];
+                    if( currentMonsterObj.isDead )
+                    {
+                        continue;
+                    }
+                    calMove( currentMonsterObj , i , delta );
                 }
-                calMove( currentMonsterObj , i , delta );
             }
         }
         
@@ -63,32 +69,37 @@ package inoah.game.td.controllers
         {
             var currentPos:Point = scene.ViewToGrid( currentMonsterObj.posX , currentMonsterObj.posY );
             
-            if( _roadStep>=scene.roadMap.length )
+            if( _roadStepList.length <= index )
             {
-                    _isMoving = false;
-                    currentMonsterObj.action = ConstsActions.Wait;
+                _roadStepList[index] = 1;
+                _isMovingList[index] = false;
+            }
+            if( _roadStepList[index] >=scene.roadMap.length )
+            {
+                _isMovingList[index] = false;
+                currentMonsterObj.action = ConstsActions.Wait;
             }
             else
             {
-                if(_roadStep>=scene.roadMap.length )
+                if( _roadStepList[index] >= scene.roadMap.length )
                 {
                     return;
                 }
-                var nextPos:Point = scene.roadMap[_roadStep];
-                _nextTarget = scene.GridToView( nextPos.x , nextPos.y );
-                if( !_isMoving )
+                var nextPos:Point = scene.roadMap[ _roadStepList[index] ];
+                _nextTargetList[index] = scene.GridToView( nextPos.x , nextPos.y );
+                if( !_isMovingList[index] )
                 {
-                    _isMoving = true;
-                    var radian:Number = GMath.getPointAngle( _nextTarget.x - currentMonsterObj.posX , _nextTarget.y -  currentMonsterObj.posY );
+                    _isMovingList[index] = true;
+                    var radian:Number = GMath.getPointAngle( _nextTargetList[index].x - currentMonsterObj.posX , _nextTargetList[index].y -  currentMonsterObj.posY );
                     var angle:int = GMath.R2A(radian)+90;
                     currentMonsterObj.changeDirectionByAngle( angle );
                     currentMonsterObj.action = ConstsActions.Run;
-                    currentMonsterObj.moveTo( _nextTarget.x , _nextTarget.y );
+                    currentMonsterObj.moveTo( _nextTargetList[index].x , _nextTargetList[index].y );
                 }
-                else if( currentMonsterObj.posX == _nextTarget.x && currentMonsterObj.posY == _nextTarget.y )
+                else if( currentMonsterObj.posX == _nextTargetList[index].x && currentMonsterObj.posY == _nextTargetList[index].y )
                 {
-                    _roadStep++;
-                    _isMoving = false;
+                    _roadStepList[index] ++;
+                    _isMovingList[index] = false;
                 }
             }
         }

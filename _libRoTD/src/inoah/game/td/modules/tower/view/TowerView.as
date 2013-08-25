@@ -1,4 +1,4 @@
-package inoah.game.td.modules.view
+package inoah.game.td.modules.tower.view
 {
     import inoah.game.ro.modules.map.view.TileBuilding;
     

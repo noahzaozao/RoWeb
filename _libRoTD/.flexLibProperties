@@ -10,9 +10,10 @@
     <classEntry path="robotlegs.bender.extensions.tdMapMgrExtension.MapEvent"/>
     <classEntry path="robotlegs.bender.extensions.tdMapMgrExtension.TDMapMgr"/>
     <classEntry path="robotlegs.bender.extensions.tdMapMgrExtension.TDMapMgrExtension"/>
-    <classEntry path="inoah.game.td.modules.view.TowerView"/>
+    <classEntry path="inoah.game.td.modules.tower.view.TowerView"/>
     <classEntry path="inoah.game.td.objects.TowerObject"/>
     <classEntry path="inoah.game.td.modules.tower.TowerController"/>
+    <classEntry path="inoah.game.td.modules.game.GameView"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
