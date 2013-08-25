@@ -1,11 +1,14 @@
 package inoah.game.ro.modules.map.view.mediators
 {
+    import flash.events.Event;
+    import flash.geom.Point;
+    
     import inoah.core.characters.gpu.MonsterViewGpu;
     import inoah.core.consts.ConstsActions;
     import inoah.core.infos.BattleCharacterInfo;
     import inoah.game.ro.objects.MonsterObject;
-    import inoah.interfaces.controller.IMonsterController;
     import inoah.interfaces.character.IMonsterObject;
+    import inoah.interfaces.controller.IMonsterController;
     import inoah.interfaces.map.IBattleSceneMediator;
     import inoah.utils.Counter;
     
@@ -39,6 +42,23 @@ package inoah.game.ro.modules.map.view.mediators
             super.initialize();
         }
         
+        override protected function onMapLoadComplete( e:flash.events.Event):void
+        {
+            super.onMapLoadComplete( e );
+            
+            var pos:Point;
+            for( var i:int = 0;i<10;i++)
+            {
+                for( var j:int = 0;j<10;j++)
+                {
+                    pos = scene.GridToView( j + 20 , i );
+                    createMonser( pos.x , pos.y  );
+                }
+            }
+            pos = scene.GridToView( 25, 2 );
+            createMonser( pos.x , pos.y  );
+        }
+        
         public function createMonser(posx:uint,posy:uint,camp:uint = 2):void
         {
             var monsterInfo:BattleCharacterInfo = new BattleCharacterInfo();
@@ -48,7 +68,8 @@ package inoah.game.ro.modules.map.view.mediators
             monsterInfo.hpCurrent = monsterInfo.hpMax;
             monsterInfo.spCurrent = monsterInfo.spMax;
             monsterInfo.atk = 5;
-            var randMonster:int =  int(Math.random() * 3);
+//            var randMonster:int =  int(Math.random() * 3);
+            var randMonster:int =  0;//int(Math.random() * 3);
             if( randMonster == 0 )
             {
                 monsterInfo.init(  "" , "data/sprite/monsters/poring.tpc" , false );

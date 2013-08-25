@@ -71,27 +71,18 @@ package inoah.game.ro.modules.map.view
         
         //地图元素
         public var bgLayer : starling.display.Sprite;  //背景层
-        public var buildingLayer:starling.display.Sprite;
-        public var bgImg : Bitmap; //地表
-        protected var cue : Bitmap; //测试用
-        public var actLayer : starling.display.Sprite; //动作层  
-        private var debugLayer : starling.display.Sprite;
-        private var debugMode : Boolean = false; 
+        //        public var bgImg : Bitmap; //地表
+        //        public var actLayer : starling.display.Sprite; //动作层  
         //
-        public var logX : int = 0;
-        public var logY : int = 0;
-        public var logDir : int = 0;
-        //摄像机跟踪的最小滚动值的高速缓存
-        protected var minCameraPos : Point = new Point(0, 0); 
         //集合  
-        public var locked : Boolean = true;   
-        public var mapCache : Object = {};
-        public var sortArr : Array = []; 
-        public var npcDict : Object = {}; 
+        //        public var locked : Boolean = true;   
+        //        public var mapCache : Object = {};
+        //        public var sortArr : Array = []; 
+        //        public var npcDict : Object = {}; 
         //
         private var nowTileDict : Object = {}; //当前tile集合
-        private var nowObjectDict : Object = {};
-        private var nowDebugDict : Object = {}; 
+        //        private var nowObjectDict : Object = {};
+        //        private var nowDebugDict : Object = {}; 
         
         //        private var mapBg:Bitmap;
         //        public var mapContainer:flash.display.Sprite;
@@ -129,9 +120,6 @@ package inoah.game.ro.modules.map.view
             bgLayer = new starling.display.Sprite();
             //            bgLayer.touchable = false;
             _container.addChild( bgLayer );
-            
-            buildingLayer = new starling.display.Sprite();
-            _container.addChild( buildingLayer );
             
             _levelList = new Vector.<IMapLevel>();
             _currentResIndexList = new Vector.<String>();
@@ -384,7 +372,8 @@ package inoah.game.ro.modules.map.view
         public function addBuilding( _XX:int , _YY:int , id:int , textureStr:String ):IViewObject
         {
             var building:TileBuilding = new TileBuilding( id , _currentTextureAtlasList[1].getTexture( textureStr ) );
-//            buildingLayer.addChild( building );
+            //            buildingLayer.addChild( building );
+            building.touchable = false;
             var pt : Point = GridToView(_XX , _YY); 
             building.x = pt.x - Global.TILE_W / 2;
             building.y = pt.y - Global.TILE_H  * 7 / 2  ; 
