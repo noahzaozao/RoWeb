@@ -156,6 +156,7 @@
     <classEntry path="inoah.interfaces.IViewObject"/>
     <classEntry path="inoah.interfaces.base.IBaseController"/>
     <classEntry path="inoah.interfaces.base.IBaseObject"/>
+    <classEntry path="inoah.interfaces.base.IDisposable"/>
     <classEntry path="inoah.interfaces.base.ILoader"/>
     <classEntry path="inoah.interfaces.base.ITickable"/>
     <classEntry path="inoah.interfaces.character.IBattleCharacterObject"/>
@@ -180,6 +181,8 @@
     <classEntry path="inoah.interfaces.map.IScene"/>
     <classEntry path="inoah.interfaces.map.ISceneMediator"/>
     <classEntry path="inoah.interfaces.map.ITDSceneMediator"/>
+    <classEntry path="inoah.interfaces.tower.ITowerController"/>
+    <classEntry path="inoah.interfaces.tower.ITowerObject"/>
     <classEntry path="inoah.utils.Counter"/>
     <classEntry path="inoah.utils.QTree"/>
     <classEntry path="morn.core.components.AutoBitmap"/>
@@ -446,8 +449,6 @@
     <classEntry path="starling.utils.getNextPowerOfTwo"/>
     <classEntry path="starling.utils.rad2deg"/>
     <classEntry path="starling.utils.transformCoords"/>
-    <classEntry path="inoah.interfaces.tower.ITowerController"/>
-    <classEntry path="inoah.interfaces.tower.ITowerObject"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
