@@ -1,0 +1,11 @@
+<View sceneWidth="960" sceneHeight="640" sceneColor="0xffffff" sceneBg="" layers="1,1,0,0,第 1 层">
+  <Image url="png.td_interface.topBg" x="0" y="0" layer="1"/>
+  <Image url="png.td_interface.coin" x="8" y="8" layer="1"/>
+  <Button skin="png.td_interface.btn_speed" x="738" y="8" layer="1" var="speedBtn" name="speedBtn"/>
+  <Image url="png.td_interface.menuBtn" x="904" y="8" layer="1" var="menuBtn" name="menuBtn"/>
+  <Image url="png.td_interface.pauseBtn" x="846" y="8" layer="1" var="pauseBtn" name="pauseBtn"/>
+  <UIView source="menuDialog.xml" x="681" y="341" layer="1"/>
+  <UIView source="winDialog.xml" x="300" y="418" layer="1"/>
+  <UIView source="loseDialog.xml" x="59" y="506" layer="1"/>
+  <Label text="999999" x="70" y="8" layer="1" color="0xffff00" size="36" align="center" bold="true" var="txtCoin" name="txtCoin"/>
+</View>

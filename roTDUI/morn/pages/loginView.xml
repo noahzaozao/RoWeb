@@ -1,0 +1,8 @@
+<View sceneWidth="280" sceneHeight="120" sceneColor="0xffffff" sceneBg="" layers="1,1,1,0,第 1 层;2,1,1,0,bgLevel">
+  <Image url="png.login_interface.win_login" x="0" y="0" layer="1"/>
+  <CheckBox label="存档" skin="png.comp.checkbox" x="230" y="32" layer="1"/>
+  <TextInput text="TextInput" skin="png.comp.textinput" x="91" y="28" layer="1" var="txtID" name="txtID"/>
+  <TextInput text="TextInput" skin="png.comp.textinput" x="91" y="59" layer="1" var="txtPass" name="txtPass" asPassword="true"/>
+  <Button skin="png.login_interface.btn_connect" x="233" y="96" layer="1" var="btnLogin" name="btnLogin"/>
+  <Button skin="png.login_interface.btn_request" x="5" y="96" layer="1" var="btnReg" name="btnReg"/>
+</View>

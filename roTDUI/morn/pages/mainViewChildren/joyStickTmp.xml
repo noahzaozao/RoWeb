@@ -1,0 +1,17 @@
+<Dialog sceneWidth="960" sceneHeight="640" sceneColor="0xffffff" sceneBg="morn/views/mainViewChildren/joyStickTmp.PNG" layers="1,1,0,0,第 1 层">
+  <Button skin="png.comp.button" x="695" y="560" layer="1" width="80" height="80" alpha="0.5"/>
+  <Button skin="png.comp.button" x="816" y="496" layer="1" width="144" height="144" var="btnAttack" name="btnAttack" alpha="0.5"/>
+  <Button skin="png.comp.button" x="880" y="400" layer="1" width="80" height="80" alpha="0.5"/>
+  <Button skin="png.comp.button" x="780" y="400" layer="1" width="80" height="80" alpha="0.5"/>
+  <Button skin="png.comp.button" x="17" y="395" layer="1" width="80" height="80" var="btnUpLeft" name="btnUpLeft" alpha="0.5"/>
+  <Button skin="png.comp.button" x="177" y="395" layer="1" width="80" height="80" var="btnUpRight" name="btnUpRight" alpha="0.5"/>
+  <Button skin="png.comp.button" x="17" y="555" layer="1" width="80" height="80" var="btnDownLeft" name="btnDownLeft" alpha="0.5"/>
+  <Button skin="png.comp.button" x="177" y="555" layer="1" width="80" height="80" var="btnDownRight" name="btnDownRight" alpha="0.5"/>
+  <Button skin="png.comp.button" x="97" y="395" layer="1" width="80" height="80" var="btnUp" name="btnUp" alpha="0.5"/>
+  <Button skin="png.comp.button" x="97" y="555" layer="1" width="80" height="80" var="btnDown" name="btnDown" alpha="0.5"/>
+  <Button skin="png.comp.button" x="177" y="475" layer="1" width="80" height="80" var="btnRight" name="btnRight" alpha="0.5"/>
+  <Button skin="png.comp.button" x="17" y="475" layer="1" width="80" height="80" var="btnLeft" name="btnLeft" alpha="0.5"/>
+  <Button label="l" skin="png.comp.button" x="695" y="461" layer="1" width="80" height="80" alpha="0.5"/>
+  <Button label="l" skin="png.comp.button" x="595" y="560" layer="1" width="80" height="80" alpha="0.5"/>
+  <Button label="l" skin="png.comp.button" x="495" y="560" layer="1" width="80" height="80" alpha="0.5"/>
+</Dialog>
