@@ -237,7 +237,7 @@ package inoah.gameEditor
             
             var mapInfo:MapInfo = new MapInfo( jsonObj );
             _scene = mapFactory.newScene( 0 );
-            _sceneMediator = mapFactory.newSceneMediator( 0 , 0 );
+            _sceneMediator = mapFactory.newSceneMediator( 0 , 1 );
 
             _camera = mapFactory.newCamera();
             
@@ -254,8 +254,8 @@ package inoah.gameEditor
             _player = playerFactory.newPlayerObject();
             _player.controller = playerController;
             _player.viewObject = playerView;
-            _player.posX = 800;
-            _player.posY = 400;
+            _player.posX = 2000;
+            _player.posY = 1000;
             _player.info = userInfo as ICharacterInfo;
             _sceneMediator.addObject( _player );
             _camera.focus( _player );

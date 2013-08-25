@@ -41,12 +41,14 @@ package
             
             Global.IS_MOBILE = false;
             Global.ENABLE_LUA = true;
+            Global.SCREEN_W = stage.stageWidth;
+            Global.SCREEN_H = stage.stageHeight;
             Global.MAP_W = 6400;
             Global.MAP_H = 3200;
             Global.TILE_W = 128;
             Global.TILE_H = 64;
-            Global.SCREEN_W = stage.stageWidth;
-            Global.SCREEN_H = stage.stageHeight;
+            Global.PLAYER_POSX = 1800;
+            Global.PLAYER_POSY = 1000;
             
             _context = new Context()
                 .install( MVCSBundle )
