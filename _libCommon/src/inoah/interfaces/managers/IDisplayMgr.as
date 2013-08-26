@@ -8,7 +8,8 @@ package inoah.interfaces.managers
 
     public interface IDisplayMgr extends IMediator
     {
-        function initStarling( starlingRoot:DisplayObject ):void;
+        function initStarling( starlingRoot:starling.display.DisplayObject ):void;
+        function removeFromParent( displayObj:* ):void;
         function get topLevel():flash.display.Sprite;
         function get uiLevel():flash.display.Sprite;
         function get joyStickLevel():starling.display.Sprite;

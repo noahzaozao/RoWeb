@@ -54,7 +54,7 @@ package
             Global.TILE_W = 64;
             Global.TILE_H = 32;
             Global.redrawW = 8;
-            Global.redrawH = 8;
+            Global.redrawH = 9;
 //            Global.redrawHOffset = 1;
             
             _context = new Context()
@@ -62,7 +62,7 @@ package
             _context.logLevel = LogLevel.DEBUG;
             _context.install(
                 AssetMgrExtension,
-                TextureMgrExtension,
+                TextureMgrExtension, 
                 SprMgrExtension,
                 DisplayerMgrExtension,
                 KeyMgrExtension,

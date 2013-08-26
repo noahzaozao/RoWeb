@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.tdMapMgrExtension
 {
+    import inoah.game.ro.modules.main.view.events.GameEvent;
     import inoah.interfaces.ICamera;
     import inoah.interfaces.IUserModel;
     import inoah.interfaces.base.ITickable;
@@ -68,6 +69,15 @@ package robotlegs.bender.extensions.tdMapMgrExtension
             _mapLevel = displayMgr.mapLevel;
             
             addContextListener( MapEvent.CHANGE_MAP , onChangeMap , MapEvent );
+            addContextListener( GameEvent.RESTART , onRestart , GameEvent );
+        }
+        
+        protected function onRestart( e:GameEvent ):void
+        {
+            if( _sceneMediator )
+            {
+                _sceneMediator.reset();
+            }
         }
         
         protected function onChangeMap( e:MapEvent ):void

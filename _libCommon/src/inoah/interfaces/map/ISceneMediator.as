@@ -12,5 +12,6 @@ package inoah.interfaces.map
         function set offsetX( value:Number ):void;
         function set offsetY( value:Number ):void;
         function tick(delta:Number):void;
+        function reset():void;
     }
 }

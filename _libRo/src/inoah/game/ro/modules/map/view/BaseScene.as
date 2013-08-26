@@ -102,8 +102,6 @@ package inoah.game.ro.modules.map.view
         private var _roadMap:Vector.<Point>;
         private var _startPos:Point;
         private var _endPos:Point;
-        private var _eventLayer:starling.display.Sprite;
-        
         
         public function BaseScene()
         {
@@ -113,9 +111,6 @@ package inoah.game.ro.modules.map.view
         public function initScene( container:DisplayObjectContainer , mapInfo:IMapInfo ):void
         {
             _container = container;
-            
-            _eventLayer = new starling.display.Sprite();
-            _container.addChild( _eventLayer );
             
             bgLayer = new starling.display.Sprite();
             //            bgLayer.touchable = false;

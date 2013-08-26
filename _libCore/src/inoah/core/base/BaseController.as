@@ -15,6 +15,11 @@ package inoah.core.base
             _animationUnitList = new Vector.<IAnimatable>();
         }
         
+        public function reset():void
+        {
+            
+        }
+        
         override public function initialize():void
         {
             

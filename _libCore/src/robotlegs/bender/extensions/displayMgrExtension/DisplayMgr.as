@@ -1,5 +1,6 @@
 package robotlegs.bender.extensions.displayMgrExtension
 {
+    import flash.display.DisplayObject;
     import flash.display.Sprite;
     import flash.display.Stage;
     
@@ -57,7 +58,7 @@ package robotlegs.bender.extensions.displayMgrExtension
             }
         }
         
-        public function initStarling( starlingRoot:DisplayObject ):void
+        public function initStarling( starlingRoot:starling.display.DisplayObject ):void
         {
             _starlingRoot = starlingRoot as DisplayObjectContainer;
             _displayStarlingList = new Vector.<starling.display.Sprite>();
@@ -69,6 +70,17 @@ package robotlegs.bender.extensions.displayMgrExtension
                 //                    _displayStarlingList[i].touchable = false;
                 //                }
                 _starlingRoot.addChild( _displayStarlingList[i] );
+            }
+        }
+        
+        public function removeFromParent( displayObj:* ):void
+        {
+            if( displayObj as flash.display.DisplayObject )
+            {
+                if( displayObj.parent )
+                {
+                    displayObj.parent.removeChild( displayObj );
+                }
             }
         }
         

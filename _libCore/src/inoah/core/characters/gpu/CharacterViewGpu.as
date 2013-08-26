@@ -497,7 +497,10 @@ package inoah.core.characters.gpu
         
         override public function dispose():void
         {
-            
+            if( this.parent )
+            {
+                this.parent.removeChild( this );
+            }
         }
         
         /**

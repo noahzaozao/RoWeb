@@ -14,6 +14,9 @@
     <classEntry path="inoah.game.td.objects.TowerObject"/>
     <classEntry path="inoah.game.td.modules.tower.TowerController"/>
     <classEntry path="inoah.game.td.modules.game.GameView"/>
+    <classEntry path="inoah.game.td.modules.map.view.mediators.TDScene"/>
+    <classEntry path="inoah.game.td.modules.game.ChooseView"/>
+    <classEntry path="inoah.game.td.modules.game.MenuDialog"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

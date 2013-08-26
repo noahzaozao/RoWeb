@@ -1,8 +1,12 @@
 package inoah.game.td
 {
+    import flash.events.Event;
     import flash.events.MouseEvent;
     import flash.text.TextField;
     import flash.text.TextFormat;
+    
+    import game.ui.loseDialogUI;
+    import game.ui.winDialogUI;
     
     import inoah.core.Global;
     import inoah.core.starlingMain;
@@ -12,7 +16,9 @@ package inoah.game.td
     import inoah.game.ro.modules.login.view.events.LoginEvent;
     import inoah.game.ro.modules.main.view.StatusBarView;
     import inoah.game.ro.modules.main.view.events.GameEvent;
+    import inoah.game.td.modules.game.ChooseView;
     import inoah.game.td.modules.game.GameView;
+    import inoah.game.td.modules.game.MenuDialog;
     import inoah.interfaces.ISprMgr;
     import inoah.interfaces.IUserModel;
     import inoah.interfaces.base.ILoader;
@@ -79,9 +85,14 @@ package inoah.game.td
         protected var _battleMgr:ITickable;
         
         protected var _loginView:LoginView;
-        protected var _mainView:GameView;
+        protected var _chooseView:ChooseView;
         
         protected var _bgImage:Image;
+        protected var _gameView:GameView;
+        protected var _menuDialog:MenuDialog;
+        protected var _winDialog:winDialogUI;
+        protected var _loseDialog:loseDialogUI;
+        protected var _speedRate:int = 1;
         
         public function TDGameMediator()
         {
@@ -104,6 +115,8 @@ package inoah.game.td
             _starling.start();
             
             contextView.view.stage.addEventListener( MouseEvent.RIGHT_CLICK, onRightClick );
+            
+            _couldTick = true;
         }
         /**
          * 
@@ -128,14 +141,15 @@ package inoah.game.td
          */        
         protected function loadComplete():void
         {
-            _loginView = new LoginView();
-            _loginView.x = Global.SCREEN_W / 2 - _loginView.width / 2;
-            _loginView.y = Global.SCREEN_H / 2 - _loginView.height / 2;
-            contextView.view.addChild( _loginView );
+            //            _loginView = new LoginView();
+            //            _loginView.x = Global.SCREEN_W / 2 - _loginView.width / 2;
+            //            _loginView.y = Global.SCREEN_H / 2 - _loginView.height / 2;
+            //            contextView.view.addChild( _loginView );
             
             addBgImage();
             
-            addContextListener( LoginEvent.LOGIN , onLoginHandler , LoginEvent );
+            onLoginHandler( new LoginEvent( LoginEvent.LOGIN , "" , "" ));
+            //            addContextListener( LoginEvent.LOGIN , onLoginHandler , LoginEvent );
         }
         /**
          * 
@@ -158,8 +172,6 @@ package inoah.game.td
         
         protected function onLoginHandler( e:LoginEvent ):void
         {
-            _bgImage.removeFromParent(true);
-            
             initUserinfo( e.username );
             
             _noteTxt = new TextField();
@@ -221,26 +233,122 @@ package inoah.game.td
             displayMgr.topLevel.addChild( statusBar );
             
             //初始化主界面
-            _mainView = new GameView();
-            displayMgr.uiLevel.addChild( _mainView );
+            _chooseView = new ChooseView();
+            displayMgr.uiLevel.addChild( _chooseView );
+            _chooseView.addEventListener( GameEvent.BACK , onReturn );
+            _chooseView.addEventListener( GameEvent.CHOOSE , onChoose );
             
-            keyMgr.initialize();
+        }
+        
+        protected function onReturn( e:GameEvent):void
+        {
+            _chooseView.removeEventListener( GameEvent.BACK , onReturn );
+            _chooseView.removeEventListener( GameEvent.CHOOSE , onChoose );
+        }
+        
+        protected function onChoose( e:Event):void
+        {
+            _chooseView.removeEventListener( GameEvent.CHOOSE , onChoose );
+            
+            _gameView = new GameView();
+            injector.injectInto( _gameView );
+            _gameView.initialize();
+            _gameView.addEventListener( GameEvent.SPEED , onSpeed );
+            _gameView.addEventListener( GameEvent.OPEN_MENU , onOpenMenu );
+            _gameView.addEventListener( GameEvent.OPEN_GAME_RESULT , onGameResult );
+            displayMgr.uiLevel.addChild( _gameView );
             
             //初始化地图管理器
             mapMgr.initialize();
-            
             dispatch( new MapEvent( MapEvent.CHANGE_MAP , 1 , 2 ) );
+            
+            keyMgr.initialize();
+            
+            _bgImage.removeFromParent(true);
             
             //初始化战斗管理器
             //            _battleMgr = new BattleMgr( (_mapMgr as MapMgr).scene as BattleMapMediator );
             //            MainMgr.instance.addMgr( MgrTypeConsts.BATTLE_MGR, _battleMgr as IMgr );
             //            facade.registerMediator( _battleMgr as IMediator );
             
-            dispatch( new GameEvent( GameEvent.RECV_CHAT , "\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>\n<font color='#00ff00'>WASD to move and J to attack!</font>" ) );
+            //            dispatch( new GameEvent( GameEvent.RECV_CHAT , "\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>\n<font color='#00ff00'>WASD to move and J to attack!</font>" ) );
+            
+        }
+        
+        protected function onSpeed( e:GameEvent ):void
+        {
+            if( _speedRate == 1 )
+            {
+                _speedRate = 2;
+            }
+            else
+            {
+                _speedRate = 1;
+            }
+        }
+        
+        protected function onGameResult( e:GameEvent ):void
+        {
+            if( e.msg == "win" )
+            {
+                if( !_winDialog )
+                {
+                    _winDialog = new winDialogUI();
+                    _winDialog.x = ( Global.SCREEN_W / 2 ) - ( _winDialog.width / 2 );
+                    _winDialog.y = ( Global.SCREEN_H / 2 ) - ( _winDialog.height / 2 );
+                }
+                displayMgr.uiLevel.addChild( _menuDialog );
+            }
+            else
+            {
+                if( !_loseDialog )
+                {
+                    _loseDialog = new loseDialogUI();
+                    _loseDialog.x = ( Global.SCREEN_W / 2 ) - ( _loseDialog.width / 2 );
+                    _loseDialog.y = ( Global.SCREEN_H / 2 ) - ( _loseDialog.height / 2 );
+                }
+                displayMgr.uiLevel.addChild( _menuDialog );
+            }
+        }
+        
+        protected function onOpenMenu( e:GameEvent):void
+        {
+            _couldTick = false;
+            
+            if( !_menuDialog )
+            {
+                _menuDialog = new MenuDialog();
+                _menuDialog.x = ( Global.SCREEN_W / 2 ) - ( _menuDialog.width / 2 );
+                _menuDialog.y = ( Global.SCREEN_H / 2 ) - ( _menuDialog.height / 2 );
+            }
+            _menuDialog.addEventListener( GameEvent.CONTINUE , onContinue );
+            _menuDialog.addEventListener( GameEvent.RESTART , onRestart );
+            displayMgr.uiLevel.addChild( _menuDialog );
+        }
+        
+        protected function onContinue( e:GameEvent ):void
+        {
+            _menuDialog.removeEventListener( GameEvent.CONTINUE , onContinue );
+            displayMgr.removeFromParent( _menuDialog );
+            
+            _couldTick = true;
+        }
+        
+        protected function onRestart( e:GameEvent ):void
+        {
+            dispatch( new GameEvent( GameEvent.RESTART ) );
+            _speedRate = 1;
+            _couldTick = true;
         }
         
         public function tick( delta:Number ):void
         {
+            delta = _speedRate * delta;
+            if( !_couldTick )
+            {
+                return;
+            }
+            
             if( _starlingMain )
             {
                 _starlingMain.tick( delta );

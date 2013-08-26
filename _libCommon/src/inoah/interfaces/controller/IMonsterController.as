@@ -7,5 +7,6 @@ package inoah.interfaces.controller
     {
         function set monsterList( value:Vector.<IMonsterObject> ):void
         function get monsterList():Vector.<IMonsterObject>
+        function reset():void
     }
 }

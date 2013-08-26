@@ -11,6 +11,7 @@ package inoah.game.td.modules.map.view.mediators
     import inoah.core.characters.gpu.MonsterViewGpu;
     import inoah.core.consts.ConstsActions;
     import inoah.core.infos.BattleCharacterInfo;
+    import inoah.game.ro.modules.map.view.TileBuilding;
     import inoah.game.ro.modules.map.view.events.SceneEvent;
     import inoah.game.ro.modules.map.view.mediators.BaseSceneMediator;
     import inoah.game.ro.objects.MonsterObject;
@@ -51,9 +52,12 @@ package inoah.game.td.modules.map.view.mediators
         public var towerController:ITowerController;
         
         protected var _monsterObjList:Vector.<IMonsterObject>;
-        protected var _towersList:Vector.<ITowerObject>;
         protected var _monsterList:Vector.<MonsterViewGpu>;
-        private var _newMonsterCounter:Counter;
+
+        protected var _towerObjList:Vector.<ITowerObject>;
+        protected var _towerList:Vector.<TileBuilding>;
+        
+        protected var _newMonsterCounter:Counter;
         
         public function TDSceneMediator()
         {
@@ -76,11 +80,13 @@ package inoah.game.td.modules.map.view.mediators
             _newMonsterCounter.reset( 1 );
             
             _monsterObjList = new Vector.<IMonsterObject>();
-            _towersList = new Vector.<ITowerObject>();
             _monsterList = new Vector.<MonsterViewGpu>(); 
+            _towerObjList = new Vector.<ITowerObject>();
+            _towerList = new Vector.<TileBuilding>();
+            
             monsterController.monsterList = _monsterObjList; 
             
-            towerController.towersList = _towersList;
+            towerController.towersList = _towerObjList;
             towerController.monsterList = _monsterObjList;
             
             var loader:URLLoader = new URLLoader();
@@ -97,17 +103,51 @@ package inoah.game.td.modules.map.view.mediators
             //            displayMgr.unitLevel.addChild( img );
         }
         
+        override public function reset():void
+        {
+            super.reset();
+            monsterController.reset();
+            _newMonsterCounter.reset( 1 );
+        }
+        
+        override protected function cleanScene():void
+        {
+            for( var i:int = 0; i<_monsterObjList.length;i++)
+            {
+                _monsterObjList.splice( i , 1 );
+                i--;
+            }
+            for( i = 0; i<_monsterList.length;i++)
+            {
+                _monsterList[i].dispose();
+                _monsterList.splice( i , 1 );
+                i--;
+            }
+            for( i = 0; i<_towerObjList.length;i++)
+            {
+                _towerObjList.splice( i , 1 );
+                i--;
+            }
+            for( i = 0; i<_towerList.length;i++)
+            {
+                _towerList[i].dispose();
+                _towerList.splice( i , 1 );
+                i--;
+            }
+        }
+        
         private function onTouch( e:SceneEvent ):void
         {
             logger.debug( "TouchMap " + e.touchGrid );
             
-            
             var towerObj:TowerObject = new TowerObject();
-            towerObj.viewObject = scene.addBuilding( e.touchGrid.x , e.touchGrid.y , 10000 , "17" );
+            var towerView:TileBuilding = scene.addBuilding( e.touchGrid.x , e.touchGrid.y , 10000 , "17" ) as TileBuilding;
+            towerObj.viewObject = towerView;
+            _towerList.push( towerView );
             var pt : Point = scene.GridToView( e.touchGrid.x , e.touchGrid.y ); 
             towerObj.posX = pt.x - Global.TILE_W / 2;
             towerObj.posY = pt.y - Global.TILE_H  * 7 / 2  ; 
-            _towersList.push( towerObj );
+            _towerObjList.push( towerObj );
             addObject( towerObj );
         }
         
@@ -178,7 +218,7 @@ package inoah.game.td.modules.map.view.mediators
                 _monsterObjList[i].tick( delta );
             }
             
-            len = _towersList.length;
+            len = _towerObjList.length;
             
             if( towerController )
             {
@@ -186,7 +226,7 @@ package inoah.game.td.modules.map.view.mediators
             }
             for( i=0;i<len;i++)
             {
-                _towersList[i].tick( delta );
+                _towerObjList[i].tick( delta );
             }
             
             _newMonsterCounter.tick( delta );

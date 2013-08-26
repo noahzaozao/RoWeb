@@ -96,6 +96,15 @@ package inoah.game.ro.modules.map.view.mediators
             scene.initScene( _mapContainer , mapInfo ); 
         }
         
+        public function reset():void
+        {
+            cleanScene();
+        }
+        
+        protected function cleanScene():void
+        {
+        }
+        
         public function addObject( o:IBaseObject ):void
         {
             if( _unitList.indexOf( o as BaseObject ) != -1 )

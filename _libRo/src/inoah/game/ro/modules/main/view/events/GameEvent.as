@@ -5,6 +5,14 @@ package inoah.game.ro.modules.main.view.events
     public class GameEvent extends Event
     {
         public static const LOGIN:String = "GameEvent.LOGIN";
+        public static const BACK:String = "GameEvent.BACK";
+        public static const CHOOSE:String = "GameEvent.CHOOSE";
+
+        public static const OPEN_MENU:String = "GameEvent.OPEN_MENU";
+        public static const CONTINUE:String = "GameEvent.CONTINUE";
+        public static const SPEED:String = "GameEvent.SPEED";
+        public static const RESTART:String = "GameEvent.RESTART";
+        public static const OPEN_GAME_RESULT:String = "GameEvent.OPEN_GAME_RESULT";
         public static const RIGHT_CLICK:String = "GameEvent.RIGHT_CLICK";
         
         public static const SHOW_ALERT:String = "GameEvent.SHOW_ALERT";

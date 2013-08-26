@@ -73,6 +73,11 @@ package inoah.game.ro.modules.map.view
         override public function dispose():void
         {
             super.dispose();
+            
+            if( this.parent )
+            {
+                this.parent.removeChild( this );
+            }
         }
         
         public function set dirIndex( value:uint ):void

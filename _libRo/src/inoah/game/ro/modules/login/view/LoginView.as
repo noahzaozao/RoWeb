@@ -30,6 +30,7 @@ package inoah.game.ro.modules.login.view
             }
             dispatchEvent( new LoginEvent( LoginEvent.LOGIN , this.txtID.text , this.txtPass.text ) );
             this.remove();
+            e.stopImmediatePropagation();
         }
     }
 }

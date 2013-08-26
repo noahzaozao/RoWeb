@@ -31,10 +31,15 @@ package inoah.game.td.controllers
         
         public function TDMonsterController()
         {
+            reset();
+        }
+        
+        override public function reset():void
+        {
             _roadStepList = new Vector.<int>();
             _nextTargetList = new Vector.<Point>();
             _isMovingList = new Vector.<Boolean>();
-            _couldTick = true;
+            _couldTick = true;           
         }
         
         override public function initialize():void
