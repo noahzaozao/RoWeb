@@ -1,5 +1,7 @@
 package
 {
+    import flash.desktop.NativeApplication;
+    import flash.display.Sprite;
     import flash.display.StageAlign;
     import flash.display.StageScaleMode;
     import flash.events.Event;
@@ -21,7 +23,7 @@ package
     import robotlegs.bender.framework.impl.Context;
     
     [SWF(width="960",height="640",frameRate="60",backgroundColor="#000000")]
-    public class RoTD extends VersionSprite
+    public class RoTDIOS extends Sprite
     {
         private var _lastTimeStamp:Number;
         
@@ -29,7 +31,7 @@ package
         
         private var _roGameMediator:TDGameMediator;
         
-        public function RoTD()
+        public function RoTDIOS()
         {
             addEventListener( Event.ADDED_TO_STAGE , init );
         }
@@ -44,10 +46,10 @@ package
             tabChildren = false;
             tabEnabled = false;
             
-            Global.IS_MOBILE = false;
+            Global.IS_MOBILE = true;
             Global.ENABLE_LUA = false;
-            Global.SCREEN_W = stage.stageWidth;
-            Global.SCREEN_H = stage.stageHeight;
+            Global.SCREEN_W = 960;
+            Global.SCREEN_H = 640;
             
             Global.MAP_W = 1920;
             Global.MAP_H = 960;
@@ -55,14 +57,13 @@ package
             Global.TILE_H = 64;
             Global.redrawW = 8;
             Global.redrawH = 8;
-//            Global.redrawHOffset = 1;
             
             _context = new Context()
                 .install( MVCSBundle );
             _context.logLevel = LogLevel.DEBUG;
             _context.install(
                 AssetMgrExtension,
-                TextureMgrExtension, 
+                TextureMgrExtension,
                 SprMgrExtension,
                 DisplayerMgrExtension,
                 KeyMgrExtension,
@@ -72,14 +73,6 @@ package
             _context.configure( TDConfig )
                 .configure( new ContextView( this ) )
                 .initialize( onInitialize );
-            
-            stage.addEventListener( Event.ACTIVATE, handleActivate, false, 0, true );
-            stage.addEventListener( Event.DEACTIVATE, handleActivate, false, 0, true );
-        }
-        
-        protected function handleActivate( e:Event):void
-        {
-            _context.dispatchEvent( e );
         }
         
         private function onInitialize():void
@@ -89,6 +82,19 @@ package
             
             _lastTimeStamp = new Date().time;
             stage.addEventListener( Event.ENTER_FRAME, onEnterFrameHandler );
+            
+            NativeApplication.nativeApplication.addEventListener( Event.ACTIVATE, handleActivate, false, 0, true );
+            NativeApplication.nativeApplication.addEventListener( Event.DEACTIVATE, handleDeactivate, false, 0, true );
+        }
+        
+        protected function handleDeactivate( e:Event):void
+        {
+            _context.dispatchEvent( e );
+        }
+        
+        protected function handleActivate( e:Event):void
+        {
+            _context.dispatchEvent( e );
         }
         
         protected function onEnterFrameHandler( e:Event):void

@@ -36,13 +36,10 @@ package inoah.game.td
     import robotlegs.bender.extensions.tdMapMgrExtension.MapEvent;
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IInjector;
-    import robotlegs.bender.framework.impl.applyHooks;
     
-    import starling.animation.Tween;
     import starling.core.Starling;
     import starling.display.DisplayObject;
     import starling.display.Image;
-    import starling.extensions.PDParticleSystem;
     import starling.textures.Texture;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
@@ -267,6 +264,9 @@ package inoah.game.td
             
             keyMgr.initialize();
             
+            context.addEventListener( Event.ACTIVATE , onActivate );
+            context.addEventListener( Event.DEACTIVATE , onActivate );
+            
             //创建粒子系统
             //            var mParticleSystem:PDParticleSystem;
             //            mParticleSystem = new PDParticleSystem( ConstsParticle.FIRE_BALL , Texture.fromBitmap(new ConstsParticle.CIRCLE()));
@@ -293,6 +293,18 @@ package inoah.game.td
             
             //            dispatch( new GameEvent( GameEvent.RECV_CHAT , "\n\n\n\n<font color='#00ff00'>Welcome to roWeb!</font>\n<font color='#00ff00'>WASD to move and J to attack!</font>" ) );
             
+        }
+        
+        private function onActivate( e:Event ):void
+        {
+            if( e.type == Event.ACTIVATE )
+            {
+            }
+            else if( e.type == Event.DEACTIVATE )
+            {
+                onOpenMenu( null );
+                _couldTick = false;
+            }
         }
         
         protected function onSpeed( e:GameEvent ):void
