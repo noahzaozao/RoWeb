@@ -95,8 +95,8 @@ package robotlegs.bender.extensions.tdMapMgrExtension
             _player = playerFactory.newPlayerObject();
             injector.injectInto(_player);
             _player.controller = playerController;
-            _player.posX = 1120;
-            _player.posY = 560;
+            _player.posX = 960;
+            _player.posY = 450;
             _player.info = userModel.info as ICharacterInfo;
             _sceneMediator.addObject( _player );
             _camera.focus( _player );

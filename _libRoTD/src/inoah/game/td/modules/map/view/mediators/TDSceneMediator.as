@@ -11,6 +11,7 @@ package inoah.game.td.modules.map.view.mediators
     import inoah.core.characters.gpu.MonsterViewGpu;
     import inoah.core.consts.ConstsActions;
     import inoah.core.infos.BattleCharacterInfo;
+    import inoah.game.ro.modules.map.view.BaseScene;
     import inoah.game.ro.modules.map.view.TileBuilding;
     import inoah.game.ro.modules.map.view.events.SceneEvent;
     import inoah.game.ro.modules.map.view.mediators.BaseSceneMediator;
@@ -91,7 +92,7 @@ package inoah.game.td.modules.map.view.mediators
             
             var loader:URLLoader = new URLLoader();
             loader.addEventListener( flash.events.Event.COMPLETE , onMapLoadComplete );
-            loader.load( new URLRequest( "map/map003.json" ));
+            loader.load( new URLRequest( "map/map004.json" ));
             
             ( scene as Sprite ).addEventListener( SceneEvent.MAP_TOUCH, onTouch );
             
@@ -140,13 +141,16 @@ package inoah.game.td.modules.map.view.mediators
         {
             logger.debug( "TouchMap " + e.touchGrid );
             
+            var pt : Point = scene.GridToView( e.touchGrid.x , e.touchGrid.y ); 
             var towerObj:TowerObject = new TowerObject();
-            var towerView:TileBuilding = scene.addBuilding( e.touchGrid.x , e.touchGrid.y , 10000 , "17" ) as TileBuilding;
+            var towerView:TileBuilding = new TileBuilding( 10000 , scene.currentTextureAtlasList[1].getTexture( "17" ) );
+            towerView.x = -128;
+            towerView.y = -128;
+            towerView.touchable = false;
             towerObj.viewObject = towerView;
             _towerList.push( towerView );
-            var pt : Point = scene.GridToView( e.touchGrid.x , e.touchGrid.y ); 
-            towerObj.posX = pt.x - Global.TILE_W / 2;
-            towerObj.posY = pt.y - Global.TILE_H  * 7 / 2  ; 
+            towerObj.posX = pt.x - Global.TILE_W / 4;
+            towerObj.posY = pt.y - Global.TILE_H  * 3 / 2 ; 
             _towerObjList.push( towerObj );
             addObject( towerObj );
         }
@@ -156,7 +160,7 @@ package inoah.game.td.modules.map.view.mediators
             super.onMapLoadComplete( e );
             
             var pos:Point;
-            pos = scene.GridToView( 15, 5 );
+            pos = scene.GridToView(  ( scene as BaseScene).startPos.x ,  ( scene as BaseScene).startPos.y );
             createMonser( pos.x , pos.y  );
         }
         
@@ -235,7 +239,7 @@ package inoah.game.td.modules.map.view.mediators
                 if( _monsterObjList.length < 100 )
                 {
                     var pos:Point;
-                    pos = scene.GridToView( 15, 5 );
+                    pos = scene.GridToView(  ( scene as BaseScene).startPos.x ,  ( scene as BaseScene).startPos.y);
                     createMonser( pos.x , pos.y  );
                     
 //                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );

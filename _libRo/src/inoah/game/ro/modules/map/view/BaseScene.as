@@ -14,7 +14,6 @@ package inoah.game.ro.modules.map.view
     import inoah.data.map.MapTileSetInfo;
     import inoah.game.ro.modules.map.view.events.SceneEvent;
     import inoah.interfaces.ICamera;
-    import inoah.interfaces.IViewObject;
     import inoah.interfaces.base.ILoader;
     import inoah.interfaces.managers.IAssetMgr;
     import inoah.interfaces.managers.IDisplayMgr;
@@ -62,6 +61,11 @@ package inoah.game.ro.modules.map.view
         protected var _currentTextureAtlasIndexList:Vector.<int>;
         protected var _currentTextureAtlasList:Vector.<TextureAtlas>;
         
+        public function get currentTextureAtlasList():Vector.<TextureAtlas>
+        {
+            return _currentTextureAtlasList;
+        }
+        
         protected var _levelList:Vector.<IMapLevel>;
         protected var _mapImageList:Vector.<Image>;
         
@@ -80,28 +84,28 @@ package inoah.game.ro.modules.map.view
         //        public var sortArr : Array = []; 
         //        public var npcDict : Object = {}; 
         //
-        private var nowTileDict : Object = {}; //当前tile集合
-        //        private var nowObjectDict : Object = {};
-        //        private var nowDebugDict : Object = {}; 
+        protected var nowTileDict : Object = {}; //当前tile集合
+        //        protected var nowObjectDict : Object = {};
+        //        protected var nowDebugDict : Object = {}; 
         
-        //        private var mapBg:Bitmap;
+        //        protected var mapBg:Bitmap;
         //        public var mapContainer:flash.display.Sprite;
         
         //
-        private var m_mapWid:int = 0;
-        private var m_mapHei:int = 0;
+        protected var m_mapWid:int = 0;
+        protected var m_mapHei:int = 0;
         
-        private var m_orgX:Number = 0;
-        private var m_orgY:Number = 0;
+        protected var m_orgX:Number = 0;
+        protected var m_orgY:Number = 0;
         
-        private var m_xincX:Number = 0;
-        private var m_xincY:Number = 0;
-        private var m_yincX:Number = 0;
-        private var m_yincY:Number = 0;
-        private var lightBlockSp:Shape;
-        private var _roadMap:Vector.<Point>;
-        private var _startPos:Point;
-        private var _endPos:Point;
+        protected var m_xincX:Number = 0;
+        protected var m_xincY:Number = 0;
+        protected var m_yincX:Number = 0;
+        protected var m_yincY:Number = 0;
+        protected var lightBlockSp:Shape;
+        protected var _roadMap:Vector.<Point>;
+        public var startPos:Point;
+        public var endPos:Point;
         
         public function BaseScene()
         {
@@ -167,24 +171,27 @@ package inoah.game.ro.modules.map.view
             _container.addEventListener( TouchEvent.TOUCH , onTouch );
         }
         
-        private function onTouch( e:TouchEvent ):void
+        protected function onTouch( e:TouchEvent ):void
         {
             var touch:Touch = e.getTouch( _container );
             if( touch && touch.phase == TouchPhase.BEGAN )
             {
                 var pos:Point = touch.getLocation( _container );
                 var touchGrid:Point = ViewToGrid(pos.x , pos.y );
-                dispatchEvent( new SceneEvent( SceneEvent.MAP_TOUCH , touchGrid ) );
+                if( touchGrid.x < _mapInfo.width && touchGrid.y < _mapInfo.height )
+                {
+                    dispatchEvent( new SceneEvent( SceneEvent.MAP_TOUCH , touchGrid ) );
+                }
             }
         }
         
-        private function makeRoadMap( mapLayerInfo:MapLayerInfo ):void
+        protected function makeRoadMap( mapLayerInfo:MapLayerInfo ):void
         {
             var p:Point;
             p = new Point( _mapInfo.layers[2].objects[0].x / _mapInfo.tileheight , _mapInfo.layers[2].objects[0].y / _mapInfo.tileheight );
-            _startPos = new Point( _mapInfo.height - p.y , p.x );
+            startPos = new Point( _mapInfo.height - p.y - 1 , p.x );
             p = new Point( _mapInfo.layers[2].objects[1].x / _mapInfo.tileheight , _mapInfo.layers[2].objects[1].y / _mapInfo.tileheight );
-            _endPos =  new Point( _mapInfo.height - p.y , p.x );
+            endPos =  new Point( _mapInfo.height - p.y - 1, p.x );
             
             var arr:Array = [];
             for( var _YY:int = 0;_YY < mapLayerInfo.height ; _YY++)
@@ -206,7 +213,7 @@ package inoah.game.ro.modules.map.view
             _astar = new SilzAstar( arr );
             //            _astar = new SilzAstar( arr , astarCon );
             _roadMap = new Vector.<Point>()
-            var nodeArr:Array = _astar.find( _startPos.x , _startPos.y , _endPos.x, _endPos.y );
+            var nodeArr:Array = _astar.find( startPos.x , startPos.y , endPos.x, endPos.y );
             if(nodeArr)
             {
                 for(var i:int=0,j:int=nodeArr.length;i<j;i++)
@@ -216,7 +223,7 @@ package inoah.game.ro.modules.map.view
             }
         }
         
-        private function onLoadMapRes( loader:ILoader ):void
+        protected function onLoadMapRes( loader:ILoader ):void
         {
             var tileSetList:Vector.<MapTileSetInfo> = _mapInfo.tilesets;
             var tileSet:MapTileSetInfo;
@@ -364,18 +371,7 @@ package inoah.game.ro.modules.map.view
             }
         }
         
-        public function addBuilding( _XX:int , _YY:int , id:int , textureStr:String ):IViewObject
-        {
-            var building:TileBuilding = new TileBuilding( id , _currentTextureAtlasList[1].getTexture( textureStr ) );
-            //            buildingLayer.addChild( building );
-            building.touchable = false;
-            var pt : Point = GridToView(_XX , _YY); 
-            building.x = pt.x - Global.TILE_W / 2;
-            building.y = pt.y - Global.TILE_H  * 7 / 2  ; 
-            return building;
-        }
-        
-        private function delTile(k : String) : void
+        protected function delTile(k : String) : void
         {  
             nowTileDict[k].removeFromParent();
             //            bgLayer.removeChild( nowTileDict[k] );

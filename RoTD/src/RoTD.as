@@ -49,12 +49,12 @@ package
             Global.SCREEN_W = stage.stageWidth;
             Global.SCREEN_H = stage.stageHeight;
             
-            Global.MAP_W = 3200;
-            Global.MAP_H = 1600;
-            Global.TILE_W = 64;
-            Global.TILE_H = 32;
+            Global.MAP_W = 1920;
+            Global.MAP_H = 960;
+            Global.TILE_W = 128;
+            Global.TILE_H = 64;
             Global.redrawW = 8;
-            Global.redrawH = 9;
+            Global.redrawH = 8;
 //            Global.redrawHOffset = 1;
             
             _context = new Context()

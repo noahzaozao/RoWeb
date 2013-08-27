@@ -419,6 +419,11 @@
     <classEntry path="starling.events.TouchMarker"/>
     <classEntry path="starling.events.TouchPhase"/>
     <classEntry path="starling.events.TouchProcessor"/>
+    <classEntry path="starling.extensions.ColorArgb"/>
+    <classEntry path="starling.extensions.PDParticle"/>
+    <classEntry path="starling.extensions.PDParticleSystem"/>
+    <classEntry path="starling.extensions.Particle"/>
+    <classEntry path="starling.extensions.ParticleSystem"/>
     <classEntry path="starling.filters.BlurFilter"/>
     <classEntry path="starling.filters.ColorMatrixFilter"/>
     <classEntry path="starling.filters.DisplacementMapFilter"/>

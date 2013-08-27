@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="15" height="15" tilewidth="128" tileheight="64">
+ <tileset firstgid="1" name="gound002" tilewidth="128" tileheight="128">
+  <image source="gound002.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="17" name="buildings001" tilewidth="64" tileheight="128">
+  <image source="buildings001.png" width="256" height="2048"/>
+ </tileset>
+ <layer name="background" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJydkysOADAIQ1EYDPc/7czE0pTPKp5q3hoISzNLgl9Y1uGA6m39ypv8yav8rYd+CLjYGdCPWdeHbhbvbnpf/2deZefqjai3qf4Jlh/0KAmE
+  </data>
+ </layer>
+ <layer name="roadMap" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF9ADcZGBK7CLHHcTopYW9lPp3qAMAQCYBbA==
+  </data>
+ </layer>
+ <objectgroup name="eventMap" width="15" height="15">
+  <object name="startPos" x="0" y="384" width="64" height="64"/>
+  <object name="endPos" x="640" y="512" width="64" height="64"/>
+ </objectgroup>
+ <layer name="towers" width="15" height="15">
+  <data encoding="base64" compression="zlib">
+   eJxjYBjZQBAJj4JRMBAAAIMEADQ=
+  </data>
+ </layer>
+</map>

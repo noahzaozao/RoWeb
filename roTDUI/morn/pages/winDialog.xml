@@ -1,5 +1,5 @@
 <Dialog sceneWidth="469" sceneHeight="332" sceneColor="0xffffff" sceneBg="" layers="1,1,0,0,第 1 层">
   <Image url="png.td_interface.winBg" x="0" y="0" layer="1"/>
-  <Button skin="png.td_interface.btn_continue" x="128" y="168" layer="1"/>
-  <Button skin="png.td_interface.btn_choose" x="128" y="88" layer="1"/>
+  <Button skin="png.td_interface.btn_continue" x="127" y="168" layer="1"/>
+  <Button skin="png.td_interface.btn_choose" x="127" y="88" layer="1"/>
 </Dialog>

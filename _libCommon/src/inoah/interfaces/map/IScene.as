@@ -3,9 +3,8 @@ package inoah.interfaces.map
     
     import flash.geom.Point;
     
-    import inoah.interfaces.IViewObject;
-    
     import starling.display.DisplayObjectContainer;
+    import starling.textures.TextureAtlas;
 
     public interface IScene
     {
@@ -14,6 +13,6 @@ package inoah.interfaces.map
         function GridToView( xpos:int, ypos:int ):Point;
         function ViewToGrid( xpos:Number, ypos:Number ):Point;
         function get roadMap():Vector.<Point>;
-        function addBuilding( _XX:int , _YY:int , id:int , textureStr:String ):IViewObject;
+        function get currentTextureAtlasList():Vector.<TextureAtlas>;
     }
 }

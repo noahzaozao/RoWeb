@@ -36,10 +36,13 @@ package inoah.game.td
     import robotlegs.bender.extensions.tdMapMgrExtension.MapEvent;
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.api.IInjector;
+    import robotlegs.bender.framework.impl.applyHooks;
     
+    import starling.animation.Tween;
     import starling.core.Starling;
     import starling.display.DisplayObject;
     import starling.display.Image;
+    import starling.extensions.PDParticleSystem;
     import starling.textures.Texture;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
@@ -263,6 +266,23 @@ package inoah.game.td
             dispatch( new MapEvent( MapEvent.CHANGE_MAP , 1 , 2 ) );
             
             keyMgr.initialize();
+            
+            //创建粒子系统
+            //            var mParticleSystem:PDParticleSystem;
+            //            mParticleSystem = new PDParticleSystem( ConstsParticle.FIRE_BALL , Texture.fromBitmap(new ConstsParticle.CIRCLE()));
+            //            mParticleSystem.emitterX = 320;
+            //            mParticleSystem.emitterY = 40;
+            //            
+            //            //添加粒子系统到舞台和juggler
+            //            displayMgr.unitLevel.addChild(mParticleSystem);
+            //            Starling.juggler.add(mParticleSystem);
+            //            
+            //            //开始发射粒子
+            //            mParticleSystem.start();
+            //            
+            //            var tween:Tween = new Tween( mParticleSystem , 5 );
+            //            tween.animate("emitterY" , 800 );
+            //            Starling.juggler.add( tween );
             
             _bgImage.removeFromParent(true);
             

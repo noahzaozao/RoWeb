@@ -17,6 +17,7 @@
     <classEntry path="inoah.game.td.modules.map.view.mediators.TDScene"/>
     <classEntry path="inoah.game.td.modules.game.ChooseView"/>
     <classEntry path="inoah.game.td.modules.game.MenuDialog"/>
+    <classEntry path="inoah.game.td.ConstsParticle"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
