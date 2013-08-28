@@ -5,6 +5,7 @@ package robotlegs.bender.extensions.tdMapMgrExtension
     public class MapEvent extends Event
     {
         public static const CHANGE_MAP:String = "MapEvent.CHANGE_MAP";
+        public static const BUILD_TOWER:String = "MapEvent.BUILD_TOWER";
         
         public var mapId:int;
         public var mapType:int;

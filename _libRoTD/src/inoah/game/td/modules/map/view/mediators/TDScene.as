@@ -1,5 +1,8 @@
 package inoah.game.td.modules.map.view.mediators
 {
+    import flash.geom.Point;
+    
+    import inoah.data.map.MapLayerInfo;
     import inoah.game.ro.modules.map.view.BaseScene;
     import inoah.interfaces.map.IMapInfo;
     

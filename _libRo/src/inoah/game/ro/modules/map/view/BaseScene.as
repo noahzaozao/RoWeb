@@ -104,6 +104,7 @@ package inoah.game.ro.modules.map.view
         protected var m_yincY:Number = 0;
         protected var lightBlockSp:Shape;
         protected var _roadMap:Vector.<Point>;
+        
         public var startPos:Point;
         public var endPos:Point;
         
@@ -447,6 +448,18 @@ package inoah.game.ro.modules.map.view
             }
             
             return pos;
+        }
+        
+        public function checkPath( pt:Point ):Boolean
+        {
+            var pos:Point = ViewToGrid( pt.x , pt.y );
+            var mapLayerInfo:MapLayerInfo = _mapInfo.layers[1];
+            var obj:int = mapLayerInfo.data[ mapLayerInfo.width * ( mapLayerInfo.height - 1 - pos.x ) + pos.y  ] != 0 ? 0 : 1;
+            if( obj == 1 )
+            {
+                return true;
+            }
+            return false;
         }
         
         //        protected function drawTile( shape:Shape, x:int , y:int , color:int = -1 ):void

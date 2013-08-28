@@ -78,6 +78,7 @@
     <classEntry path="robotlegs.bender.extensions.sprMgrExtension.SprMgrExtension"/>
     <classEntry path="robotlegs.bender.extensions.textureMgrExtension.TextureMgr"/>
     <classEntry path="robotlegs.bender.extensions.textureMgrExtension.TextureMgrExtension"/>
+    <classEntry path="inoah.core.events.UserInfoEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

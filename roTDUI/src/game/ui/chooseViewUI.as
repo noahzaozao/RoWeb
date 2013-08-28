@@ -8,7 +8,7 @@ package game.ui {
 		public var chooseBg:Image;
 		protected var uiXML:XML =
 			<View height="100">
-			  <Image url="png.td_interface.topBg" x="0" y="0"/>
+			  <Image url="png.td_interface.topBg" x="0" y="0" mouseChildren="false" mouseEnabled="false"/>
 			  <Image url="png.td_interface.backBtn" x="8" y="8" var="backBtn" name="backBtn"/>
 			  <Image url="png.td_interface.settingBtn" x="904" y="8" var="settingBtn" name="settingBtn"/>
 			  <Button skin="png.td_interface.btn_start" x="372.5" y="518" var="startBtn" name="startBtn"/>

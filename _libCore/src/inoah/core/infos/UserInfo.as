@@ -1,5 +1,6 @@
 package inoah.core.infos
 {
+    import inoah.core.events.UserInfoEvent;
     import inoah.interfaces.info.IUserInfo;
     
     /**
@@ -304,6 +305,7 @@ package inoah.core.infos
         public function set zeny( value:uint ):void
         {
             _zeny = value;
+            dispatchEvent( new UserInfoEvent( UserInfoEvent.USER_INFO_CHANGE ) );
         }
         public function get strength():uint
         {

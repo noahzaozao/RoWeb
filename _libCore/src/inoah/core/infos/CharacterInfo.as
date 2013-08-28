@@ -1,12 +1,14 @@
 package inoah.core.infos
 {
+    import flash.events.EventDispatcher;
+    
     import inoah.interfaces.info.ICharacterInfo;
 
     /**
      * 角色形象数据 
      * @author inoah
      */    
-    public class CharacterInfo implements ICharacterInfo
+    public class CharacterInfo extends EventDispatcher implements ICharacterInfo
     {
         protected var _headRes:String;
         protected var _bodyRes:String;

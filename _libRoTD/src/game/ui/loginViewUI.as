@@ -8,7 +8,7 @@ package game.ui {
 		public var btnReg:Button;
 		protected var uiXML:XML =
 			<View>
-			  <Image url="png.login_interface.win_login" x="0" y="0"/>
+			  <Image url="png.login_interface.win_login" x="0" y="0" mouseChildren="false" mouseEnabled="false"/>
 			  <CheckBox label="存档" skin="png.comp.checkbox" x="230" y="32"/>
 			  <TextInput text="TextInput" skin="png.comp.textinput" x="91" y="28" var="txtID" name="txtID"/>
 			  <TextInput text="TextInput" skin="png.comp.textinput" x="91" y="59" var="txtPass" name="txtPass" asPassword="true"/>

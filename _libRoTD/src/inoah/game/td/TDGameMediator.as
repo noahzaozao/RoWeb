@@ -16,9 +16,9 @@ package inoah.game.td
     import inoah.game.ro.modules.login.view.events.LoginEvent;
     import inoah.game.ro.modules.main.view.StatusBarView;
     import inoah.game.ro.modules.main.view.events.GameEvent;
-    import inoah.game.td.modules.game.ChooseView;
-    import inoah.game.td.modules.game.GameView;
-    import inoah.game.td.modules.game.MenuDialog;
+    import inoah.game.td.modules.gameui.ChooseView;
+    import inoah.game.td.modules.gameui.GameView;
+    import inoah.game.td.modules.gameui.MenuDialog;
     import inoah.interfaces.ISprMgr;
     import inoah.interfaces.IUserModel;
     import inoah.interfaces.base.ILoader;
@@ -41,6 +41,7 @@ package inoah.game.td
     import starling.display.DisplayObject;
     import starling.display.Image;
     import starling.textures.Texture;
+    import starling.textures.TextureAtlas;
     import starling.utils.HAlign;
     import starling.utils.VAlign;
     
@@ -182,13 +183,15 @@ package inoah.game.td
             displayMgr.uiLevel.addChild( _noteTxt );
             
             var resPathList:Vector.<String> = new Vector.<String>();
-            resPathList.push( "data/sprite/characters/body/man/novice_man.tpc" );
-            resPathList.push( "data/sprite/characters/head/man/2_man.tpc" );
-            resPathList.push( "data/sprite/characters/novice/weapon_man_knife.tpc" );
-            resPathList.push( "data/sprite/characters/novice/weapon_man_knife_ef.tpc" );
+            resPathList.push( "common.atf" );
+            resPathList.push( "common.xml" );
+            //            resPathList.push( "data/sprite/characters/body/man/novice_man.tpc" );
+            //            resPathList.push( "data/sprite/characters/head/man/2_man.tpc" );
+            //            resPathList.push( "data/sprite/characters/novice/weapon_man_knife.tpc" );
+            //            resPathList.push( "data/sprite/characters/novice/weapon_man_knife_ef.tpc" );
             resPathList.push( "data/sprite/monsters/poring.tpc" );
-            resPathList.push( "data/sprite/monsters/poporing.tpc" );
-            resPathList.push( "data/sprite/monsters/ghostring.tpc" );
+            //            resPathList.push( "data/sprite/monsters/poporing.tpc" );
+            //            resPathList.push( "data/sprite/monsters/ghostring.tpc" );
             
             assetMgr.getResList( resPathList , onInitLoadComplete );
         }
@@ -200,9 +203,9 @@ package inoah.game.td
             
             userInfo.name = username;
             
-            userInfo.init( "data/sprite/characters/head/man/2_man.tpc", "data/sprite/characters/body/man/novice_man.tpc", true );
-            userInfo.setWeaponRes( "data/sprite/characters/novice/weapon_man_knife.tpc" );
-            userInfo.setWeaponShadowRes( "data/sprite/characters/novice/weapon_man_knife_ef.tpc" );
+            //            userInfo.init( "data/sprite/characters/head/man/2_man.tpc", "data/sprite/characters/body/man/novice_man.tpc", true );
+            //            userInfo.setWeaponRes( "data/sprite/characters/novice/weapon_man_knife.tpc" );
+            //            userInfo.setWeaponShadowRes( "data/sprite/characters/novice/weapon_man_knife_ef.tpc" );
             
             userInfo.job = "Novice";
             userInfo.strength = 1;
@@ -228,6 +231,11 @@ package inoah.game.td
         {
             _noteTxt.parent.removeChild( _noteTxt );
             
+            textureMgr.getTextureAtlas( "common" , (assetMgr.getRes( "common.atf" ) as AtfLoader).data, XML( assetMgr.getRes( "common.xml" ).content ) , onCommonReady  );
+        }
+        
+        private function onCommonReady( textureAtlas:TextureAtlas ):void
+        {
             //初始化状态栏
             var statusBar:StatusBarView = new StatusBarView();
             displayMgr.topLevel.addChild( statusBar );
@@ -237,7 +245,6 @@ package inoah.game.td
             displayMgr.uiLevel.addChild( _chooseView );
             _chooseView.addEventListener( GameEvent.BACK , onReturn );
             _chooseView.addEventListener( GameEvent.CHOOSE , onChoose );
-            
         }
         
         protected function onReturn( e:GameEvent):void
@@ -266,23 +273,6 @@ package inoah.game.td
             
             context.addEventListener( Event.ACTIVATE , onActivate );
             context.addEventListener( Event.DEACTIVATE , onActivate );
-            
-            //创建粒子系统
-            //            var mParticleSystem:PDParticleSystem;
-            //            mParticleSystem = new PDParticleSystem( ConstsParticle.FIRE_BALL , Texture.fromBitmap(new ConstsParticle.CIRCLE()));
-            //            mParticleSystem.emitterX = 320;
-            //            mParticleSystem.emitterY = 40;
-            //            
-            //            //添加粒子系统到舞台和juggler
-            //            displayMgr.unitLevel.addChild(mParticleSystem);
-            //            Starling.juggler.add(mParticleSystem);
-            //            
-            //            //开始发射粒子
-            //            mParticleSystem.start();
-            //            
-            //            var tween:Tween = new Tween( mParticleSystem , 5 );
-            //            tween.animate("emitterY" , 800 );
-            //            Starling.juggler.add( tween );
             
             _bgImage.removeFromParent(true);
             

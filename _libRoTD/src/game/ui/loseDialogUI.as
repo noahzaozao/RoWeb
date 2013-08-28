@@ -4,7 +4,7 @@ package game.ui {
 	public class loseDialogUI extends Dialog {
 		protected var uiXML:XML =
 			<Dialog>
-			  <Image url="png.td_interface.loseBg" x="0" y="0"/>
+			  <Image url="png.td_interface.loseBg" x="0" y="0" mouseChildren="false" mouseEnabled="false"/>
 			  <Button skin="png.td_interface.btn_again" x="127" y="168"/>
 			  <Button skin="png.td_interface.btn_choose" x="127" y="88"/>
 			</Dialog>;

@@ -1,7 +1,7 @@
 <View sceneWidth="960" sceneHeight="640" sceneColor="0xffffff" sceneBg="" layers="1,1,0,0,第 1 层">
-  <Image url="png.td_interface.topBg" x="0" y="0" layer="1"/>
+  <Image url="png.td_interface.topBg" x="0" y="0" layer="1" mouseChildren="false" mouseEnabled="false"/>
   <Image url="png.td_interface.coin" x="8" y="8" layer="1"/>
   <Button skin="png.td_interface.btn_speed" x="780" y="8" layer="1" var="speedBtn" name="speedBtn"/>
   <Image url="png.td_interface.menuBtn" x="904" y="8" layer="1" var="menuBtn" name="menuBtn"/>
-  <Label text="999999" x="70" y="8" layer="1" color="0xffff00" size="36" align="center" bold="true" var="txtCoin" name="txtCoin"/>
+  <Label text="999999" x="70" y="8" layer="1" color="0xffff00" size="36" align="right" bold="true" var="txtCoin" name="txtCoin" mouseChildren="false" mouseEnabled="false"/>
 </View>

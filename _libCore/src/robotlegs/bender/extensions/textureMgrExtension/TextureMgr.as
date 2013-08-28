@@ -42,6 +42,20 @@ package robotlegs.bender.extensions.textureMgrExtension
             _currentLoadAsync = new Vector.<Function>();
         }
         
+        public function getTextureAtlasById( resId:String ):TextureAtlas
+        {
+            var index:int = _resIdList[0].indexOf( resId );
+            if( index != -1 )
+            {
+                _usedCountList[0][index]++;
+                if( _textureAtlasList.length > index )
+                {
+                    return _textureAtlasList[index];
+                }
+            }
+            return null;
+        }
+        
         public function getTextureAtlas( resId:String , atfByte:ByteArray, atlasXml:XML , loadAsync:Function = null ):TextureAtlas
         {
             var index:int = _resIdList[0].indexOf( resId );

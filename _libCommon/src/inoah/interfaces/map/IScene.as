@@ -14,5 +14,6 @@ package inoah.interfaces.map
         function ViewToGrid( xpos:Number, ypos:Number ):Point;
         function get roadMap():Vector.<Point>;
         function get currentTextureAtlasList():Vector.<TextureAtlas>;
+        function checkPath( pt:Point ):Boolean;
     }
 }

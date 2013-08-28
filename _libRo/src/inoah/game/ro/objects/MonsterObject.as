@@ -16,7 +16,7 @@ package inoah.game.ro.objects
         {
             var isMovingX:Boolean;
             var speed:Number = 50;
-            if( _endTarget )
+            if( _endTarget && !isDead )
             {
                 if( posX - _endTarget.x > 0 )
                 {
@@ -63,6 +63,11 @@ package inoah.game.ro.objects
                 }
             }
             super.tick( delta );
+        }
+        
+        override public function dispose():void
+        {
+            super.dispose();
         }
         
         //        override public function set info( value:BattleCharacterInfo ):void

@@ -1,4 +1,4 @@
-package inoah.game.td.modules.game
+package inoah.game.td.modules.gameui
 {
     import flash.events.MouseEvent;
     
@@ -11,8 +11,14 @@ package inoah.game.td.modules.game
         public function MenuDialog()
         {
             super();
-            this.continueBtn.addEventListener( MouseEvent.CLICK , onContinue );
-            this.restartBtn.addEventListener( MouseEvent.CLICK , onRestart );
+            this.addEventListener( MouseEvent.MOUSE_DOWN , onDown );
+            this.continueBtn.addEventListener( MouseEvent.MOUSE_DOWN , onContinue );
+            this.restartBtn.addEventListener( MouseEvent.MOUSE_DOWN , onRestart );
+        }
+        
+        protected function onDown( e:MouseEvent):void
+        {
+            e.stopImmediatePropagation();
         }
         
         protected function onRestart( e:MouseEvent):void

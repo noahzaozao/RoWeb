@@ -9,6 +9,7 @@ package inoah.interfaces.managers
 
     public interface ITextureMgr extends IMediator
     {
+        function getTextureAtlasById( resId:String ):TextureAtlas;
         function getTextureAtlas( resId:String , atfByte:ByteArray, atlasXml:XML , loadAsync:Function = null ):TextureAtlas;
         function getTexture( resId:String , atfByte:ByteArray, loadAsync:Function=null):Texture;
     }

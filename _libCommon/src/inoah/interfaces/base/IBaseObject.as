@@ -33,5 +33,6 @@ package inoah.interfaces.base
         function get isInScene():Boolean;
         function set info( value:ICharacterInfo ):void;
         function get info():ICharacterInfo;
+        function dispose():void;
     }
 }

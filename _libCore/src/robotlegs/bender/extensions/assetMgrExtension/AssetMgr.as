@@ -7,6 +7,7 @@ package robotlegs.bender.extensions.assetMgrExtension
     import inoah.core.loaders.AtfLoader;
     import inoah.core.loaders.JpgLoader;
     import inoah.core.loaders.LuaLoader;
+    import inoah.core.loaders.XmlLoader;
     import inoah.interfaces.base.ILoader;
     import inoah.interfaces.managers.IAssetMgr;
     
@@ -74,6 +75,11 @@ package robotlegs.bender.extensions.assetMgrExtension
             var loader:ILoader;
             switch( resPath.split( "." )[1] )
             {
+                case "xml":
+                {
+                    loader = new XmlLoader( resPath );
+                    break;
+                }
                 case "lua":
                 {
                     loader = new LuaLoader( resPath );

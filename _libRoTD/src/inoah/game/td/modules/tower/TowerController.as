@@ -7,9 +7,14 @@ package inoah.game.td.modules.tower
     import inoah.core.consts.ConstsActions;
     import inoah.core.infos.BattleCharacterInfo;
     import inoah.game.ro.objects.BattleCharacterObject;
+    import inoah.game.ro.objects.CharacterObject;
+    import inoah.game.td.ConstsParticle;
+    import inoah.interfaces.ICamera;
+    import inoah.interfaces.IUserModel;
     import inoah.interfaces.character.IMonsterObject;
     import inoah.interfaces.character.IPlayerObject;
-    import inoah.interfaces.map.IBattleSceneMediator;
+    import inoah.interfaces.managers.IDisplayMgr;
+    import inoah.interfaces.map.ISceneMediator;
     import inoah.interfaces.tower.ITowerController;
     import inoah.interfaces.tower.ITowerObject;
     import inoah.utils.Counter;
@@ -17,6 +22,10 @@ package inoah.game.td.modules.tower
     
     import robotlegs.bender.framework.api.IInjector;
     import robotlegs.bender.framework.api.ILogger;
+    
+    import starling.animation.Tween;
+    import starling.display.Image;
+    import starling.textures.Texture;
     
     public class TowerController extends BaseController implements ITowerController
     {
@@ -26,25 +35,32 @@ package inoah.game.td.modules.tower
         [Inject]
         public var logger:ILogger;
         
+        [Inject]
+        public var displayMgr:IDisplayMgr;
+        
+        [Inject]
+        public var userModel:IUserModel;
+        
+        protected var camera:ICamera;
+        
         protected var _towersList:Vector.<ITowerObject>;
         protected var _monsterList:Vector.<IMonsterObject>;
         protected var _atkTargetList:Vector.<BattleCharacterObject>;
         protected var _moveCounterList:Vector.<Counter>;
         protected var _atkCounterList:Vector.<Counter>;
-        protected var _fightModeList:Vector.<int>;
-        protected var _scene:IBattleSceneMediator;
+        
+        protected var _scene:ISceneMediator;
         
         public function TowerController()
         {
             _atkTargetList = new Vector.<BattleCharacterObject>( Global.MAX_MONSTER_NUM );
             _moveCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
             _atkCounterList = new Vector.<Counter>( Global.MAX_MONSTER_NUM );
-            _fightModeList = new Vector.<int>( Global.MAX_MONSTER_NUM );
         }
         
         override public function initialize():void
         {
-            _scene = injector.getInstance(IBattleSceneMediator) as IBattleSceneMediator;
+            _scene = injector.getInstance(ISceneMediator) as ISceneMediator;
         }
         
         override public function tick(delta:Number):void
@@ -62,38 +78,22 @@ package inoah.game.td.modules.tower
         
         private function calAttack( currentObj:ITowerObject, index:int, delta:Number):void
         {
-            var atkTarget:BattleCharacterObject = _atkTargetList[index];
-            if( !atkTarget )
+            var atkCounter:Counter = _atkCounterList[index];
+            if( atkCounter == null )
+            {
+                _atkCounterList[index] = new Counter();
+                atkCounter = _atkCounterList[index];
+                atkCounter.initialize();
+                atkCounter.reset( currentObj.atkCd );
+            }
+            atkCounter.tick( delta );
+            if( atkCounter.expired )
             {
                 calFindTarget( currentObj,  index , delta );
-            }
-            var fightMode:int = _fightModeList[index];
-            
-            if( atkTarget )
-            {
-                // 先判断攻击距离
-                if( fightMode==1 && posCheck( currentObj , index, currentObj.atkRange ) )
+                var atkTarget:BattleCharacterObject = _atkTargetList[index];
+                if( atkTarget )
                 {
-                    // 走入攻击范围，开始攻击
-                    fightMode = 2;
-                }
-                else
-                {
-                    _fightModeList[index] = 1;
-                }
-                
-                if( fightMode==2 && posCheck( currentObj , index, currentObj.atkRange ) )
-                {
-                    var atkCounter:Counter = _atkCounterList[index];
-                    if( atkCounter == null )
-                    {
-                        _atkCounterList[index] = new Counter();
-                        atkCounter = _atkCounterList[index];
-                        atkCounter.initialize();
-                        atkCounter.reset( currentObj.atkCd );
-                    }
-                    atkCounter.tick( delta );
-                    if( atkCounter.expired )
+                    if( posCheck( currentObj , index, currentObj.atkRange ) )
                     {
                         var atkTargetInfo:BattleCharacterInfo = atkTarget.info as BattleCharacterInfo;
                         if( atkTarget.action == ConstsActions.Wait )
@@ -102,24 +102,64 @@ package inoah.game.td.modules.tower
                         }
                         
                         logger.debug( "attack" );
+                        showAttack( currentObj , atkTarget );
                         
-                        if( atkTargetInfo.hpCurrent==0)
-                        {
-                            _scene.removeObject(atkTarget);
-                            _atkTargetList[index] = null;
-                        }
                         atkCounter.reset( currentObj.atkCd );
                     }
-                }
-                else
-                {
-                    _fightModeList[index]==1;
                 }
             }
         }
         
+        private function showAttack( currentObj:ITowerObject , atkTarget:BattleCharacterObject ):void
+        {
+            if( !camera )
+            {
+                camera = injector.getInstance( ICamera );
+            }
+            
+            var effectImg:Image = new Image( Texture.fromBitmap(new ConstsParticle.CIRCLE() ));
+            displayMgr.unitLevel.addChild( effectImg );
+            effectImg.x = currentObj.posX - camera.zeroX + Global.TILE_W / 4;
+            effectImg.y = currentObj.posY - camera.zeroY + Global.TILE_H;
+            
+            var distance:int = Point.distance( new Point( effectImg.x , effectImg.y ) ,
+                new Point( atkTarget.posX - camera.zeroX + Global.TILE_W / 4 , atkTarget.posY - camera.zeroY ) );
+            var tween:Tween = new Tween( effectImg , distance / 100 );
+            tween.animate("x" , atkTarget.posX - camera.zeroX + Global.TILE_W / 4 );
+            tween.animate("y" , atkTarget.posY- camera.zeroY );
+            tween.onComplete = onShowAttackComplete;
+            tween.onCompleteArgs = [effectImg , atkTarget];
+            appendAnimateUnit( tween );
+        }
+        
+        private function onShowAttackComplete( effectImg:Image , atkTarget:BattleCharacterObject):void
+        {
+            effectImg.parent.removeChild( effectImg );
+            effectImg.dispose();
+            
+            atkTarget.hp -= 50;
+            if( atkTarget.hp == 0 )
+            {
+                userModel.info.zeny += 50;
+                atkTarget.action = ConstsActions.Die;
+                atkTarget.isDead = true;
+                var tween:Tween = new Tween( atkTarget.viewObject, 3 );
+                tween.fadeTo( 0 );
+                tween.onComplete = onRemoveAtkTarget;
+                tween.onCompleteArgs = [atkTarget];
+                appendAnimateUnit( tween );
+            }
+        }
+        
+        private function onRemoveAtkTarget( atkTarget:CharacterObject ):void
+        {
+            _scene.removeObject(atkTarget);
+        }
+        
         protected function calFindTarget( currentObj:ITowerObject , index:int, delta:Number ):void
         {
+            _atkTargetList[index] = null;
+            
             var objList:Vector.<BattleCharacterObject> = new Vector.<BattleCharacterObject>();
             var i:int;
             var len:int;
@@ -132,7 +172,7 @@ package inoah.game.td.modules.tower
             len = objList.length;
             for ( i = 0 ; i< len;i++ )
             {
-                if( _fightModeList[index]==0  && Point.distance( objList[i].POS , currentObj.POS ) <= currentObj.atkRange )
+                if( Point.distance( objList[i].POS , currentObj.POS ) <= currentObj.atkRange )
                 {
                     if( !(objList[i] as ITowerObject) && !(objList[i] as IPlayerObject) )
                     {

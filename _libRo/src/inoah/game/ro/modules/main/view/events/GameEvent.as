@@ -14,7 +14,7 @@ package inoah.game.ro.modules.main.view.events
         public static const RESTART:String = "GameEvent.RESTART";
         public static const OPEN_GAME_RESULT:String = "GameEvent.OPEN_GAME_RESULT";
         public static const RIGHT_CLICK:String = "GameEvent.RIGHT_CLICK";
-        
+
         public static const SHOW_ALERT:String = "GameEvent.SHOW_ALERT";
         public static const HIDE_ALERT:String = "GameEvent.HIDE_ALERT";
         

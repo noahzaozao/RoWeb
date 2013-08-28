@@ -17,6 +17,7 @@ package inoah.game.td.modules.map.view.mediators
     import inoah.game.ro.modules.map.view.mediators.BaseSceneMediator;
     import inoah.game.ro.objects.MonsterObject;
     import inoah.game.td.objects.TowerObject;
+    import inoah.interfaces.ICamera;
     import inoah.interfaces.character.IMonsterObject;
     import inoah.interfaces.controller.IMonsterController;
     import inoah.interfaces.managers.IAssetMgr;
@@ -27,10 +28,12 @@ package inoah.game.td.modules.map.view.mediators
     import inoah.utils.Counter;
     import inoah.utils.QTree;
     
+    import robotlegs.bender.extensions.tdMapMgrExtension.MapEvent;
     import robotlegs.bender.framework.api.IInjector;
     import robotlegs.bender.framework.api.ILogger;
     
     import starling.display.Sprite;
+    import starling.events.Event;
     
     public class TDSceneMediator extends BaseSceneMediator implements ITDSceneMediator
     {
@@ -39,6 +42,7 @@ package inoah.game.td.modules.map.view.mediators
         
         [Inject]
         public var logger:ILogger;
+        
         
         [Inject]
         public var assetMgr:IAssetMgr;
@@ -52,13 +56,18 @@ package inoah.game.td.modules.map.view.mediators
         [Inject]
         public var towerController:ITowerController;
         
+        protected var camera:ICamera;
+        
         protected var _monsterObjList:Vector.<IMonsterObject>;
         protected var _monsterList:Vector.<MonsterViewGpu>;
-
+        
         protected var _towerObjList:Vector.<ITowerObject>;
         protected var _towerList:Vector.<TileBuilding>;
+        protected var _towerPosList:Vector.<String>;
         
         protected var _newMonsterCounter:Counter;
+        protected var _towerSelectPanel:TowerSelecter;
+        private var _pt:Point;
         
         public function TDSceneMediator()
         {
@@ -84,9 +93,11 @@ package inoah.game.td.modules.map.view.mediators
             _monsterList = new Vector.<MonsterViewGpu>(); 
             _towerObjList = new Vector.<ITowerObject>();
             _towerList = new Vector.<TileBuilding>();
+            _towerPosList = new Vector.<String>();
             
             monsterController.monsterList = _monsterObjList; 
             
+            towerController.initialize();
             towerController.towersList = _towerObjList;
             towerController.monsterList = _monsterObjList;
             
@@ -133,26 +144,73 @@ package inoah.game.td.modules.map.view.mediators
             {
                 _towerList[i].dispose();
                 _towerList.splice( i , 1 );
+                _towerPosList.splice( i , 1 );
                 i--;
             }
         }
         
         private function onTouch( e:SceneEvent ):void
         {
+            if( !camera )
+            {
+                camera = injector.getInstance( ICamera );
+            }
+            
             logger.debug( "TouchMap " + e.touchGrid );
             
-            var pt : Point = scene.GridToView( e.touchGrid.x , e.touchGrid.y ); 
-            var towerObj:TowerObject = new TowerObject();
-            var towerView:TileBuilding = new TileBuilding( 10000 , scene.currentTextureAtlasList[1].getTexture( "17" ) );
-            towerView.x = -128;
-            towerView.y = -128;
-            towerView.touchable = false;
-            towerObj.viewObject = towerView;
-            _towerList.push( towerView );
-            towerObj.posX = pt.x - Global.TILE_W / 4;
-            towerObj.posY = pt.y - Global.TILE_H  * 3 / 2 ; 
-            _towerObjList.push( towerObj );
-            addObject( towerObj );
+            _pt = scene.GridToView( e.touchGrid.x , e.touchGrid.y ); 
+            
+            if( !_towerSelectPanel )
+            {
+                _towerSelectPanel = new TowerSelecter();
+                injector.injectInto( _towerSelectPanel );
+                _towerSelectPanel.initialize();
+                _towerSelectPanel.addEventListener( MapEvent.BUILD_TOWER , onBuildTower );
+            }
+            if( _towerSelectPanel )
+            {
+                if( _towerSelectPanel.parent )
+                {
+                    displayMgr.joyStickLevel.removeChild( _towerSelectPanel );
+                }
+                else
+                {
+                    _towerSelectPanel.x = _pt.x - camera.zeroX;
+                    _towerSelectPanel.y = _pt.y - camera.zeroY;
+                    displayMgr.joyStickLevel.addChild( _towerSelectPanel );
+                }
+            }
+        }
+        
+        private function onBuildTower( e:starling.events.Event ):void
+        {
+            displayMgr.joyStickLevel.removeChild( _towerSelectPanel );
+            
+            //非寻路层位置
+            if( scene.checkPath( _pt ) )
+            {
+                //非建造过的位置
+                if( _towerPosList.indexOf( _pt.x + "_" + _pt.y ) == -1 )
+                {
+                    //判断金钱，并扣钱
+                    if( userModel.info.zeny > 100 )
+                    {
+                        userModel.info.zeny -= 100;
+                        var towerObj:TowerObject = new TowerObject();
+                        var towerView:TileBuilding = new TileBuilding( 10000 , scene.currentTextureAtlasList[1].getTexture( (17 + e.data).toString() ) );
+                        towerView.x = -128;
+                        towerView.y = -128;
+                        towerView.touchable = false;
+                        towerObj.viewObject = towerView;
+                        _towerList.push( towerView );
+                        towerObj.posX = _pt.x - Global.TILE_W / 4;
+                        towerObj.posY = _pt.y - Global.TILE_H  * 3 / 2 ; 
+                        _towerPosList.push( _pt.x + "_" + _pt.y );
+                        _towerObjList.push( towerObj );
+                        addObject( towerObj );
+                    }
+                }
+            }
         }
         
         override protected function onMapLoadComplete( e:flash.events.Event):void
@@ -173,7 +231,7 @@ package inoah.game.td.modules.map.view.mediators
             monsterInfo.hpCurrent = monsterInfo.hpMax;
             monsterInfo.spCurrent = monsterInfo.spMax;
             monsterInfo.atk = 5;
-//            var randMonster:int =  int(Math.random() * 3);
+            //            var randMonster:int =  int(Math.random() * 3);
             var randMonster:int =  0;//int(Math.random() * 3);
             if( randMonster == 0 )
             {
@@ -242,7 +300,7 @@ package inoah.game.td.modules.map.view.mediators
                     pos = scene.GridToView(  ( scene as BaseScene).startPos.x ,  ( scene as BaseScene).startPos.y);
                     createMonser( pos.x , pos.y  );
                     
-//                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );
+                    //                    facade.sendNotification( GameCommands.RECV_CHAT, [ "<font color='#ffff00'>A monster appear!</font>"] );
                 }
                 _newMonsterCounter.reset( 1 );
             }

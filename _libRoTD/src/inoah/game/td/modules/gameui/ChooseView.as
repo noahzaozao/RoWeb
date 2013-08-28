@@ -1,4 +1,4 @@
-package inoah.game.td.modules.game
+package inoah.game.td.modules.gameui
 {
     import flash.events.MouseEvent;
     
@@ -12,7 +12,13 @@ package inoah.game.td.modules.game
         {
             super();
 //            this.backBtn.addEventListener( MouseEvent.CLICK , onBack );
+            this.addEventListener( MouseEvent.MOUSE_DOWN , onDown );
             this.startBtn.addEventListener( MouseEvent.CLICK , onStart );
+        }
+        
+        protected function onDown( e:MouseEvent):void
+        {
+            e.stopImmediatePropagation();
         }
         
         protected function onBack( e:MouseEvent ):void
