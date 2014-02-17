@@ -7,6 +7,8 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls
 {
+	import flash.geom.Point;
+	
 	import feathers.core.FeathersControl;
 	import feathers.core.IFeathersControl;
 	import feathers.layout.HorizontalLayout;
@@ -15,9 +17,7 @@ package feathers.controls
 	import feathers.layout.LayoutBoundsResult;
 	import feathers.layout.VerticalLayout;
 	import feathers.layout.ViewPortBounds;
-
-	import flash.geom.Point;
-
+	
 	import starling.display.DisplayObject;
 	import starling.display.Quad;
 	import starling.events.Event;

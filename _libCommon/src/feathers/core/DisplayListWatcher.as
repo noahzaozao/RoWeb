@@ -8,7 +8,7 @@ accordance with the terms of the accompanying license agreement.
 package feathers.core
 {
 	import flash.utils.Dictionary;
-
+	
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;
 	import starling.events.Event;

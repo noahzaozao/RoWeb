@@ -29,6 +29,7 @@ package inoah.core.viewModels.actSpr
         
         protected var _act:CACT;
         protected var _spr:CSPR;
+        public var url:String;
         
         protected var _actionIndex:uint;
         protected var _currentFrame:uint;
@@ -132,6 +133,7 @@ package inoah.core.viewModels.actSpr
         
         public function initSpr( data:ByteArray , url:String ):void
         {
+            this.url = url;
             if( _spr )
             {
                 _spr.destory();

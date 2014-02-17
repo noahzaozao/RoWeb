@@ -7,11 +7,11 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.motion.transitions
 {
+	import flash.utils.getQualifiedClassName;
+	
 	import feathers.controls.IScreen;
 	import feathers.controls.ScreenNavigator;
-
-	import flash.utils.getQualifiedClassName;
-
+	
 	import starling.animation.Transitions;
 	import starling.animation.Tween;
 	import starling.core.Starling;

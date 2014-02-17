@@ -89,6 +89,8 @@ package inoah.game.td.modules.tower
             atkCounter.tick( delta );
             if( atkCounter.expired )
             {
+                atkCounter.reset( currentObj.atkCd );
+                
                 calFindTarget( currentObj,  index , delta );
                 var atkTarget:BattleCharacterObject = _atkTargetList[index];
                 if( atkTarget )
@@ -100,11 +102,7 @@ package inoah.game.td.modules.tower
                         {
                             atkTarget.action = ConstsActions.BeAtk;
                         }
-                        
-                        logger.debug( "attack" );
                         showAttack( currentObj , atkTarget );
-                        
-                        atkCounter.reset( currentObj.atkCd );
                     }
                 }
             }
@@ -124,7 +122,7 @@ package inoah.game.td.modules.tower
             
             var distance:int = Point.distance( new Point( effectImg.x , effectImg.y ) ,
                 new Point( atkTarget.posX - camera.zeroX + Global.TILE_W / 4 , atkTarget.posY - camera.zeroY ) );
-            var tween:Tween = new Tween( effectImg , distance / 100 );
+            var tween:Tween = new Tween( effectImg , distance / 250 );
             tween.animate("x" , atkTarget.posX - camera.zeroX + Global.TILE_W / 4 );
             tween.animate("y" , atkTarget.posY- camera.zeroY );
             tween.onComplete = onShowAttackComplete;
@@ -137,7 +135,14 @@ package inoah.game.td.modules.tower
             effectImg.parent.removeChild( effectImg );
             effectImg.dispose();
             
-            atkTarget.hp -= 50;
+            if( atkTarget.hp > 0 )
+            {
+                atkTarget.hp -= 10;
+            }
+            else
+            {
+                return;
+            }
             if( atkTarget.hp == 0 )
             {
                 userModel.info.zeny += 50;
@@ -170,16 +175,22 @@ package inoah.game.td.modules.tower
             
             //临时随机找怪，随后可以根据面向找四象限的怪
             len = objList.length;
+            var curDistance:Number;
+            var tmpDistance:Number = int.MAX_VALUE;
             for ( i = 0 ; i< len;i++ )
             {
-                if( Point.distance( objList[i].POS , currentObj.POS ) <= currentObj.atkRange )
+                curDistance = Point.distance( objList[i].POS , currentObj.POS );
+                if( curDistance <= currentObj.atkRange )
                 {
                     if( !(objList[i] as ITowerObject) && !(objList[i] as IPlayerObject) )
                     {
                         if( !objList[i].isDead )
                         {
-                            _atkTargetList[index] = objList[i];
-                            break;
+                            if( tmpDistance > curDistance )
+                            {
+                                tmpDistance = curDistance;
+                                _atkTargetList[index] = objList[i];
+                            }
                         }
                     }
                 }

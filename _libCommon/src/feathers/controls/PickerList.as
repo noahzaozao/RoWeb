@@ -16,7 +16,7 @@ package feathers.controls
 	import feathers.data.ListCollection;
 	import feathers.events.FeathersEventType;
 	import feathers.system.DeviceCapabilities;
-
+	
 	import starling.core.Starling;
 	import starling.events.Event;
 
@@ -925,8 +925,17 @@ package feathers.controls
 		 */
 		override public function dispose():void
 		{
-			this.closePopUpList();
-			this.list.dispose();
+			if(this.list)
+			{
+				this.closePopUpList();
+				this.list.dispose();
+				this.list = null;
+			}
+			if(this._popUpContentManager)
+			{
+				this._popUpContentManager.dispose();
+				this._popUpContentManager = null;
+			}
 			super.dispose();
 		}
 		

@@ -8,7 +8,7 @@ package inoah.game.td.objects
         public function TowerObject()
         {
             super();
-            _atkCd = 3;
+            _atkCd = 0.5;
             _moveCd = 3;
             atkRange = 400;
         }

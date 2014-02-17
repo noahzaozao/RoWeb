@@ -7,12 +7,11 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.layout
 {
-	import feathers.core.IFeathersControl;
-
 	import flash.errors.IllegalOperationError;
-
 	import flash.geom.Point;
-
+	
+	import feathers.core.IFeathersControl;
+	
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 	import starling.events.EventDispatcher;

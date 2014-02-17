@@ -103,6 +103,10 @@ package inoah.game.ro.modules.map.view.mediators
         
         protected function cleanScene():void
         {
+            while( _unitList.length > 0 )
+            {
+                removeObject( _unitList[0] );
+            }
         }
         
         public function addObject( o:IBaseObject ):void

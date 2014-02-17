@@ -124,6 +124,8 @@ package inoah.game.td.modules.map.view.mediators
         
         override protected function cleanScene():void
         {
+            super.cleanScene();
+
             for( var i:int = 0; i<_monsterObjList.length;i++)
             {
                 _monsterObjList.splice( i , 1 );

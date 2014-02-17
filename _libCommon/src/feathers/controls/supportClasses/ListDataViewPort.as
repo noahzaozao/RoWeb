@@ -637,8 +637,11 @@ package feathers.controls.supportClasses
 			var typicalItem:Object = this._typicalItem;
 			if(typicalItem)
 			{
-				typicalItemIndex = this._dataProvider.getItemIndex(typicalItem);
-				newTypicalItemIsInDataProvider = typicalItemIndex >= 0;
+				if(this._dataProvider)
+				{
+					typicalItemIndex = this._dataProvider.getItemIndex(typicalItem);
+					newTypicalItemIsInDataProvider = typicalItemIndex >= 0;
+				}
 				if(typicalItemIndex < 0)
 				{
 					typicalItemIndex = 0;
@@ -668,7 +671,7 @@ package feathers.controls.supportClasses
 			}
 			if(!typicalRenderer)
 			{
-				typicalRenderer = this.createRenderer(typicalItem, typicalItemIndex, !newTypicalItemIsInDataProvider);
+				typicalRenderer = this.createRenderer(typicalItem, typicalItemIndex, false, !newTypicalItemIsInDataProvider);
 				if(!this._typicalItemIsInDataProvider && this._typicalItemRenderer)
 				{
 					//get rid of the old one if it isn't needed anymore
@@ -681,14 +684,6 @@ package feathers.controls.supportClasses
 			virtualLayout.typicalItem = DisplayObject(typicalRenderer);
 			this._typicalItemRenderer = typicalRenderer;
 			this._typicalItemIsInDataProvider = newTypicalItemIsInDataProvider;
-
-			//if we called createRenderer() above, we may have moved a renderer
-			//to the active renderers. we want to put it back in the inactive
-			//renderers so that later code can grab it from there
-			if(this._activeRenderers.length > 0)
-			{
-				this._activeRenderers.shift();
-			}
 		}
 
 		private function refreshItemRendererStyles():void
@@ -757,23 +752,11 @@ package feathers.controls.supportClasses
 				{
 					if(this._typicalItemIsInDataProvider)
 					{
-						delete this._rendererMap[this._typicalItemRenderer];
+						delete this._rendererMap[this._typicalItemRenderer.data];
 					}
 					this.destroyRenderer(this._typicalItemRenderer);
 					this._typicalItemRenderer = null;
 					this._typicalItemIsInDataProvider = false;
-				}
-			}
-
-			if(this._typicalItemIsInDataProvider && this._typicalItemRenderer)
-			{
-				//this renderer is special and doesn't need to appear in the
-				//inactive renderers cache. in fact, if it did, it could be
-				//reused for other data, which we definitely don't want!
-				var index:int = this._inactiveRenderers.indexOf(this._typicalItemRenderer);
-				if(index >= 0)
-				{
-					this._inactiveRenderers.splice(index, 1);
 				}
 			}
 
@@ -782,6 +765,18 @@ package feathers.controls.supportClasses
 
 		private function refreshRenderers():void
 		{
+			if(this._typicalItemRenderer && this._typicalItemIsInDataProvider)
+			{
+				//this renderer is special and doesn't need to appear in the
+				//inactive renderers cache. in fact, if it did, it could be
+				//reused for other data, which we definitely don't want!
+				var inactiveIndex:int = this._inactiveRenderers.indexOf(this._typicalItemRenderer);
+				if(inactiveIndex >= 0)
+				{
+					this._inactiveRenderers.splice(inactiveIndex, 1);
+				}
+			}
+
 			this.findUnrenderedData();
 			this.recoverInactiveRenderers();
 			this.renderUnrenderedData();
@@ -908,7 +903,7 @@ package feathers.controls.supportClasses
 			{
 				var item:Object = this._unrenderedData.shift();
 				var index:int = this._dataProvider.getItemIndex(item);
-				var renderer:IListItemRenderer = this.createRenderer(item, index, false);
+				var renderer:IListItemRenderer = this.createRenderer(item, index, true, false);
 				this._layoutItems[index + this._layoutIndexOffset] = DisplayObject(renderer);
 			}
 		}
@@ -942,12 +937,12 @@ package feathers.controls.supportClasses
 			}
 		}
 
-		private function createRenderer(item:Object, index:int, isTemporary:Boolean = false):IListItemRenderer
+		private function createRenderer(item:Object, index:int, useCache:Boolean, isTemporary:Boolean):IListItemRenderer
 		{
 			var renderer:IListItemRenderer;
 			do
 			{
-				if(isTemporary || this._inactiveRenderers.length == 0)
+				if(!useCache || isTemporary || this._inactiveRenderers.length == 0)
 				{
 					if(this._itemRendererFactory != null)
 					{

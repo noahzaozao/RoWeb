@@ -2,8 +2,8 @@
 <actionScriptProperties analytics="false" mainApplicationPath="ClientRoDemoPc.as" projectUUID="eca7b8a6-40ab-45fb-893c-6e6f821ac5c2" version="11">
   <compiler additionalCompilerArguments="-locale en_US" advancedTelemetry="false" autoRSLOrdering="true" copyDependentFiles="true" fteInMXComponents="false" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="false" htmlHistoryManagement="false" htmlPlayerVersionCheck="true" includeNetmonSwc="false" outputFolderPath="bin-debug" removeUnusedRSL="true" sourceFolderPath="src" strict="true" targetPlayerVersion="0.0.0" useApolloConfig="true" useDebugRSLSwfs="true" useFlashSDK="true" verifyDigests="true" warn="true">
     <compilerSourcePath>
-      <compilerSourcePathEntry kind="1" linkType="1" path="F:/RoWeb/_resClientRo"/>
-      <compilerSourcePathEntry kind="1" linkType="1" path="F:/RoWeb/luaCore/src"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="E:/2 - as3Projects/RoWeb/_resClientRo"/>
+      <compilerSourcePathEntry kind="1" linkType="1" path="E:/2 - as3Projects/RoWeb/luaCore/src"/>
     </compilerSourcePath>
     <libraryPath defaultLinkType="0">
       <libraryPathEntry kind="4" path="">

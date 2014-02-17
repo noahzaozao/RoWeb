@@ -10,7 +10,7 @@ package feathers.controls
 	import feathers.core.FeathersControl;
 	import feathers.core.PropertyProxy;
 	import feathers.data.ListCollection;
-
+	
 	import starling.events.Event;
 
 	/**

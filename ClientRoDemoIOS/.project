@@ -26,12 +26,12 @@
 		<link>
 			<name>[source path] _resClientRo</name>
 			<type>2</type>
-			<location>F:/RoWeb/_resClientRo</location>
+			<location>E:/2 - as3Projects/RoWeb/_resClientRo</location>
 		</link>
 		<link>
 			<name>[source path] src</name>
 			<type>2</type>
-			<location>F:/RoWeb/luaCore/src</location>
+			<location>E:/2 - as3Projects/RoWeb/luaCore/src</location>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -229,6 +229,7 @@ package inoah.core.characters.nogpu
             {
                 _otherViews[0] = new ActSprOtherView( _bodyView );
             }
+			injector.injectInto( _otherViews[0] );
             _otherViews[0].initAct( (_headLoader as ActSprLoader).actData );
             _otherViews[0].initSpr( (_headLoader as ActSprLoader).sprData , _headLoader.url );
             _otherViews[0].actionIndex = _bodyView.actionIndex;
@@ -244,6 +245,7 @@ package inoah.core.characters.nogpu
             {
                 _otherViews[1] = new ActSprWeaponView( _bodyView );
             }
+			injector.injectInto( _otherViews[1] );
             _otherViews[1].initAct( (_weaponLoader as ActSprLoader).actData );
             _otherViews[1].initSpr( (_weaponLoader as ActSprLoader).sprData , _weaponLoader.url );
             _otherViews[1].actionIndex = _bodyView.actionIndex;
@@ -260,6 +262,7 @@ package inoah.core.characters.nogpu
             {
                 _otherViews[2] = new ActSprWeaponView( _bodyView );
             }
+			injector.injectInto( _otherViews[2] );
             _otherViews[2].initAct( (_weaponShadowLoader as ActSprLoader).actData );
             _otherViews[2].initSpr( (_weaponShadowLoader as ActSprLoader).sprData , _weaponShadowLoader.url );
             _otherViews[2].actionIndex = _bodyView.actionIndex;

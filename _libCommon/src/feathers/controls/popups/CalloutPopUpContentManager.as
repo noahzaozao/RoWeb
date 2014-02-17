@@ -7,10 +7,10 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls.popups
 {
-	import feathers.controls.Callout;
-
 	import flash.errors.IllegalOperationError;
-
+	
+	import feathers.controls.Callout;
+	
 	import starling.display.DisplayObject;
 	import starling.events.Event;
 	import starling.events.EventDispatcher;

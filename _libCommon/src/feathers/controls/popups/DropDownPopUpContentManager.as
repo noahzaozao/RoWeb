@@ -7,16 +7,16 @@ accordance with the terms of the accompanying license agreement.
 */
 package feathers.controls.popups
 {
-	import feathers.core.IFeathersControl;
-	import feathers.core.PopUpManager;
-	import feathers.events.FeathersEventType;
-	import feathers.utils.display.getDisplayObjectDepthFromStage;
-
 	import flash.errors.IllegalOperationError;
 	import flash.events.KeyboardEvent;
 	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
-
+	
+	import feathers.core.IFeathersControl;
+	import feathers.core.PopUpManager;
+	import feathers.events.FeathersEventType;
+	import feathers.utils.display.getDisplayObjectDepthFromStage;
+	
 	import starling.core.Starling;
 	import starling.display.DisplayObject;
 	import starling.display.DisplayObjectContainer;

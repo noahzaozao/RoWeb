@@ -40,6 +40,7 @@ package texturePackage.sequenceOperator
         private var _atfLength:uint;
         private var _cachedByteArrayData:ByteArray;
         private var _atfNow:int;
+        private var _outPutBitmapModel:PushButton;
         
         public function get textures():Vector.<TextureView>
         {
@@ -63,6 +64,9 @@ package texturePackage.sequenceOperator
             _outPutModel = new PushButton( menubar , 235 , 5 , "导出" );
             _outPutModel.width = 40;
             _outPutModel.addEventListener( MouseEvent.CLICK , onSwitchPanelHandle );
+            _outPutBitmapModel = new PushButton( menubar , 285 , 5 , "导出BMP" );
+            _outPutBitmapModel.width = 80;
+            _outPutBitmapModel.addEventListener( MouseEvent.CLICK , onSwitchPanelHandle );
             
             _textureViewer = new TextureViewer(null,0,30);
             
@@ -88,6 +92,11 @@ package texturePackage.sequenceOperator
         {
             switch(event.currentTarget as PushButton)
             {
+                case _outPutBitmapModel:
+                {
+                    doOutputBmp();
+                    break;
+                }
                 case _outPutModel:
                 {
                     doOutput();
@@ -139,6 +148,11 @@ package texturePackage.sequenceOperator
             }
         }
         
+        private function doOutputBmp():void
+        {
+            _textureViewer.outputBmp( StarlingMain.actSprView );
+        }
+        
         private function doOutput():void
         {
             _atfLength = textures.length;
@@ -146,7 +160,6 @@ package texturePackage.sequenceOperator
             {
                 return;
             }
-            var imageData:BitmapData;
             _cachedByteArrayData = new ByteArray();
             if(_atfLength > 0)
             {
@@ -192,8 +205,8 @@ package texturePackage.sequenceOperator
             {
                 _cachedByteArrayData.deflate();
                 
-                var pathFolder:String = "F:\\RoData\\dataAtf\\" + StarlingMain.filePath;
-                pathFolder = pathFolder.replace( "F:\\RoData\\data\\" , "" );
+                var pathFolder:String = "E:\\2 - as3Projects\\RoData\\dataAtf\\" + StarlingMain.filePath;
+                pathFolder = pathFolder.replace( "E:\\2 - as3Projects\\RoData\\data\\" , "" );
                 pathFolder = pathFolder.replace( ".act" , ".tpc" );
                 trace("pathFolder:",pathFolder);
                 var outFile:File = new File( pathFolder );
@@ -262,8 +275,8 @@ package texturePackage.sequenceOperator
                 
                 var file:File = new File("C:\\atf\\tempTpa.atf");
                 //emp,emc路径
-                var pathFolder:String = "F:\\RoData\\dataAtf\\" + StarlingMain.filePath;
-                pathFolder = pathFolder.replace( "F:\\RoData\\data\\" , "" );
+                var pathFolder:String = "E:\\2 - as3Projects\\RoData\\dataAtf\\" + StarlingMain.filePath;
+                pathFolder = pathFolder.replace( "E:\\2 - as3Projects\\RoData\\data\\" , "" );
                 pathFolder = pathFolder.replace( ".act" , ".atf" );
                 trace("pathFolder:",pathFolder);
                 file.copyTo(new File( pathFolder ) , true);

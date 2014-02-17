@@ -99,7 +99,14 @@ package inoah.core.base
         
         public function dispose():void
         {
-            _viewObj.dispose();
+            if( _controller )
+            {
+                _controller = null;
+            }
+            if( _viewObj )
+            {
+                _viewObj.dispose();
+            }
         }
         
         public function set playRate( value:Number ):void

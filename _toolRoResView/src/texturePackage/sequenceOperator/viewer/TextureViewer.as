@@ -7,9 +7,13 @@ package texturePackage.sequenceOperator.viewer
     import com.bit101.components.Slider;
     
     import flash.display.DisplayObjectContainer;
+    import flash.display.PNGEncoderOptions;
     import flash.display.Sprite;
     import flash.events.Event;
     import flash.events.MouseEvent;
+    import flash.filesystem.File;
+    import flash.filesystem.FileMode;
+    import flash.filesystem.FileStream;
     import flash.geom.Rectangle;
     import flash.text.TextFormat;
     import flash.text.TextFormatAlign;
@@ -17,6 +21,7 @@ package texturePackage.sequenceOperator.viewer
     import format.Sequence;
     
     import inoah.core.viewModels.actSpr.ActSprView;
+    import inoah.core.viewModels.actSpr.structs.sprh.AnySprite;
 
     public class TextureViewer extends Panel
     {
@@ -88,6 +93,35 @@ package texturePackage.sequenceOperator.viewer
             {
                 _currentTextureIndex++;
                 updateTextureDisplay();
+            }
+        }
+        
+        public function outputBmp( actSprView:ActSprView ):void
+        {
+            var len:int = actSprView.spr.imgs.length;
+            var sequence:Sequence;
+            var img:AnySprite;
+            
+            var file:File;
+            var fs:FileStream;
+            
+            var url:String = actSprView.url.replace( ".act" , "" );
+                
+            for( var i:int = 0;i<len;i++)
+            {
+                img = actSprView.spr.imgs[i];
+                if( i< 10)
+                {
+                    file = new File( url + "_0" + i + ".png" );
+                }
+                else
+                {
+                    file = new File( url + "_" + i + ".png" );
+                }
+                fs = new FileStream();
+                fs.open( file , FileMode.WRITE );
+                fs.writeBytes( img.drawbitmap().encode( new Rectangle(0,0,img.w ,img.h ) ,new PNGEncoderOptions() ) );
+                fs.close();
             }
         }
         
