@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="50" height="50" tilewidth="64" tileheight="32">
+ <tileset firstgid="1" name="gound001" tilewidth="64" tileheight="64">
+  <image source="gound001.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="17" name="trees001" tilewidth="256" tileheight="256">
+  <image source="trees001.png" width="1024" height="768"/>
+ </tileset>
+ <tileset firstgid="29" name="buildings001" tilewidth="256" tileheight="256">
+  <image source="buildings001.png" width="1792" height="1536"/>
+ </tileset>
+ <layer name="groundLevel" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1MsKgDAMRNGCj43//79uFIpIm9Qkk1EXd1nJAZO1lLIGth15v/kdv+MLjm3gTTZHVsMXHZkNIw7pd5cXOSIt3o66CId1dw5PE8ph7fG6Q1KHlSeL46krq0NrYnBIjOyOszc6LO4GylFbtLuVzXFaervE4JCmdcwJZn5imi+hZx31XB0sLq0js6l2TEeMjtoyNWJx9RxMHomDwaNxSDxMjp6HzZHJY+HI8K9ZOdB3wNKBtFg7UBYPB8Li5Yjef29Hz8Pm8LZEOjwt0Q4vC8LhYUE5rC1Ih6UF7WhZNB60QerpmdCzaxwtzw4srDH4
+  </data>
+ </layer>
+ <objectgroup name="downLevel" width="50" height="50">
+  <object gid="48" x="889" y="271"/>
+  <object gid="62" x="1097" y="130"/>
+  <object gid="21" x="160" y="96"/>
+  <object name="tree001" gid="21" x="213" y="320"/>
+  <object gid="21" x="265" y="221"/>
+  <object gid="21" x="502" y="424"/>
+  <object gid="21" x="417" y="268"/>
+  <object gid="21" x="349" y="88"/>
+  <object gid="21" x="615" y="361"/>
+  <object gid="21" x="659" y="123"/>
+  <object gid="21" x="544" y="159"/>
+  <object gid="21" x="915" y="56"/>
+  <object gid="21" x="742" y="34"/>
+  <object gid="38" x="869" y="462"/>
+  <object gid="21" x="689" y="271"/>
+  <object gid="21" x="773" y="473"/>
+  <object gid="21" x="1140" y="272"/>
+  <object gid="21" x="1609" y="143"/>
+  <object gid="21" x="1163" y="589"/>
+  <object gid="21" x="1289" y="79"/>
+  <object gid="21" x="1451" y="649"/>
+  <object gid="21" x="1597" y="811"/>
+  <object gid="21" x="1577" y="623"/>
+ </objectgroup>
+</map>

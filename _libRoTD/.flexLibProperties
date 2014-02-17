@@ -1,24 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
   <includeClasses>
-    <classEntry path="inoah.game.td.controllers.TDMonsterController"/>
-    <classEntry path="inoah.game.td.modules.map.TDMapFactory"/>
-    <classEntry path="inoah.game.td.modules.map.view.mediators.TDSceneMediator"/>
-    <classEntry path="inoah.game.td.modules.player.TDPlayerController"/>
+    <classEntry path="game.ui.chooseViewUI"/>
+    <classEntry path="game.ui.gameViewUI"/>
+    <classEntry path="game.ui.loginViewUI"/>
+    <classEntry path="game.ui.loseDialogUI"/>
+    <classEntry path="game.ui.mainViewChildren.chatViewUI"/>
+    <classEntry path="game.ui.mainViewChildren.joyStickTmpUI"/>
+    <classEntry path="game.ui.mainViewChildren.joystickUI"/>
+    <classEntry path="game.ui.mainViewChildren.mapViewUI"/>
+    <classEntry path="game.ui.mainViewChildren.skillBarViewUI"/>
+    <classEntry path="game.ui.mainViewUI"/>
+    <classEntry path="game.ui.menuDialogUI"/>
+    <classEntry path="game.ui.sysViews.alertViewUI"/>
+    <classEntry path="game.ui.winDialogUI"/>
+    <classEntry path="inoah.game.td.ConstsParticle"/>
     <classEntry path="inoah.game.td.TDConfig"/>
     <classEntry path="inoah.game.td.TDGameMediator"/>
+    <classEntry path="inoah.game.td.controllers.TDMonsterController"/>
+    <classEntry path="inoah.game.td.modules.gameui.ChooseView"/>
+    <classEntry path="inoah.game.td.modules.gameui.GameView"/>
+    <classEntry path="inoah.game.td.modules.gameui.MenuDialog"/>
+    <classEntry path="inoah.game.td.modules.map.TDMapFactory"/>
+    <classEntry path="inoah.game.td.modules.map.view.mediators.TDScene"/>
+    <classEntry path="inoah.game.td.modules.map.view.mediators.TDSceneMediator"/>
+    <classEntry path="inoah.game.td.modules.map.view.mediators.TowerSelecter"/>
+    <classEntry path="inoah.game.td.modules.player.TDPlayerController"/>
+    <classEntry path="inoah.game.td.modules.tower.TowerController"/>
+    <classEntry path="inoah.game.td.modules.tower.view.TowerView"/>
+    <classEntry path="inoah.game.td.objects.TowerObject"/>
     <classEntry path="robotlegs.bender.extensions.tdMapMgrExtension.MapEvent"/>
     <classEntry path="robotlegs.bender.extensions.tdMapMgrExtension.TDMapMgr"/>
     <classEntry path="robotlegs.bender.extensions.tdMapMgrExtension.TDMapMgrExtension"/>
-    <classEntry path="inoah.game.td.modules.tower.view.TowerView"/>
-    <classEntry path="inoah.game.td.objects.TowerObject"/>
-    <classEntry path="inoah.game.td.modules.tower.TowerController"/>
-    <classEntry path="inoah.game.td.modules.gameui.GameView"/>
-    <classEntry path="inoah.game.td.modules.map.view.mediators.TDScene"/>
-    <classEntry path="inoah.game.td.modules.gameui.ChooseView"/>
-    <classEntry path="inoah.game.td.modules.gameui.MenuDialog"/>
-    <classEntry path="inoah.game.td.ConstsParticle"/>
-    <classEntry path="inoah.game.td.modules.map.view.mediators.TowerSelecter"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>

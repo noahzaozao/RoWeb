@@ -14,11 +14,4 @@
 	<natures>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>[source path] _resRoTD</name>
-			<type>2</type>
-			<location>F:/RoWeb/_resRoTD</location>
-		</link>
-	</linkedResources>
 </projectDescription>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="35" height="35" tilewidth="64" tileheight="32">
+ <tileset firstgid="1" name="gound001" tilewidth="64" tileheight="64">
+  <image source="gound001.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="17" name="td" tilewidth="64" tileheight="128">
+  <image source="td.png" width="256" height="2048"/>
+ </tileset>
+ <layer name="background" width="35" height="35">
+  <data encoding="base64" compression="zlib">
+   eJzt1bEOwCAIBFCnLl38/6/t0qExSvG4gw4dblPygoq9tdb/UHPc+Yqj2jM6qjwrR7bnzZHl8TrUnl2HyoM62J6og+VhOaIetgP1qBy7HrXD63muPYXxeEaLoh9jXY8ny+LxWBb0TKy6lufNgvbB2ou8qQrLyhO5SxHLzKOwoLOYNV8Qh3Imo/8l2xNxMD0MB8PDdEQ8CgfiUTp2PBkOjyfTYXkqHDNPpYORC4nIOHM=
+  </data>
+ </layer>
+ <layer name="roadMap" width="35" height="35">
+  <data encoding="base64" compression="zlib">
+   eJzt1MEJACAMBEH/9t+vPcScoM6AT8OikDEAAGpm8FRaEl5u2fmTREt1Tvd739rSebd7XqLl5H4B4A8LwysC7Q==
+  </data>
+ </layer>
+ <objectgroup name="eventMap" width="35" height="35">
+  <object name="startPos" type="pos" x="160" y="608" width="32" height="32"/>
+  <object name="endPos" type="pos" x="736" y="640" width="32" height="32"/>
+  <object x="64" y="480"/>
+  <object x="704" y="288"/>
+ </objectgroup>
+ <layer name="towers" width="35" height="35">
+  <data encoding="base64" compression="zlib">
+   eJztw7ENAAAIA6C+4P/PunZ1NZCQAAAfTAUAAG4WU2YANA==
+  </data>
+ </layer>
+</map>

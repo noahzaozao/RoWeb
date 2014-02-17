@@ -5,6 +5,7 @@
     <classEntry path="inoah.core.CoreConfig"/>
     <classEntry path="inoah.core.GameCamera"/>
     <classEntry path="inoah.core.Global"/>
+    <classEntry path="inoah.core.SilzAstar"/>
     <classEntry path="inoah.core.base.BaseController"/>
     <classEntry path="inoah.core.base.BaseObject"/>
     <classEntry path="inoah.core.characters.gpu.CharacterViewGpu"/>
@@ -18,6 +19,7 @@
     <classEntry path="inoah.core.consts.commands.BattleCommands"/>
     <classEntry path="inoah.core.events.ActSprEvent"/>
     <classEntry path="inoah.core.events.ActTpcEvent"/>
+    <classEntry path="inoah.core.events.UserInfoEvent"/>
     <classEntry path="inoah.core.infos.BattleCharacterInfo"/>
     <classEntry path="inoah.core.infos.CharacterInfo"/>
     <classEntry path="inoah.core.infos.UserInfo"/>
@@ -26,6 +28,7 @@
     <classEntry path="inoah.core.loaders.AtfLoader"/>
     <classEntry path="inoah.core.loaders.JpgLoader"/>
     <classEntry path="inoah.core.loaders.LuaLoader"/>
+    <classEntry path="inoah.core.loaders.XmlLoader"/>
     <classEntry path="inoah.core.starlingMain"/>
     <classEntry path="inoah.core.utils.GMath"/>
     <classEntry path="inoah.core.utils.GeomUtil"/>
@@ -78,7 +81,6 @@
     <classEntry path="robotlegs.bender.extensions.sprMgrExtension.SprMgrExtension"/>
     <classEntry path="robotlegs.bender.extensions.textureMgrExtension.TextureMgr"/>
     <classEntry path="robotlegs.bender.extensions.textureMgrExtension.TextureMgrExtension"/>
-    <classEntry path="inoah.core.events.UserInfoEvent"/>
   </includeClasses>
   <includeResources/>
   <namespaceManifests/>
