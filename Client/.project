@@ -14,16 +14,4 @@
 	<natures>
 		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>[source path] _resClientRo</name>
-			<type>2</type>
-			<location>E:/noahGitProjects/RoWeb/_resClientRo</location>
-		</link>
-		<link>
-			<name>[source path] src</name>
-			<type>2</type>
-			<location>E:/noahGitProjects/RoWeb/luaCore/src</location>
-		</link>
-	</linkedResources>
 </projectDescription>
