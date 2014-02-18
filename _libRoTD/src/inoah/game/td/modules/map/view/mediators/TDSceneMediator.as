@@ -153,6 +153,10 @@ package inoah.game.td.modules.map.view.mediators
         
         private function onTouch( e:SceneEvent ):void
         {
+            testBuildTower( 1 , new Point( 960 , 480 ) );
+
+            return;
+            
             if( !camera )
             {
                 camera = injector.getInstance( ICamera );
@@ -198,21 +202,26 @@ package inoah.game.td.modules.map.view.mediators
                     if( userModel.info.zeny > 100 )
                     {
                         userModel.info.zeny -= 100;
-                        var towerObj:TowerObject = new TowerObject();
-                        var towerView:TileBuilding = new TileBuilding( 10000 , scene.currentTextureAtlasList[1].getTexture( (17 + e.data).toString() ) );
-                        towerView.x = -128;
-                        towerView.y = -128;
-                        towerView.touchable = false;
-                        towerObj.viewObject = towerView;
-                        _towerList.push( towerView );
-                        towerObj.posX = _pt.x - Global.TILE_W / 4;
-                        towerObj.posY = _pt.y - Global.TILE_H  * 3 / 2 ; 
-                        _towerPosList.push( _pt.x + "_" + _pt.y );
-                        _towerObjList.push( towerObj );
-                        addObject( towerObj );
+                        testBuildTower( uint( e.data ) , _pt );
                     }
                 }
             }
+        }
+        
+        public function testBuildTower( towerType:uint , pt:Point  ):void
+        {
+            var towerObj:TowerObject = new TowerObject();
+            var towerView:TileBuilding = new TileBuilding( 10000 , scene.currentTextureAtlasList[1].getTexture( (17 + towerType).toString() ) );
+            towerView.x = -128;
+            towerView.y = -128;
+            towerView.touchable = false;
+            towerObj.viewObject = towerView;
+            _towerList.push( towerView );
+            towerObj.posX = pt.x - Global.TILE_W / 4;
+            towerObj.posY = pt.y - Global.TILE_H  * 3 / 2 ; 
+            _towerPosList.push( pt.x + "_" + pt.y );
+            _towerObjList.push( towerObj );
+            addObject( towerObj );
         }
         
         override protected function onMapLoadComplete( e:flash.events.Event):void
