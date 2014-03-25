@@ -28,10 +28,5 @@
 			<type>2</type>
 			<location>E:/2 - as3Projects/RoWeb/_resClientRo</location>
 		</link>
-		<link>
-			<name>[source path] src</name>
-			<type>2</type>
-			<location>E:/2 - as3Projects/RoWeb/luaCore/src</location>
-		</link>
 	</linkedResources>
 </projectDescription>
