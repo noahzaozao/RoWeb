@@ -11,7 +11,6 @@ package
     
     import robotlegs.bender.bundles.mvcs.MVCSBundle;
     import robotlegs.bender.extensions.contextView.ContextView;
-    import robotlegs.bender.extensions.luaExtension.LuaExtension;
     import robotlegs.bender.framework.api.IContext;
     import robotlegs.bender.framework.impl.Context;
     
@@ -53,7 +52,6 @@ package
             _context = new Context()
                 .install( MVCSBundle )
                 .install( CoreBundle )
-                .install( LuaExtension )
                 .configure( RoConfig )
                 .configure( new ContextView( this ) );
             _context.initialize( onInitialize );
