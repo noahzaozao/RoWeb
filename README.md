@@ -12,15 +12,13 @@ the project is for guys wants to make their own game but not have graphics resou
 after thar, games can be published in moblie phone, web, pc, and an flash platform.
 if you are insteresting, please email me. 234082230@qq.com
 
-ËØ²Ä£ºÊµÏÖÁËÉíÌå¡¢Í·²¿¡¢ÎäÆ÷ºÍ¹ÖÎï¡£(Í·ÊÎºÍÆäËû±È½Ï¶àÔÝ²»´¦ÀíÄÇ¿é¡£)
-¶¯×÷£ºÊµÏÖÁËÒÆ¶¯¡¢¹¥»÷¡¢ËÀÍö¡¢ÊÜ»÷¡£(¿ÕÊÖ¹¥»÷ºÍ¼¼ÄÜ¡¢Ê°È¡»¹Ã»ÓÐÈÚºÏµ½Âß¼­ÀïÀ´¡£)
-Õ½¶·£ºÈËÎï£¬¹ÖÎï£¨ÎïÆ·£¬¼¼ÄÜ£¬AI£¬×°±¸ÉÐÎ´ÊµÏÖ)
-µØÍ¼£ºÈÚºÏÁËD5RpgµÄºËÐÄ´úÂë£¬·ÖÇø¿ì¼ÓÔØ¡£
-ÉçÇø£º(Áª»ú£¬ÁÄÌìºóÌ¨ÉÐÎ´¿ª·¢¡£)
-Õâ¸öÏîÄ¿µÄÆô¶¯ÊÇ½¨Á¢ÔÚÃ»ÓÐËØ²Äµ«Ïë×ö×Ô¼ºÓÎÏ·µÄ¿à±Æ£¬ÏàÐÅRoµÄ¸÷ÖÖ°ËÃæÈËÎïËÄÃæ¹ÖÎïËØ²ÄÄÜÂú×ã´ó¶àÊý2DÓÎÏ·µÄÐèÇóÁË¡£
-È»ºó£¬¹ØÓÚÓÎÏ·µÄ´«²¥¿ÉÒÔÊÇÒÆ¶¯Éè±¸¡¢ÍøÒ³ºÍµ¥»ú³ÌÊ½£¬¿ÉÒÔÂú×ã¾ø´ó¶àÊýµÄÐèÇó¡£
-¸ÐÐËÈ¤»òÕßÓÐºÏ×÷ÒâÏòµÄÅóÓÑ¿ÉÒÔÖ±½Ó¼ÓÈº»òÕßÎÒµÄQQ£¬»òÕß·¢ÓÊ¼þ¸øÎÒ¡£
+ç´ æï¼šå®žçŽ°äº†èº«ä½“ã€å¤´éƒ¨ã€æ­¦å™¨å’Œæ€ªç‰©ã€‚(å¤´é¥°å’Œå…¶ä»–æ¯”è¾ƒå¤šæš‚ä¸å¤„ç†é‚£å—ã€‚)
+åŠ¨ä½œï¼šå®žçŽ°äº†ç§»åŠ¨ã€æ”»å‡»ã€æ­»äº¡ã€å—å‡»ã€‚(ç©ºæ‰‹æ”»å‡»å’ŒæŠ€èƒ½ã€æ‹¾å–è¿˜æ²¡æœ‰èžåˆåˆ°é€»è¾‘é‡Œæ¥ã€‚)
+æˆ˜æ–—ï¼šäººç‰©ï¼Œæ€ªç‰©ï¼ˆç‰©å“ï¼ŒæŠ€èƒ½ï¼ŒAIï¼Œè£…å¤‡å°šæœªå®žçŽ°)
+åœ°å›¾ï¼šèžåˆäº†D5Rpgçš„æ ¸å¿ƒä»£ç ï¼Œåˆ†åŒºå¿«åŠ è½½ã€‚
+ç¤¾åŒºï¼š(è”æœºï¼ŒèŠå¤©åŽå°å°šæœªå¼€å‘ã€‚)
+è¿™ä¸ªé¡¹ç›®çš„å¯åŠ¨æ˜¯å»ºç«‹åœ¨æ²¡æœ‰ç´ æä½†æƒ³åšè‡ªå·±æ¸¸æˆçš„è‹¦é€¼ï¼Œç›¸ä¿¡Roçš„å„ç§å…«é¢äººç‰©å››é¢æ€ªç‰©ç´ æèƒ½æ»¡è¶³å¤§å¤šæ•°2Dæ¸¸æˆçš„éœ€æ±‚äº†ã€‚
+ç„¶åŽï¼Œå…³äºŽæ¸¸æˆçš„ä¼ æ’­å¯ä»¥æ˜¯ç§»åŠ¨è®¾å¤‡ã€ç½‘é¡µå’Œå•æœºç¨‹å¼ï¼Œå¯ä»¥æ»¡è¶³ç»å¤§å¤šæ•°çš„éœ€æ±‚ã€‚
+æ„Ÿå…´è¶£æˆ–è€…æœ‰åˆä½œæ„å‘çš„æœ‹å‹å¯ä»¥ç›´æŽ¥åŠ ç¾¤æˆ–è€…æˆ‘çš„QQï¼Œæˆ–è€…å‘é‚®ä»¶ç»™æˆ‘ã€‚
 
-ÍøÕ¾£ºhttp://inoah.dly2005.com/
-demo£ºhttp://inoah.dly2005.com/roWeb/
-
+My Blog: http://www.7mud.com
